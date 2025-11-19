@@ -132,25 +132,28 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: `url(${selectedImages.hero})`,
-            filter: 'brightness(0.3)'
+            filter: 'brightness(0.25)'
           }}
+        />
+        <div 
+          className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"
         />
         <div 
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(135deg, ${config.primaryColor}50 0%, ${config.accentColor}50 100%)`
+            background: `linear-gradient(135deg, ${config.primaryColor}40 0%, ${config.accentColor}40 100%)`
           }}
         />
         <div className="container mx-auto px-4 py-24 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
-            <Badge className="mb-6" style={{ backgroundColor: config.accentColor + "20", color: config.accentColor }}>
+            <Badge className="mb-6 shadow-lg" style={{ backgroundColor: config.accentColor, color: "white" }}>
               🚀 Nouveau : Services digitaux innovants
             </Badge>
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight text-white drop-shadow-2xl" style={{ textShadow: '0 4px 20px rgba(0,0,0,0.8)' }}>
               Transformez votre vision en{" "}
-              <span style={{ color: config.primaryColor }}>réalité digitale</span>
+              <span style={{ color: config.primaryColor, textShadow: `0 0 30px ${config.primaryColor}80, 0 4px 20px rgba(0,0,0,0.8)` }}>réalité digitale</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
+            <p className="text-xl text-white/90 mb-8 drop-shadow-lg" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.7)' }}>
               Des solutions web sur mesure qui propulsent votre entreprise vers le succès. 
               Design moderne, performance optimale, résultats garantis.
             </p>
@@ -164,17 +167,17 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
               </Button>
             </div>
             <div className="mt-12 flex items-center justify-center gap-8 flex-wrap text-sm">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5" style={{ color: config.primaryColor }} />
-                <span>Plus de 500 projets réussis</span>
+              <div className="flex items-center gap-2 text-white drop-shadow-lg">
+                <CheckCircle2 className="w-5 h-5 drop-shadow-lg" style={{ color: config.primaryColor, filter: `drop-shadow(0 0 8px ${config.primaryColor})` }} />
+                <span style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>Plus de 500 projets réussis</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5" style={{ color: config.primaryColor }} />
-                <span>Satisfaction client 98%</span>
+              <div className="flex items-center gap-2 text-white drop-shadow-lg">
+                <CheckCircle2 className="w-5 h-5 drop-shadow-lg" style={{ color: config.primaryColor, filter: `drop-shadow(0 0 8px ${config.primaryColor})` }} />
+                <span style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>Satisfaction client 98%</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5" style={{ color: config.primaryColor }} />
-                <span>Support 7j/7</span>
+              <div className="flex items-center gap-2 text-white drop-shadow-lg">
+                <CheckCircle2 className="w-5 h-5 drop-shadow-lg" style={{ color: config.primaryColor, filter: `drop-shadow(0 0 8px ${config.primaryColor})` }} />
+                <span style={{ textShadow: '0 2px 8px rgba(0,0,0,0.8)' }}>Support 7j/7</span>
               </div>
             </div>
           </div>
