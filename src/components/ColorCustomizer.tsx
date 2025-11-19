@@ -24,7 +24,7 @@ export const ColorCustomizer = ({
       <div>
         <div className="flex items-center gap-2 mb-2">
           <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
-            3
+            4
           </div>
           <h2 className="text-2xl font-bold">Personnalisez vos couleurs</h2>
         </div>

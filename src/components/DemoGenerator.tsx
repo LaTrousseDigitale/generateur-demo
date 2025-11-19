@@ -6,6 +6,7 @@ import { QuestionnaireStep } from "./QuestionnaireStep";
 import { DemoPreview } from "./DemoPreview";
 import { ColorCustomizer } from "./ColorCustomizer";
 import { LogoUploader } from "./LogoUploader";
+import { FullDemoView } from "./FullDemoView";
 import { ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
 
 export type ServiceType = "portal" | "website" | "module" | null;
@@ -16,6 +17,7 @@ export type ModuleType = "calculator" | "project-manager" | "hr-dashboard" | "it
 export interface DemoConfig {
   serviceType: ServiceType;
   features: string[];
+  industry: string;
   primaryColor: string;
   accentColor: string;
   secondaryColor: string;
@@ -23,25 +25,30 @@ export interface DemoConfig {
   companyName: string;
 }
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 5;
 
 export const DemoGenerator = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [demoConfig, setDemoConfig] = useState<DemoConfig>({
     serviceType: null,
     features: [],
+    industry: "",
     primaryColor: "#1c61fe",
     accentColor: "#ff6b3d",
     secondaryColor: "#fbca58",
     logo: null,
     companyName: "Votre Entreprise",
   });
+  const [showFinalDemo, setShowFinalDemo] = useState(false);
 
   const progress = (currentStep / TOTAL_STEPS) * 100;
 
   const handleNext = () => {
     if (currentStep < TOTAL_STEPS) {
       setCurrentStep(currentStep + 1);
+    } else {
+      // Finaliser - afficher la démo complète
+      setShowFinalDemo(true);
     }
   };
 
@@ -54,6 +61,10 @@ export const DemoGenerator = () => {
   const updateConfig = (updates: Partial<DemoConfig>) => {
     setDemoConfig({ ...demoConfig, ...updates });
   };
+
+  if (showFinalDemo) {
+    return <FullDemoView config={demoConfig} onBack={() => setShowFinalDemo(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
@@ -146,6 +157,25 @@ export const DemoGenerator = () => {
               )}
 
               {currentStep === 3 && (
+                <QuestionnaireStep
+                  step={3}
+                  title="Quelle est votre industrie ?"
+                  options={[
+                    { value: "construction", label: "Construction", description: "Entrepreneurs, rénovation, gestion de chantiers" },
+                    { value: "services-pro", label: "Services Professionnels", description: "Consultation, comptabilité, services juridiques" },
+                    { value: "sante", label: "Santé & Bien-être", description: "Cliniques, centres de soins, thérapeutes" },
+                    { value: "commerce", label: "Commerce de Détail", description: "Boutiques, e-commerce, distribution" },
+                    { value: "technologie", label: "Technologie", description: "Logiciels, IT, solutions numériques" },
+                    { value: "education", label: "Éducation", description: "Écoles, formation, cours en ligne" },
+                    { value: "restauration", label: "Restauration", description: "Restaurants, traiteurs, cafés" },
+                    { value: "immobilier", label: "Immobilier", description: "Agences, courtiers, gestion immobilière" },
+                  ]}
+                  selectedValue={demoConfig.industry}
+                  onSelect={(value) => updateConfig({ industry: value })}
+                />
+              )}
+
+              {currentStep === 4 && (
                 <ColorCustomizer
                   primaryColor={demoConfig.primaryColor}
                   accentColor={demoConfig.accentColor}
@@ -154,7 +184,7 @@ export const DemoGenerator = () => {
                 />
               )}
 
-              {currentStep === 4 && (
+              {currentStep === 5 && (
                 <LogoUploader
                   logo={demoConfig.logo}
                   companyName={demoConfig.companyName}
@@ -179,7 +209,8 @@ export const DemoGenerator = () => {
                   onClick={handleNext}
                   disabled={
                     (currentStep === 1 && !demoConfig.serviceType) ||
-                    (currentStep === 2 && demoConfig.features.length === 0)
+                    (currentStep === 2 && demoConfig.features.length === 0) ||
+                    (currentStep === 3 && !demoConfig.industry)
                   }
                   className="flex-1"
                 >

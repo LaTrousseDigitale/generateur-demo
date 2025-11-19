@@ -99,12 +99,11 @@ export const QuestionnaireStep = ({
             {options.map((option) => {
               const isSelected = selectedValue === option.value;
               return (
+              <label key={option.value} htmlFor={option.value}>
                 <Card
-                  key={option.value}
                   className={`p-4 cursor-pointer transition-all hover:shadow-md ${
                     isSelected ? "border-primary bg-primary/5" : ""
                   }`}
-                  onClick={() => onSelect?.(option.value)}
                 >
                   <div className="flex items-start gap-3">
                     <RadioGroupItem value={option.value} id={option.value} className="mt-1" />
@@ -126,6 +125,7 @@ export const QuestionnaireStep = ({
                     </div>
                   </div>
                 </Card>
+              </label>
               );
             })}
           </div>
