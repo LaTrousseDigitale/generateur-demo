@@ -18,6 +18,9 @@ export interface DemoConfig {
   serviceType: ServiceType;
   features: string[];
   industry: string;
+  companySize: string;
+  mainChallenge: string;
+  timeline: string;
   primaryColor: string;
   accentColor: string;
   secondaryColor: string;
@@ -25,7 +28,7 @@ export interface DemoConfig {
   companyName: string;
 }
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 7;
 
 export const DemoGenerator = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -33,6 +36,9 @@ export const DemoGenerator = () => {
     serviceType: null,
     features: [],
     industry: "",
+    companySize: "",
+    mainChallenge: "",
+    timeline: "",
     primaryColor: "#1c61fe",
     accentColor: "#ff6b3d",
     secondaryColor: "#fbca58",
@@ -183,21 +189,83 @@ export const DemoGenerator = () => {
               )}
 
               {currentStep === 4 && (
-                <ColorCustomizer
-                  primaryColor={demoConfig.primaryColor}
-                  accentColor={demoConfig.accentColor}
-                  secondaryColor={demoConfig.secondaryColor}
-                  onColorChange={(colors) => updateConfig(colors)}
+                <QuestionnaireStep
+                  step={4}
+                  title="Quelle est la taille de votre entreprise ?"
+                  options={[
+                    { value: "solo", label: "Travailleur Autonome", description: "1 personne, gestion personnelle" },
+                    { value: "petite", label: "Petite Équipe", description: "2-10 employés, structure simple" },
+                    { value: "moyenne", label: "Entreprise Moyenne", description: "11-50 employés, départements établis" },
+                    { value: "grande", label: "Grande Entreprise", description: "50+ employés, structure complexe" },
+                  ]}
+                  selectedValue={demoConfig.companySize}
+                  onSelect={(value) => updateConfig({ companySize: value })}
                 />
               )}
 
               {currentStep === 5 && (
-                <LogoUploader
-                  logo={demoConfig.logo}
-                  companyName={demoConfig.companyName}
-                  onLogoChange={(logo) => updateConfig({ logo })}
-                  onCompanyNameChange={(name) => updateConfig({ companyName: name })}
+                <QuestionnaireStep
+                  step={5}
+                  title="Quel est votre principal défi actuellement ?"
+                  options={[
+                    { value: "organisation", label: "Organisation & Processus", description: "Besoin de structure et d'efficacité" },
+                    { value: "croissance", label: "Croissance Rapide", description: "Gérer l'expansion et la scalabilité" },
+                    { value: "digital", label: "Transformation Digitale", description: "Moderniser les outils et pratiques" },
+                    { value: "client", label: "Expérience Client", description: "Améliorer la satisfaction et fidélisation" },
+                    { value: "couts", label: "Optimisation des Coûts", description: "Réduire les dépenses et maximiser ROI" },
+                  ]}
+                  selectedValue={demoConfig.mainChallenge}
+                  onSelect={(value) => updateConfig({ mainChallenge: value })}
                 />
+              )}
+
+              {currentStep === 6 && (
+                <QuestionnaireStep
+                  step={6}
+                  title="Dans quel délai souhaitez-vous implémenter ?"
+                  options={[
+                    { value: "urgent", label: "Urgent (1-2 semaines)", description: "Besoin immédiat, démarrage rapide" },
+                    { value: "court", label: "Court Terme (1 mois)", description: "Implémentation dans le mois" },
+                    { value: "moyen", label: "Moyen Terme (2-3 mois)", description: "Planification détaillée" },
+                    { value: "long", label: "Long Terme (3+ mois)", description: "Projet stratégique, phase de réflexion" },
+                  ]}
+                  selectedValue={demoConfig.timeline}
+                  onSelect={(value) => updateConfig({ timeline: value })}
+                />
+              )}
+
+              {currentStep === 7 && (
+                <div className="space-y-6">
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
+                        7
+                      </div>
+                      <h2 className="text-2xl font-bold">Personnalisation Visuelle</h2>
+                    </div>
+                    <p className="text-muted-foreground ml-10">
+                      Dernière étape : ajoutez votre identité visuelle
+                    </p>
+                  </div>
+                  
+                  <div className="ml-10 space-y-8">
+                    <LogoUploader
+                      logo={demoConfig.logo}
+                      companyName={demoConfig.companyName}
+                      onLogoChange={(logo) => updateConfig({ logo })}
+                      onCompanyNameChange={(name) => updateConfig({ companyName: name })}
+                    />
+                    
+                    <div className="pt-4 border-t">
+                      <ColorCustomizer
+                        primaryColor={demoConfig.primaryColor}
+                        accentColor={demoConfig.accentColor}
+                        secondaryColor={demoConfig.secondaryColor}
+                        onColorChange={(colors) => updateConfig(colors)}
+                      />
+                    </div>
+                  </div>
+                </div>
               )}
 
               {/* Navigation Buttons */}
@@ -217,7 +285,10 @@ export const DemoGenerator = () => {
                   disabled={
                     (currentStep === 1 && !demoConfig.serviceType) ||
                     (currentStep === 2 && demoConfig.features.length === 0) ||
-                    (currentStep === 3 && !demoConfig.industry)
+                    (currentStep === 3 && !demoConfig.industry) ||
+                    (currentStep === 4 && !demoConfig.companySize) ||
+                    (currentStep === 5 && !demoConfig.mainChallenge) ||
+                    (currentStep === 6 && !demoConfig.timeline)
                   }
                   className="flex-1"
                 >

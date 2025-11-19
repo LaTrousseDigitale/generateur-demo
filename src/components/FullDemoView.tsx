@@ -230,7 +230,77 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
     return industryData[config.industry] || industryData["services-pro"];
   };
 
+  const generateChallengeContent = () => {
+    const challengeData: Record<string, { recommendation: string; priority: string; impact: string }> = {
+      organisation: {
+        recommendation: "Automatisation des processus et workflows standardisés",
+        priority: "Haute",
+        impact: "Gain de 30% en efficacité opérationnelle"
+      },
+      croissance: {
+        recommendation: "Infrastructure scalable et outils collaboratifs",
+        priority: "Critique",
+        impact: "Capacité à doubler votre équipe sans friction"
+      },
+      digital: {
+        recommendation: "Formation et migration progressive vers le cloud",
+        priority: "Stratégique",
+        impact: "Modernisation complète en 3 mois"
+      },
+      client: {
+        recommendation: "CRM intégré et portail client self-service",
+        priority: "Haute",
+        impact: "Augmentation de 25% de la satisfaction client"
+      },
+      couts: {
+        recommendation: "Analytics avancés et élimination des redondances",
+        priority: "Importante",
+        impact: "Réduction de 20% des coûts opérationnels"
+      }
+    };
+    return challengeData[config.mainChallenge] || challengeData.organisation;
+  };
+
+  const generateSizeContent = () => {
+    const sizeData: Record<string, { userSeats: string; storage: string; support: string }> = {
+      solo: { userSeats: "1 utilisateur", storage: "10 GB", support: "Email" },
+      petite: { userSeats: "Jusqu'à 10 utilisateurs", storage: "50 GB", support: "Email + Chat" },
+      moyenne: { userSeats: "Jusqu'à 50 utilisateurs", storage: "200 GB", support: "Prioritaire + Téléphone" },
+      grande: { userSeats: "Illimité", storage: "1 TB+", support: "Dédié + Formation" }
+    };
+    return sizeData[config.companySize] || sizeData.petite;
+  };
+
+  const generateTimelineContent = () => {
+    const timelineData: Record<string, { phase1: string; phase2: string; phase3: string }> = {
+      urgent: {
+        phase1: "Configuration (2-3 jours)",
+        phase2: "Formation express (1 jour)",
+        phase3: "Go-live (1 semaine)"
+      },
+      court: {
+        phase1: "Analyse & Setup (1 semaine)",
+        phase2: "Configuration & Formation (2 semaines)",
+        phase3: "Déploiement (1 semaine)"
+      },
+      moyen: {
+        phase1: "Analyse approfondie (3 semaines)",
+        phase2: "Personnalisation (5 semaines)",
+        phase3: "Déploiement & Support (2 semaines)"
+      },
+      long: {
+        phase1: "Stratégie & Design (1 mois)",
+        phase2: "Développement sur mesure (2 mois)",
+        phase3: "Tests & Déploiement (1 mois)"
+      }
+    };
+    return timelineData[config.timeline] || timelineData.moyen;
+  };
+
   const industryContent = generateIndustryContent();
+  const challengeContent = generateChallengeContent();
+  const sizeContent = generateSizeContent();
+  const timelineContent = generateTimelineContent();
 
   const getServiceTitle = () => {
     switch (config.serviceType) {
@@ -302,10 +372,41 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
               <p className="text-muted-foreground text-lg">{getServiceTitle()}</p>
             </div>
           </div>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-4">
             {industryContent.tagline}
           </p>
+          <div className="flex items-center justify-center gap-4 flex-wrap">
+            <Badge variant="outline" className="text-sm px-3 py-1">
+              {sizeContent.userSeats}
+            </Badge>
+            <Badge variant="outline" className="text-sm px-3 py-1">
+              Défi: {challengeContent.recommendation}
+            </Badge>
+            <Badge variant="outline" className="text-sm px-3 py-1" style={{ borderColor: config.accentColor, color: config.accentColor }}>
+              Timeline: {config.timeline}
+            </Badge>
+          </div>
         </div>
+
+        {/* Key Recommendation Card */}
+        <Card className="mb-8 p-6 shadow-elegant" style={{ borderColor: config.primaryColor, borderWidth: 2 }}>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Recommandation Principale</p>
+              <p className="font-bold text-lg">{challengeContent.recommendation}</p>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Priorité</p>
+              <Badge style={{ backgroundColor: config.accentColor, color: "white" }}>
+                {challengeContent.priority}
+              </Badge>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Impact Estimé</p>
+              <p className="font-bold" style={{ color: config.primaryColor }}>{challengeContent.impact}</p>
+            </div>
+          </div>
+        </Card>
 
         {/* Stats Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
@@ -438,22 +539,44 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
                 </Card>
 
                 <Card className="p-4" style={{ backgroundColor: config.primaryColor + "08" }}>
-                  <h3 className="font-bold mb-3">Personnalisation Active</h3>
+                  <h3 className="font-bold mb-3">Configuration Recommandée</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Couleur principale</span>
-                      <div className="flex items-center gap-2">
-                        <div className="w-4 h-4 rounded border" style={{ backgroundColor: config.primaryColor }} />
-                        <span className="font-mono text-xs">{config.primaryColor}</span>
+                      <span className="text-muted-foreground">Utilisateurs</span>
+                      <Badge variant="outline">{sizeContent.userSeats}</Badge>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Stockage</span>
+                      <Badge variant="outline">{sizeContent.storage}</Badge>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Support</span>
+                      <Badge variant="outline">{sizeContent.support}</Badge>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-4" style={{ borderColor: config.secondaryColor + "50", borderWidth: 2 }}>
+                  <h3 className="font-bold mb-3">Plan d'Implémentation</h3>
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium">Phase 1</span>
+                        <Badge variant="outline" style={{ borderColor: config.primaryColor }}>En cours</Badge>
                       </div>
+                      <p className="text-muted-foreground text-xs">{timelineContent.phase1}</p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Industrie</span>
-                      <Badge>{config.industry}</Badge>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium">Phase 2</span>
+                      </div>
+                      <p className="text-muted-foreground text-xs">{timelineContent.phase2}</p>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Modules</span>
-                      <Badge>{config.features.length}</Badge>
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="font-medium">Phase 3</span>
+                      </div>
+                      <p className="text-muted-foreground text-xs">{timelineContent.phase3}</p>
                     </div>
                   </div>
                 </Card>
