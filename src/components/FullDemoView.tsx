@@ -5,6 +5,8 @@ import { DemoConfig } from "./DemoGenerator";
 import { ArrowLeft, Download, Share2, Users, Calendar, BarChart3, Settings, FileText, DollarSign, Clock, CheckCircle2, TrendingUp, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ShowcaseWebsiteDemo } from "./ShowcaseWebsiteDemo";
+import { EcommerceDemo } from "./EcommerceDemo";
+import { BookingDemo } from "./BookingDemo";
 
 interface FullDemoViewProps {
   config: DemoConfig;
@@ -14,9 +16,17 @@ interface FullDemoViewProps {
 export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
   const { toast } = useToast();
 
-  // Si c'est un site vitrine, afficher la démo spécifique
+  // Router vers la bonne démo selon le type sélectionné
   if (config.features.includes("vitrine")) {
     return <ShowcaseWebsiteDemo config={config} onBack={onBack} />;
+  }
+  
+  if (config.features.includes("ecommerce")) {
+    return <EcommerceDemo config={config} onBack={onBack} />;
+  }
+  
+  if (config.features.includes("booking")) {
+    return <BookingDemo config={config} onBack={onBack} />;
   }
 
   const generateIndustryContent = () => {
