@@ -218,12 +218,23 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
             </div>
             <div className="relative h-80 md:h-96">
               <div
-                className="absolute inset-0 rounded-3xl shadow-2xl backdrop-blur-sm transition-transform hover:scale-[1.02] duration-300"
+                className="absolute inset-0 rounded-3xl shadow-2xl overflow-hidden transition-transform hover:scale-[1.02] duration-300"
                 style={{
-                  background: `linear-gradient(135deg, ${config.primaryColor}15 0%, ${config.accentColor}20 100%)`,
                   border: `1px solid ${config.primaryColor}20`
                 }}
-              />
+              >
+                <img 
+                  src={products[0]?.image} 
+                  alt="Produit vedette"
+                  className="w-full h-full object-cover"
+                />
+                <div 
+                  className="absolute inset-0"
+                  style={{
+                    background: `linear-gradient(135deg, ${config.primaryColor}10 0%, ${config.accentColor}15 100%)`
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
