@@ -6,6 +6,20 @@ import { ArrowLeft, Download, Share2, ShoppingCart, Search, Heart, Star, Trendin
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
+// Import product images
+import productAuto1 from "@/assets/product-auto-1.jpg";
+import productAuto2 from "@/assets/product-auto-2.jpg";
+import productAuto3 from "@/assets/product-auto-3.jpg";
+import productRestaurant1 from "@/assets/product-restaurant-1.jpg";
+import productRestaurant2 from "@/assets/product-restaurant-2.jpg";
+import productRestaurant3 from "@/assets/product-restaurant-3.jpg";
+import productArchitecture1 from "@/assets/product-architecture-1.jpg";
+import productArchitecture2 from "@/assets/product-architecture-2.jpg";
+import productConstruction1 from "@/assets/product-construction-1.jpg";
+import productConstruction2 from "@/assets/product-construction-2.jpg";
+import productHealth1 from "@/assets/product-health-1.jpg";
+import productHealth2 from "@/assets/product-health-2.jpg";
+
 interface EcommerceDemoProps {
   config: DemoConfig;
   onBack: () => void;
@@ -31,22 +45,40 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
   const industryProducts = {
     commerce: [
-      { name: "T-shirt Premium", price: "29.99€", rating: 4.8, image: "gradient-1" },
-      { name: "Jean Slim Fit", price: "79.99€", rating: 4.6, image: "gradient-2" },
-      { name: "Sneakers Sport", price: "89.99€", rating: 4.9, image: "gradient-3" },
-      { name: "Veste Cuir", price: "199.99€", rating: 4.7, image: "gradient-4" },
+      { name: "T-shirt Premium", price: "29.99€", rating: 4.8, image: productArchitecture1 },
+      { name: "Jean Slim Fit", price: "79.99€", rating: 4.6, image: productArchitecture2 },
+      { name: "Sneakers Sport", price: "89.99€", rating: 4.9, image: productConstruction1 },
+      { name: "Veste Cuir", price: "199.99€", rating: 4.7, image: productConstruction2 },
     ],
-    "pieces-auto": [
-      { name: "Filtre à Huile Premium", price: "24.99€", rating: 4.8, image: "gradient-1" },
-      { name: "Plaquettes de Frein", price: "89.99€", rating: 4.9, image: "gradient-2" },
-      { name: "Batterie 12V 70Ah", price: "129.99€", rating: 4.7, image: "gradient-3" },
-      { name: "Amortisseurs Sport", price: "249.99€", rating: 4.6, image: "gradient-4" },
+    "vente-auto": [
+      { name: "Berline Premium", price: "34,999€", rating: 4.9, image: productAuto1 },
+      { name: "SUV Familial", price: "42,999€", rating: 4.8, image: productAuto2 },
+      { name: "Sportive GT", price: "59,999€", rating: 4.9, image: productAuto3 },
+      { name: "Citadine Électrique", price: "28,999€", rating: 4.7, image: productAuto1 },
+    ],
+    restauration: [
+      { name: "Plat du Chef - Saumon", price: "28.99€", rating: 4.9, image: productRestaurant1 },
+      { name: "Pasta alla Carbonara", price: "18.99€", rating: 4.8, image: productRestaurant2 },
+      { name: "Dessert Gourmet", price: "9.99€", rating: 4.9, image: productRestaurant3 },
+      { name: "Menu Dégustation", price: "65.00€", rating: 5.0, image: productRestaurant1 },
+    ],
+    architecture: [
+      { name: "Plan Maison Moderne", price: "2,499€", rating: 4.8, image: productArchitecture1 },
+      { name: "Pack Plans & Rendus 3D", price: "3,999€", rating: 4.9, image: productArchitecture2 },
+      { name: "Consultation Design", price: "499€", rating: 4.7, image: productArchitecture1 },
+      { name: "Rénovation Complète", price: "8,999€", rating: 4.8, image: productArchitecture2 },
+    ],
+    construction: [
+      { name: "Casque de Sécurité Pro", price: "49.99€", rating: 4.8, image: productConstruction1 },
+      { name: "Kit Outils Électriques", price: "899.99€", rating: 4.9, image: productConstruction2 },
+      { name: "Équipement Complet", price: "1,499€", rating: 4.7, image: productConstruction1 },
+      { name: "Pack Démarrage Pro", price: "2,999€", rating: 4.8, image: productConstruction2 },
     ],
     sante: [
-      { name: "Tensiomètre Digital", price: "49.99€", rating: 4.8, image: "gradient-1" },
-      { name: "Thermomètre Infrarouge", price: "39.99€", rating: 4.9, image: "gradient-2" },
-      { name: "Oxymètre de Pouls", price: "29.99€", rating: 4.7, image: "gradient-3" },
-      { name: "Kit Premier Secours", price: "34.99€", rating: 4.8, image: "gradient-4" },
+      { name: "Stéthoscope Professionnel", price: "149.99€", rating: 4.9, image: productHealth1 },
+      { name: "Complément Bien-être", price: "39.99€", rating: 4.8, image: productHealth2 },
+      { name: "Kit Diagnostic", price: "89.99€", rating: 4.7, image: productHealth1 },
+      { name: "Programme Santé+", price: "199.99€", rating: 4.9, image: productHealth2 },
     ],
   };
 
@@ -202,12 +234,13 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
             {products.map((product, i) => (
               <Card key={i} className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300">
                 <div className="relative">
-                  <div
-                    className="h-64 bg-gradient-to-br"
-                    style={{
-                      background: `linear-gradient(135deg, ${config.primaryColor}30 0%, ${config.accentColor}30 100%)`,
-                    }}
-                  />
+                  <div className="h-64 overflow-hidden">
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
                   <Badge
                     className="absolute top-3 right-3"
                     style={{ backgroundColor: config.accentColor, color: "white" }}
