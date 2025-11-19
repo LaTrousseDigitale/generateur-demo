@@ -5,9 +5,19 @@ import { DemoConfig } from "./DemoGenerator";
 import { ArrowLeft, Download, Share2, ArrowRight, CheckCircle2, Star, Mail, Phone, MapPin, Menu } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import heroDefault from "@/assets/hero-default.jpg";
+import heroAuto from "@/assets/hero-auto.jpg";
+import heroArchitecture from "@/assets/hero-architecture.jpg";
+import heroHealth from "@/assets/hero-health.jpg";
+import heroConstruction from "@/assets/hero-construction.jpg";
+import heroRestaurant from "@/assets/hero-restaurant.jpg";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
+import projectArchitecture1 from "@/assets/project-architecture-1.jpg";
+import projectAuto1 from "@/assets/project-auto-1.jpg";
+import projectHealth1 from "@/assets/project-health-1.jpg";
+import projectConstruction1 from "@/assets/project-construction-1.jpg";
+import projectRestaurant1 from "@/assets/project-restaurant-1.jpg";
 
 interface ShowcaseWebsiteDemoProps {
   config: DemoConfig;
@@ -16,6 +26,21 @@ interface ShowcaseWebsiteDemoProps {
 
 export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps) => {
   const { toast } = useToast();
+
+  // Mapping des images par industrie
+  const industryImages = {
+    architecture: { hero: heroArchitecture, projects: [projectArchitecture1, project2, project3] },
+    "pieces-auto": { hero: heroAuto, projects: [projectAuto1, project2, project3] },
+    sante: { hero: heroHealth, projects: [projectHealth1, project2, project3] },
+    construction: { hero: heroConstruction, projects: [projectConstruction1, project2, project3] },
+    restauration: { hero: heroRestaurant, projects: [projectRestaurant1, project2, project3] },
+  };
+
+  // Sélection des images selon l'industrie ou images par défaut
+  const selectedImages = industryImages[config.industry as keyof typeof industryImages] || {
+    hero: heroDefault,
+    projects: [project1, project2, project3]
+  };
 
   const handleExport = () => {
     toast({
@@ -106,7 +131,7 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(${heroDefault})`,
+            backgroundImage: `url(${selectedImages.hero})`,
             filter: 'brightness(0.3)'
           }}
         />
@@ -212,9 +237,9 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
 
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { id: 1, image: project1, title: "Site Web Corporate", desc: "Refonte complète d'un site d'entreprise avec interface moderne" },
-              { id: 2, image: project2, title: "Application Mobile", desc: "Développement d'une app mobile native avec UI/UX optimisée" },
-              { id: 3, image: project3, title: "Plateforme E-commerce", desc: "Boutique en ligne responsive avec système de paiement intégré" }
+              { id: 1, image: selectedImages.projects[0], title: "Site Web Corporate", desc: "Refonte complète d'un site d'entreprise avec interface moderne" },
+              { id: 2, image: selectedImages.projects[1], title: "Application Mobile", desc: "Développement d'une app mobile native avec UI/UX optimisée" },
+              { id: 3, image: selectedImages.projects[2], title: "Plateforme E-commerce", desc: "Boutique en ligne responsive avec système de paiement intégré" }
             ].map((item) => (
               <Card key={item.id} className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300">
                 <div 
