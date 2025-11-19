@@ -179,39 +179,49 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       </nav>
 
       {/* Hero Banner */}
-      <section className="relative overflow-hidden bg-muted/30">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            background: `linear-gradient(135deg, ${config.primaryColor} 0%, ${config.accentColor} 100%)`,
-          }}
-        />
-        <div className="container mx-auto px-4 py-16 relative z-10">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="animate-fade-in">
-              <Badge className="mb-4" style={{ backgroundColor: config.accentColor, color: "white" }}>
-                🔥 Offre Limitée
+      <section className="relative overflow-hidden" style={{ backgroundColor: `${config.primaryColor}08` }}>
+        <div className="container mx-auto px-4 py-20 md:py-24 relative">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="animate-fade-in space-y-6">
+              <Badge 
+                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-medium shadow-sm"
+                style={{ 
+                  backgroundColor: config.accentColor,
+                  color: "white"
+                }}
+              >
+                <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse"></span>
+                Offre Limitée
               </Badge>
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">
-                Jusqu'à <span style={{ color: config.primaryColor }}>-50%</span> sur toute la collection
+              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
+                Jusqu'à <span style={{ color: config.primaryColor }} className="text-5xl md:text-7xl">-50%</span> sur toute la collection
               </h1>
-              <p className="text-lg text-muted-foreground mb-6">
+              <p className="text-lg md:text-xl text-muted-foreground max-w-lg">
                 Découvrez nos produits premium avec livraison gratuite et garantie satisfait ou remboursé
               </p>
-              <div className="flex gap-4">
-                <Button size="lg" style={{ backgroundColor: config.primaryColor, color: "white" }}>
+              <div className="flex gap-4 pt-2">
+                <Button 
+                  size="lg" 
+                  className="px-8 py-6 text-base font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all"
+                  style={{ backgroundColor: config.primaryColor, color: "white" }}
+                >
                   Voir les promotions
                 </Button>
-                <Button size="lg" variant="outline">
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="px-8 py-6 text-base font-semibold rounded-xl border-2 hover:bg-muted"
+                >
                   En savoir plus
                 </Button>
               </div>
             </div>
-            <div className="relative h-64 md:h-96">
+            <div className="relative h-80 md:h-96">
               <div
-                className="absolute inset-0 rounded-2xl shadow-2xl"
+                className="absolute inset-0 rounded-3xl shadow-2xl backdrop-blur-sm transition-transform hover:scale-[1.02] duration-300"
                 style={{
-                  background: `linear-gradient(135deg, ${config.primaryColor}40 0%, ${config.accentColor}40 100%)`,
+                  background: `linear-gradient(135deg, ${config.primaryColor}15 0%, ${config.accentColor}20 100%)`,
+                  border: `1px solid ${config.primaryColor}20`
                 }}
               />
             </div>
