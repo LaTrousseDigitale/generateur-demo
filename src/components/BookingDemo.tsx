@@ -6,6 +6,13 @@ import { ArrowLeft, Download, Share2, Calendar, Clock, MapPin, Users, CheckCircl
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
+// Import booking images
+import bookingAutoService from "@/assets/booking-auto-service.jpg";
+import bookingRestaurantInterior from "@/assets/booking-restaurant-interior.jpg";
+import bookingArchitectureOffice from "@/assets/booking-architecture-office.jpg";
+import bookingConstructionOffice from "@/assets/booking-construction-office.jpg";
+import bookingHealthClinic from "@/assets/booking-health-clinic.jpg";
+
 interface BookingDemoProps {
   config: DemoConfig;
   onBack: () => void;
@@ -14,6 +21,17 @@ interface BookingDemoProps {
 export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
   const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  // Map industry to hero images
+  const industryHeroImages = {
+    "vente-auto": bookingAutoService,
+    restauration: bookingRestaurantInterior,
+    architecture: bookingArchitectureOffice,
+    construction: bookingConstructionOffice,
+    sante: bookingHealthClinic,
+  };
+
+  const heroImage = industryHeroImages[config.industry as keyof typeof industryHeroImages] || bookingHealthClinic;
 
   const handleExport = () => {
     toast({
@@ -110,14 +128,13 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-muted/30">
-        <div
-          className="absolute inset-0 opacity-10"
-          style={{
-            background: `linear-gradient(135deg, ${config.primaryColor} 0%, ${config.accentColor} 100%)`,
-          }}
+      {/* Hero Section avec image de fond */}
+      <section className="relative overflow-hidden h-96">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
         />
+        <div className="absolute inset-0 bg-black/50" />
         <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="max-w-3xl mx-auto text-center animate-fade-in">
             <Badge className="mb-6" style={{ backgroundColor: config.accentColor, color: "white" }}>
