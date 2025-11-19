@@ -22,27 +22,21 @@ export const ColorCustomizer = ({
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
-            4
-          </div>
-          <h2 className="text-2xl font-bold">Personnalisez vos couleurs</h2>
-        </div>
-        <p className="text-muted-foreground ml-10">
-          Choisissez les couleurs qui représentent votre marque
+        <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
+          <Palette className="w-5 h-5 text-primary" />
+          Palette de Couleurs
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          Personnalisez les couleurs de votre démo
         </p>
       </div>
 
-      <div className="space-y-6 ml-10">
+      <div className="space-y-4">
         {/* Primary Color */}
         <div className="space-y-2">
-          <Label htmlFor="primary-color" className="text-base font-semibold flex items-center gap-2">
-            <Palette className="w-4 h-4 text-primary" />
+          <Label htmlFor="primary-color" className="text-sm font-semibold">
             Couleur Principale
           </Label>
-          <p className="text-sm text-muted-foreground">
-            Utilisée pour les éléments importants et les boutons d'action
-          </p>
           <div className="flex gap-3 items-center">
             <div className="relative">
               <Input
@@ -50,14 +44,14 @@ export const ColorCustomizer = ({
                 type="color"
                 value={primaryColor}
                 onChange={(e) => onColorChange({ primaryColor: e.target.value })}
-                className="w-20 h-20 p-1 cursor-pointer border-2"
+                className="w-16 h-16 p-1 cursor-pointer border-2"
               />
             </div>
             <Input
               type="text"
               value={primaryColor}
               onChange={(e) => onColorChange({ primaryColor: e.target.value })}
-              className="flex-1 font-mono"
+              className="flex-1 font-mono text-sm"
               placeholder="#1c61fe"
             />
           </div>
@@ -65,13 +59,9 @@ export const ColorCustomizer = ({
 
         {/* Accent Color */}
         <div className="space-y-2">
-          <Label htmlFor="accent-color" className="text-base font-semibold flex items-center gap-2">
-            <Palette className="w-4 h-4 text-accent" />
+          <Label htmlFor="accent-color" className="text-sm font-semibold">
             Couleur d'Accent
           </Label>
-          <p className="text-sm text-muted-foreground">
-            Pour les éléments secondaires et les highlights
-          </p>
           <div className="flex gap-3 items-center">
             <div className="relative">
               <Input
@@ -79,14 +69,14 @@ export const ColorCustomizer = ({
                 type="color"
                 value={accentColor}
                 onChange={(e) => onColorChange({ accentColor: e.target.value })}
-                className="w-20 h-20 p-1 cursor-pointer border-2"
+                className="w-16 h-16 p-1 cursor-pointer border-2"
               />
             </div>
             <Input
               type="text"
               value={accentColor}
               onChange={(e) => onColorChange({ accentColor: e.target.value })}
-              className="flex-1 font-mono"
+              className="flex-1 font-mono text-sm"
               placeholder="#ff6b3d"
             />
           </div>
@@ -94,13 +84,9 @@ export const ColorCustomizer = ({
 
         {/* Secondary Color */}
         <div className="space-y-2">
-          <Label htmlFor="secondary-color" className="text-base font-semibold flex items-center gap-2">
-            <Palette className="w-4 h-4 text-secondary" />
+          <Label htmlFor="secondary-color" className="text-sm font-semibold">
             Couleur Secondaire
           </Label>
-          <p className="text-sm text-muted-foreground">
-            Pour les badges, étiquettes et éléments décoratifs
-          </p>
           <div className="flex gap-3 items-center">
             <div className="relative">
               <Input
@@ -108,26 +94,26 @@ export const ColorCustomizer = ({
                 type="color"
                 value={secondaryColor}
                 onChange={(e) => onColorChange({ secondaryColor: e.target.value })}
-                className="w-20 h-20 p-1 cursor-pointer border-2"
+                className="w-16 h-16 p-1 cursor-pointer border-2"
               />
             </div>
             <Input
               type="text"
               value={secondaryColor}
               onChange={(e) => onColorChange({ secondaryColor: e.target.value })}
-              className="flex-1 font-mono"
+              className="flex-1 font-mono text-sm"
               placeholder="#fbca58"
             />
           </div>
         </div>
 
         {/* Preview */}
-        <div className="p-4 rounded-lg border-2 space-y-3" style={{ borderColor: primaryColor + "30" }}>
-          <p className="text-sm font-semibold text-muted-foreground">Aperçu des couleurs</p>
+        <div className="p-4 rounded-lg border-2 space-y-2" style={{ borderColor: primaryColor + "30" }}>
+          <p className="text-xs font-semibold text-muted-foreground">Aperçu</p>
           <div className="flex gap-2">
-            <div className="flex-1 h-12 rounded" style={{ backgroundColor: primaryColor }} />
-            <div className="flex-1 h-12 rounded" style={{ backgroundColor: accentColor }} />
-            <div className="flex-1 h-12 rounded" style={{ backgroundColor: secondaryColor }} />
+            <div className="flex-1 h-10 rounded" style={{ backgroundColor: primaryColor }} />
+            <div className="flex-1 h-10 rounded" style={{ backgroundColor: accentColor }} />
+            <div className="flex-1 h-10 rounded" style={{ backgroundColor: secondaryColor }} />
           </div>
         </div>
       </div>

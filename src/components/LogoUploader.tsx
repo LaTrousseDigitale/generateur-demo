@@ -74,22 +74,19 @@ export const LogoUploader = ({
   return (
     <div className="space-y-6">
       <div>
-        <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
-            5
-          </div>
-          <h2 className="text-2xl font-bold">Personnalisez votre marque</h2>
-        </div>
-        <p className="text-muted-foreground ml-10">
-          Ajoutez votre logo et le nom de votre entreprise
+        <h3 className="text-lg font-bold mb-2 flex items-center gap-2">
+          <Building2 className="w-5 h-5 text-primary" />
+          Identité de Marque
+        </h3>
+        <p className="text-sm text-muted-foreground">
+          Nom d'entreprise et logo
         </p>
       </div>
 
-      <div className="space-y-6 ml-10">
+      <div className="space-y-4">
         {/* Company Name */}
         <div className="space-y-2">
-          <Label htmlFor="company-name" className="text-base font-semibold flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-primary" />
+          <Label htmlFor="company-name" className="text-sm font-semibold">
             Nom de l'Entreprise
           </Label>
           <Input
@@ -98,19 +95,14 @@ export const LogoUploader = ({
             value={companyName}
             onChange={(e) => onCompanyNameChange(e.target.value)}
             placeholder="Nom de votre entreprise"
-            className="text-base"
           />
         </div>
 
         {/* Logo Upload */}
         <div className="space-y-2">
-          <Label className="text-base font-semibold flex items-center gap-2">
-            <Upload className="w-4 h-4 text-primary" />
-            Logo de l'Entreprise
+          <Label className="text-sm font-semibold">
+            Logo (optionnel)
           </Label>
-          <p className="text-sm text-muted-foreground">
-            Format PNG, JPG ou SVG recommandé (max 5MB)
-          </p>
 
           {logo ? (
             <Card className="p-4">
@@ -118,24 +110,24 @@ export const LogoUploader = ({
                 <img
                   src={logo}
                   alt="Logo"
-                  className="w-24 h-24 object-contain rounded border-2"
+                  className="w-20 h-20 object-contain rounded border-2"
                 />
                 <div className="flex-1">
-                  <p className="font-semibold mb-2">Logo téléchargé avec succès</p>
+                  <p className="font-semibold text-sm mb-2">Logo téléchargé</p>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => onLogoChange(null)}
                   >
                     <X className="w-4 h-4 mr-2" />
-                    Retirer le logo
+                    Retirer
                   </Button>
                 </div>
               </div>
             </Card>
           ) : (
             <Card
-              className={`p-8 border-2 border-dashed cursor-pointer transition-all ${
+              className={`p-6 border-2 border-dashed cursor-pointer transition-all ${
                 isDragging
                   ? "border-primary bg-primary/5"
                   : "border-border hover:border-primary/50"
@@ -145,16 +137,16 @@ export const LogoUploader = ({
               onDragLeave={handleDragLeave}
               onClick={() => document.getElementById("logo-upload")?.click()}
             >
-              <div className="flex flex-col items-center gap-3 text-center">
-                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-primary" />
+              <div className="flex flex-col items-center gap-2 text-center">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Upload className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p className="font-semibold mb-1">
-                    Glissez votre logo ici ou cliquez pour parcourir
+                  <p className="font-semibold text-sm mb-1">
+                    Glissez votre logo ou cliquez
                   </p>
-                  <p className="text-sm text-muted-foreground">
-                    PNG, JPG ou SVG jusqu'à 5MB
+                  <p className="text-xs text-muted-foreground">
+                    PNG, JPG ou SVG (max 5MB)
                   </p>
                 </div>
               </div>
