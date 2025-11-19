@@ -15,6 +15,34 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
 
   const generateIndustryContent = () => {
     const industryData: Record<string, { tagline: string; benefits: string[]; stats: { label: string; value: string }[] }> = {
+      architecture: {
+        tagline: "Concevez l'avenir avec précision et créativité",
+        benefits: [
+          "Gestion de projets architecturaux",
+          "Plans et modélisations 3D",
+          "Suivi des permis et conformité",
+          "Collaboration avec entrepreneurs"
+        ],
+        stats: [
+          { label: "Projets en Cours", value: "18" },
+          { label: "Clients Satisfaits", value: "245" },
+          { label: "Taux de Réussite", value: "96%" }
+        ]
+      },
+      "arts-scene": {
+        tagline: "Donnez vie à vos créations artistiques",
+        benefits: [
+          "Gestion des spectacles et événements",
+          "Réservation et billetterie",
+          "Coordination des artistes",
+          "Promotion et marketing culturel"
+        ],
+        stats: [
+          { label: "Spectacles", value: "87" },
+          { label: "Artistes", value: "156" },
+          { label: "Audience", value: "12.5k" }
+        ]
+      },
       construction: {
         tagline: "Gérez vos chantiers avec efficacité et transparence",
         benefits: [
@@ -27,6 +55,20 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
           { label: "Projets Actifs", value: "24" },
           { label: "Équipes", value: "12" },
           { label: "Taux de Complétion", value: "94%" }
+        ]
+      },
+      consulting: {
+        tagline: "Expertise stratégique pour transformer votre entreprise",
+        benefits: [
+          "Gestion des missions clients",
+          "Suivi du temps et facturation",
+          "Livrables et rapports",
+          "Base de connaissances"
+        ],
+        stats: [
+          { label: "Clients", value: "67" },
+          { label: "Missions", value: "134" },
+          { label: "Satisfaction", value: "97%" }
         ]
       },
       "services-pro": {
@@ -58,7 +100,7 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
         ]
       },
       commerce: {
-        tagline: "Vendez plus, gérez mieux",
+        tagline: "Vendez plus, gérez mieux votre boutique en ligne",
         benefits: [
           "Catalogue produits dynamique",
           "Gestion des stocks en temps réel",
@@ -99,6 +141,34 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
           { label: "Taux de Réussite", value: "91%" }
         ]
       },
+      evenementiel: {
+        tagline: "Créez des événements mémorables sans stress",
+        benefits: [
+          "Planification et coordination",
+          "Gestion des invitations et RSVP",
+          "Suivi des fournisseurs",
+          "Budget et facturation événementielle"
+        ],
+        stats: [
+          { label: "Événements", value: "145" },
+          { label: "Participants", value: "8,900" },
+          { label: "Satisfaction", value: "95%" }
+        ]
+      },
+      finances: {
+        tagline: "Maîtrisez vos finances avec intelligence",
+        benefits: [
+          "Gestion de portefeuilles clients",
+          "Analyse financière avancée",
+          "Rapports réglementaires",
+          "Conseil personnalisé"
+        ],
+        stats: [
+          { label: "Clients", value: "423" },
+          { label: "Actifs Gérés", value: "$12.5M" },
+          { label: "ROI Moyen", value: "8.7%" }
+        ]
+      },
       restauration: {
         tagline: "Gestion moderne pour restaurateurs",
         benefits: [
@@ -125,6 +195,34 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
           { label: "Propriétés", value: "234" },
           { label: "Visites ce Mois", value: "89" },
           { label: "Transactions", value: "12" }
+        ]
+      },
+      transports: {
+        tagline: "Optimisez votre logistique et vos livraisons",
+        benefits: [
+          "Gestion de flotte en temps réel",
+          "Planification des itinéraires",
+          "Suivi des livraisons",
+          "Maintenance préventive"
+        ],
+        stats: [
+          { label: "Véhicules", value: "56" },
+          { label: "Livraisons/Mois", value: "3,240" },
+          { label: "Efficacité", value: "92%" }
+        ]
+      },
+      "pieces-auto": {
+        tagline: "Gérez votre inventaire automobile avec précision",
+        benefits: [
+          "Catalogue de pièces complet",
+          "Gestion des stocks multi-dépôts",
+          "Commandes fournisseurs automatisées",
+          "Compatibilité véhicules"
+        ],
+        stats: [
+          { label: "Références", value: "8,450" },
+          { label: "Commandes/Mois", value: "567" },
+          { label: "Taux de Stock", value: "97%" }
         ]
       }
     };

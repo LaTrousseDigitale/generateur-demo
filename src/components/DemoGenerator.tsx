@@ -161,14 +161,21 @@ export const DemoGenerator = () => {
                   step={3}
                   title="Quelle est votre industrie ?"
                   options={[
+                    { value: "architecture", label: "Architecture d'Entreprise", description: "Conception, planification, gestion de projets architecturaux" },
+                    { value: "arts-scene", label: "Arts de la Scène", description: "Spectacles, événements culturels, gestion artistique" },
                     { value: "construction", label: "Construction", description: "Entrepreneurs, rénovation, gestion de chantiers" },
-                    { value: "services-pro", label: "Services Professionnels", description: "Consultation, comptabilité, services juridiques" },
-                    { value: "sante", label: "Santé & Bien-être", description: "Cliniques, centres de soins, thérapeutes" },
-                    { value: "commerce", label: "Commerce de Détail", description: "Boutiques, e-commerce, distribution" },
-                    { value: "technologie", label: "Technologie", description: "Logiciels, IT, solutions numériques" },
+                    { value: "consulting", label: "Consulting", description: "Conseil stratégique, transformation, expertise" },
+                    { value: "commerce", label: "E-commerce", description: "Boutiques en ligne, vente numérique, marketplace" },
                     { value: "education", label: "Éducation", description: "Écoles, formation, cours en ligne" },
-                    { value: "restauration", label: "Restauration", description: "Restaurants, traiteurs, cafés" },
+                    { value: "evenementiel", label: "Événementiel", description: "Organisation d'événements, coordination, logistique" },
+                    { value: "finances", label: "Finances", description: "Services financiers, comptabilité, investissement" },
                     { value: "immobilier", label: "Immobilier", description: "Agences, courtiers, gestion immobilière" },
+                    { value: "restauration", label: "Restauration", description: "Restaurants, traiteurs, cafés" },
+                    { value: "sante", label: "Santé et Bien-être", description: "Cliniques, centres de soins, thérapeutes" },
+                    { value: "services-pro", label: "Services Professionnels", description: "Consultation, comptabilité, services juridiques" },
+                    { value: "technologie", label: "Technologie", description: "Logiciels, IT, solutions numériques" },
+                    { value: "transports", label: "Transports", description: "Logistique, livraison, gestion de flotte" },
+                    { value: "pieces-auto", label: "Vente de Pièces Automobiles", description: "Commerce de pièces, inventaire, distribution" },
                   ]}
                   selectedValue={demoConfig.industry}
                   onSelect={(value) => updateConfig({ industry: value })}
