@@ -43,6 +43,18 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
     });
   };
 
+  // Map industry to hero images
+  const industryHeroImages = {
+    "vente-auto": productAuto1,
+    restauration: productRestaurant1,
+    architecture: productArchitecture1,
+    construction: productConstruction1,
+    sante: productHealth1,
+    commerce: productArchitecture1,
+  };
+
+  const heroImage = industryHeroImages[config.industry as keyof typeof industryHeroImages] || productArchitecture1;
+
   const industryProducts = {
     commerce: [
       { name: "T-shirt Premium", price: "29.99€", rating: 4.8, image: productArchitecture1 },
@@ -224,7 +236,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
                 }}
               >
                 <img 
-                  src={products[0]?.image} 
+                  src={heroImage} 
                   alt="Produit vedette"
                   className="w-full h-full object-cover"
                 />
