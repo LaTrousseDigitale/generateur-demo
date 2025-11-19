@@ -307,8 +307,28 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
       case "portal":
         return "Portail d'Entreprise Complet";
       case "website":
+        // Vérifier le sous-type de site web dans les features
+        if (config.features.includes("vitrine")) {
+          return "Site Vitrine Professionnel";
+        } else if (config.features.includes("ecommerce")) {
+          return "Boutique E-commerce";
+        } else if (config.features.includes("careers")) {
+          return "Portail Carrières et Recrutement";
+        } else if (config.features.includes("booking")) {
+          return "Système de Réservation en Ligne";
+        }
         return "Solution Web Professionnelle";
       case "module":
+        // Vérifier le sous-type de module dans les features
+        if (config.features.includes("calculator")) {
+          return "Calculatrice de Soumissions";
+        } else if (config.features.includes("project-manager")) {
+          return "Gestionnaire de Projets";
+        } else if (config.features.includes("hr-dashboard")) {
+          return "Tableau de Bord RH";
+        } else if (config.features.includes("it-support")) {
+          return "Centre de Support TI";
+        }
         return "Module Digital Avancé";
       default:
         return "Solution Digitale";
