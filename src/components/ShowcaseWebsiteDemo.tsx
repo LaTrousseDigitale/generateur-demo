@@ -4,6 +4,10 @@ import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "./DemoGenerator";
 import { ArrowLeft, Download, Share2, ArrowRight, CheckCircle2, Star, Mail, Phone, MapPin, Menu } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import heroDefault from "@/assets/hero-default.jpg";
+import project1 from "@/assets/project-1.jpg";
+import project2 from "@/assets/project-2.jpg";
+import project3 from "@/assets/project-3.jpg";
 
 interface ShowcaseWebsiteDemoProps {
   config: DemoConfig;
@@ -100,9 +104,16 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
       {/* Hero Section */}
       <section id="accueil" className="relative overflow-hidden">
         <div 
-          className="absolute inset-0 opacity-10"
+          className="absolute inset-0 bg-cover bg-center"
           style={{
-            background: `linear-gradient(135deg, ${config.primaryColor} 0%, ${config.accentColor} 100%)`
+            backgroundImage: `url(${heroDefault})`,
+            filter: 'brightness(0.3)'
+          }}
+        />
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(135deg, ${config.primaryColor}50 0%, ${config.accentColor}50 100%)`
           }}
         />
         <div className="container mx-auto px-4 py-24 relative z-10">
@@ -200,30 +211,27 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
           </div>
 
           <div className="grid md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((item) => (
-              <Card key={item} className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300">
+            {[
+              { id: 1, image: project1, title: "Site Web Corporate", desc: "Refonte complète d'un site d'entreprise avec interface moderne" },
+              { id: 2, image: project2, title: "Application Mobile", desc: "Développement d'une app mobile native avec UI/UX optimisée" },
+              { id: 3, image: project3, title: "Plateforme E-commerce", desc: "Boutique en ligne responsive avec système de paiement intégré" }
+            ].map((item) => (
+              <Card key={item.id} className="overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300">
                 <div 
-                  className="h-48 relative"
+                  className="h-48 relative bg-cover bg-center"
                   style={{ 
-                    background: `linear-gradient(135deg, ${config.primaryColor}40 0%, ${config.accentColor}40 100%)` 
+                    backgroundImage: `url(${item.image})`
                   }}
                 >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div 
-                      className="w-20 h-20 rounded-full flex items-center justify-center text-white font-bold text-2xl"
-                      style={{ backgroundColor: config.primaryColor }}
-                    >
-                      P{item}
-                    </div>
-                  </div>
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                 </div>
                 <div className="p-6">
                   <Badge className="mb-2" style={{ backgroundColor: config.accentColor + "20", color: config.accentColor }}>
-                    Projet {item}
+                    Projet {item.id}
                   </Badge>
-                  <h3 className="font-bold text-lg mb-2">Site Web Moderne</h3>
+                  <h3 className="font-bold text-lg mb-2">{item.title}</h3>
                   <p className="text-muted-foreground text-sm mb-4">
-                    Transformation digitale complète avec interface moderne et performante
+                    {item.desc}
                   </p>
                   <Button variant="link" className="p-0" style={{ color: config.primaryColor }}>
                     Voir le projet →
