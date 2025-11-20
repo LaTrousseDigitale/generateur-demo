@@ -122,6 +122,7 @@ export const DemoGenerator = () => {
       typography: "",
       domainType: "",
       hostingPreference: "",
+      hostingProvider: "",
       paymentMode: null,
       financingTerm: "",
       monthlyBudget: "",
