@@ -47,6 +47,7 @@ export const EcommerceDemo = ({
 
   // Map industry to hero images
   const industryHeroImages = {
+    auto: productAuto1,
     "pieces-auto": productAuto1,
     restauration: productRestaurant1,
     architecture: productArchitecture1,
@@ -76,6 +77,27 @@ export const EcommerceDemo = ({
       price: "199.99€",
       rating: 4.7,
       image: productConstruction2
+    }],
+    auto: [{
+      name: "Berline Premium",
+      price: "34,999€",
+      rating: 4.9,
+      image: productAuto1
+    }, {
+      name: "SUV Familial",
+      price: "42,999€",
+      rating: 4.8,
+      image: productAuto2
+    }, {
+      name: "Sportive GT",
+      price: "59,999€",
+      rating: 4.9,
+      image: productAuto3
+    }, {
+      name: "Citadine Électrique",
+      price: "28,999€",
+      rating: 4.7,
+      image: productAuto4
     }],
     "pieces-auto": [{
       name: "Berline Premium",

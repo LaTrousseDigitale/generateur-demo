@@ -30,6 +30,7 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
   // Mapping des images par industrie
   const industryImages = {
     architecture: { hero: heroArchitecture, projects: [projectArchitecture1, project2, project3] },
+    auto: { hero: heroAuto, projects: [projectAuto1, project2, project3] },
     "pieces-auto": { hero: heroAuto, projects: [projectAuto1, project2, project3] },
     sante: { hero: heroHealth, projects: [projectHealth1, project2, project3] },
     construction: { hero: heroConstruction, projects: [projectConstruction1, project2, project3] },
