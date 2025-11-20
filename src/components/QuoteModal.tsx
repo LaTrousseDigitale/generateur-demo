@@ -817,8 +817,14 @@ export const QuoteModal = ({
           </div>
 
           {/* Call to action */}
-          <div className="flex gap-3">
-            <Button className="flex-1" size="lg" onClick={() => {
+          <div className="flex flex-col gap-3">
+            <Button className="w-full" size="lg" onClick={() => {
+              window.open('https://votre-kit-affaires.lovable.app/auth', '_blank');
+            }}>
+              <DollarSign className="w-4 h-4 mr-2" />
+              Payer et Devenir Client
+            </Button>
+            <Button variant="outline" className="w-full" size="lg" onClick={() => {
             onOpenChange(false);
             // Ici on pourrait déclencher une action d'envoi du devis par email
           }}>
