@@ -587,7 +587,7 @@ export const QuoteModal = ({
         <Tabs defaultValue="quote" className="mt-4">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="quote">Devis Détaillé</TabsTrigger>
-            <TabsTrigger value="comparison">Comparateur de Plans</TabsTrigger>
+            <TabsTrigger value="comparison">Comparer les plans d'entretien et sécurité</TabsTrigger>
           </TabsList>
 
           <TabsContent value="quote" className="space-y-6 mt-4">
