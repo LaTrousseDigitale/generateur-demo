@@ -567,7 +567,7 @@ export const QuoteModal = ({
     );
   }
   
-  return <Dialog open={open} onOpenChange={() => {}}>
+  return <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto fixed top-4 right-4 left-auto translate-x-0 translate-y-0 data-[state=open]:slide-in-from-right" onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
           <div className="flex items-center justify-between">
