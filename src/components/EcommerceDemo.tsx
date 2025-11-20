@@ -129,10 +129,10 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {config.logo ? (
-                <img src={config.logo} alt="Logo" className="w-10 h-10 object-contain" />
+                <img src={config.logo} alt="Logo" className="w-16 h-16 object-contain" />
               ) : (
                 <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white"
+                  className="w-16 h-16 rounded-lg flex items-center justify-center font-bold text-white text-xl"
                   style={{ backgroundColor: config.primaryColor }}
                 >
                   {config.companyName.charAt(0)}
@@ -390,10 +390,10 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 {config.logo ? (
-                  <img src={config.logo} alt="Logo" className="w-8 h-8 object-contain" />
+                  <img src={config.logo} alt="Logo" className="w-12 h-12 object-contain" />
                 ) : (
                   <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-white text-sm"
+                    className="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-white text-base"
                     style={{ backgroundColor: config.primaryColor }}
                   >
                     {config.companyName.charAt(0)}
