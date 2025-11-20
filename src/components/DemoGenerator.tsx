@@ -17,7 +17,7 @@ export interface DemoConfig {
   features: string[];
   industry: string;
   companySize: string;
-  mainObjective: string;
+  mainObjectives: string[];
   budget: string;
   timeline: string;
   primaryColor: string;
@@ -36,7 +36,7 @@ export const DemoGenerator = () => {
     features: [],
     industry: "",
     companySize: "",
-    mainObjective: "",
+    mainObjectives: [],
     budget: "",
     timeline: "",
     primaryColor: "#1c61fe",
@@ -187,14 +187,18 @@ export const DemoGenerator = () => {
                   step={4}
                   title="Quel est l'objectif principal de ce projet?"
                   options={[
-                    { value: "automation", label: "Automatiser les Processus", description: "Réduire le travail manuel et gagner du temps" },
-                    { value: "growth", label: "Accélérer la Croissance", description: "Augmenter les revenus et acquérir plus de clients" },
-                    { value: "efficiency", label: "Améliorer l'Efficacité", description: "Optimiser les opérations et la productivité" },
-                    { value: "experience", label: "Expérience Utilisateur", description: "Offrir une meilleure expérience client/employé" },
-                    { value: "visibility", label: "Augmenter la Visibilité", description: "Renforcer la présence en ligne et la notoriété" },
+                    { value: "reduce-costs", label: "Réduire les Coûts Opérationnels", description: "Diminuer les dépenses et optimiser les ressources" },
+                    { value: "save-time", label: "Gagner du Temps", description: "Automatiser les tâches répétitives et accélérer les processus" },
+                    { value: "increase-revenue", label: "Augmenter les Revenus", description: "Générer plus de ventes et de profits" },
+                    { value: "improve-quality", label: "Améliorer la Qualité de Service", description: "Offrir une expérience client exceptionnelle" },
+                    { value: "scale-business", label: "Faire Croître l'Entreprise", description: "Acquérir plus de clients et étendre les opérations" },
+                    { value: "centralize-data", label: "Centraliser les Données", description: "Avoir toute l'information au même endroit" },
+                    { value: "improve-communication", label: "Améliorer la Communication", description: "Faciliter les échanges internes et externes" },
+                    { value: "modernize", label: "Moderniser l'Image de Marque", description: "Rafraîchir la présence numérique et l'identité visuelle" },
                   ]}
-                  selectedValue={demoConfig.mainObjective}
-                  onSelect={(value) => updateConfig({ mainObjective: value })}
+                  selectedValues={demoConfig.mainObjectives}
+                  onSelectMultiple={(values) => updateConfig({ mainObjectives: values })}
+                  multiSelect={true}
                 />
               )}
 
@@ -264,7 +268,7 @@ export const DemoGenerator = () => {
                     (currentStep === 1 && !demoConfig.serviceType) ||
                     (currentStep === 2 && !demoConfig.industry) ||
                     (currentStep === 3 && !demoConfig.companySize) ||
-                    (currentStep === 4 && !demoConfig.mainObjective) ||
+                    (currentStep === 4 && demoConfig.mainObjectives.length < 2) ||
                     (currentStep === 5 && !demoConfig.timeline)
                   }
                   className="flex-1"

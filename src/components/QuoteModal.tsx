@@ -82,24 +82,30 @@ export const QuoteModal = ({ open, onOpenChange, config }: QuoteModalProps) => {
       basePrice += 2000;
     }
 
-    // Ajustement selon les objectifs
-    if (config.mainObjective === "automation") {
-      items.push({
-        name: "Automatisation Avancée",
-        description: "Workflows intelligents et intégrations",
-        price: 3500,
-        included: true
-      });
-      basePrice += 3500;
-    } else if (config.mainObjective === "efficiency") {
-      items.push({
-        name: "Optimisation des Processus",
-        description: "Interface intuitive et rapide",
-        price: 2000,
-        included: true
-      });
-      basePrice += 2000;
-    }
+    // Ajustement selon les objectifs (chaque objectif ajoute de la valeur)
+    const objectivePricing: Record<string, { name: string; description: string; price: number }> = {
+      "reduce-costs": { name: "Optimisation des Coûts", description: "Analyse et réduction des dépenses", price: 2500 },
+      "save-time": { name: "Automatisation", description: "Workflows automatisés et gains de temps", price: 3000 },
+      "increase-revenue": { name: "Génération de Revenus", description: "Outils de vente et conversion", price: 3500 },
+      "improve-quality": { name: "Amélioration Qualité", description: "Système de satisfaction client", price: 2000 },
+      "scale-business": { name: "Scalabilité", description: "Infrastructure évolutive et robuste", price: 4000 },
+      "centralize-data": { name: "Centralisation", description: "Base de données unifiée", price: 2500 },
+      "improve-communication": { name: "Communication", description: "Outils collaboratifs intégrés", price: 2000 },
+      "modernize": { name: "Modernisation", description: "Design moderne et responsive", price: 2500 }
+    };
+
+    config.mainObjectives.forEach(objective => {
+      const pricing = objectivePricing[objective];
+      if (pricing) {
+        items.push({
+          name: pricing.name,
+          description: pricing.description,
+          price: pricing.price,
+          included: true
+        });
+        basePrice += pricing.price;
+      }
+    });
 
     // Services inclus de base
     items.push(

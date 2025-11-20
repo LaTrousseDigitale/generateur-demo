@@ -248,33 +248,49 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
 
   const generateChallengeContent = () => {
     const objectiveData: Record<string, { recommendation: string; priority: string; impact: string }> = {
-      automation: {
+      "reduce-costs": {
+        recommendation: "Automatisation et optimisation des ressources",
+        priority: "Haute",
+        impact: "Réduction de 20-30% des coûts opérationnels"
+      },
+      "save-time": {
         recommendation: "Workflows automatisés et intégrations API",
         priority: "Haute",
         impact: "Économie de 15-20 heures/semaine par employé"
       },
-      growth: {
+      "increase-revenue": {
         recommendation: "CRM avancé et analytics de conversion",
         priority: "Critique",
         impact: "Augmentation de 30-40% des conversions"
       },
-      efficiency: {
-        recommendation: "Interface optimisée et raccourcis intelligents",
+      "improve-quality": {
+        recommendation: "Système de feedback et suivi qualité",
         priority: "Haute",
-        impact: "Gain de 25% de productivité opérationnelle"
+        impact: "Amélioration de 35% de la satisfaction client"
       },
-      experience: {
-        recommendation: "Design moderne et parcours utilisateur fluide",
+      "scale-business": {
+        recommendation: "Infrastructure évolutive et processus scalables",
+        priority: "Critique",
+        impact: "Capacité de croissance de 200-300%"
+      },
+      "centralize-data": {
+        recommendation: "Base de données unifiée et dashboards",
         priority: "Haute",
-        impact: "Amélioration de 35% de la satisfaction"
+        impact: "Accès instantané à 100% des données"
       },
-      visibility: {
-        recommendation: "SEO optimisé et stratégie de contenu",
+      "improve-communication": {
+        recommendation: "Outils collaboratifs et notifications en temps réel",
         priority: "Importante",
-        impact: "Croissance de 50% du trafic organique"
+        impact: "Gain de 40% d'efficacité dans les échanges"
+      },
+      "modernize": {
+        recommendation: "Design moderne et expérience utilisateur optimale",
+        priority: "Importante",
+        impact: "Augmentation de 50% de l'engagement"
       }
     };
-    return objectiveData[config.mainObjective] || objectiveData.automation;
+    // Utiliser le premier objectif comme principal
+    return objectiveData[config.mainObjectives[0]] || objectiveData["save-time"];
   };
 
   const generateSizeContent = () => {
