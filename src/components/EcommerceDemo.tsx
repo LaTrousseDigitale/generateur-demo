@@ -6,7 +6,7 @@ import { ArrowLeft, Download, Share2, ShoppingCart, Search, Heart, Star, Trendin
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 
-// Import product images
+// Import product images - Updated automotive images
 import productAuto1 from "@/assets/product-auto-1.jpg";
 import productAuto2 from "@/assets/product-auto-2.jpg";
 import productAuto3 from "@/assets/product-auto-3.jpg";
