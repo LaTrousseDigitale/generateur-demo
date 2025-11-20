@@ -11,9 +11,10 @@ import { BookingDemo } from "./BookingDemo";
 interface FullDemoViewProps {
   config: DemoConfig;
   onBack: () => void;
+  hideBackButton?: boolean;
 }
 
-export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
+export const FullDemoView = ({ config, onBack, hideBackButton = false }: FullDemoViewProps) => {
   const { toast } = useToast();
 
   // Router vers la bonne démo selon le type de service et l'industrie
@@ -392,10 +393,12 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
       <div className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <Button variant="outline" onClick={onBack}>
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Retour au configurateur
-            </Button>
+            {!hideBackButton && (
+              <Button variant="outline" onClick={onBack}>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Retour au configurateur
+              </Button>
+            )}
             <div className="flex gap-2">
               <Button variant="outline" onClick={handleShare}>
                 <Share2 className="w-4 h-4 mr-2" />
