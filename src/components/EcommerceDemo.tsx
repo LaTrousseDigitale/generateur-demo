@@ -57,6 +57,67 @@ export const EcommerceDemo = ({
     commerce: productArchitecture1
   };
   const heroImage = industryHeroImages[config.industry as keyof typeof industryHeroImages] || productArchitecture1;
+  // Determine products based on industry and auto product type
+  const getAutoProducts = () => {
+    const vehicles = [{
+      name: "Berline Premium",
+      price: "34,999€",
+      rating: 4.9,
+      image: productAuto1
+    }, {
+      name: "SUV Familial",
+      price: "42,999€",
+      rating: 4.8,
+      image: productAuto2
+    }, {
+      name: "Sportive GT",
+      price: "59,999€",
+      rating: 4.9,
+      image: productAuto3
+    }, {
+      name: "Citadine Électrique",
+      price: "28,999€",
+      rating: 4.7,
+      image: productAuto4
+    }];
+
+    const parts = [{
+      name: "Kit de freinage",
+      price: "249.99€",
+      rating: 4.8,
+      image: productAuto1,
+      compatibility: "Compatible avec 250+ modèles"
+    }, {
+      name: "Filtre à air performance",
+      price: "45.99€",
+      rating: 4.9,
+      image: productAuto2,
+      compatibility: "OEM et aftermarket"
+    }, {
+      name: "Amortisseurs sport",
+      price: "399.99€",
+      rating: 4.7,
+      image: productAuto3,
+      compatibility: "Avec schéma d'installation"
+    }, {
+      name: "Batterie haute capacité",
+      price: "159.99€",
+      rating: 4.8,
+      image: productAuto4,
+      compatibility: "Garantie 3 ans"
+    }];
+
+    // Adapt based on autoProductType
+    if (config.autoProductType?.toLowerCase().includes('pièce')) {
+      return parts;
+    } else if (config.autoProductType?.toLowerCase().includes('véhicule') || 
+               config.autoProductType?.toLowerCase().includes('automobile')) {
+      return vehicles;
+    }
+    // Default: mix of both
+    return [...vehicles.slice(0, 2), ...parts.slice(0, 2)];
+  };
+
   const industryProducts = {
     commerce: [{
       name: "T-shirt Premium",
@@ -79,48 +140,8 @@ export const EcommerceDemo = ({
       rating: 4.7,
       image: productConstruction2
     }],
-    auto: [{
-      name: "Berline Premium",
-      price: "34,999€",
-      rating: 4.9,
-      image: productAuto1
-    }, {
-      name: "SUV Familial",
-      price: "42,999€",
-      rating: 4.8,
-      image: productAuto2
-    }, {
-      name: "Sportive GT",
-      price: "59,999€",
-      rating: 4.9,
-      image: productAuto3
-    }, {
-      name: "Citadine Électrique",
-      price: "28,999€",
-      rating: 4.7,
-      image: productAuto4
-    }],
-    "pieces-auto": [{
-      name: "Berline Premium",
-      price: "34,999€",
-      rating: 4.9,
-      image: productAuto1
-    }, {
-      name: "SUV Familial",
-      price: "42,999€",
-      rating: 4.8,
-      image: productAuto2
-    }, {
-      name: "Sportive GT",
-      price: "59,999€",
-      rating: 4.9,
-      image: productAuto3
-    }, {
-      name: "Citadine Électrique",
-      price: "28,999€",
-      rating: 4.7,
-      image: productAuto4
-    }],
+    auto: getAutoProducts(),
+    "pieces-auto": getAutoProducts(),
     restauration: [{
       name: "Plat du Chef - Saumon",
       price: "28.99€",
@@ -276,6 +297,58 @@ export const EcommerceDemo = ({
           </div>
         </div>
       </nav>
+
+      {/* Automobile Search Section - Year/Make/Model */}
+      {config.industry === "auto" && config.autoCompatibility?.includes("Recherche par année/marque/modèle") && (
+        <section className="border-b bg-muted/30">
+          <div className="container mx-auto px-4 py-8">
+            <h3 className="text-lg font-semibold mb-4 text-center">Recherchez par véhicule</h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+              <div>
+                <label className="block text-sm font-medium mb-2">Année</label>
+                <select className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2">
+                  <option>Sélectionner l'année</option>
+                  <option>2024</option>
+                  <option>2023</option>
+                  <option>2022</option>
+                  <option>2021</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Marque</label>
+                <select className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2">
+                  <option>Sélectionner la marque</option>
+                  <option>Toyota</option>
+                  <option>Honda</option>
+                  <option>Ford</option>
+                  <option>BMW</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Modèle</label>
+                <select className="w-full px-4 py-2 rounded-lg border border-border bg-background focus:outline-none focus:ring-2">
+                  <option>Sélectionner le modèle</option>
+                  <option>Corolla</option>
+                  <option>Civic</option>
+                  <option>F-150</option>
+                  <option>X5</option>
+                </select>
+              </div>
+              <div className="flex items-end">
+                <Button className="w-full" style={{ backgroundColor: config.primaryColor }}>
+                  <Search className="w-4 h-4 mr-2" />
+                  Rechercher
+                </Button>
+              </div>
+            </div>
+            {config.autoCompatibility?.includes("Compatibilité automatique des pièces") && (
+              <p className="text-center text-sm text-muted-foreground mt-4">
+                ✓ Compatibilité automatique des pièces activée
+              </p>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* Hero Banner */}
       <section className="relative overflow-hidden" style={{
