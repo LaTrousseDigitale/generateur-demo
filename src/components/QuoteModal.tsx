@@ -232,10 +232,10 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
 
     // === SECTION 4: Services Canva ===
     if ((data.canvaServices || []).length > 0) {
-      const quantityPrices: Record<string, number> = {
-        "1-5": 240,      // 4h × 60$
-        "6-10": 480,     // 8h × 60$
-        "11-20": 900,    // 15h × 60$
+      const quantityPrices: Record<string, { price: number; hours: number }> = {
+        "1-5": { price: 240, hours: 4 },      // 4h × 60$
+        "6-10": { price: 480, hours: 8 },     // 8h × 60$
+        "11-20": { price: 900, hours: 15 },   // 15h × 60$
       };
 
       const quantity = data.canvaQuantity || "";
@@ -244,44 +244,95 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
       if (quantity === "20+") {
         const customQuantity = data.canvaCustomQuantity || "non spécifié";
         const customTypes = data.canvaCustomDesignTypes || "à déterminer";
-        const customDeadline = data.canvaCustomDeadline || "à définir";
+        const customDeadline = data.canvaCustomDeadline 
+          ? new Date(data.canvaCustomDeadline).toLocaleDateString('fr-CA', { year: 'numeric', month: 'long', day: 'numeric' })
+          : "à définir";
         
+        // Ajout d'un item d'en-tête pour le forfait sur mesure
         canvaItems.push({
-          name: "Services Canva (forfait sur mesure)",
-          description: `${customQuantity} designs - ${customTypes.substring(0, 80)}... - Échéance: ${customDeadline}`,
+          name: "Forfait Sur Mesure - Détails",
+          description: `Nombre de designs: ${customQuantity}\nTypes: ${customTypes}\nÉchéance: ${customDeadline}\n\n⚠️ Prix à établir lors de l'appel découverte (basé sur 60$/heure)`,
+          price: 0,
+          included: true
+        });
+
+        // Ajout des services sélectionnés
+        const serviceLabels: Record<string, string> = {
+          "flyers": "Dépliants et affiches",
+          "presentations": "Présentations PowerPoint/PDF",
+          "business-cards": "Cartes d'affaires",
+          "brochures": "Brochures et catalogues",
+          "banners": "Bannières web et publicités",
+          "infographics": "Infographies",
+          "menus": "Menus (restaurants)",
+          "newsletters": "Infolettres"
+        };
+
+        canvaItems.push({
+          name: "Types de designs inclus",
+          description: (data.canvaServices || []).map(s => `• ${serviceLabels[s] || s}`).join('\n'),
           price: 0,
           included: true
         });
       } else {
-        const basePrice = quantityPrices[quantity] || 0;
+        const priceInfo = quantityPrices[quantity];
+        if (priceInfo) {
+          const basePrice = priceInfo.price;
+          const hours = priceInfo.hours;
 
-        if (data.canvaFrequency === "one-time") {
-          // Frais uniques pour projet ponctuel
-          canvaOneTimeTotal += basePrice;
-          canvaItems.push({
-            name: "Services Canva (ponctuel)",
-            description: `${data.canvaServices.length} type(s) de design - ${quantity} designs`,
-            price: basePrice,
-            included: true
-          });
-        } else {
-          // Frais mensuels récurrents
-          const frequency = data.canvaFrequency;
-          let monthlyPrice = basePrice;
-          
-          if (frequency === "quarterly") {
-            monthlyPrice = Math.round(basePrice / 3);
-          } else if (frequency === "as-needed") {
-            monthlyPrice = Math.round(basePrice * 0.5); // Estimation moyenne
+          // Ajout des services sélectionnés avec détails
+          const serviceLabels: Record<string, string> = {
+            "flyers": "Dépliants et affiches",
+            "presentations": "Présentations PowerPoint/PDF",
+            "business-cards": "Cartes d'affaires",
+            "brochures": "Brochures et catalogues",
+            "banners": "Bannières web et publicités",
+            "infographics": "Infographies",
+            "menus": "Menus (restaurants)",
+            "newsletters": "Infolettres"
+          };
+
+          const servicesDesc = (data.canvaServices || []).map(s => `• ${serviceLabels[s] || s}`).join('\n');
+
+          if (data.canvaFrequency === "one-time") {
+            // Frais uniques pour projet ponctuel
+            canvaOneTimeTotal += basePrice;
+            canvaItems.push({
+              name: `Services Canva - Projet Ponctuel`,
+              description: `${servicesDesc}\n\n📊 Estimation: ${quantity} designs\n⏱️ Temps estimé: ${hours} heures\n💰 Tarif: 60$/heure\n💵 Total: ${hours}h × 60$ = ${basePrice}$`,
+              price: basePrice,
+              included: true
+            });
+          } else {
+            // Frais mensuels récurrents
+            const frequency = data.canvaFrequency;
+            const frequencyLabels: Record<string, string> = {
+              "monthly": "mensuel",
+              "quarterly": "trimestriel",
+              "as-needed": "au besoin"
+            };
+            
+            let monthlyPrice = basePrice;
+            let priceExplanation = "";
+            
+            if (frequency === "quarterly") {
+              monthlyPrice = Math.round(basePrice / 3);
+              priceExplanation = `💵 Base: ${basePrice}$ ÷ 3 mois = ${monthlyPrice}$/mois`;
+            } else if (frequency === "as-needed") {
+              monthlyPrice = Math.round(basePrice * 0.5);
+              priceExplanation = `💵 Estimation moyenne: ${basePrice}$ × 50% = ${monthlyPrice}$/mois`;
+            } else {
+              priceExplanation = `💵 Total mensuel: ${hours}h × 60$ = ${monthlyPrice}$`;
+            }
+            
+            canvaMonthlyTotal += monthlyPrice;
+            canvaItems.push({
+              name: `Services Canva - Service ${frequencyLabels[frequency] || frequency}`,
+              description: `${servicesDesc}\n\n📊 Par cycle: ${quantity} designs\n⏱️ Temps par cycle: ${hours} heures\n💰 Tarif: 60$/heure\n${priceExplanation}`,
+              price: monthlyPrice,
+              included: true
+            });
           }
-          
-          canvaMonthlyTotal += monthlyPrice;
-          canvaItems.push({
-            name: "Services Canva (récurrent)",
-            description: `${data.canvaServices.length} type(s) de design - ${frequency}`,
-            price: monthlyPrice,
-            included: true
-          });
         }
       }
 
@@ -290,6 +341,20 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
         const supportsCount = data.infographicSupports.length;
         const supportsPrice = supportsCount * 50; // 50$ par type de support
         
+        const supportLabels: Record<string, string> = {
+          "posters": "Affiches",
+          "stickers": "Collants/Autocollants",
+          "pens": "Stylos",
+          "mugs": "Tasses",
+          "tshirts": "T-shirts",
+          "notebooks": "Carnets/Blocs-notes",
+          "banners-physical": "Bannières physiques",
+          "keychains": "Porte-clés",
+          "magnets": "Aimants"
+        };
+
+        const supportsDesc = (data.infographicSupports || []).map(s => `• ${supportLabels[s] || s}`).join('\n');
+        
         if (data.canvaFrequency === "one-time") {
           canvaOneTimeTotal += supportsPrice;
         } else {
@@ -297,8 +362,8 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
         }
         
         canvaItems.push({
-          name: "Supports infographies",
-          description: `${supportsCount} type(s) de support physique`,
+          name: "Supports d'Infographies",
+          description: `${supportsDesc}\n\n💰 Prix par support: 50$\n💵 Total: ${supportsCount} types × 50$ = ${supportsPrice}$`,
           price: supportsPrice,
           included: true
         });
@@ -529,11 +594,11 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                             <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
                             <h4 className="font-semibold">{item.name}</h4>
                           </div>
-                          <p className="text-sm text-muted-foreground ml-6">
+                          <p className="text-sm text-muted-foreground ml-6 whitespace-pre-line">
                             {item.description}
                           </p>
                         </div>
-                        <div className="text-right">
+                        <div className="text-right flex-shrink-0">
                           {item.price > 0 ? (
                             <p className="font-semibold text-accent">
                               {item.price.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
