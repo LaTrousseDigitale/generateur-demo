@@ -77,7 +77,7 @@ export const INDUSTRIES = [
   { value: "obnl", label: "Organisme à but non lucratif" },
   { value: "restauration", label: "Restauration" },
   { value: "architecture", label: "Architecture et design" },
-  { value: "auto", label: "Vente automobile" },
+  { value: "auto", label: "Vente automobile et pièces" },
   { value: "arts-scene", label: "Arts de la scène" },
   { value: "autre", label: "Autre industrie" },
 ];
