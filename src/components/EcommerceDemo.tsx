@@ -127,16 +127,9 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       <nav className="border-b bg-background">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              {config.logo ? (
-                <img src={config.logo} alt="Logo" className="w-16 h-16 object-contain" />
-              ) : (
-                <div
-                  className="w-16 h-16 rounded-lg flex items-center justify-center font-bold text-white text-xl"
-                  style={{ backgroundColor: config.primaryColor }}
-                >
-                  {config.companyName.charAt(0)}
-                </div>
+            <div className="flex items-center gap-4">
+              {config.logo && (
+                <img src={config.logo} alt="Logo" className="h-20 w-auto object-contain" />
               )}
               <span className="font-bold text-xl">{config.companyName}</span>
             </div>
@@ -388,16 +381,9 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                {config.logo ? (
-                  <img src={config.logo} alt="Logo" className="w-12 h-12 object-contain" />
-                ) : (
-                  <div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-white text-base"
-                    style={{ backgroundColor: config.primaryColor }}
-                  >
-                    {config.companyName.charAt(0)}
-                  </div>
+              <div className="flex items-center gap-3 mb-4">
+                {config.logo && (
+                  <img src={config.logo} alt="Logo" className="h-16 w-auto object-contain" />
                 )}
                 <span className="font-bold">{config.companyName}</span>
               </div>
