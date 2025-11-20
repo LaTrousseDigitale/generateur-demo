@@ -309,26 +309,6 @@ export const EcommerceDemo = ({
         </div>
       </nav>
 
-      {/* Automobile Search Section - Year/Make/Model */}
-      {config.industry === "auto" && config.autoCompatibility?.includes("Recherche par année/marque/modèle") && (
-        <VehicleSearchWidget onSearch={handleVehicleSearch} />
-      )}
-
-      {/* Automatic Parts Compatibility */}
-      {config.industry === "auto" && config.autoCompatibility?.includes("Compatibilité automatique des pièces") && (
-        <PartsCompatibilityChecker selectedVehicle={selectedVehicle} />
-      )}
-
-      {/* Parts Diagrams & Schemas */}
-      {config.industry === "auto" && config.autoCompatibility?.includes("Diagrammes et schémas de pièces") && (
-        <PartsDiagramsViewer />
-      )}
-
-      {/* OEM vs Aftermarket Catalog */}
-      {config.industry === "auto" && config.autoCompatibility?.includes("Catalogue pièces OEM vs aftermarket") && (
-        <OEMAftermarketCatalog />
-      )}
-
       {/* Hero Banner */}
       <section className="relative overflow-hidden" style={{
       backgroundColor: `${config.primaryColor}08`
@@ -377,8 +357,15 @@ export const EcommerceDemo = ({
         </div>
       </section>
 
-      {/* Features Display - Shows all selected features from questionnaire */}
-      <DemoFeaturesDisplay config={config} />
+      {/* Automobile Search Section - Year/Make/Model */}
+      {config.industry === "auto" && config.autoCompatibility?.includes("Recherche par année/marque/modèle") && (
+        <VehicleSearchWidget onSearch={handleVehicleSearch} />
+      )}
+
+      {/* OEM vs Aftermarket Catalog - Show products immediately after search */}
+      {config.industry === "auto" && config.autoCompatibility?.includes("Catalogue pièces OEM vs aftermarket") && (
+        <OEMAftermarketCatalog />
+      )}
 
       {/* Filters & Products Grid */}
       <section className="py-12">
@@ -438,6 +425,16 @@ export const EcommerceDemo = ({
           </div>
         </div>
       </section>
+
+      {/* Automatic Parts Compatibility - Reassure about compatibility */}
+      {config.industry === "auto" && config.autoCompatibility?.includes("Compatibilité automatique des pièces") && (
+        <PartsCompatibilityChecker selectedVehicle={selectedVehicle} />
+      )}
+
+      {/* Parts Diagrams & Schemas - Add value */}
+      {config.industry === "auto" && config.autoCompatibility?.includes("Diagrammes et schémas de pièces") && (
+        <PartsDiagramsViewer />
+      )}
 
       {/* Features Section */}
       <section className="py-16 bg-muted/30">
@@ -507,6 +504,9 @@ export const EcommerceDemo = ({
           </Card>
         </div>
       </section>
+
+      {/* Features Display - Shows all selected features from questionnaire */}
+      <DemoFeaturesDisplay config={config} />
 
       {/* Footer */}
       <footer className="border-t py-12 bg-muted/30">
