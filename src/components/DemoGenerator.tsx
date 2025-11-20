@@ -148,6 +148,7 @@ export const DemoGenerator = () => {
                   options={[
                     { value: "architecture", label: "Architecture d'Entreprise", description: "Conception, planification, gestion de projets architecturaux" },
                     { value: "arts-scene", label: "Arts de la Scène", description: "Spectacles, événements culturels, gestion artistique" },
+                    { value: "auto", label: "Automobile", description: "Vente automobile, concessionnaires, services automobiles" },
                     { value: "construction", label: "Construction", description: "Entrepreneurs, rénovation, gestion de chantiers" },
                     { value: "consulting", label: "Consulting", description: "Conseil stratégique, transformation, expertise" },
                     { value: "commerce", label: "E-commerce", description: "Boutiques en ligne, vente numérique, marketplace" },
