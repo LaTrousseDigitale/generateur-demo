@@ -4,8 +4,10 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QuestionnaireData } from "@/types/questionnaire";
-import { CheckCircle2, Calendar, DollarSign, Clock, Zap, Minimize2, Maximize2 } from "lucide-react";
+import { CheckCircle2, Calendar, DollarSign, Clock, Zap, Minimize2, Maximize2, TrendingUp } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MaintenancePlanComparison } from "./MaintenancePlanComparison";
 interface QuoteModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -582,7 +584,13 @@ export const QuoteModal = ({
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6 mt-4">
+        <Tabs defaultValue="quote" className="mt-4">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="quote">Devis Détaillé</TabsTrigger>
+            <TabsTrigger value="comparison">Comparateur de Plans</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="quote" className="space-y-6 mt-4">
           {/* Informations du projet */}
           <Card className="p-4 bg-primary/5 border-primary/20">
             <div className="grid md:grid-cols-2 gap-4">
@@ -783,6 +791,24 @@ export const QuoteModal = ({
                   </div>
                 </div>}
               
+              {/* Grand total mensuel */}
+              {(quote.total > 0 || quote.canvaTotal > 0 || quote.maintenanceTotal > 0) && (
+                <div className="pt-6 border-t-2 border-primary/30">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-muted-foreground mb-1">TOTAL MENSUEL</p>
+                      <p className="text-5xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                        {(quote.total + quote.canvaTotal + quote.maintenanceTotal).toLocaleString('fr-CA', {
+                          style: 'currency',
+                          currency: 'CAD'
+                        })}/mois
+                      </p>
+                    </div>
+                    <TrendingUp className="w-16 h-16 text-primary/20" />
+                  </div>
+                </div>
+              )}
+              
               <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
                 <CheckCircle2 className="w-4 h-4 text-primary" />
                 <span>Aucun engagement • Annulez à tout moment</span>
@@ -804,7 +830,12 @@ export const QuoteModal = ({
           <p className="text-xs text-center text-muted-foreground">
             Ce devis est une estimation basée sur vos réponses. Un devis final détaillé vous sera fourni après notre appel découverte.
           </p>
-        </div>
+          </TabsContent>
+
+          <TabsContent value="comparison" className="mt-4">
+            <MaintenancePlanComparison currentPlan={data.maintenanceLevel} />
+          </TabsContent>
+        </Tabs>
       </DialogContent>
     </Dialog>;
 };
