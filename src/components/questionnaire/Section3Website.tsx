@@ -163,7 +163,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           {/* Questions spécifiques - Vente automobile et pièces */}
           {data.industry === "auto" && (
             <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-accent-foreground">
+              <Label className="text-base font-bold text-foreground">
                 Questions spécifiques - Vente automobile et pièces
               </Label>
               
@@ -216,7 +216,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           {/* Questions spécifiques - Restauration */}
           {data.industry === "restauration" && (
             <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-accent-foreground">
+              <Label className="text-base font-bold text-foreground">
                 Questions spécifiques - Restauration
               </Label>
               
@@ -248,7 +248,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           {/* Questions spécifiques - Commerce de détail */}
           {data.industry === "commerce" && (
             <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-accent-foreground">
+              <Label className="text-base font-bold text-foreground">
                 Questions spécifiques - Commerce de détail
               </Label>
               
@@ -321,7 +321,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           {/* Questions spécifiques - Santé et bien-être */}
           {data.industry === "sante" && (
             <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-accent-foreground">
+              <Label className="text-base font-bold text-foreground">
                 Questions spécifiques - Santé et bien-être
               </Label>
               
@@ -353,7 +353,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           {/* Questions spécifiques - Éducation et formation */}
           {data.industry === "education" && (
             <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-accent-foreground">
+              <Label className="text-base font-bold text-foreground">
                 Questions spécifiques - Éducation et formation
               </Label>
               
@@ -385,7 +385,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           {/* Questions spécifiques - OBNL */}
           {data.industry === "obnl" && (
             <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-accent-foreground">
+              <Label className="text-base font-bold text-foreground">
                 Questions spécifiques - Organisme à but non lucratif
               </Label>
               
