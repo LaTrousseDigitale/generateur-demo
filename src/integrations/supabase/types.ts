@@ -14,7 +14,75 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      quotes: {
+        Row: {
+          canva_services: string[] | null
+          client_email: string | null
+          client_name: string | null
+          company_name: string | null
+          created_at: string
+          custom_module: string | null
+          domain_type: string | null
+          hosting_preference: string | null
+          id: string
+          industry: string | null
+          maintenance_level: string | null
+          modules: string[] | null
+          monthly_budget: string | null
+          payment_mode: string | null
+          portal_type: string | null
+          questionnaire_data: Json
+          solution_types: string[] | null
+          status: string | null
+          updated_at: string
+          website_type: string | null
+        }
+        Insert: {
+          canva_services?: string[] | null
+          client_email?: string | null
+          client_name?: string | null
+          company_name?: string | null
+          created_at?: string
+          custom_module?: string | null
+          domain_type?: string | null
+          hosting_preference?: string | null
+          id?: string
+          industry?: string | null
+          maintenance_level?: string | null
+          modules?: string[] | null
+          monthly_budget?: string | null
+          payment_mode?: string | null
+          portal_type?: string | null
+          questionnaire_data: Json
+          solution_types?: string[] | null
+          status?: string | null
+          updated_at?: string
+          website_type?: string | null
+        }
+        Update: {
+          canva_services?: string[] | null
+          client_email?: string | null
+          client_name?: string | null
+          company_name?: string | null
+          created_at?: string
+          custom_module?: string | null
+          domain_type?: string | null
+          hosting_preference?: string | null
+          id?: string
+          industry?: string | null
+          maintenance_level?: string | null
+          modules?: string[] | null
+          monthly_budget?: string | null
+          payment_mode?: string | null
+          portal_type?: string | null
+          questionnaire_data?: Json
+          solution_types?: string[] | null
+          status?: string | null
+          updated_at?: string
+          website_type?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

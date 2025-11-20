@@ -18,6 +18,7 @@ import { LogoUploader } from "./LogoUploader";
 import { Section7Domain } from "./questionnaire/Section7Domain";
 import { Section8Finances } from "./questionnaire/Section8Finances";
 import { Section9Summary } from "./questionnaire/Section9Summary";
+import { useQuoteSubmission } from "@/hooks/useQuoteSubmission";
 
 export type ServiceType = "portal" | "website" | "module" | null;
 
@@ -103,6 +104,7 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
 
 export const DemoGenerator = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const { submitQuote } = useQuoteSubmission();
   const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData>(() => {
     const saved = localStorage.getItem("questionnaire-data");
     if (saved) {
@@ -254,11 +256,13 @@ export const DemoGenerator = () => {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (currentStep < TOTAL_STEPS) {
       const nextSection = getNextSection(currentStep);
       setCurrentStep(nextSection);
     } else {
+      // Save quote to database when completing the questionnaire
+      await submitQuote(questionnaireData);
       setShowFinalDemo(true);
       setTimeout(() => setShowQuoteModal(true), 1000);
     }
