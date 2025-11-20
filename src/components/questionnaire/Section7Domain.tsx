@@ -1,6 +1,7 @@
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Server } from "lucide-react";
 interface Section7Props {
   data: any;
@@ -104,5 +105,21 @@ export const Section7Domain = ({
           </Card>
         </RadioGroup>
       </div>
+
+      {/* Question conditionnelle pour le fournisseur d'hébergement */}
+      {data.hostingPreference === "client" && (
+        <div className="space-y-3">
+          <Label htmlFor="hostingProvider">
+            Nom de votre fournisseur d'hébergement *
+          </Label>
+          <Input
+            id="hostingProvider"
+            value={data.hostingProvider || ""}
+            onChange={(e) => onChange({ hostingProvider: e.target.value })}
+            placeholder="Ex: GoDaddy, OVH, Bluehost, etc."
+            className="w-full"
+          />
+        </div>
+      )}
     </div>;
 };

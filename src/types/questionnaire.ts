@@ -59,6 +59,7 @@ export interface QuestionnaireData {
   // Section 7: Domaine & hébergement
   domainType: string;
   hostingPreference: string;
+  hostingProvider: string;
 
   // Section 8: Finances
   paymentMode: PaymentMode;
