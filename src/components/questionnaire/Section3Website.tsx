@@ -159,6 +159,123 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
               ))}
             </RadioGroup>
           </div>
+
+          {/* Questions spécifiques - Vente automobile et pièces */}
+          {data.industry === "auto" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-accent-foreground">
+                Questions spécifiques - Vente automobile et pièces
+              </Label>
+              
+              <div className="space-y-3">
+                <Label>Recherche et compatibilité véhicules</Label>
+                {[
+                  "Recherche par année/marque/modèle",
+                  "Recherche par numéro VIN",
+                  "Diagrammes et schémas de pièces",
+                  "Compatibilité automatique des pièces",
+                  "Catalogue pièces OEM vs aftermarket",
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`auto-compat-${feature}`}
+                      checked={(data.autoCompatibility || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("autoCompatibility", feature)}
+                    />
+                    <label htmlFor={`auto-compat-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-3">
+                <Label>Fonctionnalités additionnelles</Label>
+                {[
+                  "Filtres avancés (prix, marque, condition)",
+                  "Intégration fournisseurs (API/FTP)",
+                  "Gestion des garanties",
+                  "Programme de fidélité / points",
+                  "Devis instantané pour installation",
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`auto-feat-${feature}`}
+                      checked={(data.autoSearchFeatures || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("autoSearchFeatures", feature)}
+                    />
+                    <label htmlFor={`auto-feat-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Questions spécifiques - Restauration */}
+          {data.industry === "restauration" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-accent-foreground">
+                Questions spécifiques - Restauration
+              </Label>
+              
+              <div className="space-y-3">
+                <Label>Fonctionnalités restaurant</Label>
+                {[
+                  "Menu en ligne avec photos et descriptions",
+                  "Système de réservation de tables",
+                  "Commande en ligne (pick-up / livraison)",
+                  "Gestion des allergènes et restrictions alimentaires",
+                  "Programme de fidélité",
+                  "Horaires d'ouverture dynamiques",
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`resto-${feature}`}
+                      checked={(data.restaurantFeatures || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("restaurantFeatures", feature)}
+                    />
+                    <label htmlFor={`resto-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Questions spécifiques - Commerce de détail */}
+          {data.industry === "commerce" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-accent-foreground">
+                Questions spécifiques - Commerce de détail
+              </Label>
+              
+              <div className="space-y-3">
+                <Label>Gestion magasin et inventaire</Label>
+                {[
+                  "Synchronisation inventaire magasin/en ligne",
+                  "Scan codes-barres / QR",
+                  "Programme de fidélité",
+                  "Click & collect (acheter en ligne, ramasser en magasin)",
+                  "Gestion des promotions et soldes",
+                  "Alertes de stock bas",
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`retail-${feature}`}
+                      checked={(data.retailFeatures || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("retailFeatures", feature)}
+                    />
+                    <label htmlFor={`retail-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
         </Card>
       )}
 
@@ -200,6 +317,102 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
               )
             )}
           </div>
+
+          {/* Questions spécifiques - Santé et bien-être */}
+          {data.industry === "sante" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-accent-foreground">
+                Questions spécifiques - Santé et bien-être
+              </Label>
+              
+              <div className="space-y-3">
+                <Label>Gestion patients et conformité</Label>
+                {[
+                  "Dossiers patients sécurisés",
+                  "Prise de rendez-vous en ligne",
+                  "Télémédecine / consultations virtuelles",
+                  "Conformité HIPAA / protection données",
+                  "Prescriptions électroniques",
+                  "Portail patient (résultats, historique)",
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`health-${feature}`}
+                      checked={(data.healthCompliance || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("healthCompliance", feature)}
+                    />
+                    <label htmlFor={`health-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Questions spécifiques - Éducation et formation */}
+          {data.industry === "education" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-accent-foreground">
+                Questions spécifiques - Éducation et formation
+              </Label>
+              
+              <div className="space-y-3">
+                <Label>Fonctionnalités académiques</Label>
+                {[
+                  "Portail étudiants (notes, horaires, documents)",
+                  "Gestion des cours et inscriptions",
+                  "Plateforme e-learning / LMS",
+                  "Suivi de présences",
+                  "Communication parents-professeurs",
+                  "Bibliothèque de ressources pédagogiques",
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`edu-${feature}`}
+                      checked={(data.educationFeatures || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("educationFeatures", feature)}
+                    />
+                    <label htmlFor={`edu-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Questions spécifiques - OBNL */}
+          {data.industry === "obnl" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-accent-foreground">
+                Questions spécifiques - Organisme à but non lucratif
+              </Label>
+              
+              <div className="space-y-3">
+                <Label>Fonctionnalités OBNL</Label>
+                {[
+                  "Système de dons en ligne",
+                  "Gestion des bénévoles et horaires",
+                  "Calendrier d'événements publics",
+                  "Galerie projets et impact",
+                  "Infolettre et communications",
+                  "Portail membres / donateurs",
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`nonprofit-${feature}`}
+                      checked={(data.nonprofitFeatures || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("nonprofitFeatures", feature)}
+                    />
+                    <label htmlFor={`nonprofit-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
         </Card>
       )}
     </div>

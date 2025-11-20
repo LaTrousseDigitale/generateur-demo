@@ -25,6 +25,17 @@ export interface QuestionnaireData {
   ecommercePlatform: string;
   organisationalPages: string[];
   organisationalFeatures: string[];
+  
+  // Questions spécifiques par industrie - E-commerce
+  autoCompatibility: string[]; // Auto: compatibilité véhicules
+  autoSearchFeatures: string[]; // Auto: recherche par VIN, année/marque/modèle
+  restaurantFeatures: string[]; // Restaurant: menu, réservations, livraison
+  retailFeatures: string[]; // Commerce: stocks, fidélité
+  
+  // Questions spécifiques par industrie - Organisationnel
+  healthCompliance: string[]; // Santé: dossiers patients, HIPAA
+  educationFeatures: string[]; // Éducation: portail étudiants
+  nonprofitFeatures: string[]; // OBNL: dons, bénévoles
 
   // Section 4: Portails
   portalType: PortalType;
