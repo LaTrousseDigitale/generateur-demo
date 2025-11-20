@@ -7,7 +7,7 @@ import { DemoPreview } from "./DemoPreview";
 import { ColorCustomizer } from "./ColorCustomizer";
 import { LogoUploader } from "./LogoUploader";
 import { FullDemoView } from "./FullDemoView";
-import { ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowLeft, Layout } from "lucide-react";
 
 export type ServiceType = "portal" | "website" | "module" | null;
 export type PortalFeature = "crm" | "projects" | "hr" | "support";
@@ -78,7 +78,7 @@ export const DemoGenerator = () => {
         {/* Header */}
         <div className="text-center mb-8 animate-fade-in">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="w-8 h-8 text-primary" />
+            <Layout className="w-8 h-8 text-primary" />
             <h1 className="text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               Générateur de Démos
             </h1>
