@@ -82,41 +82,46 @@ export const MaintenancePlanComparison = ({ currentPlan }: MaintenancePlanCompar
         <p className="text-muted-foreground">Choisissez le niveau de service qui correspond à vos besoins</p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid md:grid-cols-2 gap-6">
         {plans.map((plan) => (
-          <Card key={plan.id} className={`p-6 ${plan.id === currentPlan ? 'ring-2 ring-primary' : ''} ${plan.popular ? 'border-primary' : ''}`}>
+          <Card key={plan.id} className={`p-6 ${plan.id === currentPlan ? 'ring-2 ring-primary' : ''} ${plan.popular ? 'border-primary border-2' : ''} relative`}>
             <div className="space-y-4">
-              {plan.popular && (
-                <Badge className="mb-2">Plus populaire</Badge>
-              )}
-              {plan.id === currentPlan && (
-                <Badge variant="secondary" className="mb-2">Plan actuel</Badge>
-              )}
+              <div className="flex flex-wrap gap-2">
+                {plan.popular && (
+                  <Badge className="bg-primary">Plus populaire</Badge>
+                )}
+                {plan.id === currentPlan && (
+                  <Badge variant="secondary">Plan sélectionné</Badge>
+                )}
+              </div>
               
-              <div>
-                <h4 className="font-semibold text-lg">{plan.name}</h4>
-                <div className="flex items-baseline gap-1 mt-2">
-                  <span className="text-3xl font-bold text-primary">
+              <div className="space-y-2">
+                <h4 className="font-bold text-xl">{plan.name}</h4>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-4xl font-bold text-primary">
                     {plan.price}$
                   </span>
                   <span className="text-muted-foreground">/mois</span>
                 </div>
+                <p className="text-sm text-muted-foreground">
+                  ou {plan.price * 11}$/an (1 mois gratuit)
+                </p>
               </div>
 
-              <div className="space-y-3 pt-4 border-t">
+              <div className="space-y-2 pt-4 border-t">
                 {plan.features.map((feature, index) => (
-                  <div key={index} className="flex items-start gap-2">
+                  <div key={index} className="flex items-start gap-3">
                     {feature.included ? (
-                      <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                     ) : feature.included === false ? (
-                      <X className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                      <X className="w-5 h-5 text-muted-foreground/40 flex-shrink-0 mt-0.5" />
                     ) : null}
-                    <div className="flex-1">
-                      <p className={`text-sm ${feature.included === false ? 'text-muted-foreground line-through' : ''}`}>
+                    <div className="flex-1 min-w-0">
+                      <p className={`text-sm ${feature.included === false ? 'text-muted-foreground/60 line-through' : 'text-foreground'}`}>
                         {feature.name}
                       </p>
                       {feature.value && (
-                        <p className="text-xs text-muted-foreground">{feature.value}</p>
+                        <p className="text-xs text-primary font-medium mt-0.5">{feature.value}</p>
                       )}
                     </div>
                   </div>
