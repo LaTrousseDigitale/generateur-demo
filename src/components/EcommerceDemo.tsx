@@ -10,6 +10,7 @@ import { useState } from "react";
 import productAuto1 from "@/assets/product-auto-1.jpg";
 import productAuto2 from "@/assets/product-auto-2.jpg";
 import productAuto3 from "@/assets/product-auto-3.jpg";
+import productAuto4 from "@/assets/product-auto-4.jpg";
 import productRestaurant1 from "@/assets/product-restaurant-1.jpg";
 import productRestaurant2 from "@/assets/product-restaurant-2.jpg";
 import productRestaurant3 from "@/assets/product-restaurant-3.jpg";
@@ -66,7 +67,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       { name: "Berline Premium", price: "34,999€", rating: 4.9, image: productAuto1 },
       { name: "SUV Familial", price: "42,999€", rating: 4.8, image: productAuto2 },
       { name: "Sportive GT", price: "59,999€", rating: 4.9, image: productAuto3 },
-      { name: "Citadine Électrique", price: "28,999€", rating: 4.7, image: productAuto1 },
+      { name: "Citadine Électrique", price: "28,999€", rating: 4.7, image: productAuto4 },
     ],
     restauration: [
       { name: "Plat du Chef - Saumon", price: "28.99€", rating: 4.9, image: productRestaurant1 },
