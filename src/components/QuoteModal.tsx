@@ -5,29 +5,30 @@ import { Button } from "@/components/ui/button";
 import { QuestionnaireData } from "@/types/questionnaire";
 import { CheckCircle2, Calendar, DollarSign, Clock, Zap } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-
 interface QuoteModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   data: QuestionnaireData;
 }
-
 interface QuoteItem {
   name: string;
   description: string;
   price: number;
   included: boolean;
 }
-
-export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
-  const calculateQuote = (): { 
-    items: QuoteItem[], 
-    canvaItems: QuoteItem[],
-    total: number, 
-    canvaTotal: number,
-    canvaOneTime: number,
-    timeline: string, 
-    oneTimeTotal: number 
+export const QuoteModal = ({
+  open,
+  onOpenChange,
+  data
+}: QuoteModalProps) => {
+  const calculateQuote = (): {
+    items: QuoteItem[];
+    canvaItems: QuoteItem[];
+    total: number;
+    canvaTotal: number;
+    canvaOneTime: number;
+    timeline: string;
+    oneTimeTotal: number;
   } => {
     const items: QuoteItem[] = [];
     const canvaItems: QuoteItem[] = [];
@@ -54,7 +55,7 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           price: 150,
           included: true
         });
-        
+
         // Ajout selon nombre de produits
         const productCount = data.ecommerceProductCount;
         if (productCount === "50-200" || productCount === "200+") {
@@ -107,7 +108,6 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           included: true
         });
       }
-
       if (data.industry === "restauration") {
         (data.restaurantFeatures || []).forEach(feature => {
           const prices: Record<string, number> = {
@@ -126,7 +126,6 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           }
         });
       }
-
       if (data.industry === "sante") {
         (data.healthCompliance || []).forEach(feature => {
           monthlyTotal += 30;
@@ -203,20 +202,55 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
     }
 
     // === SECTION 3: Modules Complémentaires ===
-    const modulePrices: Record<string, { name: string; price: number }> = {
-      "calculateur-pdf": { name: "Calculateur PDF", price: 25 },
-      "rendez-vous": { name: "Système de rendez-vous", price: 30 },
-      "tickets": { name: "Gestion de tickets", price: 20 },
-      "crm-lite": { name: "CRM Lite", price: 35 },
-      "projets-lite": { name: "Gestion de projets Lite", price: 30 },
-      "rh-lite": { name: "RH Lite", price: 35 },
-      "base-connaissances": { name: "Base de connaissances", price: 25 },
-      "chat-interne": { name: "Chat interne", price: 20 },
-      "onboarding": { name: "Onboarding automatisé", price: 25 },
-      "signatures": { name: "Signatures électroniques", price: 30 },
-      "kpi-dashboard": { name: "KPI & Tableaux de bord", price: 40 }
+    const modulePrices: Record<string, {
+      name: string;
+      price: number;
+    }> = {
+      "calculateur-pdf": {
+        name: "Calculateur PDF",
+        price: 25
+      },
+      "rendez-vous": {
+        name: "Système de rendez-vous",
+        price: 30
+      },
+      "tickets": {
+        name: "Gestion de tickets",
+        price: 20
+      },
+      "crm-lite": {
+        name: "CRM Lite",
+        price: 35
+      },
+      "projets-lite": {
+        name: "Gestion de projets Lite",
+        price: 30
+      },
+      "rh-lite": {
+        name: "RH Lite",
+        price: 35
+      },
+      "base-connaissances": {
+        name: "Base de connaissances",
+        price: 25
+      },
+      "chat-interne": {
+        name: "Chat interne",
+        price: 20
+      },
+      "onboarding": {
+        name: "Onboarding automatisé",
+        price: 25
+      },
+      "signatures": {
+        name: "Signatures électroniques",
+        price: 30
+      },
+      "kpi-dashboard": {
+        name: "KPI & Tableaux de bord",
+        price: 40
+      }
     };
-
     (data.selectedModules || []).forEach(moduleId => {
       const module = modulePrices[moduleId];
       if (module) {
@@ -232,14 +266,25 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
 
     // === SECTION 4: Services Canva ===
     if ((data.canvaServices || []).length > 0) {
-      const quantityPrices: Record<string, { price: number; hours: number }> = {
-        "1-5": { price: 240, hours: 4 },
-        "6-10": { price: 480, hours: 8 },
-        "11-20": { price: 900, hours: 15 },
+      const quantityPrices: Record<string, {
+        price: number;
+        hours: number;
+      }> = {
+        "1-5": {
+          price: 240,
+          hours: 4
+        },
+        "6-10": {
+          price: 480,
+          hours: 8
+        },
+        "11-20": {
+          price: 900,
+          hours: 15
+        }
       };
-
       const quantity = data.canvaQuantity || "";
-      
+
       // Labels des services
       const serviceLabels: Record<string, string> = {
         "flyers": "Dépliants et affiches",
@@ -251,16 +296,12 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
         "menus": "Menus (restaurants)",
         "newsletters": "Infolettres"
       };
-
       const servicesDesc = (data.canvaServices || []).map(s => serviceLabels[s] || s).join(', ');
-      
+
       // Forfait sur mesure pour 20+
       if (quantity === "20+") {
         const customQuantity = data.canvaCustomQuantity || "non spécifié";
-        const customDeadline = data.canvaCustomDeadline 
-          ? new Date(data.canvaCustomDeadline).toLocaleDateString('fr-CA')
-          : "à définir";
-        
+        const customDeadline = data.canvaCustomDeadline ? new Date(data.canvaCustomDeadline).toLocaleDateString('fr-CA') : "à définir";
         canvaItems.push({
           name: "Forfait sur mesure",
           description: `${servicesDesc} • ${customQuantity} designs • Échéance: ${customDeadline}`,
@@ -277,7 +318,6 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
             "quarterly": "trimestriel",
             "as-needed": "au besoin"
           };
-
           if (data.canvaFrequency === "one-time") {
             canvaOneTimeTotal += basePrice;
             canvaItems.push({
@@ -289,13 +329,11 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           } else {
             const frequency = data.canvaFrequency;
             let monthlyPrice = basePrice;
-            
             if (frequency === "quarterly") {
               monthlyPrice = Math.round(basePrice / 3);
             } else if (frequency === "as-needed") {
               monthlyPrice = Math.round(basePrice * 0.5);
             }
-            
             canvaMonthlyTotal += monthlyPrice;
             canvaItems.push({
               name: `Services Canva (${frequencyLabels[frequency]})`,
@@ -311,7 +349,6 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
       if ((data.infographicSupports || []).length > 0) {
         const supportsCount = data.infographicSupports.length;
         const supportsPrice = supportsCount * 50;
-        
         const supportLabels: Record<string, string> = {
           "posters": "Affiches",
           "stickers": "Collants",
@@ -323,15 +360,12 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           "keychains": "Porte-clés",
           "magnets": "Aimants"
         };
-
         const supportsDesc = (data.infographicSupports || []).map(s => supportLabels[s] || s).join(', ');
-        
         if (data.canvaFrequency === "one-time") {
           canvaOneTimeTotal += supportsPrice;
         } else {
           canvaMonthlyTotal += supportsPrice;
         }
-        
         canvaItems.push({
           name: "Supports d'infographies",
           description: supportsDesc,
@@ -342,49 +376,52 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
     }
 
     // Modules selon les objectifs sélectionnés (legacy support)
-    const objectiveModules: Record<string, { name: string; description: string; price: number }> = {
-      "reduce-costs": { 
-        name: "Optimisation & Analytics", 
+    const objectiveModules: Record<string, {
+      name: string;
+      description: string;
+      price: number;
+    }> = {
+      "reduce-costs": {
+        name: "Optimisation & Analytics",
         description: "Outils d'analyse et d'optimisation des coûts",
-        price: 20 
+        price: 20
       },
-      "save-time": { 
-        name: "Automatisation", 
+      "save-time": {
+        name: "Automatisation",
         description: "Workflows automatisés et intégrations",
-        price: 25 
+        price: 25
       },
-      "increase-revenue": { 
-        name: "CRM Lite", 
+      "increase-revenue": {
+        name: "CRM Lite",
         description: "Gestion des opportunités et suivi des ventes",
-        price: 22 
+        price: 22
       },
-      "improve-quality": { 
-        name: "Tickets d'Assistance", 
+      "improve-quality": {
+        name: "Tickets d'Assistance",
         description: "Système de support client professionnel",
-        price: 15 
+        price: 15
       },
-      "scale-business": { 
-        name: "Gestionnaire de Projets Lite", 
+      "scale-business": {
+        name: "Gestionnaire de Projets Lite",
         description: "Suivi de projets et collaboration d'équipe",
-        price: 25 
+        price: 25
       },
-      "centralize-data": { 
-        name: "Base de Données Unifiée", 
+      "centralize-data": {
+        name: "Base de Données Unifiée",
         description: "Centralisation et organisation des données",
-        price: 20 
+        price: 20
       },
-      "improve-communication": { 
-        name: "Outils de Communication", 
+      "improve-communication": {
+        name: "Outils de Communication",
         description: "Notifications et messagerie intégrées",
-        price: 15 
+        price: 15
       },
-      "modernize": { 
-        name: "Design Premium", 
+      "modernize": {
+        name: "Design Premium",
         description: "Interface moderne et identité visuelle",
-        price: 30 
+        price: 30
       }
     };
-
     data.mainObjectives.forEach(objective => {
       const module = objectiveModules[objective];
       if (module) {
@@ -411,26 +448,22 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
     }
 
     // Services inclus de base
-    items.push(
-      {
-        name: "Hébergement & Sécurité",
-        description: "Infrastructure sécurisée et surveillance 24/7",
-        price: 0,
-        included: true
-      },
-      {
-        name: "Maintenance & Mises à Jour",
-        description: "Support technique et évolutions",
-        price: 0,
-        included: true
-      },
-      {
-        name: "Formation",
-        description: "Sessions de formation et documentation",
-        price: 0,
-        included: true
-      }
-    );
+    items.push({
+      name: "Hébergement & Sécurité",
+      description: "Infrastructure sécurisée et surveillance 24/7",
+      price: 0,
+      included: true
+    }, {
+      name: "Maintenance & Mises à Jour",
+      description: "Support technique et évolutions",
+      price: 0,
+      included: true
+    }, {
+      name: "Formation",
+      description: "Sessions de formation et documentation",
+      price: 0,
+      included: true
+    });
 
     // Frais d'installation unique selon urgence
     const isUrgent = data.startDate && new Date(data.startDate) < new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
@@ -452,7 +485,6 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
       const startDate = new Date(data.startDate);
       const now = new Date();
       const daysUntil = Math.floor((startDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
-      
       if (daysUntil < 30) {
         timeline = "2-3 semaines";
       } else if (daysUntil < 60) {
@@ -461,22 +493,18 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
         timeline = "4-6 semaines";
       }
     }
-
-    return { 
-      items, 
+    return {
+      items,
       canvaItems,
-      total: monthlyTotal, 
+      total: monthlyTotal,
       canvaTotal: canvaMonthlyTotal,
       canvaOneTime: canvaOneTimeTotal,
       timeline,
-      oneTimeTotal 
+      oneTimeTotal
     };
   };
-
   const quote = calculateQuote();
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+  return <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold flex items-center gap-2">
@@ -495,7 +523,7 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
               <div className="flex items-center gap-2">
                 <Clock className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm text-muted-foreground">Timeline estimée</p>
+                  <p className="text-sm text-muted-foreground">Délai de livraison estimé</p>
                   <p className="font-semibold">{quote.timeline}</p>
                 </div>
               </div>
@@ -513,8 +541,7 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Éléments du Projet</h3>
             <div className="space-y-3">
-              {quote.items.map((item, index) => (
-                <Card key={index} className="p-4">
+              {quote.items.map((item, index) => <Card key={index} className="p-4">
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
@@ -526,23 +553,20 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                       </p>
                     </div>
                     <div className="text-right">
-                      {item.price > 0 ? (
-                        <p className="font-semibold text-primary">
-                          {item.price.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
-                        </p>
-                      ) : (
-                        <Badge variant="secondary" className="text-xs">Inclus</Badge>
-                      )}
+                      {item.price > 0 ? <p className="font-semibold text-primary">
+                          {item.price.toLocaleString('fr-CA', {
+                      style: 'currency',
+                      currency: 'CAD'
+                    })}
+                        </p> : <Badge variant="secondary" className="text-xs">Inclus</Badge>}
                     </div>
                   </div>
-                </Card>
-              ))}
+                </Card>)}
             </div>
           </div>
 
           {/* Services Canva - Section séparée */}
-          {quote.canvaItems.length > 0 && (
-            <>
+          {quote.canvaItems.length > 0 && <>
               <Separator />
               <div>
                 <div className="flex items-center gap-2 mb-4">
@@ -557,8 +581,7 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  {quote.canvaItems.map((item, index) => (
-                    <Card key={index} className="p-4 border-accent/30">
+                  {quote.canvaItems.map((item, index) => <Card key={index} className="p-4 border-accent/30">
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-1">
@@ -570,21 +593,18 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                           </p>
                         </div>
                         <div className="text-right flex-shrink-0">
-                          {item.price > 0 ? (
-                            <p className="font-semibold text-accent">
-                              {item.price.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
-                            </p>
-                          ) : (
-                            <Badge variant="outline" className="text-accent border-accent">À déterminer</Badge>
-                          )}
+                          {item.price > 0 ? <p className="font-semibold text-accent">
+                              {item.price.toLocaleString('fr-CA', {
+                        style: 'currency',
+                        currency: 'CAD'
+                      })}
+                            </p> : <Badge variant="outline" className="text-accent border-accent">À déterminer</Badge>}
                         </div>
                       </div>
-                    </Card>
-                  ))}
+                    </Card>)}
                 </div>
               </div>
-            </>
-          )}
+            </>}
 
           <Separator />
 
@@ -595,46 +615,52 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                 <div>
                   <p className="text-muted-foreground mb-1">Abonnement Mensuel</p>
                   <p className="text-4xl font-bold text-primary">
-                    {quote.total.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}/mois
+                    {quote.total.toLocaleString('fr-CA', {
+                    style: 'currency',
+                    currency: 'CAD'
+                  })}/mois
                   </p>
                 </div>
                 <Zap className="w-12 h-12 text-primary/30" />
               </div>
 
               {/* Services Canva mensuels */}
-              {quote.canvaTotal > 0 && (
-                <div className="pt-4 border-t border-primary/20">
+              {quote.canvaTotal > 0 && <div className="pt-4 border-t border-primary/20">
                   <div className="flex items-center justify-between">
                     <p className="text-muted-foreground">Services Canva (récurrent)</p>
                     <p className="text-2xl font-bold text-accent">
-                      {quote.canvaTotal.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}/mois
+                      {quote.canvaTotal.toLocaleString('fr-CA', {
+                    style: 'currency',
+                    currency: 'CAD'
+                  })}/mois
                     </p>
                   </div>
-                </div>
-              )}
+                </div>}
               
-              {quote.oneTimeTotal > 0 && (
-                <div className="pt-4 border-t border-primary/20">
+              {quote.oneTimeTotal > 0 && <div className="pt-4 border-t border-primary/20">
                   <div className="flex items-center justify-between">
                     <p className="text-muted-foreground">Frais d'installation unique</p>
                     <p className="text-2xl font-bold text-accent">
-                      {quote.oneTimeTotal.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
+                      {quote.oneTimeTotal.toLocaleString('fr-CA', {
+                    style: 'currency',
+                    currency: 'CAD'
+                  })}
                     </p>
                   </div>
-                </div>
-              )}
+                </div>}
 
               {/* Services Canva ponctuels */}
-              {quote.canvaOneTime > 0 && (
-                <div className="pt-4 border-t border-primary/20">
+              {quote.canvaOneTime > 0 && <div className="pt-4 border-t border-primary/20">
                   <div className="flex items-center justify-between">
                     <p className="text-muted-foreground">Services Canva (ponctuel)</p>
                     <p className="text-2xl font-bold text-accent">
-                      {quote.canvaOneTime.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
+                      {quote.canvaOneTime.toLocaleString('fr-CA', {
+                    style: 'currency',
+                    currency: 'CAD'
+                  })}
                     </p>
                   </div>
-                </div>
-              )}
+                </div>}
               
               <div className="flex items-center gap-2 text-sm text-muted-foreground pt-2">
                 <CheckCircle2 className="w-4 h-4 text-primary" />
@@ -645,14 +671,10 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
 
           {/* Call to action */}
           <div className="flex gap-3">
-            <Button 
-              className="flex-1" 
-              size="lg"
-              onClick={() => {
-                onOpenChange(false);
-                // Ici on pourrait déclencher une action d'envoi du devis par email
-              }}
-            >
+            <Button className="flex-1" size="lg" onClick={() => {
+            onOpenChange(false);
+            // Ici on pourrait déclencher une action d'envoi du devis par email
+          }}>
               <Calendar className="w-4 h-4 mr-2" />
               Planifier un Appel Découverte
             </Button>
@@ -663,6 +685,5 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           </p>
         </div>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
