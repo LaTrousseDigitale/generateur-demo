@@ -247,34 +247,34 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
   };
 
   const generateChallengeContent = () => {
-    const challengeData: Record<string, { recommendation: string; priority: string; impact: string }> = {
-      organisation: {
-        recommendation: "Automatisation des processus et workflows standardisés",
+    const objectiveData: Record<string, { recommendation: string; priority: string; impact: string }> = {
+      automation: {
+        recommendation: "Workflows automatisés et intégrations API",
         priority: "Haute",
-        impact: "Gain de 30% en efficacité opérationnelle"
+        impact: "Économie de 15-20 heures/semaine par employé"
       },
-      croissance: {
-        recommendation: "Infrastructure scalable et outils collaboratifs",
+      growth: {
+        recommendation: "CRM avancé et analytics de conversion",
         priority: "Critique",
-        impact: "Capacité à doubler votre équipe sans friction"
+        impact: "Augmentation de 30-40% des conversions"
       },
-      digital: {
-        recommendation: "Formation et migration progressive vers le cloud",
-        priority: "Stratégique",
-        impact: "Modernisation complète en 3 mois"
-      },
-      client: {
-        recommendation: "CRM intégré et portail client self-service",
+      efficiency: {
+        recommendation: "Interface optimisée et raccourcis intelligents",
         priority: "Haute",
-        impact: "Augmentation de 25% de la satisfaction client"
+        impact: "Gain de 25% de productivité opérationnelle"
       },
-      couts: {
-        recommendation: "Analytics avancés et élimination des redondances",
+      experience: {
+        recommendation: "Design moderne et parcours utilisateur fluide",
+        priority: "Haute",
+        impact: "Amélioration de 35% de la satisfaction"
+      },
+      visibility: {
+        recommendation: "SEO optimisé et stratégie de contenu",
         priority: "Importante",
-        impact: "Réduction de 20% des coûts opérationnels"
+        impact: "Croissance de 50% du trafic organique"
       }
     };
-    return challengeData[config.mainChallenge] || challengeData.organisation;
+    return objectiveData[config.mainObjective] || objectiveData.automation;
   };
 
   const generateSizeContent = () => {
