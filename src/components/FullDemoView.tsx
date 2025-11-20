@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "./DemoGenerator";
-import { ArrowLeft, Download, Share2, Users, Calendar, BarChart3, Settings, FileText, DollarSign, Clock, CheckCircle2, TrendingUp, MessageSquare } from "lucide-react";
+import { ArrowLeft, Calendar, Share2, Users, BarChart3, Settings, FileText, DollarSign, Clock, CheckCircle2, TrendingUp, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ShowcaseWebsiteDemo } from "./ShowcaseWebsiteDemo";
 import { EcommerceDemo } from "./EcommerceDemo";
@@ -353,8 +353,8 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
 
   const handleExport = () => {
     toast({
-      title: "Export en cours",
-      description: "Votre démo sera prête dans quelques instants",
+      title: "Appel découverte",
+      description: "Nous vous contacterons dans les 24h pour planifier votre appel découverte",
     });
   };
 
@@ -381,8 +381,8 @@ export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
                 Partager
               </Button>
               <Button onClick={handleExport}>
-                <Download className="w-4 h-4 mr-2" />
-                Télécharger PDF
+                <Calendar className="w-4 h-4 mr-2" />
+                Appel Découverte
               </Button>
             </div>
           </div>

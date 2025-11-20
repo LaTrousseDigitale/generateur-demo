@@ -2,13 +2,30 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DemoConfig } from "./DemoGenerator";
-import { Eye, Download } from "lucide-react";
+import { Eye, Calendar } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 interface DemoPreviewProps {
   config: DemoConfig;
 }
 
 export const DemoPreview = ({ config }: DemoPreviewProps) => {
+  const { toast } = useToast();
+
+  const handleFullscreen = () => {
+    toast({
+      title: "Vue plein écran",
+      description: "Passez à la vue complète pour explorer toutes les fonctionnalités",
+    });
+  };
+
+  const handleContact = () => {
+    toast({
+      title: "Appel découverte",
+      description: "Nous vous contacterons dans les 24h pour planifier votre appel découverte",
+    });
+  };
+
   const getServiceTitle = () => {
     switch (config.serviceType) {
       case "portal":
@@ -160,13 +177,13 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
 
       {/* Actions */}
       <div className="flex gap-2">
-        <Button variant="outline" className="flex-1" size="sm">
+        <Button variant="outline" className="flex-1" size="sm" onClick={handleFullscreen}>
           <Eye className="w-4 h-4 mr-2" />
           Vue Plein Écran
         </Button>
-        <Button variant="outline" className="flex-1" size="sm">
-          <Download className="w-4 h-4 mr-2" />
-          Exporter PDF
+        <Button variant="outline" className="flex-1" size="sm" onClick={handleContact}>
+          <Calendar className="w-4 h-4 mr-2" />
+          Appel Découverte
         </Button>
       </div>
     </Card>
