@@ -2,7 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DemoConfig } from "./DemoGenerator";
-import { Eye, Calendar } from "lucide-react";
+import { Rocket, Calendar } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface DemoPreviewProps {
@@ -12,10 +12,10 @@ interface DemoPreviewProps {
 export const DemoPreview = ({ config }: DemoPreviewProps) => {
   const { toast } = useToast();
 
-  const handleFullscreen = () => {
+  const handleStartProject = () => {
     toast({
-      title: "Vue plein écran",
-      description: "Passez à la vue complète pour explorer toutes les fonctionnalités",
+      title: "Démarrage du projet",
+      description: "Nous vous contacterons dans les 24h pour démarrer votre projet",
     });
   };
 
@@ -60,7 +60,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
   return (
     <Card className="p-6 shadow-elegant animate-slide-up">
       <div className="flex items-center gap-2 mb-4">
-        <Eye className="w-5 h-5 text-primary" />
+        <Rocket className="w-5 h-5 text-primary" />
         <h3 className="text-xl font-bold">Aperçu en Temps Réel</h3>
       </div>
 
@@ -177,9 +177,9 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
 
       {/* Actions */}
       <div className="flex gap-2">
-        <Button variant="outline" className="flex-1" size="sm" onClick={handleFullscreen}>
-          <Eye className="w-4 h-4 mr-2" />
-          Vue Plein Écran
+        <Button variant="outline" className="flex-1" size="sm" onClick={handleStartProject}>
+          <Rocket className="w-4 h-4 mr-2" />
+          Démarrer mon projet maintenant
         </Button>
         <Button variant="outline" className="flex-1" size="sm" onClick={handleContact}>
           <Calendar className="w-4 h-4 mr-2" />
