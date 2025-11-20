@@ -55,6 +55,7 @@ export interface QuestionnaireData {
   canvaFrequency: string;
   canvaDeadline: string;
   canvaSpecifications: string;
+  infographicSupports: string[];
 
   // Section 7: Branding
   logo: string | null;

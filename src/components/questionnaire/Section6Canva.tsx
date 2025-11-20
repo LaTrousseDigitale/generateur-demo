@@ -22,6 +22,18 @@ const CANVA_SERVICES = [
   { id: "newsletters", label: "Infolettres" },
 ];
 
+const INFOGRAPHIC_SUPPORTS = [
+  { id: "posters", label: "Affiches" },
+  { id: "stickers", label: "Collants/Autocollants" },
+  { id: "pens", label: "Stylos" },
+  { id: "mugs", label: "Tasses" },
+  { id: "tshirts", label: "T-shirts" },
+  { id: "notebooks", label: "Carnets/Blocs-notes" },
+  { id: "banners-physical", label: "Bannières physiques" },
+  { id: "keychains", label: "Porte-clés" },
+  { id: "magnets", label: "Aimants" },
+];
+
 export const Section6Canva = ({ data, onChange }: Section6Props) => {
   const handleServiceToggle = (serviceId: string) => {
     const currentServices = data.canvaServices || [];
@@ -29,6 +41,14 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
       ? currentServices.filter((id: string) => id !== serviceId)
       : [...currentServices, serviceId];
     onChange({ canvaServices: updated });
+  };
+
+  const handleSupportToggle = (supportId: string) => {
+    const currentSupports = data.infographicSupports || [];
+    const updated = currentSupports.includes(supportId)
+      ? currentSupports.filter((id: string) => id !== supportId)
+      : [...currentSupports, supportId];
+    onChange({ infographicSupports: updated });
   };
 
   return (
@@ -66,6 +86,35 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
           ))}
         </div>
       </div>
+
+      {/* Question conditionnelle pour les supports d'infographie */}
+      {(data.canvaServices || []).includes("infographics") && (
+        <div className="space-y-3">
+          <Label className="text-foreground">Supports pour les infographies</Label>
+          <p className="text-xs text-muted-foreground mb-2">
+            Sur quels supports souhaitez-vous appliquer vos infographies?
+          </p>
+          <div className="grid grid-cols-1 gap-3">
+            {INFOGRAPHIC_SUPPORTS.map((support) => (
+              <Card key={support.id} className="p-4 hover:bg-accent/5 transition-colors">
+                <div className="flex items-center space-x-3">
+                  <Checkbox
+                    id={`support-${support.id}`}
+                    checked={(data.infographicSupports || []).includes(support.id)}
+                    onCheckedChange={() => handleSupportToggle(support.id)}
+                  />
+                  <label
+                    htmlFor={`support-${support.id}`}
+                    className="text-sm font-medium cursor-pointer flex-1"
+                  >
+                    {support.label}
+                  </label>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Quantité approximative */}
       <div className="space-y-3">
