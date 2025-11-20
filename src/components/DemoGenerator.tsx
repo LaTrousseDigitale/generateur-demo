@@ -121,6 +121,7 @@ export const DemoGenerator = () => {
       canvaFrequency: "",
       canvaDeadline: "",
       canvaSpecifications: "",
+      infographicSupports: [],
       logo: null,
       primaryColor: "#1c61fe",
       accentColor: "#ff6b3d",
