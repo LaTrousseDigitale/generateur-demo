@@ -2,15 +2,15 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Card } from "@/components/ui/card";
 import { Server } from "lucide-react";
-
 interface Section7Props {
   data: any;
   onChange: (updates: any) => void;
 }
-
-export const Section7Domain = ({ data, onChange }: Section7Props) => {
-  return (
-    <div className="space-y-6">
+export const Section7Domain = ({
+  data,
+  onChange
+}: Section7Props) => {
+  return <div className="space-y-6">
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Server className="w-5 h-5 text-primary" />
@@ -22,13 +22,15 @@ export const Section7Domain = ({ data, onChange }: Section7Props) => {
       {/* Type de domaine */}
       <div className="space-y-3">
         <Label>Type de domaine *</Label>
-        <RadioGroup value={data.domainType || ""} onValueChange={(value) => onChange({ domainType: value })}>
+        <RadioGroup value={data.domainType || ""} onValueChange={value => onChange({
+        domainType: value
+      })}>
           <Card className="p-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="sous-domaine" id="sous-domaine" />
               <div className="flex-1">
                 <label htmlFor="sous-domaine" className="text-sm cursor-pointer font-semibold block">
-                  Sous-domaine (votre-entreprise.lovable.app)
+                  Sous-domaine (votre-entreprise.latroussedigitale.ca)
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Gratuit, configuration instantanée, idéal pour débuter rapidement
@@ -56,10 +58,9 @@ export const Section7Domain = ({ data, onChange }: Section7Props) => {
       {/* Préférence d'hébergement */}
       <div className="space-y-3">
         <Label>Préférence d'hébergement *</Label>
-        <RadioGroup
-          value={data.hostingPreference || ""}
-          onValueChange={(value) => onChange({ hostingPreference: value })}
-        >
+        <RadioGroup value={data.hostingPreference || ""} onValueChange={value => onChange({
+        hostingPreference: value
+      })}>
           <Card className="p-4">
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="lovable" id="hosting-lovable" />
@@ -103,6 +104,5 @@ export const Section7Domain = ({ data, onChange }: Section7Props) => {
           </Card>
         </RadioGroup>
       </div>
-    </div>
-  );
+    </div>;
 };
