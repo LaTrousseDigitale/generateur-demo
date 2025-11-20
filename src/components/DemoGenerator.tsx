@@ -7,19 +7,18 @@ import { DemoPreview } from "./DemoPreview";
 import { ColorCustomizer } from "./ColorCustomizer";
 import { LogoUploader } from "./LogoUploader";
 import { FullDemoView } from "./FullDemoView";
+import { QuoteModal } from "./QuoteModal";
 import { ArrowRight, ArrowLeft, Layout } from "lucide-react";
 
 export type ServiceType = "portal" | "website" | "module" | null;
-export type PortalFeature = "crm" | "projects" | "hr" | "support";
-export type WebsiteType = "vitrine" | "ecommerce" | "careers" | "booking";
-export type ModuleType = "calculator" | "project-manager" | "hr-dashboard" | "it-support";
 
 export interface DemoConfig {
   serviceType: ServiceType;
   features: string[];
   industry: string;
   companySize: string;
-  mainChallenge: string;
+  mainObjective: string;
+  budget: string;
   timeline: string;
   primaryColor: string;
   accentColor: string;
@@ -28,7 +27,7 @@ export interface DemoConfig {
   companyName: string;
 }
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 6;
 
 export const DemoGenerator = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -37,7 +36,8 @@ export const DemoGenerator = () => {
     features: [],
     industry: "",
     companySize: "",
-    mainChallenge: "",
+    mainObjective: "",
+    budget: "",
     timeline: "",
     primaryColor: "#1c61fe",
     accentColor: "#ff6b3d",
@@ -46,6 +46,7 @@ export const DemoGenerator = () => {
     companyName: "Votre Entreprise",
   });
   const [showFinalDemo, setShowFinalDemo] = useState(false);
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
 
   const progress = (currentStep / TOTAL_STEPS) * 100;
 
@@ -53,8 +54,9 @@ export const DemoGenerator = () => {
     if (currentStep < TOTAL_STEPS) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Finaliser - afficher la démo complète
+      // Finaliser - afficher la démo complète et le modal de devis
       setShowFinalDemo(true);
+      setTimeout(() => setShowQuoteModal(true), 1000);
     }
   };
 
@@ -69,7 +71,16 @@ export const DemoGenerator = () => {
   };
 
   if (showFinalDemo) {
-    return <FullDemoView config={demoConfig} onBack={() => setShowFinalDemo(false)} />;
+    return (
+      <>
+        <FullDemoView config={demoConfig} onBack={() => setShowFinalDemo(false)} />
+        <QuoteModal 
+          open={showQuoteModal} 
+          onOpenChange={setShowQuoteModal}
+          config={demoConfig}
+        />
+      </>
+    );
   }
 
   return (
@@ -133,38 +144,6 @@ export const DemoGenerator = () => {
               {currentStep === 2 && (
                 <QuestionnaireStep
                   step={2}
-                  title="Quelles fonctionnalités vous intéressent ?"
-                  multiSelect
-                  options={
-                    demoConfig.serviceType === "portal"
-                      ? [
-                          { value: "crm", label: "CRM", description: "Gestion des clients" },
-                          { value: "projects", label: "Projets", description: "Collaboration et tâches" },
-                          { value: "hr", label: "RH", description: "Gestion des employés" },
-                          { value: "support", label: "Support", description: "Tickets et documentation" },
-                        ]
-                      : demoConfig.serviceType === "website"
-                      ? [
-                          { value: "vitrine", label: "Site Vitrine", description: "Design moderne et SEO" },
-                          { value: "ecommerce", label: "E-commerce", description: "Boutique en ligne" },
-                          { value: "careers", label: "Carrières", description: "Recrutement" },
-                          { value: "booking", label: "Réservations", description: "Prise de rendez-vous" },
-                        ]
-                      : [
-                          { value: "calculator", label: "Calculatrice", description: "Soumissions automatiques" },
-                          { value: "project-manager", label: "Gestionnaire", description: "Projets et temps" },
-                          { value: "hr-dashboard", label: "Tableau RH", description: "Évaluations et onboarding" },
-                          { value: "it-support", label: "Support TI", description: "Centre d'assistance" },
-                        ]
-                  }
-                  selectedValues={demoConfig.features}
-                  onSelectMultiple={(values) => updateConfig({ features: values })}
-                />
-              )}
-
-              {currentStep === 3 && (
-                <QuestionnaireStep
-                  step={3}
                   title="Quelle est votre industrie ?"
                   options={[
                     { value: "architecture", label: "Architecture d'Entreprise", description: "Conception, planification, gestion de projets architecturaux" },
@@ -178,74 +157,72 @@ export const DemoGenerator = () => {
                     { value: "immobilier", label: "Immobilier", description: "Agences, courtiers, gestion immobilière" },
                     { value: "restauration", label: "Restauration", description: "Restaurants, traiteurs, cafés" },
                     { value: "sante", label: "Santé et Bien-être", description: "Cliniques, centres de soins, thérapeutes" },
-                    { value: "services-pro", label: "Services Professionnels", description: "Consultation, comptabilité, services juridiques" },
-                    { value: "technologie", label: "Technologie", description: "Logiciels, IT, solutions numériques" },
-                    { value: "transports", label: "Transports", description: "Logistique, livraison, gestion de flotte" },
-                    { value: "pieces-auto", label: "Vente de Pièces Automobiles", description: "Commerce de pièces, inventaire, distribution" },
+                    { value: "technologie", label: "Technologie", description: "Développement logiciel, IT, startups tech" },
+                    { value: "transport", label: "Transport et Logistique", description: "Expédition, livraison, gestion de flotte" },
+                    { value: "autre", label: "Autre", description: "Autre secteur d'activité" },
                   ]}
                   selectedValue={demoConfig.industry}
                   onSelect={(value) => updateConfig({ industry: value })}
                 />
               )}
 
-              {currentStep === 4 && (
+              {currentStep === 3 && (
                 <QuestionnaireStep
-                  step={4}
-                  title="Quelle est la taille de votre entreprise ?"
+                  step={3}
+                  title="Quelle est la taille de votre organisation ?"
                   options={[
-                    { value: "solo", label: "Travailleur Autonome", description: "1 personne, gestion personnelle" },
-                    { value: "petite", label: "Petite Équipe", description: "2-10 employés, structure simple" },
-                    { value: "moyenne", label: "Entreprise Moyenne", description: "11-50 employés, départements établis" },
-                    { value: "grande", label: "Grande Entreprise", description: "50+ employés, structure complexe" },
+                    { value: "solo", label: "Travailleur Autonome", description: "1 personne" },
+                    { value: "small", label: "Petite Entreprise", description: "2-10 employés" },
+                    { value: "medium", label: "Entreprise Moyenne", description: "11-50 employés" },
+                    { value: "large", label: "Grande Entreprise", description: "50+ employés" },
                   ]}
                   selectedValue={demoConfig.companySize}
                   onSelect={(value) => updateConfig({ companySize: value })}
                 />
               )}
 
-              {currentStep === 5 && (
+              {currentStep === 4 && (
                 <QuestionnaireStep
-                  step={5}
-                  title="Quel est votre principal défi actuellement ?"
+                  step={4}
+                  title="Quel est votre objectif principal avec ce projet ?"
                   options={[
-                    { value: "organisation", label: "Organisation & Processus", description: "Besoin de structure et d'efficacité" },
-                    { value: "croissance", label: "Croissance Rapide", description: "Gérer l'expansion et la scalabilité" },
-                    { value: "digital", label: "Transformation Digitale", description: "Moderniser les outils et pratiques" },
-                    { value: "client", label: "Expérience Client", description: "Améliorer la satisfaction et fidélisation" },
-                    { value: "couts", label: "Optimisation des Coûts", description: "Réduire les dépenses et maximiser ROI" },
+                    { value: "automation", label: "Automatiser les Processus", description: "Réduire le travail manuel et gagner du temps" },
+                    { value: "growth", label: "Accélérer la Croissance", description: "Augmenter les revenus et acquérir plus de clients" },
+                    { value: "efficiency", label: "Améliorer l'Efficacité", description: "Optimiser les opérations et la productivité" },
+                    { value: "experience", label: "Expérience Utilisateur", description: "Offrir une meilleure expérience client/employé" },
+                    { value: "visibility", label: "Augmenter la Visibilité", description: "Renforcer la présence en ligne et la notoriété" },
                   ]}
-                  selectedValue={demoConfig.mainChallenge}
-                  onSelect={(value) => updateConfig({ mainChallenge: value })}
+                  selectedValue={demoConfig.mainObjective}
+                  onSelect={(value) => updateConfig({ mainObjective: value })}
                 />
               )}
 
-              {currentStep === 6 && (
+              {currentStep === 5 && (
                 <QuestionnaireStep
-                  step={6}
-                  title="Dans quel délai souhaitez-vous implémenter ?"
+                  step={5}
+                  title="Dans quel délai souhaitez-vous lancer ?"
                   options={[
-                    { value: "urgent", label: "Urgent (1-2 semaines)", description: "Besoin immédiat, démarrage rapide" },
-                    { value: "court", label: "Court Terme (1 mois)", description: "Implémentation dans le mois" },
-                    { value: "moyen", label: "Moyen Terme (2-3 mois)", description: "Planification détaillée" },
-                    { value: "long", label: "Long Terme (3+ mois)", description: "Projet stratégique, phase de réflexion" },
+                    { value: "urgent", label: "Très Urgent (2-4 semaines)", description: "Besoin immédiat, démarrage rapide prioritaire" },
+                    { value: "normal", label: "Standard (2-3 mois)", description: "Timeline normale avec planification" },
+                    { value: "flexible", label: "Flexible (3+ mois)", description: "Pas de date limite précise" },
                   ]}
                   selectedValue={demoConfig.timeline}
                   onSelect={(value) => updateConfig({ timeline: value })}
                 />
               )}
 
-              {currentStep === 7 && (
+              {currentStep === 6 && (
                 <div className="space-y-6">
                   <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
-                        7
-                      </div>
-                      <h2 className="text-2xl font-bold">Personnalisation Visuelle</h2>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
+                      6
                     </div>
-                    <p className="text-muted-foreground ml-10">
-                      Dernière étape : ajoutez votre identité visuelle
-                    </p>
+                    <h2 className="text-2xl font-bold">Personnalisation Visuelle</h2>
+                  </div>
+                  <p className="text-muted-foreground ml-10">
+                    Dernière étape : ajoutez votre identité visuelle
+                  </p>
                   </div>
                   
                   <div className="ml-10 space-y-8">
@@ -284,11 +261,10 @@ export const DemoGenerator = () => {
                   onClick={handleNext}
                   disabled={
                     (currentStep === 1 && !demoConfig.serviceType) ||
-                    (currentStep === 2 && demoConfig.features.length === 0) ||
-                    (currentStep === 3 && !demoConfig.industry) ||
-                    (currentStep === 4 && !demoConfig.companySize) ||
-                    (currentStep === 5 && !demoConfig.mainChallenge) ||
-                    (currentStep === 6 && !demoConfig.timeline)
+                    (currentStep === 2 && !demoConfig.industry) ||
+                    (currentStep === 3 && !demoConfig.companySize) ||
+                    (currentStep === 4 && !demoConfig.mainObjective) ||
+                    (currentStep === 5 && !demoConfig.timeline)
                   }
                   className="flex-1"
                 >
