@@ -115,7 +115,19 @@ export const DemoFeaturesDisplay = ({
         </div>
 
         <div className="space-y-8">
-          {Object.entries(featuresByCategory).map(([category, features]) => {})}
+          {Object.entries(featuresByCategory).map(([category, features]) => (
+            <Card key={category} className="p-6">
+              <h3 className="font-bold text-xl mb-4">{category}</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                {features.map((feature, idx) => (
+                  <div key={idx} className="flex items-start gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          ))}
         </div>
 
         {/* Add business context for auto industry */}
