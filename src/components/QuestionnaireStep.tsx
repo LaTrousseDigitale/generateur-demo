@@ -94,7 +94,7 @@ export const QuestionnaireStep = ({
           })}
         </div>
       ) : (
-        <RadioGroup value={selectedValue || undefined} onValueChange={onSelect}>
+        <RadioGroup value={selectedValue || ""} onValueChange={onSelect}>
           <div className="space-y-3">
             {options.map((option) => {
               const isSelected = selectedValue === option.value;
