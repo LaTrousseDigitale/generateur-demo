@@ -2,14 +2,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { DemoConfig } from "./DemoGenerator";
+import { QuestionnaireData } from "@/types/questionnaire";
 import { CheckCircle2, Calendar, DollarSign, Clock, Zap } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 
 interface QuoteModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  config: DemoConfig;
+  data: QuestionnaireData;
 }
 
 interface QuoteItem {
@@ -19,66 +19,270 @@ interface QuoteItem {
   included: boolean;
 }
 
-export const QuoteModal = ({ open, onOpenChange, config }: QuoteModalProps) => {
+export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
   const calculateQuote = (): { items: QuoteItem[], total: number, timeline: string, oneTimeTotal: number } => {
     const items: QuoteItem[] = [];
     let monthlyTotal = 0;
     let oneTimeTotal = 0;
 
-    // Prix de base selon le type de service (mensuel)
-    if (config.serviceType === "portal") {
-      monthlyTotal = 120; // Portail Démarrage
+    // === SECTION 1: Solutions Website ===
+    if ((data.solutionTypes || []).includes("website")) {
+      if (data.websiteType === "vitrine") {
+        monthlyTotal += 80;
+        items.push({
+          name: "Site Web Vitrine",
+          description: "Site professionnel responsive",
+          price: 80,
+          included: true
+        });
+      } else if (data.websiteType === "ecommerce") {
+        monthlyTotal += 150;
+        items.push({
+          name: "Site E-commerce",
+          description: "Boutique en ligne complète",
+          price: 150,
+          included: true
+        });
+        
+        // Ajout selon nombre de produits
+        const productCount = data.ecommerceProductCount;
+        if (productCount === "50-200" || productCount === "200+") {
+          monthlyTotal += 30;
+          items.push({
+            name: "Gestion catalogue étendu",
+            description: "Support pour catalogue de produits volumineux",
+            price: 30,
+            included: true
+          });
+        }
+      } else if (data.websiteType === "organisationnel") {
+        monthlyTotal += 100;
+        items.push({
+          name: "Site Organisationnel",
+          description: "Plateforme web sur mesure",
+          price: 100,
+          included: true
+        });
+      }
+
+      // Fonctionnalités additionnelles - E-commerce
+      (data.ecommerceNeeds || []).forEach(need => {
+        const needPrices: Record<string, number> = {
+          "payment": 20,
+          "inventory": 25,
+          "shipping": 15,
+          "reviews": 10,
+          "wishlist": 8,
+          "loyalty": 15
+        };
+        if (needPrices[need]) {
+          monthlyTotal += needPrices[need];
+          items.push({
+            name: `Module ${need}`,
+            description: "Fonctionnalité e-commerce additionnelle",
+            price: needPrices[need],
+            included: true
+          });
+        }
+      });
+
+      // Fonctionnalités spécifiques par industrie
+      if (data.industry === "auto") {
+        (data.autoCompatibility || []).forEach(() => {
+          monthlyTotal += 20;
+          items.push({
+            name: "Compatibilité véhicules",
+            description: "Base de données de compatibilité auto",
+            price: 20,
+            included: true
+          });
+        });
+      }
+
+      if (data.industry === "restauration") {
+        (data.restaurantFeatures || []).forEach(feature => {
+          const prices: Record<string, number> = {
+            "menu": 15,
+            "reservations": 25,
+            "delivery": 30
+          };
+          if (prices[feature]) {
+            monthlyTotal += prices[feature];
+            items.push({
+              name: `Restaurant - ${feature}`,
+              description: "Module restauration",
+              price: prices[feature],
+              included: true
+            });
+          }
+        });
+      }
+
+      if (data.industry === "sante") {
+        (data.healthCompliance || []).forEach(feature => {
+          monthlyTotal += 30;
+          items.push({
+            name: "Conformité santé",
+            description: feature,
+            price: 30,
+            included: true
+          });
+        });
+      }
+    }
+
+    // === SECTION 2: Solutions Portal ===
+    if ((data.solutionTypes || []).includes("portal")) {
+      monthlyTotal += 120;
       items.push({
-        name: "Portail Démarrage",
+        name: "Portail d'entreprise",
         description: "Plateforme complète avec 3 utilisateurs inclus",
         price: 120,
         included: true
       });
-      
-      // Ajout selon taille de l'entreprise (utilisateurs additionnels)
-      if (config.companySize === "small") {
-        const additionalUsers = 7; // 10 - 3 inclus
+
+      // Utilisateurs additionnels basés sur portalUsers
+      const userCounts: Record<string, number> = {
+        "5-10": 7,
+        "11-25": 22,
+        "26-50": 47,
+        "50+": 97
+      };
+      const additionalUsers = userCounts[data.portalUsers || ""] || 0;
+      if (additionalUsers > 0) {
         monthlyTotal += additionalUsers;
         items.push({
-          name: "Utilisateurs Additionnels",
-          description: `${additionalUsers} utilisateurs supplémentaires`,
-          price: additionalUsers,
-          included: true
-        });
-      } else if (config.companySize === "medium") {
-        const additionalUsers = 47; // 50 - 3 inclus
-        monthlyTotal += additionalUsers;
-        items.push({
-          name: "Utilisateurs Additionnels",
-          description: `${additionalUsers} utilisateurs supplémentaires`,
-          price: additionalUsers,
-          included: true
-        });
-      } else if (config.companySize === "large") {
-        const additionalUsers = 97; // 100 - 3 inclus (estimation)
-        monthlyTotal += additionalUsers;
-        items.push({
-          name: "Utilisateurs Additionnels",
-          description: `${additionalUsers} utilisateurs supplémentaires`,
+          name: "Utilisateurs additionnels",
+          description: `${additionalUsers} utilisateurs supplémentaires à 1$/mois`,
           price: additionalUsers,
           included: true
         });
       }
-      
-    } else if (config.serviceType === "website") {
-      monthlyTotal = 80; // Site Web Essentiel
-      items.push({
-        name: "Site Web Essentiel",
-        description: "Site professionnel responsive avec 3 pages",
-        price: 80,
-        included: true
+
+      // Fonctionnalités portail client
+      (data.portalClientFeatures || []).forEach(feature => {
+        monthlyTotal += 15;
+        items.push({
+          name: `Portail client - ${feature}`,
+          description: "Fonctionnalité portail",
+          price: 15,
+          included: true
+        });
       });
-    } else if (config.serviceType === "module") {
-      // Module de base - prix selon objectifs
-      monthlyTotal = 0; // Sera calculé selon les objectifs
+
+      // Fonctionnalités portail employés
+      (data.portalEmployeeFeatures || []).forEach(feature => {
+        monthlyTotal += 15;
+        items.push({
+          name: `Portail employés - ${feature}`,
+          description: "Fonctionnalité portail",
+          price: 15,
+          included: true
+        });
+      });
+
+      // Fonctionnalités portail RH
+      (data.portalHRFeatures || []).forEach(feature => {
+        monthlyTotal += 20;
+        items.push({
+          name: `Module RH - ${feature}`,
+          description: "Fonctionnalité ressources humaines",
+          price: 20,
+          included: true
+        });
+      });
     }
 
-    // Modules selon les objectifs sélectionnés
+    // === SECTION 3: Modules Complémentaires ===
+    const modulePrices: Record<string, { name: string; price: number }> = {
+      "calculateur-pdf": { name: "Calculateur PDF", price: 25 },
+      "rendez-vous": { name: "Système de rendez-vous", price: 30 },
+      "tickets": { name: "Gestion de tickets", price: 20 },
+      "crm-lite": { name: "CRM Lite", price: 35 },
+      "projets-lite": { name: "Gestion de projets Lite", price: 30 },
+      "rh-lite": { name: "RH Lite", price: 35 },
+      "base-connaissances": { name: "Base de connaissances", price: 25 },
+      "chat-interne": { name: "Chat interne", price: 20 },
+      "onboarding": { name: "Onboarding automatisé", price: 25 },
+      "signatures": { name: "Signatures électroniques", price: 30 },
+      "kpi-dashboard": { name: "KPI & Tableaux de bord", price: 40 }
+    };
+
+    (data.selectedModules || []).forEach(moduleId => {
+      const module = modulePrices[moduleId];
+      if (module) {
+        monthlyTotal += module.price;
+        items.push({
+          name: module.name,
+          description: "Module complémentaire",
+          price: module.price,
+          included: true
+        });
+      }
+    });
+
+    // === SECTION 4: Services Canva ===
+    if ((data.canvaServices || []).length > 0) {
+      const quantityPrices: Record<string, number> = {
+        "1-5": 240,      // 4h × 60$
+        "6-10": 480,     // 8h × 60$
+        "11-20": 900,    // 15h × 60$
+        "20+": 1500      // forfait sur mesure estimation
+      };
+
+      const quantity = data.canvaQuantity || "";
+      const basePrice = quantityPrices[quantity] || 0;
+
+      if (data.canvaFrequency === "one-time") {
+        // Frais uniques pour projet ponctuel
+        oneTimeTotal += basePrice;
+        items.push({
+          name: "Services Canva (ponctuel)",
+          description: `${data.canvaServices.length} type(s) de design - ${quantity} designs`,
+          price: basePrice,
+          included: true
+        });
+      } else {
+        // Frais mensuels récurrents
+        const frequency = data.canvaFrequency;
+        let monthlyPrice = basePrice;
+        
+        if (frequency === "quarterly") {
+          monthlyPrice = Math.round(basePrice / 3);
+        } else if (frequency === "as-needed") {
+          monthlyPrice = Math.round(basePrice * 0.5); // Estimation moyenne
+        }
+        
+        monthlyTotal += monthlyPrice;
+        items.push({
+          name: "Services Canva (récurrent)",
+          description: `${data.canvaServices.length} type(s) de design - ${frequency}`,
+          price: monthlyPrice,
+          included: true
+        });
+      }
+
+      // Supports infographies additionnels
+      if ((data.infographicSupports || []).length > 0) {
+        const supportsCount = data.infographicSupports.length;
+        const supportsPrice = supportsCount * 50; // 50$ par type de support
+        
+        if (data.canvaFrequency === "one-time") {
+          oneTimeTotal += supportsPrice;
+        } else {
+          monthlyTotal += supportsPrice;
+        }
+        
+        items.push({
+          name: "Supports infographies",
+          description: `${supportsCount} type(s) de support physique`,
+          price: supportsPrice,
+          included: true
+        });
+      }
+    }
+
+    // Modules selon les objectifs sélectionnés (legacy support)
     const objectiveModules: Record<string, { name: string; description: string; price: number }> = {
       "reduce-costs": { 
         name: "Optimisation & Analytics", 
@@ -122,7 +326,7 @@ export const QuoteModal = ({ open, onOpenChange, config }: QuoteModalProps) => {
       }
     };
 
-    config.mainObjectives.forEach(objective => {
+    data.mainObjectives.forEach(objective => {
       const module = objectiveModules[objective];
       if (module) {
         items.push({
@@ -137,7 +341,7 @@ export const QuoteModal = ({ open, onOpenChange, config }: QuoteModalProps) => {
 
     // Modules selon l'industrie (conformité)
     const complexIndustries = ["finances", "sante", "legal"];
-    if (complexIndustries.includes(config.industry)) {
+    if (complexIndustries.includes(data.industry)) {
       items.push({
         name: "Conformité Sectorielle",
         description: "Sécurité renforcée et conformité réglementaire",
@@ -170,8 +374,9 @@ export const QuoteModal = ({ open, onOpenChange, config }: QuoteModalProps) => {
     );
 
     // Frais d'installation unique selon urgence
-    if (config.timeline === "urgent") {
-      oneTimeTotal = 500;
+    const isUrgent = data.startDate && new Date(data.startDate) < new Date(Date.now() + 14 * 24 * 60 * 60 * 1000);
+    if (isUrgent) {
+      oneTimeTotal += 500;
       items.push({
         name: "Installation Express",
         description: "Livraison accélérée en 7 jours",
@@ -180,14 +385,22 @@ export const QuoteModal = ({ open, onOpenChange, config }: QuoteModalProps) => {
       });
     }
 
-    // Timeline selon l'urgence
+    // Timeline selon l'urgence et la date de démarrage
     let timeline = "2-3 semaines";
-    if (config.timeline === "urgent") {
+    if (isUrgent) {
       timeline = "7 jours ouvrables";
-    } else if (config.timeline === "normal") {
-      timeline = "2-3 semaines";
-    } else if (config.timeline === "flexible") {
-      timeline = "3-4 semaines";
+    } else if (data.startDate) {
+      const startDate = new Date(data.startDate);
+      const now = new Date();
+      const daysUntil = Math.floor((startDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysUntil < 30) {
+        timeline = "2-3 semaines";
+      } else if (daysUntil < 60) {
+        timeline = "3-4 semaines";
+      } else {
+        timeline = "4-6 semaines";
+      }
     }
 
     return { 
