@@ -12,6 +12,7 @@ import { Section2SolutionType } from "./questionnaire/Section2SolutionType";
 import { Section3Website } from "./questionnaire/Section3Website";
 import { Section4Portal } from "./questionnaire/Section4Portal";
 import { Section5Modules } from "./questionnaire/Section5Modules";
+import { Section6Canva } from "./questionnaire/Section6Canva";
 import { ColorCustomizer } from "./ColorCustomizer";
 import { LogoUploader } from "./LogoUploader";
 import { Section7Domain } from "./questionnaire/Section7Domain";
@@ -35,7 +36,7 @@ export interface DemoConfig {
   companyName: string;
 }
 
-const TOTAL_STEPS = 10;
+const TOTAL_STEPS = 11;
 
 // Convert QuestionnaireData to DemoConfig
 const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
@@ -115,6 +116,11 @@ export const DemoGenerator = () => {
       portalHRFeatures: [],
       selectedModules: [],
       customModule: "",
+      canvaServices: [],
+      canvaQuantity: "",
+      canvaFrequency: "",
+      canvaDeadline: "",
+      canvaSpecifications: "",
       logo: null,
       primaryColor: "#1c61fe",
       accentColor: "#ff6b3d",
@@ -182,12 +188,14 @@ export const DemoGenerator = () => {
         if (!(questionnaireData.solutionTypes || []).includes("portal")) return true;
         return questionnaireData.portalType && questionnaireData.portalUsers && questionnaireData.portalRoles;
       case 6:
-        return questionnaireData.companyName;
+        return questionnaireData.canvaServices && questionnaireData.canvaServices.length > 0 && questionnaireData.canvaQuantity && questionnaireData.canvaFrequency;
       case 7:
-        return questionnaireData.domainType && questionnaireData.hostingPreference;
+        return questionnaireData.companyName;
       case 8:
-        return questionnaireData.paymentMode;
+        return questionnaireData.domainType && questionnaireData.hostingPreference;
       case 9:
+        return questionnaireData.paymentMode;
+      case 10:
         return questionnaireData.contactMethod;
       default:
         return true;
@@ -231,6 +239,7 @@ export const DemoGenerator = () => {
       "Configuration Site Web",
       "Configuration Portail",
       "Modules Additionnels",
+      "Services Canva",
       "Identité de Marque",
       "Domaine & Hébergement",
       "Options Financières",
@@ -283,7 +292,8 @@ export const DemoGenerator = () => {
                   isModuleSelected={(questionnaireData.solutionTypes || []).includes("module")}
                 />
               )}
-              {currentStep === 6 && (
+              {currentStep === 6 && <Section6Canva data={questionnaireData} onChange={updateData} />}
+              {currentStep === 7 && (
                 <div className="space-y-6">
                   <LogoUploader
                     logo={questionnaireData.logo}
@@ -299,10 +309,10 @@ export const DemoGenerator = () => {
                   />
                 </div>
               )}
-              {currentStep === 7 && <Section7Domain data={questionnaireData} onChange={updateData} />}
-              {currentStep === 8 && <Section8Finances data={questionnaireData} onChange={updateData} />}
-              {currentStep === 9 && <Section9Summary data={questionnaireData} onChange={updateData} />}
-              {currentStep === 10 && (
+              {currentStep === 8 && <Section7Domain data={questionnaireData} onChange={updateData} />}
+              {currentStep === 9 && <Section8Finances data={questionnaireData} onChange={updateData} />}
+              {currentStep === 10 && <Section9Summary data={questionnaireData} onChange={updateData} />}
+              {currentStep === 11 && (
                 <div className="text-center py-12 space-y-4">
                   <h3 className="text-2xl font-bold text-primary">🎉 Prêt à découvrir votre démo !</h3>
                   <p className="text-muted-foreground text-lg">
