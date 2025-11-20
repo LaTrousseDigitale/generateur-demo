@@ -20,10 +20,21 @@ interface QuoteItem {
 }
 
 export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
-  const calculateQuote = (): { items: QuoteItem[], total: number, timeline: string, oneTimeTotal: number } => {
+  const calculateQuote = (): { 
+    items: QuoteItem[], 
+    canvaItems: QuoteItem[],
+    total: number, 
+    canvaTotal: number,
+    canvaOneTime: number,
+    timeline: string, 
+    oneTimeTotal: number 
+  } => {
     const items: QuoteItem[] = [];
+    const canvaItems: QuoteItem[] = [];
     let monthlyTotal = 0;
     let oneTimeTotal = 0;
+    let canvaMonthlyTotal = 0;
+    let canvaOneTimeTotal = 0;
 
     // === SECTION 1: Solutions Website ===
     if ((data.solutionTypes || []).includes("website")) {
@@ -233,8 +244,8 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
 
       if (data.canvaFrequency === "one-time") {
         // Frais uniques pour projet ponctuel
-        oneTimeTotal += basePrice;
-        items.push({
+        canvaOneTimeTotal += basePrice;
+        canvaItems.push({
           name: "Services Canva (ponctuel)",
           description: `${data.canvaServices.length} type(s) de design - ${quantity} designs`,
           price: basePrice,
@@ -251,8 +262,8 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
           monthlyPrice = Math.round(basePrice * 0.5); // Estimation moyenne
         }
         
-        monthlyTotal += monthlyPrice;
-        items.push({
+        canvaMonthlyTotal += monthlyPrice;
+        canvaItems.push({
           name: "Services Canva (récurrent)",
           description: `${data.canvaServices.length} type(s) de design - ${frequency}`,
           price: monthlyPrice,
@@ -266,12 +277,12 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
         const supportsPrice = supportsCount * 50; // 50$ par type de support
         
         if (data.canvaFrequency === "one-time") {
-          oneTimeTotal += supportsPrice;
+          canvaOneTimeTotal += supportsPrice;
         } else {
-          monthlyTotal += supportsPrice;
+          canvaMonthlyTotal += supportsPrice;
         }
         
-        items.push({
+        canvaItems.push({
           name: "Supports infographies",
           description: `${supportsCount} type(s) de support physique`,
           price: supportsPrice,
@@ -403,7 +414,10 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
 
     return { 
       items, 
+      canvaItems,
       total: monthlyTotal, 
+      canvaTotal: canvaMonthlyTotal,
+      canvaOneTime: canvaOneTimeTotal,
       timeline,
       oneTimeTotal 
     };
@@ -476,6 +490,48 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
             </div>
           </div>
 
+          {/* Services Canva - Section séparée */}
+          {quote.canvaItems.length > 0 && (
+            <>
+              <Separator />
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Services Design Canva</h3>
+                    <p className="text-sm text-muted-foreground">Services de création graphique</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {quote.canvaItems.map((item, index) => (
+                    <Card key={index} className="p-4 border-accent/30">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+                            <h4 className="font-semibold">{item.name}</h4>
+                          </div>
+                          <p className="text-sm text-muted-foreground ml-6">
+                            {item.description}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-accent">
+                            {item.price.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
           <Separator />
 
           {/* Total */}
@@ -490,6 +546,18 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                 </div>
                 <Zap className="w-12 h-12 text-primary/30" />
               </div>
+
+              {/* Services Canva mensuels */}
+              {quote.canvaTotal > 0 && (
+                <div className="pt-4 border-t border-primary/20">
+                  <div className="flex items-center justify-between">
+                    <p className="text-muted-foreground">Services Canva (récurrent)</p>
+                    <p className="text-2xl font-bold text-accent">
+                      {quote.canvaTotal.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}/mois
+                    </p>
+                  </div>
+                </div>
+              )}
               
               {quote.oneTimeTotal > 0 && (
                 <div className="pt-4 border-t border-primary/20">
@@ -497,6 +565,18 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                     <p className="text-muted-foreground">Frais d'installation unique</p>
                     <p className="text-2xl font-bold text-accent">
                       {quote.oneTimeTotal.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Services Canva ponctuels */}
+              {quote.canvaOneTime > 0 && (
+                <div className="pt-4 border-t border-primary/20">
+                  <div className="flex items-center justify-between">
+                    <p className="text-muted-foreground">Services Canva (ponctuel)</p>
+                    <p className="text-2xl font-bold text-accent">
+                      {quote.canvaOneTime.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                     </p>
                   </div>
                 </div>
