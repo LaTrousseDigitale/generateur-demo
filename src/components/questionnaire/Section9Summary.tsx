@@ -4,10 +4,12 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { FileText, Mail, Phone } from "lucide-react";
+
 interface Section9Props {
   data: any;
   onChange: (updates: any) => void;
 }
+
 export const Section9Summary = ({
   data,
   onChange
@@ -71,9 +73,8 @@ export const Section9Summary = ({
 
       {/* Confirmation */}
       <Card className="p-4 bg-primary/5 border-primary/20">
-        <p className="text-sm">Presque terminé ! Une fois que vous aurez cliqué sur ''suivant'', vous accéderez à votre démo en temps réel ainsi qu'un devis personnalisé de votre projet. Pour toute question, n'hésitez pas à nous joindre du lundi au jeudi de 11h à 19h et les vendredi entre 10h et 14h. Nous vous répondrons dans un délai de 24 heures ouvrables.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <strong>Presque terminé !</strong> Une fois que vous aurez vu votre démo personnalisée, vous recevrez un
-          devis détaillé par courriel. Notre équipe vous contactera selon votre préférence pour discuter de votre
-          projet.
+        <p className="text-sm">
+          Presque terminé ! Une fois que vous aurez cliqué sur "suivant", vous accéderez à votre démo en temps réel ainsi qu'un devis personnalisé de votre projet. Pour toute question, n'hésitez pas à nous joindre du lundi au jeudi de 11h à 19h et les vendredi entre 10h et 14h. Nous vous répondrons dans un délai de 24 heures ouvrables.
         </p>
       </Card>
     </div>;
