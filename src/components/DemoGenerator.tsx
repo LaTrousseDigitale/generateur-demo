@@ -227,7 +227,7 @@ export const DemoGenerator = () => {
         <QuoteModal 
           open={showQuoteModal} 
           onOpenChange={setShowQuoteModal}
-          config={demoConfig}
+          data={questionnaireData}
         />
       </>
     );
