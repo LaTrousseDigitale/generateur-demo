@@ -5,6 +5,7 @@ import { DemoConfig } from "./DemoGenerator";
 import { ArrowLeft, Download, Share2, ShoppingCart, Search, Heart, Star, TrendingUp, Filter, ChevronRight, Menu } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { DemoFeaturesDisplay } from "./DemoFeaturesDisplay";
 
 // Import product images - Fresh automotive images 2024
 import productAuto1 from "@/assets/product-auto-1.jpg";
@@ -323,6 +324,9 @@ export const EcommerceDemo = ({
           </div>
         </div>
       </section>
+
+      {/* Features Display - Shows all selected features from questionnaire */}
+      <DemoFeaturesDisplay config={config} />
 
       {/* Filters & Products Grid */}
       <section className="py-12">

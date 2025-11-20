@@ -167,6 +167,62 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
                 Questions spécifiques - Vente automobile et pièces
               </Label>
               
+              {/* Nouveaux: Questions sur le business */}
+              <div className="space-y-2">
+                <Label>Type de produits vendus *</Label>
+                <RadioGroup
+                  value={data.autoProductType || ""}
+                  onValueChange={(value) => onChange({ autoProductType: value })}
+                >
+                  {[
+                    "Pièces automobiles neuves",
+                    "Pièces automobiles usagées / recyclées",
+                    "Véhicules neufs et d'occasion",
+                    "Accessoires et équipements",
+                    "Mix de produits (pièces et véhicules)"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`product-type-${type}`} />
+                      <label htmlFor={`product-type-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Type d'acheteur principal *</Label>
+                <RadioGroup
+                  value={data.autoCustomerType || ""}
+                  onValueChange={(value) => onChange({ autoCustomerType: value })}
+                >
+                  {[
+                    "Particuliers (B2C)",
+                    "Ateliers / Garages (B2B)",
+                    "Concessionnaires (B2B)",
+                    "Mix B2B et B2C"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`customer-type-${type}`} />
+                      <label htmlFor={`customer-type-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="current-sales">Comment gérez-vous vos ventes actuellement?</Label>
+                <Input
+                  id="current-sales"
+                  value={data.autoCurrentSales || ""}
+                  onChange={(e) => onChange({ autoCurrentSales: e.target.value })}
+                  placeholder="Ex: Par téléphone, email, sur place uniquement..."
+                />
+              </div>
+              
               <div className="space-y-3">
                 <Label>Recherche et compatibilité véhicules</Label>
                 {[
@@ -220,6 +276,52 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
                 Questions spécifiques - Restauration
               </Label>
               
+              {/* Nouvelles questions sur le business */}
+              <div className="space-y-2">
+                <Label>Type de restaurant *</Label>
+                <RadioGroup
+                  value={data.restaurantType || ""}
+                  onValueChange={(value) => onChange({ restaurantType: value })}
+                >
+                  {[
+                    "Restaurant traditionnel",
+                    "Fast-food / Restauration rapide",
+                    "Café / Bistro",
+                    "Food truck / Traiteur",
+                    "Restaurant gastronomique"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`resto-type-${type}`} />
+                      <label htmlFor={`resto-type-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Service de vente principal *</Label>
+                <RadioGroup
+                  value={data.restaurantSalesType || ""}
+                  onValueChange={(value) => onChange({ restaurantSalesType: value })}
+                >
+                  {[
+                    "Sur place uniquement",
+                    "Livraison uniquement",
+                    "À emporter uniquement",
+                    "Mix (sur place + livraison/emporter)"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`sales-type-${type}`} />
+                      <label htmlFor={`sales-type-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+              
               <div className="space-y-3">
                 <Label>Fonctionnalités restaurant</Label>
                 {[
@@ -251,6 +353,39 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
               <Label className="text-base font-bold text-foreground">
                 Questions spécifiques - Commerce de détail
               </Label>
+              
+              {/* Nouvelles questions sur le business */}
+              <div className="space-y-2">
+                <Label>Type de commerce *</Label>
+                <RadioGroup
+                  value={data.retailType || ""}
+                  onValueChange={(value) => onChange({ retailType: value })}
+                >
+                  {[
+                    "Boutique unique",
+                    "Chaîne de magasins",
+                    "En ligne uniquement",
+                    "Click & Collect (en ligne + magasin)"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`retail-type-${type}`} />
+                      <label htmlFor={`retail-type-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="retail-products">Quels types de produits vendez-vous?</Label>
+                <Input
+                  id="retail-products"
+                  value={data.retailProductTypes || ""}
+                  onChange={(e) => onChange({ retailProductTypes: e.target.value })}
+                  placeholder="Ex: Vêtements, électronique, décoration..."
+                />
+              </div>
               
               <div className="space-y-3">
                 <Label>Gestion magasin et inventaire</Label>
