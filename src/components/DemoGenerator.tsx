@@ -118,7 +118,7 @@ export const DemoGenerator = () => {
               {currentStep === 1 && (
                 <QuestionnaireStep
                   step={1}
-                  title="Quel type de service souhaitez-vous découvrir ?"
+                  title="Quel service souhaitez-vous découvrir?"
                   options={[
                     {
                       value: "portal",
