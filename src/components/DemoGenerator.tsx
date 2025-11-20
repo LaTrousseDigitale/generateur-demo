@@ -122,6 +122,9 @@ export const DemoGenerator = () => {
       canvaDeadline: "",
       canvaSpecifications: "",
       infographicSupports: [],
+      canvaCustomQuantity: "",
+      canvaCustomDesignTypes: "",
+      canvaCustomDeadline: "",
       logo: null,
       primaryColor: "#1c61fe",
       accentColor: "#ff6b3d",
@@ -189,7 +192,20 @@ export const DemoGenerator = () => {
         if (!(questionnaireData.solutionTypes || []).includes("portal")) return true;
         return questionnaireData.portalType && questionnaireData.portalUsers && questionnaireData.portalRoles;
       case 6:
-        return questionnaireData.canvaServices && questionnaireData.canvaServices.length > 0 && questionnaireData.canvaQuantity && questionnaireData.canvaFrequency;
+        const hasCanvaServices = questionnaireData.canvaServices && questionnaireData.canvaServices.length > 0;
+        const hasQuantity = questionnaireData.canvaQuantity;
+        const hasFrequency = questionnaireData.canvaFrequency;
+        
+        if (!hasCanvaServices || !hasQuantity || !hasFrequency) return false;
+        
+        // Si forfait sur mesure (20+), vérifier les champs additionnels
+        if (questionnaireData.canvaQuantity === "20+") {
+          return questionnaireData.canvaCustomQuantity && 
+                 questionnaireData.canvaCustomDesignTypes && 
+                 questionnaireData.canvaCustomDeadline;
+        }
+        
+        return true;
       case 7:
         return questionnaireData.companyName;
       case 8:

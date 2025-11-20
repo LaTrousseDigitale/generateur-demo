@@ -158,6 +158,66 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
         </RadioGroup>
       </div>
 
+      {/* Questions conditionnelles pour forfait sur mesure (20+) */}
+      {data.canvaQuantity === "20+" && (
+        <Card className="p-6 bg-accent/5 border-accent/30 space-y-4">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
+              <span className="text-sm font-bold text-accent">!</span>
+            </div>
+            <h4 className="font-semibold text-accent">Détails du forfait sur mesure</h4>
+          </div>
+
+          {/* Nombre exact de designs */}
+          <div className="space-y-2">
+            <Label htmlFor="custom-quantity" className="text-foreground">
+              Nombre exact de designs souhaités *
+            </Label>
+            <Input
+              id="custom-quantity"
+              type="number"
+              min="21"
+              value={data.canvaCustomQuantity || ""}
+              onChange={(e) => onChange({ canvaCustomQuantity: e.target.value })}
+              placeholder="Ex: 25, 50, 100..."
+              className="border-accent/30"
+            />
+          </div>
+
+          {/* Types de designs détaillés */}
+          <div className="space-y-2">
+            <Label htmlFor="custom-design-types" className="text-foreground">
+              Types de designs et quantités par type *
+            </Label>
+            <Textarea
+              id="custom-design-types"
+              value={data.canvaCustomDesignTypes || ""}
+              onChange={(e) => onChange({ canvaCustomDesignTypes: e.target.value })}
+              placeholder="Ex: 15 dépliants, 20 bannières web, 10 infographies pour affiches..."
+              rows={4}
+              className="border-accent/30"
+            />
+            <p className="text-xs text-muted-foreground">
+              Décrivez en détail les types de designs et les quantités souhaitées pour chacun
+            </p>
+          </div>
+
+          {/* Date d'échéance spécifique */}
+          <div className="space-y-2">
+            <Label htmlFor="custom-deadline" className="text-foreground">
+              Date d'échéance souhaitée *
+            </Label>
+            <Input
+              id="custom-deadline"
+              type="date"
+              value={data.canvaCustomDeadline || ""}
+              onChange={(e) => onChange({ canvaCustomDeadline: e.target.value })}
+              className="border-accent/30"
+            />
+          </div>
+        </Card>
+      )}
+
       {/* Fréquence */}
       <div className="space-y-3">
         <Label>Fréquence des services *</Label>

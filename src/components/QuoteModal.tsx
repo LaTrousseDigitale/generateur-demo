@@ -242,9 +242,13 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
       
       // Forfait sur mesure pour 20+
       if (quantity === "20+") {
+        const customQuantity = data.canvaCustomQuantity || "non spécifié";
+        const customTypes = data.canvaCustomDesignTypes || "à déterminer";
+        const customDeadline = data.canvaCustomDeadline || "à définir";
+        
         canvaItems.push({
           name: "Services Canva (forfait sur mesure)",
-          description: `${data.canvaServices.length} type(s) de design - Plus de 20 designs - Prix à déterminer selon vos besoins`,
+          description: `${customQuantity} designs - ${customTypes.substring(0, 80)}... - Échéance: ${customDeadline}`,
           price: 0,
           included: true
         });
