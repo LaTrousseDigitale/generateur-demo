@@ -87,15 +87,13 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
       });
 
       // Fonctionnalités spécifiques par industrie
-      if (data.industry === "auto") {
-        (data.autoCompatibility || []).forEach(() => {
-          monthlyTotal += 20;
-          items.push({
-            name: "Compatibilité véhicules",
-            description: "Base de données de compatibilité auto",
-            price: 20,
-            included: true
-          });
+      if (data.industry === "auto" && (data.autoCompatibility || []).length > 0) {
+        monthlyTotal += 20;
+        items.push({
+          name: "Compatibilité véhicules",
+          description: "Base de données de compatibilité auto",
+          price: 20,
+          included: true
         });
       }
 
