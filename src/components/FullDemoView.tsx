@@ -16,17 +16,22 @@ interface FullDemoViewProps {
 export const FullDemoView = ({ config, onBack }: FullDemoViewProps) => {
   const { toast } = useToast();
 
-  // Router vers la bonne démo selon le type sélectionné
-  if (config.features.includes("vitrine")) {
+  // Router vers la bonne démo selon le type de service et l'industrie
+  if (config.serviceType === "website") {
+    // Démos spécifiques selon l'industrie pour les solutions web
+    const ecommerceIndustries = ["commerce", "restauration", "auto"];
+    const bookingIndustries = ["sante", "consulting", "architecture", "evenementiel", "arts-scene"];
+    
+    if (ecommerceIndustries.includes(config.industry)) {
+      return <EcommerceDemo config={config} onBack={onBack} />;
+    }
+    
+    if (bookingIndustries.includes(config.industry)) {
+      return <BookingDemo config={config} onBack={onBack} />;
+    }
+    
+    // Par défaut, afficher la démo vitrine
     return <ShowcaseWebsiteDemo config={config} onBack={onBack} />;
-  }
-  
-  if (config.features.includes("ecommerce")) {
-    return <EcommerceDemo config={config} onBack={onBack} />;
-  }
-  
-  if (config.features.includes("booking")) {
-    return <BookingDemo config={config} onBack={onBack} />;
   }
 
   const generateIndustryContent = () => {
