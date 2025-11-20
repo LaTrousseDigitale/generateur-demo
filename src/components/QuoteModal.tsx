@@ -236,39 +236,49 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
         "1-5": 240,      // 4h × 60$
         "6-10": 480,     // 8h × 60$
         "11-20": 900,    // 15h × 60$
-        "20+": 1500      // forfait sur mesure estimation
       };
 
       const quantity = data.canvaQuantity || "";
-      const basePrice = quantityPrices[quantity] || 0;
-
-      if (data.canvaFrequency === "one-time") {
-        // Frais uniques pour projet ponctuel
-        canvaOneTimeTotal += basePrice;
+      
+      // Forfait sur mesure pour 20+
+      if (quantity === "20+") {
         canvaItems.push({
-          name: "Services Canva (ponctuel)",
-          description: `${data.canvaServices.length} type(s) de design - ${quantity} designs`,
-          price: basePrice,
+          name: "Services Canva (forfait sur mesure)",
+          description: `${data.canvaServices.length} type(s) de design - Plus de 20 designs - Prix à déterminer selon vos besoins`,
+          price: 0,
           included: true
         });
       } else {
-        // Frais mensuels récurrents
-        const frequency = data.canvaFrequency;
-        let monthlyPrice = basePrice;
-        
-        if (frequency === "quarterly") {
-          monthlyPrice = Math.round(basePrice / 3);
-        } else if (frequency === "as-needed") {
-          monthlyPrice = Math.round(basePrice * 0.5); // Estimation moyenne
+        const basePrice = quantityPrices[quantity] || 0;
+
+        if (data.canvaFrequency === "one-time") {
+          // Frais uniques pour projet ponctuel
+          canvaOneTimeTotal += basePrice;
+          canvaItems.push({
+            name: "Services Canva (ponctuel)",
+            description: `${data.canvaServices.length} type(s) de design - ${quantity} designs`,
+            price: basePrice,
+            included: true
+          });
+        } else {
+          // Frais mensuels récurrents
+          const frequency = data.canvaFrequency;
+          let monthlyPrice = basePrice;
+          
+          if (frequency === "quarterly") {
+            monthlyPrice = Math.round(basePrice / 3);
+          } else if (frequency === "as-needed") {
+            monthlyPrice = Math.round(basePrice * 0.5); // Estimation moyenne
+          }
+          
+          canvaMonthlyTotal += monthlyPrice;
+          canvaItems.push({
+            name: "Services Canva (récurrent)",
+            description: `${data.canvaServices.length} type(s) de design - ${frequency}`,
+            price: monthlyPrice,
+            included: true
+          });
         }
-        
-        canvaMonthlyTotal += monthlyPrice;
-        canvaItems.push({
-          name: "Services Canva (récurrent)",
-          description: `${data.canvaServices.length} type(s) de design - ${frequency}`,
-          price: monthlyPrice,
-          included: true
-        });
       }
 
       // Supports infographies additionnels
@@ -520,9 +530,13 @@ export const QuoteModal = ({ open, onOpenChange, data }: QuoteModalProps) => {
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="font-semibold text-accent">
-                            {item.price.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
-                          </p>
+                          {item.price > 0 ? (
+                            <p className="font-semibold text-accent">
+                              {item.price.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
+                            </p>
+                          ) : (
+                            <Badge variant="outline" className="text-accent border-accent">À déterminer</Badge>
+                          )}
                         </div>
                       </div>
                     </Card>
