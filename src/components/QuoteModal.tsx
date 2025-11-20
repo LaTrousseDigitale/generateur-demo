@@ -1,9 +1,10 @@
+import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { QuestionnaireData } from "@/types/questionnaire";
-import { CheckCircle2, Calendar, DollarSign, Clock, Zap } from "lucide-react";
+import { CheckCircle2, Calendar, DollarSign, Clock, Zap, Minimize2, Maximize2 } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 interface QuoteModalProps {
   open: boolean;
@@ -21,6 +22,8 @@ export const QuoteModal = ({
   onOpenChange,
   data
 }: QuoteModalProps) => {
+  const [isMinimized, setIsMinimized] = useState(false);
+  
   const calculateQuote = (): {
     items: QuoteItem[];
     canvaItems: QuoteItem[];
@@ -504,13 +507,37 @@ export const QuoteModal = ({
     };
   };
   const quote = calculateQuote();
-  return <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+  
+  // Version minimisée
+  if (isMinimized && open) {
+    return (
+      <div className="fixed top-4 right-4 z-50">
+        <Card className="p-4 shadow-lg bg-background border-primary/20 cursor-pointer hover:border-primary/40 transition-colors" onClick={() => setIsMinimized(false)}>
+          <div className="flex items-center gap-3">
+            <DollarSign className="w-5 h-5 text-primary" />
+            <div>
+              <p className="font-semibold">Devis du Projet</p>
+              <p className="text-sm text-muted-foreground">Cliquez pour agrandir</p>
+            </div>
+            <Maximize2 className="w-4 h-4 text-muted-foreground ml-2" />
+          </div>
+        </Card>
+      </div>
+    );
+  }
+  
+  return <Dialog open={open} onOpenChange={() => {}}>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto fixed top-4 right-4 left-auto translate-x-0 translate-y-0 data-[state=open]:slide-in-from-right" onInteractOutside={(e) => e.preventDefault()}>
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold flex items-center gap-2">
-            <DollarSign className="w-6 h-6 text-primary" />
-            Devis Détaillé du Projet
-          </DialogTitle>
+          <div className="flex items-center justify-between">
+            <DialogTitle className="text-2xl font-bold flex items-center gap-2">
+              <DollarSign className="w-6 h-6 text-primary" />
+              Devis Détaillé du Projet
+            </DialogTitle>
+            <Button variant="ghost" size="sm" onClick={() => setIsMinimized(true)}>
+              <Minimize2 className="w-4 h-4" />
+            </Button>
+          </div>
           <DialogDescription>
             Estimation basée sur vos réponses et besoins spécifiques
           </DialogDescription>
