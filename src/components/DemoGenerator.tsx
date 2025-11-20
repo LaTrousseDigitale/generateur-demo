@@ -185,7 +185,7 @@ export const DemoGenerator = () => {
               {currentStep === 4 && (
                 <QuestionnaireStep
                   step={4}
-                  title="Quel est votre objectif principal avec ce projet ?"
+                  title="Quel est l'objectif principal de ce projet?"
                   options={[
                     { value: "automation", label: "Automatiser les Processus", description: "Réduire le travail manuel et gagner du temps" },
                     { value: "growth", label: "Accélérer la Croissance", description: "Augmenter les revenus et acquérir plus de clients" },
