@@ -46,7 +46,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
   // Map industry to hero images
   const industryHeroImages = {
-    "vente-auto": productAuto1,
+    "pieces-auto": productAuto1,
     restauration: productRestaurant1,
     architecture: productArchitecture1,
     construction: productConstruction1,
@@ -63,7 +63,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       { name: "Sneakers Sport", price: "89.99€", rating: 4.9, image: productConstruction1 },
       { name: "Veste Cuir", price: "199.99€", rating: 4.7, image: productConstruction2 },
     ],
-    "vente-auto": [
+    "pieces-auto": [
       { name: "Berline Premium", price: "34,999€", rating: 4.9, image: productAuto1 },
       { name: "SUV Familial", price: "42,999€", rating: 4.8, image: productAuto2 },
       { name: "Sportive GT", price: "59,999€", rating: 4.9, image: productAuto3 },
