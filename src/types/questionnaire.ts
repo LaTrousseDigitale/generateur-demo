@@ -49,24 +49,31 @@ export interface QuestionnaireData {
   selectedModules: string[];
   customModule: string;
 
-  // Section 6: Branding
+  // Section 6: Services Canva
+  canvaServices: string[];
+  canvaQuantity: string;
+  canvaFrequency: string;
+  canvaDeadline: string;
+  canvaSpecifications: string;
+
+  // Section 7: Branding
   logo: string | null;
   primaryColor: string;
   accentColor: string;
   secondaryColor: string;
   typography: string;
 
-  // Section 7: Domaine & hébergement
+  // Section 8: Domaine & hébergement
   domainType: string;
   hostingPreference: string;
   hostingProvider: string;
 
-  // Section 8: Finances
+  // Section 9: Finances
   paymentMode: PaymentMode;
   financingTerm: string;
   monthlyBudget: string;
 
-  // Section 9: Résumé
+  // Section 10: Résumé
   otherNeeds: string;
   contactMethod: string;
 
