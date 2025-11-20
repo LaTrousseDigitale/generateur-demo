@@ -27,18 +27,22 @@ export const QuoteModal = ({
   const calculateQuote = (): {
     items: QuoteItem[];
     canvaItems: QuoteItem[];
+    maintenanceItems: QuoteItem[];
     total: number;
     canvaTotal: number;
     canvaOneTime: number;
+    maintenanceTotal: number;
     timeline: string;
     oneTimeTotal: number;
   } => {
     const items: QuoteItem[] = [];
     const canvaItems: QuoteItem[] = [];
+    const maintenanceItems: QuoteItem[] = [];
     let monthlyTotal = 0;
     let oneTimeTotal = 0;
     let canvaMonthlyTotal = 0;
     let canvaOneTimeTotal = 0;
+    let maintenanceMonthlyTotal = 0;
 
     // === SECTION 1: Solutions Website ===
     if ((data.solutionTypes || []).includes("website")) {
@@ -496,12 +500,47 @@ export const QuoteModal = ({
         timeline = "4-6 semaines";
       }
     }
+    
+    // === SERVICE D'ENTRETIEN ET MAINTENANCE ===
+    if (data.maintenanceLevel) {
+      const maintenancePrices: Record<string, number> = {
+        "basic": 50,
+        "standard": 150,
+        "premium": 300,
+        "enterprise": 450
+      };
+      
+      const maintenanceLabels: Record<string, string> = {
+        "basic": "Service de base",
+        "standard": "Service standard",
+        "premium": "Service premium",
+        "enterprise": "Service entreprise"
+      };
+      
+      const monthlyPrice = maintenancePrices[data.maintenanceLevel] || 0;
+      const isAnnual = data.maintenancePaymentFrequency === "annual";
+      const displayPrice = isAnnual ? monthlyPrice * 11 : monthlyPrice; // 11 mois si annuel (1 mois gratuit)
+      
+      maintenanceMonthlyTotal = monthlyPrice;
+      
+      maintenanceItems.push({
+        name: maintenanceLabels[data.maintenanceLevel] || "Service de maintenance",
+        description: isAnnual 
+          ? `Paiement annuel (${displayPrice.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}/an - 1 mois gratuit)`
+          : `Paiement mensuel`,
+        price: monthlyPrice,
+        included: true
+      });
+    }
+    
     return {
       items,
       canvaItems,
+      maintenanceItems,
       total: monthlyTotal,
       canvaTotal: canvaMonthlyTotal,
       canvaOneTime: canvaOneTimeTotal,
+      maintenanceTotal: maintenanceMonthlyTotal,
       timeline,
       oneTimeTotal
     };
@@ -633,6 +672,48 @@ export const QuoteModal = ({
               </div>
             </>}
 
+          {/* Services Maintenance - Section séparée */}
+          {quote.maintenanceItems.length > 0 && <>
+              <Separator />
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-lg">Service d'Entretien et Maintenance</h3>
+                    <p className="text-sm text-muted-foreground">Garantie de performance et sécurité</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {quote.maintenanceItems.map((item, index) => <Card key={index} className="p-4 border-primary/30">
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <CheckCircle2 className="w-4 h-4 text-primary flex-shrink-0" />
+                            <h4 className="font-semibold">{item.name}</h4>
+                          </div>
+                          <p className="text-sm text-muted-foreground ml-6">
+                            {item.description}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-primary">
+                            {item.price.toLocaleString('fr-CA', {
+                          style: 'currency',
+                          currency: 'CAD'
+                        })}/mois
+                          </p>
+                        </div>
+                      </div>
+                    </Card>)}
+                </div>
+              </div>
+            </>}
+
           <Separator />
 
           {/* Total */}
@@ -657,6 +738,19 @@ export const QuoteModal = ({
                     <p className="text-muted-foreground">Services Canva (récurrent)</p>
                     <p className="text-2xl font-bold text-accent">
                       {quote.canvaTotal.toLocaleString('fr-CA', {
+                    style: 'currency',
+                    currency: 'CAD'
+                  })}/mois
+                    </p>
+                  </div>
+                </div>}
+              
+              {/* Services Maintenance mensuels */}
+              {quote.maintenanceTotal > 0 && <div className="pt-4 border-t border-primary/20">
+                  <div className="flex items-center justify-between">
+                    <p className="text-muted-foreground">Entretien et Maintenance</p>
+                    <p className="text-2xl font-bold text-primary">
+                      {quote.maintenanceTotal.toLocaleString('fr-CA', {
                     style: 'currency',
                     currency: 'CAD'
                   })}/mois

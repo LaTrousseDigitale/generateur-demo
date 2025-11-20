@@ -136,6 +136,8 @@ export const DemoGenerator = () => {
       paymentMode: null,
       financingTerm: "",
       monthlyBudget: "",
+      maintenanceLevel: "",
+      maintenancePaymentFrequency: "monthly",
       otherNeeds: "",
       contactMethod: "",
       serviceType: null,
@@ -211,7 +213,7 @@ export const DemoGenerator = () => {
       case 8:
         return questionnaireData.domainType && questionnaireData.hostingPreference;
       case 9:
-        return questionnaireData.paymentMode;
+        return questionnaireData.paymentMode && questionnaireData.maintenanceLevel;
       case 10:
         return questionnaireData.contactMethod;
       default:
