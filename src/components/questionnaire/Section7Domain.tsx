@@ -66,7 +66,7 @@ export const Section7Domain = ({
               <RadioGroupItem value="lovable" id="hosting-lovable" />
               <div className="flex-1">
                 <label htmlFor="hosting-lovable" className="text-sm cursor-pointer font-semibold block">
-                  Hébergement par Vision Express Digital
+                  Hébergement chez nos partenaires
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Support inclus, mises à jour automatiques, sécurité maximale
