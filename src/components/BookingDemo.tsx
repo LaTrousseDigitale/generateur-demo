@@ -24,6 +24,7 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
 
   // Map industry to hero images
   const industryHeroImages = {
+    auto: bookingAutoService,
     "pieces-auto": bookingAutoService,
     restauration: bookingRestaurantInterior,
     architecture: bookingArchitectureOffice,
