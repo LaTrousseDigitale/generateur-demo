@@ -76,6 +76,10 @@ export interface QuestionnaireData {
   paymentMode: PaymentMode;
   financingTerm: string;
   monthlyBudget: string;
+  
+  // Maintenance et entretien
+  maintenanceLevel: string;
+  maintenancePaymentFrequency: string;
 
   // Section 10: Résumé
   otherNeeds: string;

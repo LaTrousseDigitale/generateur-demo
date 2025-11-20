@@ -116,6 +116,94 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
           Cela nous aide à vous proposer les meilleures options pour votre budget
         </p>
       </div>
+
+      {/* Service d'entretien et maintenance */}
+      <div className="space-y-3">
+        <Label>Service d'entretien et maintenance *</Label>
+        <p className="text-sm text-muted-foreground">Un service essentiel pour assurer la performance et la sécurité de votre solution</p>
+        
+        <RadioGroup value={data.maintenanceLevel || ""} onValueChange={(value) => onChange({ maintenanceLevel: value })}>
+          <Card className="p-4">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="basic" id="maintenance-basic" />
+              <div className="flex-1">
+                <label htmlFor="maintenance-basic" className="text-sm cursor-pointer font-semibold block">
+                  Service de base (50$/mois)
+                </label>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Mises à jour de sécurité, surveillance de base, support par courriel
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="standard" id="maintenance-standard" />
+              <div className="flex-1">
+                <label htmlFor="maintenance-standard" className="text-sm cursor-pointer font-semibold block">
+                  Service standard (150$/mois)
+                </label>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Tout le service de base + sauvegardes quotidiennes, optimisation de performance, support prioritaire
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="premium" id="maintenance-premium" />
+              <div className="flex-1">
+                <label htmlFor="maintenance-premium" className="text-sm cursor-pointer font-semibold block">
+                  Service premium (300$/mois)
+                </label>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Tout le service standard + surveillance 24/7, tests de sécurité, corrections de bugs illimitées, support téléphonique
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-4">
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="enterprise" id="maintenance-enterprise" />
+              <div className="flex-1">
+                <label htmlFor="maintenance-enterprise" className="text-sm cursor-pointer font-semibold block">
+                  Service entreprise (450$/mois)
+                </label>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Service complet maximum + SLA garanti, gestionnaire de compte dédié, développements sur mesure inclus, infrastructure dédiée
+                </p>
+              </div>
+            </div>
+          </Card>
+        </RadioGroup>
+
+        {/* Fréquence de paiement */}
+        {data.maintenanceLevel && (
+          <div className="space-y-2 pt-4">
+            <Label>Fréquence de paiement</Label>
+            <RadioGroup
+              value={data.maintenancePaymentFrequency || "monthly"}
+              onValueChange={(value) => onChange({ maintenancePaymentFrequency: value })}
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="monthly" id="maintenance-monthly" />
+                <label htmlFor="maintenance-monthly" className="text-sm cursor-pointer">
+                  Mensuel
+                </label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="annual" id="maintenance-annual" />
+                <label htmlFor="maintenance-annual" className="text-sm cursor-pointer">
+                  Annuel (1 mois gratuit)
+                </label>
+              </div>
+            </RadioGroup>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
