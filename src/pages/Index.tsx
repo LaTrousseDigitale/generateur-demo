@@ -1,7 +1,7 @@
-import { NewDemoGenerator } from "@/components/NewDemoGenerator";
+import { DemoGenerator } from "@/components/DemoGenerator";
 
 const Index = () => {
-  return <NewDemoGenerator />;
+  return <DemoGenerator />;
 };
 
 export default Index;
