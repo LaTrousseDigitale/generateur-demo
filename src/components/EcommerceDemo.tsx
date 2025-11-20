@@ -437,7 +437,7 @@ export const EcommerceDemo = ({
             <div>
               <div className="flex items-center gap-3 mb-4">
                 {config.logo && <img src={config.logo} alt="Logo" className="h-16 w-auto object-contain" />}
-                <span className="font-bold">{config.companyName}</span>
+                
               </div>
               <p className="text-sm text-muted-foreground">Votre boutique en ligne de confiance</p>
             </div>
