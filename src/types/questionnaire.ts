@@ -29,8 +29,15 @@ export interface QuestionnaireData {
   // Questions spécifiques par industrie - E-commerce
   autoCompatibility: string[]; // Auto: compatibilité véhicules
   autoSearchFeatures: string[]; // Auto: recherche par VIN, année/marque/modèle
+  autoProductType: string; // Auto: type de produits vendus
+  autoCustomerType: string; // Auto: type d'acheteur
+  autoCurrentSales: string; // Auto: processus de vente actuel
   restaurantFeatures: string[]; // Restaurant: menu, réservations, livraison
+  restaurantType: string; // Restaurant: type de restaurant
+  restaurantSalesType: string; // Restaurant: type de service (sur place, livraison, etc.)
   retailFeatures: string[]; // Commerce: stocks, fidélité
+  retailType: string; // Commerce: type de commerce
+  retailProductTypes: string; // Commerce: types de produits vendus
   
   // Questions spécifiques par industrie - Organisationnel
   healthCompliance: string[]; // Santé: dossiers patients, HIPAA

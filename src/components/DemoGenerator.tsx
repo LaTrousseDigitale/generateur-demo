@@ -34,6 +34,19 @@ export interface DemoConfig {
   secondaryColor: string;
   logo: string | null;
   companyName: string;
+  // Industry-specific features
+  ecommerceNeeds?: string[];
+  autoCompatibility?: string[];
+  autoSearchFeatures?: string[];
+  autoProductType?: string;
+  autoCustomerType?: string;
+  autoCurrentSales?: string;
+  restaurantFeatures?: string[];
+  restaurantType?: string;
+  restaurantSalesType?: string;
+  retailFeatures?: string[];
+  retailType?: string;
+  retailProductTypes?: string;
 }
 
 const TOTAL_STEPS = 11;
@@ -72,6 +85,19 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
     secondaryColor: data.secondaryColor,
     logo: data.logo,
     companyName: data.companyName,
+    // Industry-specific features
+    ecommerceNeeds: data.ecommerceNeeds,
+    autoCompatibility: data.autoCompatibility,
+    autoSearchFeatures: data.autoSearchFeatures,
+    autoProductType: data.autoProductType,
+    autoCustomerType: data.autoCustomerType,
+    autoCurrentSales: data.autoCurrentSales,
+    restaurantFeatures: data.restaurantFeatures,
+    restaurantType: data.restaurantType,
+    restaurantSalesType: data.restaurantSalesType,
+    retailFeatures: data.retailFeatures,
+    retailType: data.retailType,
+    retailProductTypes: data.retailProductTypes,
   };
 };
 
@@ -103,8 +129,15 @@ export const DemoGenerator = () => {
       organisationalFeatures: [],
       autoCompatibility: [],
       autoSearchFeatures: [],
+      autoProductType: "",
+      autoCustomerType: "",
+      autoCurrentSales: "",
       restaurantFeatures: [],
+      restaurantType: "",
+      restaurantSalesType: "",
       retailFeatures: [],
+      retailType: "",
+      retailProductTypes: "",
       healthCompliance: [],
       educationFeatures: [],
       nonprofitFeatures: [],
