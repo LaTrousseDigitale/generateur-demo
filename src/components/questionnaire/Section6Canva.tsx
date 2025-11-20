@@ -12,8 +12,6 @@ interface Section6Props {
 }
 
 const CANVA_SERVICES = [
-  { id: "logo", label: "Logo et identité visuelle" },
-  { id: "social-media", label: "Publications réseaux sociaux" },
   { id: "flyers", label: "Dépliants et affiches" },
   { id: "presentations", label: "Présentations PowerPoint/PDF" },
   { id: "business-cards", label: "Cartes d'affaires" },
