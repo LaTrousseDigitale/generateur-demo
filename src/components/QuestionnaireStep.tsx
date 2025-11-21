@@ -42,15 +42,15 @@ export const QuestionnaireStep = ({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3 sm:space-y-4">
       <div>
         <div className="flex items-center gap-2 mb-2">
-          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold">
+          <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-semibold text-xs sm:text-base flex-shrink-0">
             {step}
           </div>
-          <h2 className="text-2xl font-bold">{title}</h2>
+          <h2 className="text-lg sm:text-2xl font-bold">{title}</h2>
         </div>
-        <p className="text-muted-foreground ml-10">
+        <p className="text-xs sm:text-sm text-muted-foreground ml-8 sm:ml-10">
           {multiSelect ? "Sélectionnez une ou plusieurs options" : "Choisissez une option"}
         </p>
       </div>
@@ -62,29 +62,29 @@ export const QuestionnaireStep = ({
             return (
               <Card
                 key={option.value}
-                className={`p-4 cursor-pointer transition-all hover:shadow-md ${
+                className={`p-3 sm:p-4 cursor-pointer transition-all hover:shadow-md ${
                   isSelected ? "border-primary bg-primary/5" : ""
                 }`}
                 onClick={() => handleCheckboxChange(option.value, !isSelected)}
               >
-                <div className="flex items-start gap-3">
+                <div className="flex items-start gap-2 sm:gap-3">
                   <Checkbox
                     checked={isSelected}
                     onCheckedChange={(checked) =>
                       handleCheckboxChange(option.value, checked as boolean)
                     }
-                    className="mt-1"
+                    className="mt-0.5 sm:mt-1 flex-shrink-0"
                   />
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <Label className="text-base font-semibold cursor-pointer">
+                      <Label className="text-sm sm:text-base font-semibold cursor-pointer">
                         {option.label}
                       </Label>
                       {isSelected && (
-                        <CheckCircle2 className="w-5 h-5 text-primary" />
+                        <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                       {option.description}
                     </p>
                   </div>
@@ -101,25 +101,25 @@ export const QuestionnaireStep = ({
               return (
               <label key={option.value} htmlFor={option.value}>
                 <Card
-                  className={`p-4 cursor-pointer transition-all hover:shadow-md ${
+                  className={`p-3 sm:p-4 cursor-pointer transition-all hover:shadow-md ${
                     isSelected ? "border-primary bg-primary/5" : ""
                   }`}
                 >
-                  <div className="flex items-start gap-3">
-                    <RadioGroupItem value={option.value} id={option.value} className="mt-1" />
-                    <div className="flex-1">
+                  <div className="flex items-start gap-2 sm:gap-3">
+                    <RadioGroupItem value={option.value} id={option.value} className="mt-0.5 sm:mt-1 flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <Label
                           htmlFor={option.value}
-                          className="text-base font-semibold cursor-pointer"
+                          className="text-sm sm:text-base font-semibold cursor-pointer"
                         >
                           {option.label}
                         </Label>
                         {isSelected && (
-                          <CheckCircle2 className="w-5 h-5 text-primary" />
+                          <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
                         )}
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">
+                      <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                         {option.description}
                       </p>
                     </div>
