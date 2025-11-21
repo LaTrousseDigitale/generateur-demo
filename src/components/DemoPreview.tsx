@@ -104,6 +104,26 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
             </div>
           </div>
 
+          {/* Video Preview */}
+          <div className="space-y-3">
+            <h5 className="font-semibold" style={{ color: config.primaryColor }}>
+              Aperçu Vidéo du Développement
+            </h5>
+            <div className="relative rounded-lg overflow-hidden bg-muted/30 aspect-video border-2" style={{ borderColor: config.primaryColor + "20" }}>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center space-y-2">
+                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center" style={{ backgroundColor: config.primaryColor + "20" }}>
+                    <svg className="w-8 h-8" style={{ color: config.primaryColor }} fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-muted-foreground">Site en cours de développement</p>
+                  <p className="text-xs text-muted-foreground/70">Vidéo de démonstration à venir</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Features */}
           {config.features.length > 0 && (
             <div className="space-y-3">
