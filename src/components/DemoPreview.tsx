@@ -104,21 +104,123 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
             </div>
           </div>
 
-          {/* Video Preview */}
+          {/* Animated Construction Preview */}
           <div className="space-y-3">
             <h5 className="font-semibold" style={{ color: config.primaryColor }}>
               Aperçu Vidéo du Développement
             </h5>
-            <div className="relative rounded-lg overflow-hidden bg-muted/30 aspect-video border-2" style={{ borderColor: config.primaryColor + "20" }}>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-2">
-                  <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center" style={{ backgroundColor: config.primaryColor + "20" }}>
-                    <svg className="w-8 h-8" style={{ color: config.primaryColor }} fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
+            <div className="relative rounded-lg overflow-hidden bg-background aspect-video border-2" style={{ borderColor: config.primaryColor + "20" }}>
+              {/* Animated Website Construction */}
+              <div className="absolute inset-0 p-4 space-y-2">
+                {/* Header Bar */}
+                <div className="flex items-center gap-2 pb-2 border-b border-border/50 animate-fade-in">
+                  <div 
+                    className="w-8 h-8 rounded animate-scale-in" 
+                    style={{ 
+                      backgroundColor: config.primaryColor,
+                      animationDelay: '0.2s',
+                      animationFillMode: 'backwards'
+                    }} 
+                  />
+                  <div className="flex-1 space-y-1">
+                    <div 
+                      className="h-3 rounded animate-scale-in" 
+                      style={{ 
+                        width: '40%',
+                        backgroundColor: config.primaryColor + "40",
+                        animationDelay: '0.4s',
+                        animationFillMode: 'backwards'
+                      }} 
+                    />
+                    <div 
+                      className="h-2 bg-muted rounded animate-scale-in" 
+                      style={{ 
+                        width: '30%',
+                        animationDelay: '0.6s',
+                        animationFillMode: 'backwards'
+                      }} 
+                    />
                   </div>
-                  <p className="text-sm text-muted-foreground">Site en cours de développement</p>
-                  <p className="text-xs text-muted-foreground/70">Vidéo de démonstration à venir</p>
+                </div>
+
+                {/* Hero Section */}
+                <div 
+                  className="relative h-20 rounded-lg flex items-center justify-center overflow-hidden animate-fade-in"
+                  style={{ 
+                    background: `linear-gradient(135deg, ${config.primaryColor}20, ${config.accentColor}20)`,
+                    animationDelay: '0.8s',
+                    animationFillMode: 'backwards'
+                  }}
+                >
+                  <div className="text-center space-y-1">
+                    <div 
+                      className="h-4 rounded mx-auto animate-scale-in" 
+                      style={{ 
+                        width: '120px',
+                        backgroundColor: config.primaryColor + "60",
+                        animationDelay: '1s',
+                        animationFillMode: 'backwards'
+                      }} 
+                    />
+                    <div 
+                      className="h-2 bg-muted/60 rounded mx-auto animate-scale-in" 
+                      style={{ 
+                        width: '80px',
+                        animationDelay: '1.2s',
+                        animationFillMode: 'backwards'
+                      }} 
+                    />
+                  </div>
+                  {/* Animated Building Effect */}
+                  <div 
+                    className="absolute bottom-0 left-0 right-0 h-1 animate-pulse"
+                    style={{ 
+                      backgroundColor: config.primaryColor,
+                      animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    }}
+                  />
+                </div>
+
+                {/* Content Blocks */}
+                <div className="grid grid-cols-3 gap-2">
+                  {[0.4, 0.6, 0.8].map((delay, i) => (
+                    <div 
+                      key={i}
+                      className="space-y-1 animate-fade-in"
+                      style={{ 
+                        animationDelay: `${1.4 + delay}s`,
+                        animationFillMode: 'backwards'
+                      }}
+                    >
+                      <div 
+                        className="h-12 rounded animate-scale-in" 
+                        style={{ 
+                          backgroundColor: config.secondaryColor + "20",
+                          animationDelay: `${1.6 + delay}s`,
+                          animationFillMode: 'backwards'
+                        }} 
+                      />
+                      <div className="h-2 bg-muted/50 rounded animate-scale-in" style={{ animationDelay: `${1.8 + delay}s`, animationFillMode: 'backwards' }} />
+                      <div className="h-2 bg-muted/30 rounded w-3/4 animate-scale-in" style={{ animationDelay: `${2 + delay}s`, animationFillMode: 'backwards' }} />
+                    </div>
+                  ))}
+                </div>
+
+                {/* Progress Indicator */}
+                <div className="absolute bottom-4 left-4 right-4 animate-fade-in" style={{ animationDelay: '2.5s', animationFillMode: 'backwards' }}>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <div className="relative flex-1 h-1 bg-muted rounded-full overflow-hidden">
+                      <div 
+                        className="absolute inset-y-0 left-0 rounded-full"
+                        style={{ 
+                          width: '65%',
+                          backgroundColor: config.primaryColor,
+                          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                        }}
+                      />
+                    </div>
+                    <span style={{ color: config.primaryColor }}>En construction...</span>
+                  </div>
                 </div>
               </div>
             </div>
