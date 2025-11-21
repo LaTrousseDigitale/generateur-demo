@@ -256,6 +256,70 @@ export const DemoGenerator = () => {
     }
   };
 
+  const calculateEstimatedPrice = (): number => {
+    let basePrice = 0;
+    
+    // Base price by solution type
+    if ((questionnaireData.solutionTypes || []).includes("website")) basePrice += 2000;
+    if ((questionnaireData.solutionTypes || []).includes("portal")) basePrice += 5000;
+    if ((questionnaireData.solutionTypes || []).includes("module")) basePrice += 1500;
+    
+    // Additional modules
+    basePrice += (questionnaireData.selectedModules?.length || 0) * 500;
+    
+    // Canva services
+    const canvaCount = parseInt(questionnaireData.canvaQuantity || "0") || 0;
+    basePrice += canvaCount * 50;
+    
+    return basePrice;
+  };
+
+  const handleSubmitDemo = async () => {
+    try {
+      const calculatedPrice = calculateEstimatedPrice();
+      
+      const response = await fetch('https://ohbrtlbdabiojwohdoxj.supabase.co/functions/v1/receive-demo-request', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          company_name: questionnaireData.companyName,
+          industry: questionnaireData.industry,
+          contact_name: questionnaireData.companyName,
+          contact_email: questionnaireData.contactMethod,
+          contact_phone: questionnaireData.contactMethod,
+          questionnaire_responses: {
+            "Type de solution": questionnaireData.solutionTypes?.join(", "),
+            "Industrie": questionnaireData.industry,
+            "Objectifs principaux": questionnaireData.mainObjectives?.join(", "),
+            "Date de début": questionnaireData.startDate,
+            "Financement": questionnaireData.financing,
+            "Type de site web": questionnaireData.websiteType,
+            "Type de portail": questionnaireData.portalType,
+            "Modules sélectionnés": questionnaireData.selectedModules?.join(", "),
+            "Services Canva": questionnaireData.canvaServices?.join(", "),
+            "Type de domaine": questionnaireData.domainType,
+            "Mode de paiement": questionnaireData.paymentMode,
+            "Niveau de maintenance": questionnaireData.maintenanceLevel,
+            "Budget mensuel": questionnaireData.monthlyBudget,
+            "Autres besoins": questionnaireData.otherNeeds,
+          },
+          estimated_amount: calculatedPrice,
+          demo_description: `Démo personnalisée pour ${questionnaireData.companyName} - ${questionnaireData.industry}`
+        })
+      });
+
+      const result = await response.json();
+      
+      if (result.success && result.signup_url) {
+        window.location.href = result.signup_url;
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi au portail:', error);
+    }
+  };
+
   const handleNext = async () => {
     if (currentStep < TOTAL_STEPS) {
       const nextSection = getNextSection(currentStep);
@@ -263,6 +327,10 @@ export const DemoGenerator = () => {
     } else {
       // Save quote to database when completing the questionnaire
       await submitQuote(questionnaireData);
+      
+      // Send to external portal
+      await handleSubmitDemo();
+      
       setShowFinalDemo(true);
       setTimeout(() => setShowQuoteModal(true), 1000);
     }
