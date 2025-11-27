@@ -5,7 +5,18 @@ import { Progress } from "@/components/ui/progress";
 import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
-import { ArrowRight, ArrowLeft, Layout } from "lucide-react";
+import { ArrowRight, ArrowLeft, Layout, RotateCcw } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { QuestionnaireData } from "@/types/questionnaire";
 import { Section1General } from "./questionnaire/Section1General";
 import { Section2SolutionType } from "./questionnaire/Section2SolutionType";
@@ -343,6 +354,82 @@ export const DemoGenerator = () => {
     }
   };
 
+  const handleReset = () => {
+    const initialData: QuestionnaireData = {
+      companyName: "",
+      industry: "",
+      mainObjectives: [],
+      startDate: "",
+      financing: "",
+      solutionTypes: [],
+      websiteType: null,
+      websitePages: [],
+      websiteContent: [],
+      websiteSections: [],
+      ecommerceProductCount: "",
+      ecommerceExistingPlatform: "",
+      ecommerceNeeds: [],
+      ecommercePlatform: "",
+      organisationalPages: [],
+      organisationalFeatures: [],
+      autoCompatibility: [],
+      autoSearchFeatures: [],
+      autoProductType: "",
+      autoCustomerType: "",
+      autoCurrentSales: "",
+      restaurantFeatures: [],
+      restaurantType: "",
+      restaurantSalesType: "",
+      retailFeatures: [],
+      retailType: "",
+      retailProductTypes: "",
+      healthCompliance: [],
+      educationFeatures: [],
+      nonprofitFeatures: [],
+      portalType: null,
+      portalUsers: "",
+      portalRoles: "",
+      portalClientFeatures: [],
+      portalEmployeeFeatures: [],
+      portalHRFeatures: [],
+      selectedModules: [],
+      customModule: "",
+      canvaServices: [],
+      canvaQuantity: "",
+      canvaFrequency: "",
+      canvaDeadline: "",
+      canvaSpecifications: "",
+      infographicSupports: [],
+      canvaCustomQuantity: "",
+      canvaCustomDesignTypes: "",
+      canvaCustomDeadline: "",
+      logo: null,
+      primaryColor: "#1c61fe",
+      accentColor: "#ff6b3d",
+      secondaryColor: "#fbca58",
+      typography: "",
+      domainType: "",
+      hostingPreference: "",
+      hostingProvider: "",
+      paymentMode: null,
+      financingTerm: "",
+      monthlyBudget: "",
+      maintenanceLevel: "",
+      maintenancePaymentFrequency: "monthly",
+      otherNeeds: "",
+      contactMethod: "",
+      serviceType: null,
+      features: [],
+      companySize: "",
+      budget: "",
+      timeline: "",
+    };
+    
+    localStorage.removeItem("questionnaire-data");
+    setQuestionnaireData(initialData);
+    setCurrentStep(1);
+  };
+
   if (showFinalDemo) {
     return (
       <>
@@ -378,11 +465,38 @@ export const DemoGenerator = () => {
       <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         {/* Header */}
         <div className="text-center mb-4 sm:mb-8 animate-fade-in">
-          <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4">
+          <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4 relative">
             <Layout className="w-6 h-6 sm:w-8 sm:h-8 text-primary flex-shrink-0" />
             <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               Générateur de Démos
             </h1>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  className="absolute right-2 sm:right-4"
+                  title="Réinitialiser le questionnaire"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Cette action effacera toutes vos réponses et vous ramènera au début du questionnaire. 
+                    Cette action est irréversible.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Annuler</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleReset}>
+                    Réinitialiser
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
           <p className="text-muted-foreground text-sm sm:text-base lg:text-lg px-2">
             Créez votre démo en répondant à quelques questions
