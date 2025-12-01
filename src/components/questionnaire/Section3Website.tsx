@@ -453,101 +453,339 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
             )}
           </div>
 
-          {/* Questions spécifiques - Santé et bien-être */}
-          {data.industry === "sante" && (
-            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-foreground">
-                Questions spécifiques - Santé et bien-être
-              </Label>
-              
-              <div className="space-y-3">
-                <Label>Gestion patients et conformité</Label>
-                {[
-                  "Dossiers patients sécurisés",
-                  "Prise de rendez-vous en ligne",
-                  "Télémédecine / consultations virtuelles",
-                  "Conformité HIPAA / protection données",
-                  "Prescriptions électroniques",
-                  "Portail patient (résultats, historique)",
-                ].map((feature) => (
-                  <div key={feature} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`health-${feature}`}
-                      checked={(data.healthCompliance || []).includes(feature)}
-                      onCheckedChange={() => toggleItem("healthCompliance", feature)}
-                    />
-                    <label htmlFor={`health-${feature}`} className="text-sm cursor-pointer">
-                      {feature}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
+          {/* Questions spécifiques santé/education/obnl déplacées en dehors de cette section */}
+        </Card>
+      )}
 
-          {/* Questions spécifiques - Éducation et formation */}
-          {data.industry === "education" && (
-            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-foreground">
-                Questions spécifiques - Éducation et formation
-              </Label>
-              
-              <div className="space-y-3">
-                <Label>Fonctionnalités académiques</Label>
-                {[
-                  "Portail étudiants (notes, horaires, documents)",
-                  "Gestion des cours et inscriptions",
-                  "Plateforme e-learning / LMS",
-                  "Suivi de présences",
-                  "Communication parents-professeurs",
-                  "Bibliothèque de ressources pédagogiques",
-                ].map((feature) => (
-                  <div key={feature} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`edu-${feature}`}
-                      checked={(data.educationFeatures || []).includes(feature)}
-                      onCheckedChange={() => toggleItem("educationFeatures", feature)}
-                    />
-                    <label htmlFor={`edu-${feature}`} className="text-sm cursor-pointer">
-                      {feature}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </Card>
-          )}
+      {/* ============================================ */}
+      {/* QUESTIONS SPÉCIFIQUES PAR INDUSTRIE */}
+      {/* S'affichent quel que soit le type de site */}
+      {/* ============================================ */}
 
-          {/* Questions spécifiques - OBNL */}
-          {data.industry === "obnl" && (
-            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
-              <Label className="text-base font-bold text-foreground">
-                Questions spécifiques - Organisme à but non lucratif
-              </Label>
-              
-              <div className="space-y-3">
-                <Label>Fonctionnalités OBNL</Label>
-                {[
-                  "Système de dons en ligne",
-                  "Gestion des bénévoles et horaires",
-                  "Calendrier d'événements publics",
-                  "Galerie projets et impact",
-                  "Infolettre et communications",
-                  "Portail membres / donateurs",
-                ].map((feature) => (
-                  <div key={feature} className="flex items-center space-x-2">
-                    <Checkbox
-                      id={`nonprofit-${feature}`}
-                      checked={(data.nonprofitFeatures || []).includes(feature)}
-                      onCheckedChange={() => toggleItem("nonprofitFeatures", feature)}
-                    />
-                    <label htmlFor={`nonprofit-${feature}`} className="text-sm cursor-pointer">
-                      {feature}
-                    </label>
-                  </div>
-                ))}
+      {/* Questions spécifiques - Santé et bien-être */}
+      {data.industry === "sante" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            🏥 Questions spécifiques - Santé et bien-être
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités santé requises</Label>
+            {[
+              "Dossiers patients sécurisés",
+              "Prise de rendez-vous en ligne",
+              "Télémédecine / consultations virtuelles",
+              "Conformité HIPAA / protection données",
+              "Prescriptions électroniques",
+              "Portail patient (résultats, historique)",
+              "Rappels automatiques de rendez-vous",
+              "Gestion des assurances",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`health-${feature}`}
+                  checked={(data.healthCompliance || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("healthCompliance", feature)}
+                />
+                <label htmlFor={`health-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
               </div>
-            </Card>
-          )}
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - Construction */}
+      {data.industry === "construction" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            🏗️ Questions spécifiques - Construction et rénovation
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Type de services offerts</Label>
+            {[
+              "Construction résidentielle",
+              "Construction commerciale",
+              "Rénovation intérieure",
+              "Rénovation extérieure",
+              "Toiture et revêtement",
+              "Plomberie / Électricité",
+            ].map((service) => (
+              <div key={service} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`construct-${service}`}
+                  checked={(data.constructionServices || []).includes(service)}
+                  onCheckedChange={() => toggleItem("constructionServices", service)}
+                />
+                <label htmlFor={`construct-${service}`} className="text-sm cursor-pointer">
+                  {service}
+                </label>
+              </div>
+            ))}
+          </div>
+
+          <div className="space-y-3">
+            <Label>Fonctionnalités souhaitées</Label>
+            {[
+              "Portfolio de projets avec photos avant/après",
+              "Formulaire de demande de soumission",
+              "Calculateur de coût estimatif",
+              "Témoignages clients et avis",
+              "Galerie de réalisations par catégorie",
+              "Certifications et licences affichées",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`construct-feat-${feature}`}
+                  checked={(data.constructionFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("constructionFeatures", feature)}
+                />
+                <label htmlFor={`construct-feat-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - Éducation et formation */}
+      {data.industry === "education" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            🎓 Questions spécifiques - Éducation et formation
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités académiques</Label>
+            {[
+              "Portail étudiants (notes, horaires, documents)",
+              "Gestion des cours et inscriptions",
+              "Plateforme e-learning / LMS",
+              "Suivi de présences",
+              "Communication parents-professeurs",
+              "Bibliothèque de ressources pédagogiques",
+              "Certificats et attestations en ligne",
+              "Quiz et évaluations en ligne",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`edu-${feature}`}
+                  checked={(data.educationFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("educationFeatures", feature)}
+                />
+                <label htmlFor={`edu-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - OBNL */}
+      {data.industry === "obnl" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            💚 Questions spécifiques - Organisme à but non lucratif
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités OBNL</Label>
+            {[
+              "Système de dons en ligne (ponctuel et récurrent)",
+              "Gestion des bénévoles et horaires",
+              "Calendrier d'événements publics",
+              "Galerie projets et impact",
+              "Infolettre et communications",
+              "Portail membres / donateurs",
+              "Rapports annuels et transparence",
+              "Campagnes de financement",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`nonprofit-${feature}`}
+                  checked={(data.nonprofitFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("nonprofitFeatures", feature)}
+                />
+                <label htmlFor={`nonprofit-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - Services professionnels */}
+      {data.industry === "services" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            💼 Questions spécifiques - Services professionnels
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités souhaitées</Label>
+            {[
+              "Présentation des services détaillée",
+              "Témoignages et études de cas",
+              "Formulaire de contact avancé",
+              "Prise de rendez-vous en ligne",
+              "Zone clients sécurisée",
+              "Blog / Articles d'expertise",
+              "FAQ dynamique",
+              "Chat en direct",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`services-${feature}`}
+                  checked={(data.servicesFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("servicesFeatures", feature)}
+                />
+                <label htmlFor={`services-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - Architecture */}
+      {data.industry === "architecture" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            🏛️ Questions spécifiques - Architecture et design
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités portfolio</Label>
+            {[
+              "Galerie de projets haute résolution",
+              "Filtres par type de projet",
+              "Visualisation 3D / visite virtuelle",
+              "Études de cas détaillées",
+              "Processus de travail illustré",
+              "Présentation de l'équipe",
+              "Publications et récompenses",
+              "Formulaire de brief projet",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`archi-${feature}`}
+                  checked={(data.architectureFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("architectureFeatures", feature)}
+                />
+                <label htmlFor={`archi-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - Arts de la scène */}
+      {data.industry === "arts-scene" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            🎭 Questions spécifiques - Arts de la scène
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités événementielles</Label>
+            {[
+              "Billetterie en ligne",
+              "Calendrier des spectacles",
+              "Présentation des artistes",
+              "Galerie photos et vidéos",
+              "Abonnements de saison",
+              "Système de réservation de places",
+              "Infolettre événements",
+              "Intégration réseaux sociaux",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`arts-${feature}`}
+                  checked={(data.artsFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("artsFeatures", feature)}
+                />
+                <label htmlFor={`arts-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - Transport */}
+      {data.industry === "transport" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            🚚 Questions spécifiques - Transport et logistique
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités transport</Label>
+            {[
+              "Demande de soumission en ligne",
+              "Suivi de colis / livraison",
+              "Calculateur de tarifs",
+              "Zones de livraison et délais",
+              "Portail client pour historique",
+              "Intégration API transporteurs",
+              "Gestion de flotte",
+              "Réservation de transport",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`transport-${feature}`}
+                  checked={(data.transportFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("transportFeatures", feature)}
+                />
+                <label htmlFor={`transport-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {/* Questions spécifiques - Tech */}
+      {data.industry === "tech" && data.websiteType && (
+        <Card className="p-4 space-y-4 bg-accent/5 border-accent/30">
+          <Label className="text-base font-bold text-foreground flex items-center gap-2">
+            💻 Questions spécifiques - Technologie et informatique
+          </Label>
+          
+          <div className="space-y-3">
+            <Label>Fonctionnalités tech</Label>
+            {[
+              "Page produit / SaaS détaillée",
+              "Documentation technique en ligne",
+              "Démo ou essai gratuit",
+              "Système de tickets support",
+              "Base de connaissances / FAQ",
+              "Blog technique",
+              "Intégrations et API",
+              "Tarification et plans",
+            ].map((feature) => (
+              <div key={feature} className="flex items-center space-x-2">
+                <Checkbox
+                  id={`tech-${feature}`}
+                  checked={(data.techFeatures || []).includes(feature)}
+                  onCheckedChange={() => toggleItem("techFeatures", feature)}
+                />
+                <label htmlFor={`tech-${feature}`} className="text-sm cursor-pointer">
+                  {feature}
+                </label>
+              </div>
+            ))}
+          </div>
         </Card>
       )}
     </div>

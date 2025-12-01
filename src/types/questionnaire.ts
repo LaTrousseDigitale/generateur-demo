@@ -39,10 +39,17 @@ export interface QuestionnaireData {
   retailType: string; // Commerce: type de commerce
   retailProductTypes: string; // Commerce: types de produits vendus
   
-  // Questions spécifiques par industrie - Organisationnel
-  healthCompliance: string[]; // Santé: dossiers patients, HIPAA
+  // Questions spécifiques par industrie - Tous types de sites
+  healthCompliance: string[]; // Santé: dossiers patients, conformité
   educationFeatures: string[]; // Éducation: portail étudiants
   nonprofitFeatures: string[]; // OBNL: dons, bénévoles
+  constructionServices: string[]; // Construction: types de services
+  constructionFeatures: string[]; // Construction: fonctionnalités
+  servicesFeatures: string[]; // Services pro: fonctionnalités
+  architectureFeatures: string[]; // Architecture: portfolio
+  artsFeatures: string[]; // Arts de la scène: billetterie
+  transportFeatures: string[]; // Transport: logistique
+  techFeatures: string[]; // Tech: SaaS, documentation
 
   // Section 4: Portails
   portalType: PortalType;
