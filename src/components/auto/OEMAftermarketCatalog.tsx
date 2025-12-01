@@ -130,7 +130,7 @@ export const OEMAftermarketCatalog = () => {
               {/* Price Range */}
               <div>
                 <label className="block text-sm font-medium mb-3">
-                  Prix: {priceRange[0]}€ - {priceRange[1]}€
+                  Prix: {priceRange[0]} $ - {priceRange[1]} $ CAD
                 </label>
                 <Slider
                   value={priceRange}
@@ -191,10 +191,10 @@ export const OEMAftermarketCatalog = () => {
 
                 <div className="mb-4">
                   <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold">{part.price}€</span>
+                    <span className="text-2xl font-bold">{part.price.toLocaleString('fr-CA', { minimumFractionDigits: 2 })} $</span>
                     {part.originalPrice && (
                       <span className="text-sm text-muted-foreground line-through">
-                        {part.originalPrice}€
+                        {part.originalPrice.toLocaleString('fr-CA', { minimumFractionDigits: 2 })} $
                       </span>
                     )}
                   </div>

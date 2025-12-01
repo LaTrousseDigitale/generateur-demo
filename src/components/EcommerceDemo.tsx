@@ -72,47 +72,47 @@ export const EcommerceDemo = ({
   const getAutoProducts = () => {
     const vehicles = [{
       name: "Berline Premium",
-      price: "34,999€",
+      price: "34 999 $",
       rating: 4.9,
       image: productAuto1
     }, {
       name: "SUV Familial",
-      price: "42,999€",
+      price: "42 999 $",
       rating: 4.8,
       image: productAuto2
     }, {
       name: "Sportive GT",
-      price: "59,999€",
+      price: "59 999 $",
       rating: 4.9,
       image: productAuto3
     }, {
       name: "Citadine Électrique",
-      price: "28,999€",
+      price: "28 999 $",
       rating: 4.7,
       image: productAuto4
     }];
 
     const parts = [{
       name: "Kit de freinage",
-      price: "249.99€",
+      price: "249,99 $",
       rating: 4.8,
       image: productAuto1,
       compatibility: "Compatible avec 250+ modèles"
     }, {
       name: "Filtre à air performance",
-      price: "45.99€",
+      price: "45,99 $",
       rating: 4.9,
       image: productAuto2,
       compatibility: "OEM et aftermarket"
     }, {
       name: "Amortisseurs sport",
-      price: "399.99€",
+      price: "399,99 $",
       rating: 4.7,
       image: productAuto3,
       compatibility: "Avec schéma d'installation"
     }, {
       name: "Batterie haute capacité",
-      price: "159.99€",
+      price: "159,99 $",
       rating: 4.8,
       image: productAuto4,
       compatibility: "Garantie 3 ans"
@@ -132,22 +132,22 @@ export const EcommerceDemo = ({
   const industryProducts = {
     commerce: [{
       name: "T-shirt Premium",
-      price: "29.99€",
+      price: "29,99 $",
       rating: 4.8,
       image: productArchitecture1
     }, {
       name: "Jean Slim Fit",
-      price: "79.99€",
+      price: "79,99 $",
       rating: 4.6,
       image: productArchitecture2
     }, {
       name: "Sneakers Sport",
-      price: "89.99€",
+      price: "89,99 $",
       rating: 4.9,
       image: productConstruction1
     }, {
       name: "Veste Cuir",
-      price: "199.99€",
+      price: "199,99 $",
       rating: 4.7,
       image: productConstruction2
     }],
@@ -155,85 +155,85 @@ export const EcommerceDemo = ({
     "pieces-auto": getAutoProducts(),
     restauration: [{
       name: "Plat du Chef - Saumon",
-      price: "28.99€",
+      price: "28,99 $",
       rating: 4.9,
       image: productRestaurant1
     }, {
       name: "Pasta alla Carbonara",
-      price: "18.99€",
+      price: "18,99 $",
       rating: 4.8,
       image: productRestaurant2
     }, {
       name: "Dessert Gourmet",
-      price: "9.99€",
+      price: "9,99 $",
       rating: 4.9,
       image: productRestaurant3
     }, {
       name: "Menu Dégustation",
-      price: "65.00€",
+      price: "65,00 $",
       rating: 5.0,
       image: productRestaurant1
     }],
     architecture: [{
       name: "Plan Maison Moderne",
-      price: "2,499€",
+      price: "2 499 $",
       rating: 4.8,
       image: productArchitecture1
     }, {
       name: "Pack Plans & Rendus 3D",
-      price: "3,999€",
+      price: "3 999 $",
       rating: 4.9,
       image: productArchitecture2
     }, {
       name: "Consultation Design",
-      price: "499€",
+      price: "499 $",
       rating: 4.7,
       image: productArchitecture1
     }, {
       name: "Rénovation Complète",
-      price: "8,999€",
+      price: "8 999 $",
       rating: 4.8,
       image: productArchitecture2
     }],
     construction: [{
       name: "Casque de Sécurité Pro",
-      price: "49.99€",
+      price: "49,99 $",
       rating: 4.8,
       image: productConstruction1
     }, {
       name: "Kit Outils Électriques",
-      price: "899.99€",
+      price: "899,99 $",
       rating: 4.9,
       image: productConstruction2
     }, {
       name: "Équipement Complet",
-      price: "1,499€",
+      price: "1 499 $",
       rating: 4.7,
       image: productConstruction1
     }, {
       name: "Pack Démarrage Pro",
-      price: "2,999€",
+      price: "2 999 $",
       rating: 4.8,
       image: productConstruction2
     }],
     sante: [{
       name: "Stéthoscope Professionnel",
-      price: "149.99€",
+      price: "149,99 $",
       rating: 4.9,
       image: productHealth1
     }, {
       name: "Complément Bien-être",
-      price: "39.99€",
+      price: "39,99 $",
       rating: 4.8,
       image: productHealth2
     }, {
       name: "Kit Diagnostic",
-      price: "89.99€",
+      price: "89,99 $",
       rating: 4.7,
       image: productHealth1
     }, {
       name: "Programme Santé+",
-      price: "199.99€",
+      price: "199,99 $",
       rating: 4.9,
       image: productHealth2
     }]
@@ -405,7 +405,7 @@ export const EcommerceDemo = ({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-muted-foreground line-through">
-                        {(parseFloat(product.price) * 1.25).toFixed(2)}€
+                        {(parseFloat(product.price.replace(/[^\d,]/g, '').replace(',', '.')) * 1.25).toLocaleString('fr-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} $
                       </p>
                       <p className="text-xl font-bold" style={{
                     color: config.primaryColor
@@ -449,7 +449,7 @@ export const EcommerceDemo = ({
               }} className="w-8 h-8" />
               </div>
               <h3 className="font-bold text-lg mb-2">Livraison Gratuite</h3>
-              <p className="text-muted-foreground">Dès 50€ d'achat partout en France</p>
+              <p className="text-muted-foreground">Dès 75 $ d'achat partout au Canada</p>
             </Card>
             <Card className="p-6 text-center">
               <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{

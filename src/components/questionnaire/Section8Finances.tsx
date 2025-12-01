@@ -29,7 +29,7 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
               <RadioGroupItem value="abonnement" id="abonnement" />
               <div className="flex-1">
                 <label htmlFor="abonnement" className="text-sm cursor-pointer font-semibold block">
-                  Abonnement mensuel (80$/mois)
+                  Abonnement mensuel (80 $ CAD/mois)
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Flexibilité maximale, mises à jour incluses, support prioritaire, sans engagement long terme
@@ -128,7 +128,7 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
               <RadioGroupItem value="basic" id="maintenance-basic" />
               <div className="flex-1">
                 <label htmlFor="maintenance-basic" className="text-sm cursor-pointer font-semibold block">
-                  Service de base (50$/mois)
+                  Service de base (50 $ CAD/mois)
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Mises à jour de sécurité, surveillance de base, support par courriel
@@ -142,7 +142,7 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
               <RadioGroupItem value="standard" id="maintenance-standard" />
               <div className="flex-1">
                 <label htmlFor="maintenance-standard" className="text-sm cursor-pointer font-semibold block">
-                  Service standard (150$/mois)
+                  Service standard (150 $ CAD/mois)
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Tout le service de base + sauvegardes quotidiennes, optimisation de performance, support prioritaire
@@ -156,7 +156,7 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
               <RadioGroupItem value="premium" id="maintenance-premium" />
               <div className="flex-1">
                 <label htmlFor="maintenance-premium" className="text-sm cursor-pointer font-semibold block">
-                  Service premium (300$/mois)
+                  Service premium (300 $ CAD/mois)
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Tout le service standard + surveillance 24/7, tests de sécurité, corrections de bugs illimitées, support téléphonique
@@ -170,7 +170,7 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
               <RadioGroupItem value="enterprise" id="maintenance-enterprise" />
               <div className="flex-1">
                 <label htmlFor="maintenance-enterprise" className="text-sm cursor-pointer font-semibold block">
-                  Service entreprise (450$/mois)
+                  Service entreprise (450 $ CAD/mois)
                 </label>
                 <p className="text-xs text-muted-foreground mt-1">
                   Service complet maximum + SLA garanti, gestionnaire de compte dédié, développements sur mesure inclus, infrastructure dédiée
