@@ -13,13 +13,123 @@ import { LogoUploader } from "./LogoUploader";
 import { 
   ArrowLeft, Eye, RefreshCw, Sparkles, Car, UtensilsCrossed, 
   Building2, Stethoscope, ShoppingBag, Briefcase, GraduationCap,
-  Hammer, Palette, Check
+  Hammer, Palette, Check, Globe, Lock, Users, FileText, ShoppingCart
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, MODULES } from "@/types/questionnaire";
 import type { DemoConfig, ServiceType } from "./DemoGenerator";
 
-// Industry Templates with pre-configured settings
+// Types de solutions détaillés
+const WEBSITE_TYPES = [
+  { 
+    id: "vitrine", 
+    label: "Site Vitrine", 
+    description: "Présentation de vos services et produits",
+    icon: Globe,
+  },
+  { 
+    id: "ecommerce", 
+    label: "E-commerce", 
+    description: "Boutique en ligne complète",
+    icon: ShoppingCart,
+  },
+  { 
+    id: "organisationnel", 
+    label: "Organisationnel", 
+    description: "Intranet / Documentation interne",
+    icon: FileText,
+  },
+];
+
+const PORTAL_TYPES = [
+  { 
+    id: "client", 
+    label: "Portail Client", 
+    description: "Espace client sécurisé",
+    icon: Users,
+  },
+  { 
+    id: "employes", 
+    label: "Portail Employés", 
+    description: "Gestion d'équipe et projets",
+    icon: Briefcase,
+  },
+  { 
+    id: "rh", 
+    label: "Portail RH", 
+    description: "Ressources humaines",
+    icon: Users,
+  },
+  { 
+    id: "mixte", 
+    label: "Portail Mixte", 
+    description: "Combinaison de plusieurs types",
+    icon: Lock,
+  },
+];
+
+// Fonctionnalités par type
+const VITRINE_PAGES = [
+  "Accueil", "À propos", "Services", "Portfolio", "Blog", "Contact"
+];
+
+const VITRINE_SECTIONS = [
+  "Témoignages clients", "FAQ", "Galerie photos", "Équipe", "Coordonnées"
+];
+
+const ECOMMERCE_FEATURES = [
+  "Variantes de produits (tailles, couleurs)",
+  "Abonnements récurrents",
+  "Print on Demand (POD)",
+  "Paiements en ligne sécurisés",
+  "Calcul automatique de livraison",
+  "Dropshipping",
+  "Connexion FTP pour inventaire",
+];
+
+const PORTAL_CLIENT_FEATURES = [
+  "Consultation de documents",
+  "Signatures électroniques",
+  "Factures et paiements",
+  "Historique des transactions",
+  "Formulaires personnalisés",
+];
+
+const PORTAL_EMPLOYEE_FEATURES = [
+  "Feuilles de temps",
+  "Gestion de projets",
+  "Documentation interne",
+  "Onboarding automatisé",
+  "Chat d'équipe",
+];
+
+const PORTAL_HR_FEATURES = [
+  "Dossiers employés",
+  "Gestion des congés",
+  "Formations et certifications",
+  "Calendriers d'équipe",
+  "Recrutement et candidatures",
+  "Évaluations de performance",
+];
+
+const AUTO_FEATURES = [
+  "Recherche par année/marque/modèle",
+  "Recherche par numéro VIN",
+  "Diagrammes et schémas de pièces",
+  "Compatibilité automatique des pièces",
+  "Catalogue pièces OEM vs aftermarket",
+];
+
+const RESTAURANT_FEATURES = [
+  "Menu en ligne avec photos et descriptions",
+  "Système de réservation de tables",
+  "Commande en ligne (pick-up / livraison)",
+  "Gestion des allergènes et restrictions alimentaires",
+  "Programme de fidélité",
+  "Horaires d'ouverture dynamiques",
+];
+
+// Templates pré-configurés
 const DEMO_TEMPLATES: Array<{
   id: string;
   name: string;
@@ -28,154 +138,170 @@ const DEMO_TEMPLATES: Array<{
   config: Partial<DemoConfig>;
 }> = [
   {
-    id: "auto-parts",
-    name: "Pièces Automobiles",
-    description: "E-commerce spécialisé avec recherche VIN et compatibilité véhicules",
+    id: "vitrine-services",
+    name: "Site Vitrine - Services",
+    description: "Site professionnel pour présenter vos services",
+    icon: <Globe className="w-6 h-6" />,
+    config: {
+      serviceType: "website",
+      websiteType: "vitrine",
+      industry: "services",
+      companyName: "Mon Entreprise",
+      primaryColor: "#1d4ed8",
+      accentColor: "#3b82f6",
+      secondaryColor: "#93c5fd",
+      features: ["Accueil", "À propos", "Services", "Contact"],
+      websitePages: ["Accueil", "À propos", "Services", "Contact"],
+      websiteSections: ["Témoignages clients", "FAQ"],
+    },
+  },
+  {
+    id: "ecommerce-auto",
+    name: "E-commerce - Pièces Auto",
+    description: "Boutique spécialisée avec recherche VIN",
     icon: <Car className="w-6 h-6" />,
     config: {
-      industry: "auto",
       serviceType: "website",
+      websiteType: "ecommerce",
+      industry: "auto",
       companyName: "AutoParts Pro",
       primaryColor: "#dc2626",
       accentColor: "#f97316",
       secondaryColor: "#fbbf24",
-      features: ["accueil", "catalogue", "contact", "faq"],
-      ecommerceNeeds: ["catalogue", "panier", "paiement", "filtres", "inventaire"],
-      autoCompatibility: ["vin-search", "ymm-search", "compatibility", "diagrams", "oem-aftermarket"],
-      autoSearchFeatures: ["vin", "year-make-model"],
-      autoProductType: "pieces",
-      autoCustomerType: "b2c",
+      ecommerceNeeds: ["Paiements en ligne sécurisés", "Connexion FTP pour inventaire"],
+      autoCompatibility: ["Recherche par année/marque/modèle", "Recherche par numéro VIN", "Compatibilité automatique des pièces"],
+      autoProductType: "Pièces automobiles neuves",
+      autoCustomerType: "Mix B2B et B2C",
     },
   },
   {
-    id: "restaurant",
-    name: "Restaurant & Café",
-    description: "Site vitrine avec menu, réservations et commandes en ligne",
+    id: "ecommerce-restaurant",
+    name: "E-commerce - Restaurant",
+    description: "Commande en ligne et réservations",
     icon: <UtensilsCrossed className="w-6 h-6" />,
     config: {
-      industry: "restauration",
       serviceType: "website",
+      websiteType: "ecommerce",
+      industry: "restauration",
       companyName: "Le Gourmet",
       primaryColor: "#b45309",
       accentColor: "#d97706",
       secondaryColor: "#fcd34d",
-      features: ["accueil", "about", "contact", "testimonials"],
-      restaurantFeatures: ["menu", "reservation", "commande", "livraison", "fidelite"],
-      restaurantType: "gastronomique",
-      restaurantSalesType: "sur-place",
+      restaurantFeatures: ["Menu en ligne avec photos et descriptions", "Système de réservation de tables", "Commande en ligne (pick-up / livraison)"],
+      restaurantType: "Restaurant traditionnel",
+      restaurantSalesType: "Mix (sur place + livraison/emporter)",
     },
   },
   {
-    id: "architecture",
-    name: "Architecture & Design",
-    description: "Portfolio élégant pour présenter vos projets et réalisations",
-    icon: <Building2 className="w-6 h-6" />,
-    config: {
-      industry: "architecture",
-      serviceType: "website",
-      companyName: "Studio Archi",
-      primaryColor: "#1e293b",
-      accentColor: "#64748b",
-      secondaryColor: "#94a3b8",
-      features: ["accueil", "about", "portfolio", "services", "contact", "team"],
-    },
-  },
-  {
-    id: "health-clinic",
-    name: "Clinique Santé",
-    description: "Site médical avec prise de rendez-vous et portail patient",
-    icon: <Stethoscope className="w-6 h-6" />,
-    config: {
-      industry: "sante",
-      serviceType: "website",
-      companyName: "Clinique Santé Plus",
-      primaryColor: "#0891b2",
-      accentColor: "#06b6d4",
-      secondaryColor: "#67e8f9",
-      features: ["accueil", "services", "team", "contact", "faq", "rendez-vous"],
-    },
-  },
-  {
-    id: "retail-store",
-    name: "Commerce de Détail",
-    description: "Boutique en ligne complète avec gestion des stocks",
+    id: "ecommerce-retail",
+    name: "E-commerce - Commerce",
+    description: "Boutique en ligne avec gestion stocks",
     icon: <ShoppingBag className="w-6 h-6" />,
     config: {
-      industry: "commerce",
       serviceType: "website",
+      websiteType: "ecommerce",
+      industry: "commerce",
       companyName: "Ma Boutique",
       primaryColor: "#7c3aed",
       accentColor: "#a78bfa",
       secondaryColor: "#c4b5fd",
-      features: ["accueil", "about", "contact", "blog"],
-      ecommerceNeeds: ["catalogue", "panier", "paiement", "promotions", "wishlist", "reviews"],
-      retailFeatures: ["stocks", "fidelite"],
+      ecommerceNeeds: ["Variantes de produits (tailles, couleurs)", "Paiements en ligne sécurisés"],
+      retailType: "Click & Collect (en ligne + magasin)",
     },
   },
   {
-    id: "professional-services",
-    name: "Services Professionnels",
-    description: "Site corporatif pour cabinets et consultants",
-    icon: <Briefcase className="w-6 h-6" />,
+    id: "vitrine-architecture",
+    name: "Site Vitrine - Architecture",
+    description: "Portfolio élégant pour projets",
+    icon: <Building2 className="w-6 h-6" />,
     config: {
-      industry: "services",
       serviceType: "website",
-      companyName: "Expertise Conseil",
-      primaryColor: "#1d4ed8",
-      accentColor: "#3b82f6",
-      secondaryColor: "#93c5fd",
-      features: ["accueil", "about", "services", "team", "testimonials", "contact", "blog"],
+      websiteType: "vitrine",
+      industry: "architecture",
+      companyName: "Studio Archi",
+      primaryColor: "#1e293b",
+      accentColor: "#64748b",
+      secondaryColor: "#94a3b8",
+      websitePages: ["Accueil", "À propos", "Portfolio", "Services", "Contact"],
+      websiteSections: ["Galerie photos", "Équipe", "Témoignages clients"],
     },
   },
   {
-    id: "construction",
-    name: "Construction & Rénovation",
-    description: "Site vitrine avec projets et demande de soumission",
-    icon: <Hammer className="w-6 h-6" />,
+    id: "vitrine-sante",
+    name: "Site Vitrine - Santé",
+    description: "Site médical avec prise de RDV",
+    icon: <Stethoscope className="w-6 h-6" />,
     config: {
-      industry: "construction",
       serviceType: "website",
-      companyName: "Constructions ABC",
-      primaryColor: "#ea580c",
-      accentColor: "#f97316",
-      secondaryColor: "#fdba74",
-      features: ["accueil", "services", "portfolio", "testimonials", "contact"],
+      websiteType: "vitrine",
+      industry: "sante",
+      companyName: "Clinique Santé Plus",
+      primaryColor: "#0891b2",
+      accentColor: "#06b6d4",
+      secondaryColor: "#67e8f9",
+      websitePages: ["Accueil", "Services", "À propos", "Contact"],
+      websiteSections: ["Équipe", "FAQ", "Coordonnées"],
     },
   },
   {
-    id: "education",
-    name: "Éducation & Formation",
-    description: "Plateforme éducative avec portail étudiant",
-    icon: <GraduationCap className="w-6 h-6" />,
+    id: "portal-client",
+    name: "Portail Client",
+    description: "Espace client sécurisé avec documents",
+    icon: <Users className="w-6 h-6" />,
     config: {
-      industry: "education",
       serviceType: "portal",
-      companyName: "Centre Formation Pro",
+      portalType: "client",
+      industry: "services",
+      companyName: "Mon Portail Client",
       primaryColor: "#059669",
       accentColor: "#10b981",
       secondaryColor: "#6ee7b7",
-      features: ["accueil", "services", "about", "contact", "faq"],
+      portalClientFeatures: ["Consultation de documents", "Factures et paiements", "Historique des transactions"],
+      portalUsers: "11-20 utilisateurs",
+      portalRoles: "2 rôles (ex: admin et utilisateur)",
     },
   },
   {
-    id: "creative-agency",
-    name: "Agence Créative",
-    description: "Portfolio créatif pour agences et designers",
-    icon: <Palette className="w-6 h-6" />,
+    id: "portal-employes",
+    name: "Portail Employés",
+    description: "Gestion d'équipe et projets",
+    icon: <Briefcase className="w-6 h-6" />,
     config: {
-      industry: "arts-scene",
-      serviceType: "website",
-      companyName: "Studio Créatif",
+      serviceType: "portal",
+      portalType: "employes",
+      industry: "services",
+      companyName: "Mon Portail Employés",
+      primaryColor: "#4f46e5",
+      accentColor: "#6366f1",
+      secondaryColor: "#a5b4fc",
+      portalEmployeeFeatures: ["Feuilles de temps", "Gestion de projets", "Documentation interne", "Chat d'équipe"],
+      portalUsers: "21-50 utilisateurs",
+      portalRoles: "3+ rôles (hiérarchie complexe)",
+    },
+  },
+  {
+    id: "portal-rh",
+    name: "Portail RH",
+    description: "Ressources humaines complètes",
+    icon: <Users className="w-6 h-6" />,
+    config: {
+      serviceType: "portal",
+      portalType: "rh",
+      industry: "services",
+      companyName: "Mon Portail RH",
       primaryColor: "#db2777",
       accentColor: "#ec4899",
       secondaryColor: "#f9a8d4",
-      features: ["accueil", "portfolio", "services", "about", "team", "contact", "blog"],
+      portalHRFeatures: ["Dossiers employés", "Gestion des congés", "Formations et certifications", "Recrutement et candidatures"],
+      portalUsers: "50+ utilisateurs",
+      portalRoles: "3+ rôles (hiérarchie complexe)",
     },
   },
 ];
 
 const DEFAULT_CONFIG: DemoConfig = {
   serviceType: "website",
+  websiteType: "vitrine",
   features: [],
   industry: "services",
   companySize: "small",
@@ -187,52 +313,18 @@ const DEFAULT_CONFIG: DemoConfig = {
   secondaryColor: "#fbca58",
   logo: null,
   companyName: "Ma Démo",
+  websitePages: [],
+  websiteSections: [],
+  portalType: null,
+  portalClientFeatures: [],
+  portalEmployeeFeatures: [],
+  portalHRFeatures: [],
   ecommerceNeeds: [],
   autoCompatibility: [],
   autoSearchFeatures: [],
   restaurantFeatures: [],
   retailFeatures: [],
 };
-
-const WEBSITE_FEATURES = [
-  { id: "accueil", label: "Page d'accueil" },
-  { id: "about", label: "À propos" },
-  { id: "services", label: "Services" },
-  { id: "portfolio", label: "Portfolio/Projets" },
-  { id: "contact", label: "Contact" },
-  { id: "blog", label: "Blog" },
-  { id: "testimonials", label: "Témoignages" },
-  { id: "faq", label: "FAQ" },
-  { id: "pricing", label: "Tarifs" },
-  { id: "team", label: "Équipe" },
-];
-
-const ECOMMERCE_FEATURES = [
-  { id: "catalogue", label: "Catalogue produits" },
-  { id: "panier", label: "Panier d'achat" },
-  { id: "paiement", label: "Paiement en ligne" },
-  { id: "inventaire", label: "Gestion d'inventaire" },
-  { id: "promotions", label: "Promotions/Coupons" },
-  { id: "wishlist", label: "Liste de souhaits" },
-  { id: "reviews", label: "Avis clients" },
-  { id: "filtres", label: "Filtres avancés" },
-];
-
-const AUTO_FEATURES = [
-  { id: "vin-search", label: "Recherche par VIN" },
-  { id: "ymm-search", label: "Année/Marque/Modèle" },
-  { id: "compatibility", label: "Compatibilité véhicules" },
-  { id: "diagrams", label: "Diagrammes de pièces" },
-  { id: "oem-aftermarket", label: "OEM vs Aftermarket" },
-];
-
-const RESTAURANT_FEATURES = [
-  { id: "menu", label: "Menu en ligne" },
-  { id: "reservation", label: "Réservations" },
-  { id: "commande", label: "Commande en ligne" },
-  { id: "livraison", label: "Livraison" },
-  { id: "fidelite", label: "Programme fidélité" },
-];
 
 export const DemoEditorPanel = () => {
   const [config, setConfig] = useState<DemoConfig>(DEFAULT_CONFIG);
@@ -246,16 +338,6 @@ export const DemoEditorPanel = () => {
   const applyTemplate = (template: typeof DEMO_TEMPLATES[0]) => {
     setConfig({ ...DEFAULT_CONFIG, ...template.config });
     setSelectedTemplate(template.id);
-  };
-
-  const toggleFeature = (feature: string) => {
-    const currentFeatures = config.features || [];
-    if (currentFeatures.includes(feature)) {
-      updateConfig({ features: currentFeatures.filter(f => f !== feature) });
-    } else {
-      updateConfig({ features: [...currentFeatures, feature] });
-    }
-    setSelectedTemplate(null);
   };
 
   const toggleArrayFeature = (key: keyof DemoConfig, feature: string) => {
@@ -282,11 +364,29 @@ export const DemoEditorPanel = () => {
     );
   }
 
+  // Calcul du total des fonctionnalités
   const totalFeatures = 
-    config.features.length + 
+    (config.websitePages?.length || 0) +
+    (config.websiteSections?.length || 0) +
     (config.ecommerceNeeds?.length || 0) + 
     (config.autoCompatibility?.length || 0) + 
-    (config.restaurantFeatures?.length || 0);
+    (config.restaurantFeatures?.length || 0) +
+    (config.portalClientFeatures?.length || 0) +
+    (config.portalEmployeeFeatures?.length || 0) +
+    (config.portalHRFeatures?.length || 0);
+
+  // Labels pour l'affichage
+  const getServiceTypeLabel = () => {
+    if (config.serviceType === "website") {
+      const type = WEBSITE_TYPES.find(t => t.id === config.websiteType);
+      return type ? `Site Web - ${type.label}` : "Site Web";
+    }
+    if (config.serviceType === "portal") {
+      const type = PORTAL_TYPES.find(t => t.id === config.portalType);
+      return type ? `Portail - ${type.label}` : "Portail";
+    }
+    return "Module";
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
@@ -326,14 +426,13 @@ export const DemoEditorPanel = () => {
             <Card>
               <CardContent className="p-6">
                 <Tabs defaultValue="templates" className="w-full">
-                  <TabsList className="grid w-full grid-cols-5 mb-6">
+                  <TabsList className="grid w-full grid-cols-4 mb-6">
                     <TabsTrigger value="templates" className="flex items-center gap-1">
                       <Sparkles className="w-3 h-3" />
                       <span className="hidden sm:inline">Templates</span>
                     </TabsTrigger>
-                    <TabsTrigger value="general">Général</TabsTrigger>
+                    <TabsTrigger value="solution">Solution</TabsTrigger>
                     <TabsTrigger value="features">Fonctionnalités</TabsTrigger>
-                    <TabsTrigger value="industry">Industrie</TabsTrigger>
                     <TabsTrigger value="branding">Branding</TabsTrigger>
                   </TabsList>
 
@@ -390,13 +489,11 @@ export const DemoEditorPanel = () => {
                         </Card>
                       ))}
                     </div>
-                    <p className="text-xs text-muted-foreground text-center mt-4">
-                      Sélectionnez un template puis personnalisez-le dans les autres onglets
-                    </p>
                   </TabsContent>
 
-                  {/* General Tab */}
-                  <TabsContent value="general" className="space-y-6">
+                  {/* Solution Tab */}
+                  <TabsContent value="solution" className="space-y-6">
+                    {/* Infos générales */}
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div className="space-y-2">
                         <Label htmlFor="companyName">Nom de l'entreprise</Label>
@@ -433,133 +530,277 @@ export const DemoEditorPanel = () => {
                       </div>
                     </div>
 
-                    <div className="space-y-2">
+                    {/* Type de solution principal */}
+                    <div className="space-y-3">
                       <Label>Type de solution</Label>
-                      <Select
-                        value={config.serviceType || "website"}
-                        onValueChange={(value) => {
-                          updateConfig({ serviceType: value as ServiceType });
-                          setSelectedTemplate(null);
-                        }}
-                      >
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="website">Site Web</SelectItem>
-                          <SelectItem value="portal">Portail</SelectItem>
-                          <SelectItem value="module">Module</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <div className="grid grid-cols-2 gap-3">
+                        <Card 
+                          className={`p-4 cursor-pointer transition-all ${
+                            config.serviceType === "website" ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-muted/50'
+                          }`}
+                          onClick={() => {
+                            updateConfig({ serviceType: "website", portalType: null });
+                            setSelectedTemplate(null);
+                          }}
+                        >
+                          <Globe className="w-6 h-6 mb-2 text-primary" />
+                          <h4 className="font-semibold">Site Web</h4>
+                          <p className="text-xs text-muted-foreground">Vitrine, E-commerce ou Organisationnel</p>
+                        </Card>
+                        <Card 
+                          className={`p-4 cursor-pointer transition-all ${
+                            config.serviceType === "portal" ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-muted/50'
+                          }`}
+                          onClick={() => {
+                            updateConfig({ serviceType: "portal", websiteType: null });
+                            setSelectedTemplate(null);
+                          }}
+                        >
+                          <Lock className="w-6 h-6 mb-2 text-primary" />
+                          <h4 className="font-semibold">Portail</h4>
+                          <p className="text-xs text-muted-foreground">Client, Employés, RH ou Mixte</p>
+                        </Card>
+                      </div>
                     </div>
+
+                    {/* Types de sites web */}
+                    {config.serviceType === "website" && (
+                      <div className="space-y-3">
+                        <Label>Type de site web</Label>
+                        <div className="grid gap-3">
+                          {WEBSITE_TYPES.map(type => (
+                            <Card 
+                              key={type.id}
+                              className={`p-4 cursor-pointer transition-all ${
+                                config.websiteType === type.id ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-muted/50'
+                              }`}
+                              onClick={() => {
+                                updateConfig({ websiteType: type.id as any });
+                                setSelectedTemplate(null);
+                              }}
+                            >
+                              <div className="flex items-center gap-3">
+                                <type.icon className="w-5 h-5 text-primary" />
+                                <div>
+                                  <h4 className="font-semibold text-sm">{type.label}</h4>
+                                  <p className="text-xs text-muted-foreground">{type.description}</p>
+                                </div>
+                              </div>
+                            </Card>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Types de portails */}
+                    {config.serviceType === "portal" && (
+                      <div className="space-y-3">
+                        <Label>Type de portail</Label>
+                        <div className="grid sm:grid-cols-2 gap-3">
+                          {PORTAL_TYPES.map(type => (
+                            <Card 
+                              key={type.id}
+                              className={`p-4 cursor-pointer transition-all ${
+                                config.portalType === type.id ? 'ring-2 ring-primary bg-primary/5' : 'hover:bg-muted/50'
+                              }`}
+                              onClick={() => {
+                                updateConfig({ portalType: type.id as any });
+                                setSelectedTemplate(null);
+                              }}
+                            >
+                              <div className="flex items-center gap-3">
+                                <type.icon className="w-5 h-5 text-primary" />
+                                <div>
+                                  <h4 className="font-semibold text-sm">{type.label}</h4>
+                                  <p className="text-xs text-muted-foreground">{type.description}</p>
+                                </div>
+                              </div>
+                            </Card>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </TabsContent>
 
                   {/* Features Tab */}
                   <TabsContent value="features" className="space-y-6">
-                    <div>
-                      <h3 className="font-medium mb-3">Pages du site</h3>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {WEBSITE_FEATURES.map(feature => (
-                          <label
-                            key={feature.id}
-                            className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
-                          >
-                            <Checkbox
-                              checked={config.features.includes(feature.id)}
-                              onCheckedChange={() => toggleFeature(feature.id)}
-                            />
-                            <span className="text-sm">{feature.label}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
+                    {/* Site Vitrine */}
+                    {config.serviceType === "website" && config.websiteType === "vitrine" && (
+                      <>
+                        <div>
+                          <h3 className="font-medium mb-3">Pages principales</h3>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {VITRINE_PAGES.map(page => (
+                              <label
+                                key={page}
+                                className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                              >
+                                <Checkbox
+                                  checked={(config.websitePages || []).includes(page)}
+                                  onCheckedChange={() => toggleArrayFeature("websitePages", page)}
+                                />
+                                <span className="text-sm">{page}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="font-medium mb-3">Sections importantes</h3>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {VITRINE_SECTIONS.map(section => (
+                              <label
+                                key={section}
+                                className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                              >
+                                <Checkbox
+                                  checked={(config.websiteSections || []).includes(section)}
+                                  onCheckedChange={() => toggleArrayFeature("websiteSections", section)}
+                                />
+                                <span className="text-sm">{section}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
+                      </>
+                    )}
 
-                    <div>
-                      <h3 className="font-medium mb-3">E-commerce</h3>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        {ECOMMERCE_FEATURES.map(feature => (
-                          <label
-                            key={feature.id}
-                            className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
-                          >
-                            <Checkbox
-                              checked={(config.ecommerceNeeds || []).includes(feature.id)}
-                              onCheckedChange={() => toggleArrayFeature("ecommerceNeeds", feature.id)}
-                            />
-                            <span className="text-sm">{feature.label}</span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
+                    {/* E-commerce */}
+                    {config.serviceType === "website" && config.websiteType === "ecommerce" && (
+                      <>
+                        <div>
+                          <h3 className="font-medium mb-3">Fonctionnalités E-commerce</h3>
+                          <div className="grid gap-3">
+                            {ECOMMERCE_FEATURES.map(feature => (
+                              <label
+                                key={feature}
+                                className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                              >
+                                <Checkbox
+                                  checked={(config.ecommerceNeeds || []).includes(feature)}
+                                  onCheckedChange={() => toggleArrayFeature("ecommerceNeeds", feature)}
+                                />
+                                <span className="text-sm">{feature}</span>
+                              </label>
+                            ))}
+                          </div>
+                        </div>
 
-                    <div>
-                      <h3 className="font-medium mb-3">Modules additionnels</h3>
-                      <div className="grid gap-3">
-                        {MODULES.slice(0, 6).map(module => (
-                          <label
-                            key={module.id}
-                            className="flex items-center gap-3 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
-                          >
-                            <Checkbox
-                              checked={config.features.includes(module.id)}
-                              onCheckedChange={() => toggleFeature(module.id)}
-                            />
-                            <div>
-                              <span className="text-sm font-medium">{module.label}</span>
-                              <p className="text-xs text-muted-foreground">{module.description}</p>
+                        {/* Auto specifics */}
+                        {config.industry === "auto" && (
+                          <div>
+                            <h3 className="font-medium mb-3">Fonctionnalités Automobile</h3>
+                            <div className="grid gap-3">
+                              {AUTO_FEATURES.map(feature => (
+                                <label
+                                  key={feature}
+                                  className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                                >
+                                  <Checkbox
+                                    checked={(config.autoCompatibility || []).includes(feature)}
+                                    onCheckedChange={() => toggleArrayFeature("autoCompatibility", feature)}
+                                  />
+                                  <span className="text-sm">{feature}</span>
+                                </label>
+                              ))}
                             </div>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-                  </TabsContent>
+                          </div>
+                        )}
 
-                  {/* Industry Tab */}
-                  <TabsContent value="industry" className="space-y-6">
-                    {config.industry === "auto" && (
+                        {/* Restaurant specifics */}
+                        {config.industry === "restauration" && (
+                          <div>
+                            <h3 className="font-medium mb-3">Fonctionnalités Restauration</h3>
+                            <div className="grid gap-3">
+                              {RESTAURANT_FEATURES.map(feature => (
+                                <label
+                                  key={feature}
+                                  className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                                >
+                                  <Checkbox
+                                    checked={(config.restaurantFeatures || []).includes(feature)}
+                                    onCheckedChange={() => toggleArrayFeature("restaurantFeatures", feature)}
+                                  />
+                                  <span className="text-sm">{feature}</span>
+                                </label>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {/* Portail Client */}
+                    {config.serviceType === "portal" && (config.portalType === "client" || config.portalType === "mixte") && (
                       <div>
-                        <h3 className="font-medium mb-3">Fonctionnalités Automobile</h3>
-                        <div className="grid grid-cols-2 gap-3">
-                          {AUTO_FEATURES.map(feature => (
+                        <h3 className="font-medium mb-3">Fonctionnalités Portail Client</h3>
+                        <div className="grid gap-3">
+                          {PORTAL_CLIENT_FEATURES.map(feature => (
                             <label
-                              key={feature.id}
+                              key={feature}
                               className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
                             >
                               <Checkbox
-                                checked={(config.autoCompatibility || []).includes(feature.id)}
-                                onCheckedChange={() => toggleArrayFeature("autoCompatibility", feature.id)}
+                                checked={(config.portalClientFeatures || []).includes(feature)}
+                                onCheckedChange={() => toggleArrayFeature("portalClientFeatures", feature)}
                               />
-                              <span className="text-sm">{feature.label}</span>
+                              <span className="text-sm">{feature}</span>
                             </label>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    {config.industry === "restauration" && (
+                    {/* Portail Employés */}
+                    {config.serviceType === "portal" && (config.portalType === "employes" || config.portalType === "mixte") && (
                       <div>
-                        <h3 className="font-medium mb-3">Fonctionnalités Restauration</h3>
-                        <div className="grid grid-cols-2 gap-3">
-                          {RESTAURANT_FEATURES.map(feature => (
+                        <h3 className="font-medium mb-3">Fonctionnalités Portail Employés</h3>
+                        <div className="grid gap-3">
+                          {PORTAL_EMPLOYEE_FEATURES.map(feature => (
                             <label
-                              key={feature.id}
+                              key={feature}
                               className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
                             >
                               <Checkbox
-                                checked={(config.restaurantFeatures || []).includes(feature.id)}
-                                onCheckedChange={() => toggleArrayFeature("restaurantFeatures", feature.id)}
+                                checked={(config.portalEmployeeFeatures || []).includes(feature)}
+                                onCheckedChange={() => toggleArrayFeature("portalEmployeeFeatures", feature)}
                               />
-                              <span className="text-sm">{feature.label}</span>
+                              <span className="text-sm">{feature}</span>
                             </label>
                           ))}
                         </div>
                       </div>
                     )}
 
-                    {!["auto", "restauration"].includes(config.industry) && (
+                    {/* Portail RH */}
+                    {config.serviceType === "portal" && (config.portalType === "rh" || config.portalType === "mixte") && (
+                      <div>
+                        <h3 className="font-medium mb-3">Fonctionnalités Portail RH</h3>
+                        <div className="grid gap-3">
+                          {PORTAL_HR_FEATURES.map(feature => (
+                            <label
+                              key={feature}
+                              className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                            >
+                              <Checkbox
+                                checked={(config.portalHRFeatures || []).includes(feature)}
+                                onCheckedChange={() => toggleArrayFeature("portalHRFeatures", feature)}
+                              />
+                              <span className="text-sm">{feature}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Message si pas de type sélectionné */}
+                    {config.serviceType === "website" && !config.websiteType && (
                       <div className="text-center py-8 text-muted-foreground">
-                        <p>Sélectionnez "Automobile" ou "Restauration" dans l'onglet Général</p>
-                        <p className="text-sm">pour voir les fonctionnalités spécifiques à l'industrie</p>
+                        <p>Sélectionnez un type de site web dans l'onglet "Solution"</p>
+                      </div>
+                    )}
+                    {config.serviceType === "portal" && !config.portalType && (
+                      <div className="text-center py-8 text-muted-foreground">
+                        <p>Sélectionnez un type de portail dans l'onglet "Solution"</p>
                       </div>
                     )}
                   </TabsContent>
@@ -618,12 +859,8 @@ export const DemoEditorPanel = () => {
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-muted-foreground">Type</p>
-                  <p className="font-medium">
-                    {config.serviceType === "website" ? "Site Web" : 
-                     config.serviceType === "portal" ? "Portail" : 
-                     config.serviceType === "module" ? "Module" : "Site Web"}
-                  </p>
+                  <p className="text-sm text-muted-foreground">Type de solution</p>
+                  <p className="font-medium">{getServiceTypeLabel()}</p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">Fonctionnalités</p>

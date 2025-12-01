@@ -47,6 +47,17 @@ export interface DemoConfig {
   secondaryColor: string;
   logo: string | null;
   companyName: string;
+  // Website types
+  websiteType?: "vitrine" | "ecommerce" | "organisationnel" | null;
+  websitePages?: string[];
+  websiteSections?: string[];
+  // Portal types
+  portalType?: "client" | "employes" | "rh" | "mixte" | null;
+  portalUsers?: string;
+  portalRoles?: string;
+  portalClientFeatures?: string[];
+  portalEmployeeFeatures?: string[];
+  portalHRFeatures?: string[];
   // Industry-specific features
   ecommerceNeeds?: string[];
   autoCompatibility?: string[];
