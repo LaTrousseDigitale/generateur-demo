@@ -13,7 +13,7 @@ import { LogoUploader } from "./LogoUploader";
 import { 
   ArrowLeft, Eye, RefreshCw, Sparkles, Car, UtensilsCrossed, 
   Building2, Stethoscope, ShoppingBag, Briefcase, GraduationCap,
-  Hammer, Palette, Check, Globe, Lock, Users, FileText, ShoppingCart
+  Hammer, Palette, Check, Globe, Lock, Users, FileText, ShoppingCart, Star
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, MODULES } from "@/types/questionnaire";
@@ -112,22 +112,157 @@ const PORTAL_HR_FEATURES = [
   "Évaluations de performance",
 ];
 
-const AUTO_FEATURES = [
-  "Recherche par année/marque/modèle",
-  "Recherche par numéro VIN",
-  "Diagrammes et schémas de pièces",
-  "Compatibilité automatique des pièces",
-  "Catalogue pièces OEM vs aftermarket",
-];
+// Fonctionnalités spécifiques par industrie
+const INDUSTRY_FEATURES: Record<string, { title: string; features: string[] }> = {
+  auto: {
+    title: "Fonctionnalités Automobile",
+    features: [
+      "Recherche par année/marque/modèle",
+      "Recherche par numéro VIN",
+      "Diagrammes et schémas de pièces",
+      "Compatibilité automatique des pièces",
+      "Catalogue pièces OEM vs aftermarket",
+      "Gestion de garanties",
+    ],
+  },
+  restauration: {
+    title: "Fonctionnalités Restauration",
+    features: [
+      "Menu en ligne avec photos et descriptions",
+      "Système de réservation de tables",
+      "Commande en ligne (pick-up / livraison)",
+      "Gestion des allergènes et restrictions alimentaires",
+      "Programme de fidélité",
+      "Horaires d'ouverture dynamiques",
+    ],
+  },
+  sante: {
+    title: "Fonctionnalités Santé & Bien-être",
+    features: [
+      "Prise de rendez-vous en ligne",
+      "Rappels automatiques par courriel/SMS",
+      "Formulaires de consentement électroniques",
+      "Dossiers patients sécurisés",
+      "Téléconsultation vidéo",
+      "Conformité réglementaire santé",
+    ],
+  },
+  construction: {
+    title: "Fonctionnalités Construction",
+    features: [
+      "Portfolio de projets avec galerie",
+      "Générateur de soumissions PDF",
+      "Suivi de chantiers",
+      "Gestion des sous-traitants",
+      "Signatures électroniques contrats",
+      "Calendrier de disponibilité",
+    ],
+  },
+  education: {
+    title: "Fonctionnalités Éducation",
+    features: [
+      "Catalogue de cours en ligne",
+      "Inscriptions et paiements",
+      "Portail étudiant sécurisé",
+      "Suivi de progression",
+      "Certificats automatisés",
+      "Classes virtuelles intégrées",
+    ],
+  },
+  obnl: {
+    title: "Fonctionnalités OBNL",
+    features: [
+      "Dons en ligne sécurisés",
+      "Gestion des membres et bénévoles",
+      "Campagnes de financement",
+      "Rapports d'impact",
+      "Événements et inscriptions",
+      "Reçus fiscaux automatiques",
+    ],
+  },
+  services: {
+    title: "Fonctionnalités Services Pro",
+    features: [
+      "Formulaire de contact avancé",
+      "Prise de rendez-vous",
+      "Devis en ligne",
+      "Témoignages clients",
+      "Intégration calendrier",
+      "Chat en direct",
+    ],
+  },
+  architecture: {
+    title: "Fonctionnalités Architecture & Design",
+    features: [
+      "Portfolio projets haute résolution",
+      "Galerie avant/après",
+      "Processus de travail illustré",
+      "Visualisation 3D intégrée",
+      "Demandes de projets personnalisés",
+      "Prix et distinctions",
+    ],
+  },
+  tech: {
+    title: "Fonctionnalités Tech & Startups",
+    features: [
+      "Documentation technique",
+      "Système de tickets support",
+      "Base de connaissances",
+      "Intégrations API",
+      "Tableau de bord analytics",
+      "Onboarding automatisé",
+    ],
+  },
+  commerce: {
+    title: "Fonctionnalités Commerce de détail",
+    features: [
+      "Catalogue produits avec filtres",
+      "Gestion des stocks en temps réel",
+      "Programme de fidélité",
+      "Click & Collect",
+      "Avis clients vérifiés",
+      "Promotions et codes promo",
+    ],
+  },
+  transport: {
+    title: "Fonctionnalités Transport & Logistique",
+    features: [
+      "Suivi de livraisons en temps réel",
+      "Calculateur de tarifs",
+      "Gestion de flotte",
+      "Réservations en ligne",
+      "Rapports de performance",
+      "Intégration GPS",
+    ],
+  },
+  "arts-scene": {
+    title: "Fonctionnalités Arts de la scène",
+    features: [
+      "Billetterie en ligne",
+      "Calendrier d'événements",
+      "Galerie multimédia",
+      "Biographies artistes",
+      "Newsletter et abonnements",
+      "Réservations de groupe",
+    ],
+  },
+};
 
-const RESTAURANT_FEATURES = [
-  "Menu en ligne avec photos et descriptions",
-  "Système de réservation de tables",
-  "Commande en ligne (pick-up / livraison)",
-  "Gestion des allergènes et restrictions alimentaires",
-  "Programme de fidélité",
-  "Horaires d'ouverture dynamiques",
-];
+// Modules recommandés par industrie
+const INDUSTRY_RECOMMENDED_MODULES: Record<string, string[]> = {
+  auto: ["calculateur-pdf", "crm-lite", "tickets"],
+  restauration: ["rendez-vous", "crm-lite", "kpi-dashboard"],
+  commerce: ["crm-lite", "kpi-dashboard", "tickets"],
+  sante: ["rendez-vous", "base-connaissances", "signatures"],
+  construction: ["projets-lite", "calculateur-pdf", "signatures"],
+  education: ["base-connaissances", "onboarding", "kpi-dashboard"],
+  obnl: ["crm-lite", "base-connaissances", "kpi-dashboard"],
+  services: ["rendez-vous", "crm-lite", "calculateur-pdf"],
+  architecture: ["projets-lite", "calculateur-pdf", "signatures"],
+  tech: ["tickets", "base-connaissances", "projets-lite"],
+  transport: ["projets-lite", "kpi-dashboard", "chat-interne"],
+  "arts-scene": ["rendez-vous", "crm-lite", "kpi-dashboard"],
+};
 
 // Templates par industrie
 const DEMO_TEMPLATES: Array<{
@@ -625,67 +760,51 @@ export const DemoEditorPanel = () => {
 
                     {/* E-commerce */}
                     {config.serviceType === "website" && config.websiteType === "ecommerce" && (
-                      <>
-                        <div>
-                          <h3 className="font-medium mb-3">Fonctionnalités E-commerce</h3>
-                          <div className="grid gap-3">
-                            {ECOMMERCE_FEATURES.map(feature => (
-                              <label
-                                key={feature}
-                                className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
-                              >
-                                <Checkbox
-                                  checked={(config.ecommerceNeeds || []).includes(feature)}
-                                  onCheckedChange={() => toggleArrayFeature("ecommerceNeeds", feature)}
-                                />
-                                <span className="text-sm">{feature}</span>
-                              </label>
-                            ))}
-                          </div>
+                      <div>
+                        <h3 className="font-medium mb-3">Fonctionnalités E-commerce</h3>
+                        <div className="grid gap-3">
+                          {ECOMMERCE_FEATURES.map(feature => (
+                            <label
+                              key={feature}
+                              className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                            >
+                              <Checkbox
+                                checked={(config.ecommerceNeeds || []).includes(feature)}
+                                onCheckedChange={() => toggleArrayFeature("ecommerceNeeds", feature)}
+                              />
+                              <span className="text-sm">{feature}</span>
+                            </label>
+                          ))}
                         </div>
+                      </div>
+                    )}
 
-                        {/* Auto specifics */}
-                        {config.industry === "auto" && (
-                          <div>
-                            <h3 className="font-medium mb-3">Fonctionnalités Automobile</h3>
-                            <div className="grid gap-3">
-                              {AUTO_FEATURES.map(feature => (
-                                <label
-                                  key={feature}
-                                  className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
-                                >
-                                  <Checkbox
-                                    checked={(config.autoCompatibility || []).includes(feature)}
-                                    onCheckedChange={() => toggleArrayFeature("autoCompatibility", feature)}
-                                  />
-                                  <span className="text-sm">{feature}</span>
-                                </label>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Restaurant specifics */}
-                        {config.industry === "restauration" && (
-                          <div>
-                            <h3 className="font-medium mb-3">Fonctionnalités Restauration</h3>
-                            <div className="grid gap-3">
-                              {RESTAURANT_FEATURES.map(feature => (
-                                <label
-                                  key={feature}
-                                  className="flex items-center gap-2 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
-                                >
-                                  <Checkbox
-                                    checked={(config.restaurantFeatures || []).includes(feature)}
-                                    onCheckedChange={() => toggleArrayFeature("restaurantFeatures", feature)}
-                                  />
-                                  <span className="text-sm">{feature}</span>
-                                </label>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </>
+                    {/* Fonctionnalités spécifiques à l'industrie */}
+                    {INDUSTRY_FEATURES[config.industry] && (
+                      <div className="border-t pt-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Sparkles className="w-4 h-4 text-primary" />
+                          <h3 className="font-medium">{INDUSTRY_FEATURES[config.industry].title}</h3>
+                          <Badge variant="secondary" className="text-xs">Recommandé</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-4">
+                          Fonctionnalités adaptées à votre industrie
+                        </p>
+                        <div className="grid gap-3">
+                          {INDUSTRY_FEATURES[config.industry].features.map(feature => (
+                            <label
+                              key={feature}
+                              className="flex items-center gap-2 p-3 rounded-lg border border-primary/30 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors"
+                            >
+                              <Checkbox
+                                checked={(config.autoCompatibility || []).includes(feature)}
+                                onCheckedChange={() => toggleArrayFeature("autoCompatibility", feature)}
+                              />
+                              <span className="text-sm">{feature}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
                     )}
 
                     {/* Portail Client */}
@@ -760,23 +879,60 @@ export const DemoEditorPanel = () => {
                       <p className="text-xs text-muted-foreground mb-4">
                         Ajoutez des fonctionnalités supplémentaires à votre solution
                       </p>
+                      
+                      {/* Note recommandations */}
+                      {INDUSTRY_RECOMMENDED_MODULES[config.industry]?.length > 0 && (
+                        <div className="flex items-center gap-2 mb-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                          <Star className="w-4 h-4 text-primary fill-primary" />
+                          <span className="text-sm">Modules recommandés pour votre industrie</span>
+                        </div>
+                      )}
+                      
                       <div className="grid gap-3">
-                        {MODULES.map(module => (
-                          <label
-                            key={module.id}
-                            className="flex items-start gap-3 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
-                          >
-                            <Checkbox
-                              checked={(config.selectedModules || []).includes(module.id)}
-                              onCheckedChange={() => toggleArrayFeature("selectedModules", module.id)}
-                              className="mt-0.5"
-                            />
-                            <div>
-                              <span className="text-sm font-medium">{module.label}</span>
-                              <p className="text-xs text-muted-foreground">{module.description}</p>
-                            </div>
-                          </label>
-                        ))}
+                        {/* Modules triés: recommandés en premier */}
+                        {[...MODULES]
+                          .sort((a, b) => {
+                            const aRecommended = (INDUSTRY_RECOMMENDED_MODULES[config.industry] || []).includes(a.id);
+                            const bRecommended = (INDUSTRY_RECOMMENDED_MODULES[config.industry] || []).includes(b.id);
+                            if (aRecommended && !bRecommended) return -1;
+                            if (!aRecommended && bRecommended) return 1;
+                            return 0;
+                          })
+                          .map(module => {
+                            const isRecommended = (INDUSTRY_RECOMMENDED_MODULES[config.industry] || []).includes(module.id);
+                            const isSelected = (config.selectedModules || []).includes(module.id);
+                            
+                            return (
+                              <label
+                                key={module.id}
+                                className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
+                                  isSelected 
+                                    ? 'border-primary border-2 bg-primary/5' 
+                                    : isRecommended 
+                                      ? 'border-primary/50 bg-primary/5 hover:bg-primary/10' 
+                                      : 'hover:bg-muted/50'
+                                }`}
+                              >
+                                <Checkbox
+                                  checked={isSelected}
+                                  onCheckedChange={() => toggleArrayFeature("selectedModules", module.id)}
+                                  className="mt-0.5"
+                                />
+                                <div className="flex-1">
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-sm font-medium">{module.label}</span>
+                                    {isRecommended && (
+                                      <Badge variant="secondary" className="text-xs">
+                                        <Star className="w-3 h-3 mr-1 fill-current" />
+                                        Recommandé
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <p className="text-xs text-muted-foreground">{module.description}</p>
+                                </div>
+                              </label>
+                            );
+                          })}
                       </div>
                     </div>
 
