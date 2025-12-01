@@ -619,7 +619,11 @@ export const DemoEditorPanel = () => {
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">Type</p>
-                  <p className="font-medium capitalize">{config.serviceType || "Site Web"}</p>
+                  <p className="font-medium">
+                    {config.serviceType === "website" ? "Site Web" : 
+                     config.serviceType === "portal" ? "Portail" : 
+                     config.serviceType === "module" ? "Module" : "Site Web"}
+                  </p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">Fonctionnalités</p>
