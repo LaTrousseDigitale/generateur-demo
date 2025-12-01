@@ -1,9 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { 
   Rocket, TrendingUp, Clock, Shield, Zap, Award, 
-  CheckCircle2, ArrowRight, Sparkles, DollarSign
+  CheckCircle2, Sparkles, DollarSign
 } from "lucide-react";
 import { DemoConfig } from "./DemoGenerator";
 
@@ -11,26 +10,53 @@ interface DemoFeaturesDisplayProps {
   config: DemoConfig;
 }
 
-// Calcul du prix estimé en CAD
+// Prix alignés avec le questionnaire (Section8Finances et DemoGenerator)
+const PRICING = {
+  website: 2000,
+  portal: 5000,
+  module: 1500,
+  additionalModule: 500,
+  canvaService: 50,
+  // Maintenance mensuelle selon les niveaux
+  maintenance: {
+    basic: 50,
+    standard: 150,
+    premium: 300,
+    enterprise: 450,
+  },
+};
+
+// Calcul du prix estimé en CAD - aligné avec calculateEstimatedPrice du questionnaire
 const calculatePricing = (config: DemoConfig) => {
   let basePrice = 0;
-  let monthlyPrice = 0;
   const items: { label: string; price: number }[] = [];
 
-  // Prix de base par type de service
+  // Prix de base par type de service (même logique que DemoGenerator)
   if (config.serviceType === "website") {
-    basePrice += 2500;
-    items.push({ label: "Site web professionnel", price: 2500 });
+    basePrice += PRICING.website;
+    items.push({ label: "Site web professionnel", price: PRICING.website });
   }
   if (config.serviceType === "portal") {
-    basePrice += 5000;
-    items.push({ label: "Portail client/employé", price: 5000 });
+    basePrice += PRICING.portal;
+    items.push({ label: "Portail client/employé", price: PRICING.portal });
+  }
+  if (config.serviceType === "module") {
+    basePrice += PRICING.module;
+    items.push({ label: "Module personnalisé", price: PRICING.module });
   }
 
-  // E-commerce
+  // Fonctionnalités sélectionnées (pages, etc.) - considérées comme modules additionnels
+  const featuresCount = config.features?.length || 0;
+  if (featuresCount > 0) {
+    const featuresPrice = featuresCount * PRICING.additionalModule;
+    basePrice += featuresPrice;
+    items.push({ label: `Modules additionnels (${featuresCount})`, price: featuresPrice });
+  }
+
+  // E-commerce features
   const ecommerceCount = config.ecommerceNeeds?.length || 0;
   if (ecommerceCount > 0) {
-    const ecommercePrice = ecommerceCount * 400;
+    const ecommercePrice = ecommerceCount * PRICING.additionalModule;
     basePrice += ecommercePrice;
     items.push({ label: `Fonctionnalités e-commerce (${ecommerceCount})`, price: ecommercePrice });
   }
@@ -38,35 +64,22 @@ const calculatePricing = (config: DemoConfig) => {
   // Auto features
   const autoCount = config.autoCompatibility?.length || 0;
   if (autoCount > 0) {
-    const autoPrice = autoCount * 600;
+    const autoPrice = autoCount * PRICING.additionalModule;
     basePrice += autoPrice;
-    items.push({ label: `Outils automobile avancés (${autoCount})`, price: autoPrice });
+    items.push({ label: `Outils automobile (${autoCount})`, price: autoPrice });
   }
 
   // Restaurant features
   const restaurantCount = config.restaurantFeatures?.length || 0;
   if (restaurantCount > 0) {
-    const restaurantPrice = restaurantCount * 350;
+    const restaurantPrice = restaurantCount * PRICING.additionalModule;
     basePrice += restaurantPrice;
     items.push({ label: `Fonctionnalités restauration (${restaurantCount})`, price: restaurantPrice });
   }
 
-  // Pages standard
-  const pagesCount = config.features?.length || 0;
-  if (pagesCount > 0) {
-    const pagesPrice = pagesCount * 150;
-    basePrice += pagesPrice;
-    items.push({ label: `Pages personnalisées (${pagesCount})`, price: pagesPrice });
-  }
-
-  // Maintenance mensuelle
-  monthlyPrice = Math.round(basePrice * 0.08);
-
   return {
     basePrice,
-    monthlyPrice,
     items,
-    totalValue: Math.round(basePrice * 1.4), // Valeur perçue
   };
 };
 
@@ -169,7 +182,7 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
               </div>
               <div>
                 <h3 className="font-bold text-xl">Estimation du projet</h3>
-                <p className="text-sm text-muted-foreground">Prix en dollars canadiens</p>
+                <p className="text-sm text-muted-foreground">Prix en dollars canadiens (CAD)</p>
               </div>
             </div>
 
@@ -211,13 +224,27 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
               </div>
             </div>
 
-            {/* Maintenance */}
-            <div className="mt-4 p-4 bg-muted/50 rounded-lg flex justify-between items-center">
-              <div className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-muted-foreground" />
-                <span className="text-sm">Maintenance & support mensuel</span>
+            {/* Options de maintenance */}
+            <div className="mt-6 space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">+ Maintenance mensuelle (au choix)</p>
+              <div className="grid grid-cols-2 gap-2">
+                <div className="p-3 bg-muted/30 rounded-lg text-center">
+                  <p className="font-bold">{PRICING.maintenance.basic} $/mois</p>
+                  <p className="text-xs text-muted-foreground">Service de base</p>
+                </div>
+                <div className="p-3 bg-muted/30 rounded-lg text-center">
+                  <p className="font-bold">{PRICING.maintenance.standard} $/mois</p>
+                  <p className="text-xs text-muted-foreground">Standard</p>
+                </div>
+                <div className="p-3 bg-muted/30 rounded-lg text-center">
+                  <p className="font-bold">{PRICING.maintenance.premium} $/mois</p>
+                  <p className="text-xs text-muted-foreground">Premium</p>
+                </div>
+                <div className="p-3 bg-muted/30 rounded-lg text-center">
+                  <p className="font-bold">{PRICING.maintenance.enterprise} $/mois</p>
+                  <p className="text-xs text-muted-foreground">Entreprise</p>
+                </div>
               </div>
-              <span className="font-semibold">{pricing.monthlyPrice.toLocaleString("fr-CA")} $/mois</span>
             </div>
           </Card>
 
@@ -256,32 +283,28 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
               ))}
             </div>
 
-            {/* ROI estimé */}
+            {/* Option abonnement */}
             <div 
               className="rounded-xl p-6 border-2"
               style={{ borderColor: config.accentColor + "40" }}
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="font-medium">Valeur estimée du projet</span>
-                <Badge variant="secondary">ROI potentiel</Badge>
+                <span className="font-medium">Alternative : Abonnement mensuel</span>
+                <Badge variant="secondary">Populaire</Badge>
               </div>
               <div className="flex items-end gap-2">
                 <span 
                   className="text-3xl font-bold"
                   style={{ color: config.accentColor }}
                 >
-                  {pricing.totalValue.toLocaleString("fr-CA")} $
+                  80 $
                 </span>
                 <span className="text-muted-foreground text-sm mb-1">
-                  valeur perçue
+                  /mois
                 </span>
               </div>
               <p className="text-sm text-muted-foreground mt-2">
-                Économie de{" "}
-                <span className="font-semibold text-foreground">
-                  {(pricing.totalValue - pricing.basePrice).toLocaleString("fr-CA")} $
-                </span>{" "}
-                par rapport au marché
+                Flexibilité maximale, mises à jour incluses, support prioritaire, sans engagement long terme
               </p>
             </div>
           </Card>
