@@ -81,7 +81,7 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
     { time: "17:00", available: true },
   ];
 
-  const services = {
+  const services: Record<string, Array<{ name: string; duration: string; price: string; icon: typeof Users; popular: boolean; image: string }>> = {
     sante: [
       { name: "Consultation Générale", duration: "30 min", price: "75 $", icon: Users, popular: false, image: bookingHealthClinic },
       { name: "Consultation Spécialisée", duration: "45 min", price: "120 $", icon: Star, popular: true, image: bookingArchitectureOffice },
@@ -92,12 +92,84 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
       { name: "Table 4 Personnes", duration: "2h", price: "Gratuit", icon: Users, popular: true, image: bookingHealthClinic },
       { name: "Salle Privée 8-12 pers", duration: "3h", price: "150 $", icon: Star, popular: false, image: bookingArchitectureOffice },
     ],
+    "arts-scene": [
+      { name: "Billet Standard", duration: "Parterre", price: "45 $", icon: Users, popular: false, image: bookingRestaurantInterior },
+      { name: "Billet Premium", duration: "Balcon VIP", price: "85 $", icon: Star, popular: true, image: bookingArchitectureOffice },
+      { name: "Loge Privée", duration: "4 personnes", price: "320 $", icon: Award, popular: false, image: bookingHealthClinic },
+    ],
+    auto: [
+      { name: "Diagnostic Complet", duration: "45 min", price: "89 $", icon: Shield, popular: false, image: bookingAutoService },
+      { name: "Entretien Standard", duration: "2h", price: "149 $", icon: Star, popular: true, image: bookingConstructionOffice },
+      { name: "Révision Complète", duration: "4h", price: "299 $", icon: Award, popular: false, image: bookingArchitectureOffice },
+    ],
+    construction: [
+      { name: "Consultation Projet", duration: "1h", price: "Gratuit", icon: Users, popular: false, image: bookingConstructionOffice },
+      { name: "Estimation Détaillée", duration: "Sur site", price: "150 $", icon: Star, popular: true, image: bookingArchitectureOffice },
+      { name: "Suivi de Chantier", duration: "Mensuel", price: "500 $", icon: Award, popular: false, image: bookingAutoService },
+    ],
+    architecture: [
+      { name: "Première Rencontre", duration: "1h", price: "Gratuit", icon: Users, popular: false, image: bookingArchitectureOffice },
+      { name: "Étude de Faisabilité", duration: "1 semaine", price: "750 $", icon: Star, popular: true, image: bookingConstructionOffice },
+      { name: "Plans Complets", duration: "3-4 semaines", price: "2 500 $", icon: Award, popular: false, image: bookingHealthClinic },
+    ],
+    education: [
+      { name: "Cours Découverte", duration: "1h", price: "25 $", icon: Users, popular: false, image: bookingArchitectureOffice },
+      { name: "Formation Intensive", duration: "1 journée", price: "195 $", icon: Star, popular: true, image: bookingHealthClinic },
+      { name: "Programme Complet", duration: "10 semaines", price: "1 200 $", icon: Award, popular: false, image: bookingRestaurantInterior },
+    ],
+    services: [
+      { name: "Consultation Initiale", duration: "60 min", price: "180 $", icon: Users, popular: false, image: bookingArchitectureOffice },
+      { name: "Session de Suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true, image: bookingHealthClinic },
+      { name: "Audit Complet", duration: "2h", price: "375 $", icon: Star, popular: false, image: bookingConstructionOffice },
+    ],
     "services-pro": [
       { name: "Consultation Initiale", duration: "60 min", price: "180 $", icon: Users, popular: false, image: bookingArchitectureOffice },
       { name: "Session de Suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true, image: bookingHealthClinic },
       { name: "Audit Complet", duration: "2h", price: "375 $", icon: Star, popular: false, image: bookingConstructionOffice },
     ],
   };
+
+  // Titres de section adaptés par industrie
+  const sectionTitles: Record<string, { badge: string; title: string; subtitle: string; duration: string }> = {
+    "arts-scene": { 
+      badge: "Billetterie", 
+      title: "Choisissez vos billets", 
+      subtitle: "Sélectionnez votre type de place et réservez votre soirée",
+      duration: "Emplacement"
+    },
+    restauration: { 
+      badge: "Réservations", 
+      title: "Réservez votre table", 
+      subtitle: "Choisissez le type de table et l'heure qui vous conviennent",
+      duration: "Capacité"
+    },
+    auto: { 
+      badge: "Services auto", 
+      title: "Nos services", 
+      subtitle: "Sélectionnez le service dont votre véhicule a besoin",
+      duration: "Durée"
+    },
+    sante: { 
+      badge: "Consultations", 
+      title: "Nos consultations", 
+      subtitle: "Choisissez le type de consultation adapté à vos besoins",
+      duration: "Durée"
+    },
+    education: { 
+      badge: "Formations", 
+      title: "Nos formations", 
+      subtitle: "Choisissez le programme qui correspond à vos objectifs",
+      duration: "Durée"
+    },
+    default: { 
+      badge: "Nos prestations", 
+      title: "Choisissez votre service", 
+      subtitle: "Sélectionnez le service qui vous intéresse et réservez votre créneau",
+      duration: "Durée"
+    },
+  };
+
+  const currentTitles = sectionTitles[config.industry] || sectionTitles.default;
 
   const availableServices = services[config.industry as keyof typeof services] || services["services-pro"];
 
@@ -386,19 +458,19 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
               }}
             >
               <Sparkles className="w-4 h-4" style={{ color: config.accentColor }} />
-              <span className="text-sm font-medium" style={{ color: config.accentColor }}>Nos prestations</span>
+              <span className="text-sm font-medium" style={{ color: config.accentColor }}>{currentTitles.badge}</span>
             </div>
             <h2 className="text-5xl md:text-7xl font-black mb-8 text-white tracking-tight">
-              Choisissez votre{" "}
+              {currentTitles.title.split(' ').slice(0, -1).join(' ')}{" "}
               <span 
                 className="bg-clip-text text-transparent"
                 style={{ backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
               >
-                service
+                {currentTitles.title.split(' ').slice(-1)[0]}
               </span>
             </h2>
             <p className="text-slate-400 text-xl max-w-2xl mx-auto leading-relaxed">
-              Sélectionnez le service qui vous intéresse et réservez votre créneau préféré
+              {currentTitles.subtitle}
             </p>
           </div>
 
@@ -500,7 +572,7 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                           <Clock className="w-5 h-5" style={{ color: config.primaryColor }} />
                         </div>
                         <div>
-                          <p className="text-slate-500 text-xs uppercase tracking-wider">Durée</p>
+                          <p className="text-slate-500 text-xs uppercase tracking-wider">{currentTitles.duration}</p>
                           <p className="text-white font-semibold">{service.duration}</p>
                         </div>
                       </div>
