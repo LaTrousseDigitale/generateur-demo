@@ -5,7 +5,8 @@ import { Progress } from "@/components/ui/progress";
 import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
-import { ArrowRight, ArrowLeft, Layout, RotateCcw } from "lucide-react";
+import { ArrowRight, ArrowLeft, Layout, RotateCcw, Pencil } from "lucide-react";
+import { Link } from "react-router-dom";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -470,17 +471,26 @@ export const DemoGenerator = () => {
             <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
               Générateur de Démos
             </h1>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
+            <div className="absolute right-2 sm:right-4 flex gap-1">
+              <Link to="/editor">
                 <Button 
                   variant="ghost" 
                   size="icon"
-                  className="absolute right-2 sm:right-4"
-                  title="Réinitialiser le questionnaire"
+                  title="Éditeur rapide"
                 >
-                  <RotateCcw className="w-4 h-4" />
+                  <Pencil className="w-4 h-4" />
                 </Button>
-              </AlertDialogTrigger>
+              </Link>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    title="Réinitialiser le questionnaire"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                  </Button>
+                </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
                   <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
@@ -496,7 +506,8 @@ export const DemoGenerator = () => {
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
-            </AlertDialog>
+              </AlertDialog>
+            </div>
           </div>
           <p className="text-muted-foreground text-sm sm:text-base lg:text-lg px-2">
             Créez votre démo en répondant à quelques questions
