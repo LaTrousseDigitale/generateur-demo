@@ -54,19 +54,19 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
 
   const services = {
     sante: [
-      { name: "Consultation Générale", duration: "30 min", price: "50€" },
-      { name: "Consultation Spécialisée", duration: "45 min", price: "80€" },
-      { name: "Suivi Médical", duration: "20 min", price: "40€" },
+      { name: "Consultation Générale", duration: "30 min", price: "75 $" },
+      { name: "Consultation Spécialisée", duration: "45 min", price: "120 $" },
+      { name: "Suivi Médical", duration: "20 min", price: "60 $" },
     ],
     restauration: [
       { name: "Table 2 Personnes", duration: "2h", price: "Gratuit" },
       { name: "Table 4 Personnes", duration: "2h", price: "Gratuit" },
-      { name: "Salle Privée 8-12 pers", duration: "3h", price: "100€" },
+      { name: "Salle Privée 8-12 pers", duration: "3h", price: "150 $" },
     ],
     "services-pro": [
-      { name: "Consultation Initiale", duration: "60 min", price: "120€" },
-      { name: "Session de Suivi", duration: "30 min", price: "60€" },
-      { name: "Audit Complet", duration: "2h", price: "250€" },
+      { name: "Consultation Initiale", duration: "60 min", price: "180 $" },
+      { name: "Session de Suivi", duration: "30 min", price: "90 $" },
+      { name: "Audit Complet", duration: "2h", price: "375 $" },
     ],
   };
 

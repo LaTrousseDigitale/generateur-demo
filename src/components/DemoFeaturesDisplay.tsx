@@ -229,19 +229,19 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
               <p className="text-sm font-medium text-muted-foreground">+ Maintenance mensuelle (au choix)</p>
               <div className="grid grid-cols-2 gap-2">
                 <div className="p-3 bg-muted/30 rounded-lg text-center">
-                  <p className="font-bold">{PRICING.maintenance.basic} $/mois</p>
+                  <p className="font-bold">{PRICING.maintenance.basic} $ CAD/mois</p>
                   <p className="text-xs text-muted-foreground">Service de base</p>
                 </div>
                 <div className="p-3 bg-muted/30 rounded-lg text-center">
-                  <p className="font-bold">{PRICING.maintenance.standard} $/mois</p>
+                  <p className="font-bold">{PRICING.maintenance.standard} $ CAD/mois</p>
                   <p className="text-xs text-muted-foreground">Standard</p>
                 </div>
                 <div className="p-3 bg-muted/30 rounded-lg text-center">
-                  <p className="font-bold">{PRICING.maintenance.premium} $/mois</p>
+                  <p className="font-bold">{PRICING.maintenance.premium} $ CAD/mois</p>
                   <p className="text-xs text-muted-foreground">Premium</p>
                 </div>
                 <div className="p-3 bg-muted/30 rounded-lg text-center">
-                  <p className="font-bold">{PRICING.maintenance.enterprise} $/mois</p>
+                  <p className="font-bold">{PRICING.maintenance.enterprise} $ CAD/mois</p>
                   <p className="text-xs text-muted-foreground">Entreprise</p>
                 </div>
               </div>
@@ -297,7 +297,7 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
                   className="text-3xl font-bold"
                   style={{ color: config.accentColor }}
                 >
-                  80 $
+                  80 $ CAD
                 </span>
                 <span className="text-muted-foreground text-sm mb-1">
                   /mois

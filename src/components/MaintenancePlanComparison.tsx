@@ -99,12 +99,12 @@ export const MaintenancePlanComparison = ({ currentPlan }: MaintenancePlanCompar
                 <h4 className="font-bold text-xl">{plan.name}</h4>
                 <div className="flex items-baseline gap-1">
                   <span className="text-4xl font-bold text-primary">
-                    {plan.price}$
+                    {plan.price.toLocaleString('fr-CA')} $
                   </span>
-                  <span className="text-muted-foreground">/mois</span>
+                  <span className="text-muted-foreground">CAD/mois</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  ou {plan.price * 11}$/an (1 mois gratuit)
+                  ou {(plan.price * 11).toLocaleString('fr-CA')} $/an (1 mois gratuit)
                 </p>
               </div>
 
