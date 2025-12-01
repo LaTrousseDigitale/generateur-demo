@@ -365,27 +365,30 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
         </div>
       </section>
 
-      {/* Services Section with Image Cards */}
-      <section id="services" className="py-24 relative overflow-hidden">
-        {/* Background */}
+      {/* Services Section - Premium Design */}
+      <section id="services" className="py-32 relative overflow-hidden">
+        {/* Background Elements */}
         <div 
-          className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[150px] opacity-20"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full blur-[200px] opacity-10"
           style={{ backgroundColor: config.primaryColor }}
+        />
+        <div 
+          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] opacity-10"
+          style={{ backgroundColor: config.accentColor }}
         />
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <Badge 
-              className="mb-6 px-6 py-2 text-sm border-0"
+          <div className="text-center mb-20">
+            <div 
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/10"
               style={{ 
-                background: `linear-gradient(135deg, ${config.primaryColor}30, ${config.accentColor}30)`,
-                color: config.accentColor 
+                background: `linear-gradient(135deg, ${config.primaryColor}15, ${config.accentColor}15)`,
               }}
             >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Nos prestations
-            </Badge>
-            <h2 className="text-4xl md:text-6xl font-black mb-6 text-white">
+              <Sparkles className="w-4 h-4" style={{ color: config.accentColor }} />
+              <span className="text-sm font-medium" style={{ color: config.accentColor }}>Nos prestations</span>
+            </div>
+            <h2 className="text-5xl md:text-7xl font-black mb-8 text-white tracking-tight">
               Choisissez votre{" "}
               <span 
                 className="bg-clip-text text-transparent"
@@ -394,84 +397,141 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                 service
               </span>
             </h2>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            <p className="text-slate-400 text-xl max-w-2xl mx-auto leading-relaxed">
               Sélectionnez le service qui vous intéresse et réservez votre créneau préféré
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-10 max-w-7xl mx-auto">
             {availableServices.map((service, i) => (
-              <Card
+              <div
                 key={i}
-                className={`relative overflow-hidden transition-all duration-700 cursor-pointer group bg-slate-900/50 border-white/10 animate-fade-in ${
-                  service.popular ? 'md:-translate-y-4 shadow-2xl' : 'hover:shadow-xl'
+                className={`relative group animate-fade-in ${
+                  service.popular ? 'md:-translate-y-6' : ''
                 }`}
-                style={{ 
-                  animationDelay: `${i * 150}ms`,
-                  borderColor: service.popular ? config.primaryColor : undefined,
-                  borderWidth: service.popular ? 2 : 1,
-                }}
+                style={{ animationDelay: `${i * 150}ms` }}
               >
-                {/* Image Header */}
-                <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={service.image} 
-                    alt={service.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                {/* Card */}
+                <div 
+                  className={`relative rounded-3xl overflow-hidden transition-all duration-700 ${
+                    service.popular 
+                      ? 'shadow-[0_25px_80px_-15px_rgba(0,0,0,0.5)]' 
+                      : 'hover:shadow-[0_25px_80px_-15px_rgba(0,0,0,0.4)]'
+                  }`}
+                  style={{
+                    background: 'linear-gradient(180deg, rgba(30,30,40,0.9) 0%, rgba(15,15,25,0.95) 100%)',
+                  }}
+                >
+                  {/* Gradient Border Effect */}
+                  <div 
+                    className={`absolute inset-0 rounded-3xl transition-opacity duration-500 ${
+                      service.popular ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                    }`}
+                    style={{
+                      background: `linear-gradient(135deg, ${config.primaryColor}40, transparent, ${config.accentColor}40)`,
+                      padding: '1px',
+                    }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
                   
-                  {/* Popular Badge */}
-                  {service.popular && (
-                    <div 
-                      className="absolute top-4 right-4 px-4 py-2 rounded-full text-white text-sm font-bold shadow-lg flex items-center gap-2"
-                      style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-                    >
-                      <Star className="w-4 h-4 fill-white" />
-                      Populaire
+                  {/* Inner Content */}
+                  <div className="relative">
+                    {/* Image Container */}
+                    <div className="relative h-56 overflow-hidden">
+                      <img 
+                        src={service.image} 
+                        alt={service.name}
+                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
+                      />
+                      
+                      {/* Overlay Gradient */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20" />
+                      
+                      {/* Popular Badge */}
+                      {service.popular && (
+                        <div 
+                          className="absolute top-5 right-5 px-4 py-2 rounded-full text-white text-sm font-bold shadow-2xl flex items-center gap-2 backdrop-blur-sm"
+                          style={{ 
+                            background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
+                            boxShadow: `0 10px 30px ${config.primaryColor}50`
+                          }}
+                        >
+                          <Star className="w-4 h-4 fill-white" />
+                          Populaire
+                        </div>
+                      )}
+                      
+                      {/* Price - Glassmorphism Style */}
+                      <div className="absolute bottom-5 left-5">
+                        <div 
+                          className="px-5 py-3 rounded-2xl backdrop-blur-xl border border-white/20"
+                          style={{ 
+                            background: 'rgba(255,255,255,0.1)',
+                          }}
+                        >
+                          <span className="text-3xl font-black text-white tracking-tight">
+                            {service.price}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  )}
-                  
-                  {/* Price Badge */}
-                  <div className="absolute bottom-4 left-4">
-                    <div 
-                      className="text-3xl font-black text-white"
-                      style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
-                    >
-                      {service.price}
+
+                    {/* Content */}
+                    <div className="p-7">
+                      {/* Service Name with animated underline */}
+                      <div className="mb-4">
+                        <h3 className="text-2xl font-bold text-white mb-2 transition-all duration-300 group-hover:tracking-wide">
+                          {service.name}
+                        </h3>
+                        <div 
+                          className="h-1 rounded-full transition-all duration-500 group-hover:w-full"
+                          style={{ 
+                            width: service.popular ? '100%' : '40%',
+                            background: `linear-gradient(90deg, ${config.primaryColor}, ${config.accentColor})`,
+                          }}
+                        />
+                      </div>
+
+                      {/* Duration */}
+                      <div className="flex items-center gap-3 mb-7">
+                        <div 
+                          className="w-10 h-10 rounded-xl flex items-center justify-center"
+                          style={{ backgroundColor: `${config.primaryColor}20` }}
+                        >
+                          <Clock className="w-5 h-5" style={{ color: config.primaryColor }} />
+                        </div>
+                        <div>
+                          <p className="text-slate-500 text-xs uppercase tracking-wider">Durée</p>
+                          <p className="text-white font-semibold">{service.duration}</p>
+                        </div>
+                      </div>
+
+                      {/* Button */}
+                      <Button 
+                        className={`w-full rounded-2xl py-7 text-base font-bold transition-all duration-500 group-hover:shadow-2xl ${
+                          service.popular ? 'text-white' : 'text-white hover:text-white'
+                        }`}
+                        style={{ 
+                          background: service.popular 
+                            ? `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`
+                            : 'rgba(255,255,255,0.08)',
+                          boxShadow: service.popular ? `0 15px 40px ${config.primaryColor}40` : undefined,
+                        }}
+                      >
+                        <span>Réserver ce service</span>
+                        <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-500 group-hover:translate-x-2" />
+                      </Button>
                     </div>
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="font-bold text-xl mb-3 text-white group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300"
-                    style={{ 
-                      backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` 
-                    }}
-                  >
-                    {service.name}
-                  </h3>
-                  <div className="flex items-center gap-4 mb-6 text-slate-400">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4" />
-                      <span>{service.duration}</span>
-                    </div>
-                  </div>
-
-                  <Button 
-                    className="w-full rounded-xl py-6 transition-all duration-500 group-hover:shadow-lg text-white font-semibold"
-                    style={{ 
-                      background: service.popular 
-                        ? `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`
-                        : 'rgba(255,255,255,0.1)',
-                    }}
-                  >
-                    Réserver ce service
-                    <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-2" />
-                  </Button>
-                </div>
-              </Card>
+                {/* Decorative glow under popular card */}
+                {service.popular && (
+                  <div 
+                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 blur-2xl rounded-full"
+                    style={{ backgroundColor: config.primaryColor, opacity: 0.4 }}
+                  />
+                )}
+              </div>
             ))}
           </div>
         </div>
