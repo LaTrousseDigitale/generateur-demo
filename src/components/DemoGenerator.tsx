@@ -71,6 +71,8 @@ export interface DemoConfig {
   retailFeatures?: string[];
   retailType?: string;
   retailProductTypes?: string;
+  // Modules
+  selectedModules?: string[];
 }
 
 const TOTAL_STEPS = 11;

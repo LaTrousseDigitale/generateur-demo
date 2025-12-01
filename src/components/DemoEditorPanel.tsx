@@ -129,7 +129,7 @@ const RESTAURANT_FEATURES = [
   "Horaires d'ouverture dynamiques",
 ];
 
-// Templates pré-configurés
+// Templates par industrie
 const DEMO_TEMPLATES: Array<{
   id: string;
   name: string;
@@ -138,163 +138,120 @@ const DEMO_TEMPLATES: Array<{
   config: Partial<DemoConfig>;
 }> = [
   {
-    id: "vitrine-services",
-    name: "Site Vitrine - Services",
-    description: "Site professionnel pour présenter vos services",
-    icon: <Globe className="w-6 h-6" />,
-    config: {
-      serviceType: "website",
-      websiteType: "vitrine",
-      industry: "services",
-      companyName: "Mon Entreprise",
-      primaryColor: "#1d4ed8",
-      accentColor: "#3b82f6",
-      secondaryColor: "#93c5fd",
-      features: ["Accueil", "À propos", "Services", "Contact"],
-      websitePages: ["Accueil", "À propos", "Services", "Contact"],
-      websiteSections: ["Témoignages clients", "FAQ"],
-    },
-  },
-  {
-    id: "ecommerce-auto",
-    name: "E-commerce - Pièces Auto",
-    description: "Boutique spécialisée avec recherche VIN",
+    id: "auto",
+    name: "Automobile & Pièces",
+    description: "E-commerce spécialisé avec recherche VIN et compatibilité",
     icon: <Car className="w-6 h-6" />,
     config: {
-      serviceType: "website",
-      websiteType: "ecommerce",
       industry: "auto",
       companyName: "AutoParts Pro",
       primaryColor: "#dc2626",
       accentColor: "#f97316",
       secondaryColor: "#fbbf24",
-      ecommerceNeeds: ["Paiements en ligne sécurisés", "Connexion FTP pour inventaire"],
-      autoCompatibility: ["Recherche par année/marque/modèle", "Recherche par numéro VIN", "Compatibilité automatique des pièces"],
-      autoProductType: "Pièces automobiles neuves",
-      autoCustomerType: "Mix B2B et B2C",
     },
   },
   {
-    id: "ecommerce-restaurant",
-    name: "E-commerce - Restaurant",
-    description: "Commande en ligne et réservations",
+    id: "restauration",
+    name: "Restauration",
+    description: "Menu en ligne, réservations et commandes",
     icon: <UtensilsCrossed className="w-6 h-6" />,
     config: {
-      serviceType: "website",
-      websiteType: "ecommerce",
       industry: "restauration",
       companyName: "Le Gourmet",
       primaryColor: "#b45309",
       accentColor: "#d97706",
       secondaryColor: "#fcd34d",
-      restaurantFeatures: ["Menu en ligne avec photos et descriptions", "Système de réservation de tables", "Commande en ligne (pick-up / livraison)"],
-      restaurantType: "Restaurant traditionnel",
-      restaurantSalesType: "Mix (sur place + livraison/emporter)",
     },
   },
   {
-    id: "ecommerce-retail",
-    name: "E-commerce - Commerce",
-    description: "Boutique en ligne avec gestion stocks",
+    id: "commerce",
+    name: "Commerce de détail",
+    description: "Boutique en ligne avec gestion des stocks",
     icon: <ShoppingBag className="w-6 h-6" />,
     config: {
-      serviceType: "website",
-      websiteType: "ecommerce",
       industry: "commerce",
       companyName: "Ma Boutique",
       primaryColor: "#7c3aed",
       accentColor: "#a78bfa",
       secondaryColor: "#c4b5fd",
-      ecommerceNeeds: ["Variantes de produits (tailles, couleurs)", "Paiements en ligne sécurisés"],
-      retailType: "Click & Collect (en ligne + magasin)",
     },
   },
   {
-    id: "vitrine-architecture",
-    name: "Site Vitrine - Architecture",
-    description: "Portfolio élégant pour projets",
+    id: "architecture",
+    name: "Architecture & Design",
+    description: "Portfolio élégant pour projets créatifs",
     icon: <Building2 className="w-6 h-6" />,
     config: {
-      serviceType: "website",
-      websiteType: "vitrine",
       industry: "architecture",
       companyName: "Studio Archi",
       primaryColor: "#1e293b",
       accentColor: "#64748b",
       secondaryColor: "#94a3b8",
-      websitePages: ["Accueil", "À propos", "Portfolio", "Services", "Contact"],
-      websiteSections: ["Galerie photos", "Équipe", "Témoignages clients"],
     },
   },
   {
-    id: "vitrine-sante",
-    name: "Site Vitrine - Santé",
-    description: "Site médical avec prise de RDV",
+    id: "sante",
+    name: "Santé & Bien-être",
+    description: "Site médical avec prise de rendez-vous",
     icon: <Stethoscope className="w-6 h-6" />,
     config: {
-      serviceType: "website",
-      websiteType: "vitrine",
       industry: "sante",
       companyName: "Clinique Santé Plus",
       primaryColor: "#0891b2",
       accentColor: "#06b6d4",
       secondaryColor: "#67e8f9",
-      websitePages: ["Accueil", "Services", "À propos", "Contact"],
-      websiteSections: ["Équipe", "FAQ", "Coordonnées"],
     },
   },
   {
-    id: "portal-client",
-    name: "Portail Client",
-    description: "Espace client sécurisé avec documents",
-    icon: <Users className="w-6 h-6" />,
+    id: "construction",
+    name: "Construction & Rénovation",
+    description: "Vitrine professionnelle avec portfolio de projets",
+    icon: <Hammer className="w-6 h-6" />,
     config: {
-      serviceType: "portal",
-      portalType: "client",
+      industry: "construction",
+      companyName: "Constructions ABC",
+      primaryColor: "#ca8a04",
+      accentColor: "#eab308",
+      secondaryColor: "#fde047",
+    },
+  },
+  {
+    id: "services",
+    name: "Services professionnels",
+    description: "Site corporate pour entreprises de services",
+    icon: <Briefcase className="w-6 h-6" />,
+    config: {
       industry: "services",
-      companyName: "Mon Portail Client",
+      companyName: "Mon Entreprise",
+      primaryColor: "#1d4ed8",
+      accentColor: "#3b82f6",
+      secondaryColor: "#93c5fd",
+    },
+  },
+  {
+    id: "education",
+    name: "Éducation & Formation",
+    description: "Plateforme éducative avec portail étudiant",
+    icon: <GraduationCap className="w-6 h-6" />,
+    config: {
+      industry: "education",
+      companyName: "Centre de Formation",
       primaryColor: "#059669",
       accentColor: "#10b981",
       secondaryColor: "#6ee7b7",
-      portalClientFeatures: ["Consultation de documents", "Factures et paiements", "Historique des transactions"],
-      portalUsers: "11-20 utilisateurs",
-      portalRoles: "2 rôles (ex: admin et utilisateur)",
     },
   },
   {
-    id: "portal-employes",
-    name: "Portail Employés",
-    description: "Gestion d'équipe et projets",
-    icon: <Briefcase className="w-6 h-6" />,
+    id: "arts-scene",
+    name: "Arts de la scène",
+    description: "Site artistique avec billetterie et événements",
+    icon: <Palette className="w-6 h-6" />,
     config: {
-      serviceType: "portal",
-      portalType: "employes",
-      industry: "services",
-      companyName: "Mon Portail Employés",
-      primaryColor: "#4f46e5",
-      accentColor: "#6366f1",
-      secondaryColor: "#a5b4fc",
-      portalEmployeeFeatures: ["Feuilles de temps", "Gestion de projets", "Documentation interne", "Chat d'équipe"],
-      portalUsers: "21-50 utilisateurs",
-      portalRoles: "3+ rôles (hiérarchie complexe)",
-    },
-  },
-  {
-    id: "portal-rh",
-    name: "Portail RH",
-    description: "Ressources humaines complètes",
-    icon: <Users className="w-6 h-6" />,
-    config: {
-      serviceType: "portal",
-      portalType: "rh",
-      industry: "services",
-      companyName: "Mon Portail RH",
+      industry: "arts-scene",
+      companyName: "Compagnie Artistique",
       primaryColor: "#db2777",
       accentColor: "#ec4899",
       secondaryColor: "#f9a8d4",
-      portalHRFeatures: ["Dossiers employés", "Gestion des congés", "Formations et certifications", "Recrutement et candidatures"],
-      portalUsers: "50+ utilisateurs",
-      portalRoles: "3+ rôles (hiérarchie complexe)",
     },
   },
 ];
@@ -324,6 +281,7 @@ const DEFAULT_CONFIG: DemoConfig = {
   autoSearchFeatures: [],
   restaurantFeatures: [],
   retailFeatures: [],
+  selectedModules: [],
 };
 
 export const DemoEditorPanel = () => {
@@ -373,7 +331,8 @@ export const DemoEditorPanel = () => {
     (config.restaurantFeatures?.length || 0) +
     (config.portalClientFeatures?.length || 0) +
     (config.portalEmployeeFeatures?.length || 0) +
-    (config.portalHRFeatures?.length || 0);
+    (config.portalHRFeatures?.length || 0) +
+    (config.selectedModules?.length || 0);
 
   // Labels pour l'affichage
   const getServiceTypeLabel = () => {
@@ -792,15 +751,44 @@ export const DemoEditorPanel = () => {
                       </div>
                     )}
 
+                    {/* Modules additionnels */}
+                    <div className="border-t pt-6">
+                      <h3 className="font-medium mb-3 flex items-center gap-2">
+                        <Briefcase className="w-4 h-4 text-primary" />
+                        Modules additionnels
+                      </h3>
+                      <p className="text-xs text-muted-foreground mb-4">
+                        Ajoutez des fonctionnalités supplémentaires à votre solution
+                      </p>
+                      <div className="grid gap-3">
+                        {MODULES.map(module => (
+                          <label
+                            key={module.id}
+                            className="flex items-start gap-3 p-3 rounded-lg border cursor-pointer hover:bg-muted/50 transition-colors"
+                          >
+                            <Checkbox
+                              checked={(config.selectedModules || []).includes(module.id)}
+                              onCheckedChange={() => toggleArrayFeature("selectedModules", module.id)}
+                              className="mt-0.5"
+                            />
+                            <div>
+                              <span className="text-sm font-medium">{module.label}</span>
+                              <p className="text-xs text-muted-foreground">{module.description}</p>
+                            </div>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
                     {/* Message si pas de type sélectionné */}
                     {config.serviceType === "website" && !config.websiteType && (
                       <div className="text-center py-8 text-muted-foreground">
-                        <p>Sélectionnez un type de site web dans l'onglet "Solution"</p>
+                        <p>Sélectionnez un type de site web dans l'onglet "Solution" pour voir plus de fonctionnalités</p>
                       </div>
                     )}
                     {config.serviceType === "portal" && !config.portalType && (
                       <div className="text-center py-8 text-muted-foreground">
-                        <p>Sélectionnez un type de portail dans l'onglet "Solution"</p>
+                        <p>Sélectionnez un type de portail dans l'onglet "Solution" pour voir plus de fonctionnalités</p>
                       </div>
                     )}
                   </TabsContent>
@@ -866,6 +854,21 @@ export const DemoEditorPanel = () => {
                   <p className="text-sm text-muted-foreground">Fonctionnalités</p>
                   <p className="font-medium">{totalFeatures} sélectionnées</p>
                 </div>
+                {(config.selectedModules?.length || 0) > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-sm text-muted-foreground">Modules</p>
+                    <div className="flex flex-wrap gap-1">
+                      {config.selectedModules?.map(moduleId => {
+                        const module = MODULES.find(m => m.id === moduleId);
+                        return (
+                          <Badge key={moduleId} variant="secondary" className="text-xs">
+                            {module?.label || moduleId}
+                          </Badge>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">Couleurs</p>
                   <div className="flex gap-2">
