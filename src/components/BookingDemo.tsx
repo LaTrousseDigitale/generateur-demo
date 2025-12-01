@@ -5,10 +5,10 @@ import { DemoConfig } from "./DemoGenerator";
 import { 
   ArrowLeft, Download, Share2, Calendar, Clock, MapPin, Users, 
   CheckCircle2, Star, Menu, ChevronRight, Sparkles, Zap, Shield, 
-  Phone, Mail, Bell, ArrowRight
+  Phone, Mail, Bell, ArrowRight, Play, Heart, Award, TrendingUp
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Import booking images
 import bookingAutoService from "@/assets/booking-auto-service.jpg";
@@ -26,6 +26,14 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
   const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+  const [scrollY, setScrollY] = useState(0);
+
+  // Parallax effect
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Map industry to hero images
   const industryHeroImages = {
@@ -38,6 +46,15 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
   };
 
   const heroImage = industryHeroImages[config.industry as keyof typeof industryHeroImages] || bookingHealthClinic;
+
+  // All industry images for gallery
+  const galleryImages = [
+    bookingHealthClinic,
+    bookingRestaurantInterior,
+    bookingArchitectureOffice,
+    bookingConstructionOffice,
+    bookingAutoService,
+  ];
 
   const handleExport = () => {
     toast({
@@ -66,57 +83,43 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
 
   const services = {
     sante: [
-      { name: "Consultation Générale", duration: "30 min", price: "75 $", icon: Users, popular: false },
-      { name: "Consultation Spécialisée", duration: "45 min", price: "120 $", icon: Star, popular: true },
-      { name: "Suivi Médical", duration: "20 min", price: "60 $", icon: Calendar, popular: false },
+      { name: "Consultation Générale", duration: "30 min", price: "75 $", icon: Users, popular: false, image: bookingHealthClinic },
+      { name: "Consultation Spécialisée", duration: "45 min", price: "120 $", icon: Star, popular: true, image: bookingArchitectureOffice },
+      { name: "Suivi Médical", duration: "20 min", price: "60 $", icon: Calendar, popular: false, image: bookingRestaurantInterior },
     ],
     restauration: [
-      { name: "Table 2 Personnes", duration: "2h", price: "Gratuit", icon: Users, popular: false },
-      { name: "Table 4 Personnes", duration: "2h", price: "Gratuit", icon: Users, popular: true },
-      { name: "Salle Privée 8-12 pers", duration: "3h", price: "150 $", icon: Star, popular: false },
+      { name: "Table 2 Personnes", duration: "2h", price: "Gratuit", icon: Users, popular: false, image: bookingRestaurantInterior },
+      { name: "Table 4 Personnes", duration: "2h", price: "Gratuit", icon: Users, popular: true, image: bookingHealthClinic },
+      { name: "Salle Privée 8-12 pers", duration: "3h", price: "150 $", icon: Star, popular: false, image: bookingArchitectureOffice },
     ],
     "services-pro": [
-      { name: "Consultation Initiale", duration: "60 min", price: "180 $", icon: Users, popular: false },
-      { name: "Session de Suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true },
-      { name: "Audit Complet", duration: "2h", price: "375 $", icon: Star, popular: false },
+      { name: "Consultation Initiale", duration: "60 min", price: "180 $", icon: Users, popular: false, image: bookingArchitectureOffice },
+      { name: "Session de Suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true, image: bookingHealthClinic },
+      { name: "Audit Complet", duration: "2h", price: "375 $", icon: Star, popular: false, image: bookingConstructionOffice },
     ],
   };
 
   const availableServices = services[config.industry as keyof typeof services] || services["services-pro"];
 
-  // Generate gradient based on primary color
-  const hexToHSL = (hex: string) => {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (!result) return { h: 0, s: 50, l: 50 };
-    const r = parseInt(result[1], 16) / 255;
-    const g = parseInt(result[2], 16) / 255;
-    const b = parseInt(result[3], 16) / 255;
-    const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    let h = 0, s = 0;
-    const l = (max + min) / 2;
-    if (max !== min) {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
-        case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
-        case g: h = ((b - r) / d + 2) / 6; break;
-        case b: h = ((r - g) / d + 4) / 6; break;
-      }
-    }
-    return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
-  };
-
-  const primaryHSL = hexToHSL(config.primaryColor);
-  const accentHSL = hexToHSL(config.accentColor);
+  const stats = [
+    { value: "15K+", label: "Clients satisfaits", icon: Heart },
+    { value: "98%", label: "Taux de satisfaction", icon: TrendingUp },
+    { value: "24/7", label: "Support disponible", icon: Shield },
+    { value: "5★", label: "Note moyenne", icon: Award },
+  ];
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
-      {/* Floating Header with Glassmorphism */}
+    <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
+      {/* Floating Header */}
       <div className="fixed top-4 left-4 right-4 z-50">
-        <div className="bg-background/70 backdrop-blur-xl border border-border/50 rounded-2xl shadow-2xl">
+        <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl">
           <div className="container mx-auto px-6 py-3">
             <div className="flex items-center justify-between">
-              <Button variant="ghost" onClick={onBack} className="hover:bg-background/50">
+              <Button 
+                variant="ghost" 
+                onClick={onBack} 
+                className="text-white hover:bg-white/10"
+              >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Retour
               </Button>
@@ -127,12 +130,17 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                 <span className="font-bold text-lg hidden sm:block">{config.companyName}</span>
               </div>
               <div className="flex gap-2">
-                <Button variant="ghost" size="icon" onClick={handleShare} className="hover:bg-background/50">
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={handleShare} 
+                  className="text-white hover:bg-white/10"
+                >
                   <Share2 className="w-4 h-4" />
                 </Button>
                 <Button 
                   onClick={handleExport}
-                  className="rounded-xl shadow-lg transition-all duration-300 hover:scale-105"
+                  className="rounded-xl shadow-lg transition-all duration-300 hover:scale-105 text-white"
                   style={{ 
                     background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
                   }}
@@ -147,96 +155,173 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
       </div>
 
       {/* Epic Hero Section */}
-      <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-        {/* Background Image with Parallax Effect */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Video-like Background with Parallax */}
         <div 
-          className="absolute inset-0 bg-cover bg-center scale-110 transition-transform duration-1000"
-          style={{ backgroundImage: `url(${heroImage})` }}
+          className="absolute inset-0 scale-125 transition-transform duration-100"
+          style={{ 
+            backgroundImage: `url(${heroImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            transform: `scale(1.25) translateY(${scrollY * 0.3}px)`,
+          }}
         />
+        
+        {/* Dark Overlay for text visibility */}
+        <div className="absolute inset-0 bg-slate-950/70" />
         
         {/* Gradient Overlays */}
         <div 
-          className="absolute inset-0"
+          className="absolute inset-0 mix-blend-overlay"
           style={{ 
-            background: `linear-gradient(135deg, ${config.primaryColor}90 0%, transparent 50%, ${config.accentColor}60 100%)` 
+            background: `linear-gradient(135deg, ${config.primaryColor}40 0%, transparent 50%, ${config.accentColor}30 100%)` 
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
         
-        {/* Animated Shapes */}
+        {/* Animated Floating Elements */}
         <div 
-          className="absolute top-20 right-10 w-72 h-72 rounded-full blur-3xl opacity-30 animate-pulse"
-          style={{ backgroundColor: config.accentColor }}
+          className="absolute top-32 right-20 w-80 h-80 rounded-full blur-[100px] animate-pulse"
+          style={{ backgroundColor: config.primaryColor, opacity: 0.3 }}
         />
         <div 
-          className="absolute bottom-20 left-10 w-96 h-96 rounded-full blur-3xl opacity-20 animate-pulse"
-          style={{ backgroundColor: config.primaryColor, animationDelay: '1s' }}
+          className="absolute bottom-32 left-20 w-96 h-96 rounded-full blur-[120px] animate-pulse"
+          style={{ backgroundColor: config.accentColor, opacity: 0.2, animationDelay: '2s' }}
+        />
+        <div 
+          className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full blur-[80px] animate-pulse"
+          style={{ backgroundColor: config.secondaryColor, opacity: 0.15, animationDelay: '4s' }}
         />
 
+        {/* Floating Image Cards */}
+        <div 
+          className="absolute top-40 right-10 md:right-20 w-32 md:w-48 h-40 md:h-60 rounded-2xl overflow-hidden shadow-2xl border border-white/20 animate-fade-in hidden lg:block"
+          style={{ 
+            animationDelay: '0.5s',
+            transform: `translateY(${scrollY * -0.1}px) rotate(6deg)`,
+          }}
+        >
+          <img src={galleryImages[0]} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
+        </div>
+        <div 
+          className="absolute bottom-40 left-10 md:left-20 w-28 md:w-40 h-36 md:h-52 rounded-2xl overflow-hidden shadow-2xl border border-white/20 animate-fade-in hidden lg:block"
+          style={{ 
+            animationDelay: '0.7s',
+            transform: `translateY(${scrollY * -0.15}px) rotate(-8deg)`,
+          }}
+        >
+          <img src={galleryImages[1]} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
+        </div>
+        <div 
+          className="absolute top-60 left-32 w-24 md:w-32 h-32 md:h-40 rounded-2xl overflow-hidden shadow-2xl border border-white/20 animate-fade-in hidden xl:block"
+          style={{ 
+            animationDelay: '0.9s',
+            transform: `translateY(${scrollY * -0.2}px) rotate(12deg)`,
+          }}
+        >
+          <img src={galleryImages[2]} alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
+        </div>
+
         {/* Hero Content */}
-        <div className="container mx-auto px-4 pt-24 relative z-10">
+        <div className="container mx-auto px-4 pt-32 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            {/* Floating Badge */}
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full mb-8 animate-fade-in backdrop-blur-xl border border-white/20 shadow-2xl"
+            {/* Animated Badge */}
+            <div 
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full mb-8 animate-fade-in border border-white/20 shadow-2xl"
               style={{ 
-                background: `linear-gradient(135deg, ${config.accentColor}dd, ${config.primaryColor}dd)`,
+                background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
               }}
             >
               <Sparkles className="w-5 h-5 text-white animate-pulse" />
               <span className="text-white font-semibold">Réservation en ligne instantanée</span>
+              <Sparkles className="w-5 h-5 text-white animate-pulse" />
             </div>
 
-            {/* Main Title with Gradient */}
-            <h1 className="text-5xl md:text-7xl font-black mb-8 leading-tight animate-fade-in" style={{ animationDelay: '0.1s' }}>
-              <span className="text-white drop-shadow-2xl">Réservez votre</span>
-              <br />
+            {/* Main Title */}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-none tracking-tight">
               <span 
-                className="bg-clip-text text-transparent"
+                className="block animate-fade-in text-white"
+                style={{ animationDelay: '0.1s' }}
+              >
+                Réservez votre
+              </span>
+              <span 
+                className="block animate-fade-in bg-clip-text text-transparent py-2"
                 style={{ 
-                  backgroundImage: `linear-gradient(135deg, ${config.accentColor}, ${config.primaryColor}, ${config.secondaryColor})`,
+                  animationDelay: '0.2s',
+                  backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor}, ${config.secondaryColor})`,
                 }}
               >
                 rendez-vous
               </span>
-              <br />
-              <span className="text-white drop-shadow-2xl">en quelques clics</span>
+              <span 
+                className="block animate-fade-in text-white"
+                style={{ animationDelay: '0.3s' }}
+              >
+                en quelques clics
+              </span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              Système de réservation simple et rapide. Choisissez votre créneau et confirmez instantanément.
+            <p 
+              className="text-xl md:text-2xl text-slate-300 mb-12 max-w-2xl mx-auto animate-fade-in leading-relaxed"
+              style={{ animationDelay: '0.4s' }}
+            >
+              Système de réservation simple et rapide. 
+              <span className="text-white font-semibold"> Choisissez votre créneau</span> et 
+              <span className="text-white font-semibold"> confirmez instantanément.</span>
             </p>
 
-            {/* Feature Badges */}
-            <div className="flex items-center justify-center gap-4 md:gap-8 flex-wrap animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            {/* Feature Pills */}
+            <div 
+              className="flex items-center justify-center gap-3 md:gap-6 flex-wrap mb-12 animate-fade-in"
+              style={{ animationDelay: '0.5s' }}
+            >
               {[
-                { icon: Zap, text: "Disponibilité temps réel" },
+                { icon: Zap, text: "Temps réel" },
                 { icon: CheckCircle2, text: "Confirmation instantanée" },
-                { icon: Bell, text: "Rappel automatique" },
+                { icon: Bell, text: "Rappels auto" },
               ].map((feature, i) => (
                 <div 
                   key={i}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 transition-all duration-300 hover:bg-white/20 hover:scale-105"
+                  className="flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-110 cursor-pointer group"
                 >
-                  <feature.icon className="w-4 h-4 text-white" />
-                  <span className="text-white text-sm font-medium">{feature.text}</span>
+                  <feature.icon 
+                    className="w-5 h-5 transition-transform group-hover:rotate-12" 
+                    style={{ color: config.accentColor }}
+                  />
+                  <span className="text-white font-medium">{feature.text}</span>
                 </div>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="mt-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+            {/* CTA Buttons */}
+            <div 
+              className="flex items-center justify-center gap-4 animate-fade-in"
+              style={{ animationDelay: '0.6s' }}
+            >
               <Button 
                 size="lg"
-                className="text-lg px-10 py-7 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 group"
+                className="text-lg px-10 py-7 rounded-2xl shadow-2xl transition-all duration-500 hover:scale-110 group text-white"
                 style={{ 
                   background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                  boxShadow: `0 20px 40px ${config.primaryColor}40`
+                  boxShadow: `0 25px 50px ${config.primaryColor}50`
                 }}
               >
-                <Calendar className="w-5 h-5 mr-2" />
+                <Calendar className="w-6 h-6 mr-2" />
                 Réserver maintenant
-                <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-6 h-6 ml-2 transition-transform group-hover:translate-x-2" />
+              </Button>
+              <Button 
+                size="lg"
+                variant="outline"
+                className="text-lg px-8 py-7 rounded-2xl border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+              >
+                <Play className="w-5 h-5 mr-2" />
+                Voir la vidéo
               </Button>
             </div>
           </div>
@@ -244,29 +329,63 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-8 h-12 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
-            <div className="w-2 h-3 bg-white/50 rounded-full animate-pulse" />
+          <div className="w-8 h-14 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
+            <div 
+              className="w-2 h-4 rounded-full animate-pulse"
+              style={{ backgroundColor: config.primaryColor }}
+            />
           </div>
         </div>
       </section>
 
-      {/* Services Section with Glassmorphism Cards */}
+      {/* Stats Section */}
+      <section className="py-16 relative overflow-hidden bg-slate-900/50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            {stats.map((stat, i) => (
+              <div 
+                key={i}
+                className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm animate-fade-in transition-all duration-500 hover:bg-white/10 hover:scale-105"
+                style={{ animationDelay: `${i * 100}ms` }}
+              >
+                <stat.icon 
+                  className="w-8 h-8 mx-auto mb-3"
+                  style={{ color: config.accentColor }}
+                />
+                <div 
+                  className="text-4xl font-black mb-1"
+                  style={{ color: config.primaryColor }}
+                >
+                  {stat.value}
+                </div>
+                <div className="text-slate-400 text-sm">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section with Image Cards */}
       <section id="services" className="py-24 relative overflow-hidden">
-        {/* Background Decoration */}
+        {/* Background */}
         <div 
-          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-3xl opacity-10"
+          className="absolute top-0 right-0 w-[800px] h-[800px] rounded-full blur-[150px] opacity-20"
           style={{ backgroundColor: config.primaryColor }}
         />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
             <Badge 
-              className="mb-4 px-4 py-2 text-sm"
-              style={{ backgroundColor: config.primaryColor + "20", color: config.primaryColor }}
+              className="mb-6 px-6 py-2 text-sm border-0"
+              style={{ 
+                background: `linear-gradient(135deg, ${config.primaryColor}30, ${config.accentColor}30)`,
+                color: config.accentColor 
+              }}
             >
+              <Sparkles className="w-4 h-4 mr-2" />
               Nos prestations
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-6xl font-black mb-6 text-white">
               Choisissez votre{" "}
               <span 
                 className="bg-clip-text text-transparent"
@@ -275,7 +394,7 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                 service
               </span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
               Sélectionnez le service qui vous intéresse et réservez votre créneau préféré
             </p>
           </div>
@@ -284,108 +403,146 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
             {availableServices.map((service, i) => (
               <Card
                 key={i}
-                className={`relative p-8 transition-all duration-500 cursor-pointer group overflow-hidden animate-fade-in ${
-                  service.popular ? 'border-2 scale-105 shadow-2xl' : 'hover:shadow-xl hover:-translate-y-2'
+                className={`relative overflow-hidden transition-all duration-700 cursor-pointer group bg-slate-900/50 border-white/10 animate-fade-in ${
+                  service.popular ? 'md:-translate-y-4 shadow-2xl' : 'hover:shadow-xl'
                 }`}
                 style={{ 
                   animationDelay: `${i * 150}ms`,
                   borderColor: service.popular ? config.primaryColor : undefined,
+                  borderWidth: service.popular ? 2 : 1,
                 }}
               >
-                {/* Popular Badge */}
-                {service.popular && (
-                  <div 
-                    className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-white text-sm font-semibold shadow-lg"
-                    style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-                  >
-                    ⭐ Populaire
+                {/* Image Header */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={service.image} 
+                    alt={service.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
+                  
+                  {/* Popular Badge */}
+                  {service.popular && (
+                    <div 
+                      className="absolute top-4 right-4 px-4 py-2 rounded-full text-white text-sm font-bold shadow-lg flex items-center gap-2"
+                      style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                    >
+                      <Star className="w-4 h-4 fill-white" />
+                      Populaire
+                    </div>
+                  )}
+                  
+                  {/* Price Badge */}
+                  <div className="absolute bottom-4 left-4">
+                    <div 
+                      className="text-3xl font-black text-white"
+                      style={{ textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}
+                    >
+                      {service.price}
+                    </div>
                   </div>
-                )}
-
-                {/* Background Glow */}
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500 rounded-xl"
-                  style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-                />
-
-                {/* Icon */}
-                <div
-                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110"
-                  style={{ 
-                    background: `linear-gradient(135deg, ${config.primaryColor}20, ${config.accentColor}20)`,
-                  }}
-                >
-                  <service.icon style={{ color: config.primaryColor }} className="w-8 h-8" />
                 </div>
 
                 {/* Content */}
-                <h3 className="font-bold text-xl mb-3">{service.name}</h3>
-                <div className="flex items-center gap-4 mb-6 text-muted-foreground">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-4 h-4" />
-                    <span>{service.duration}</span>
+                <div className="p-6">
+                  <h3 className="font-bold text-xl mb-3 text-white group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300"
+                    style={{ 
+                      backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` 
+                    }}
+                  >
+                    {service.name}
+                  </h3>
+                  <div className="flex items-center gap-4 mb-6 text-slate-400">
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      <span>{service.duration}</span>
+                    </div>
                   </div>
-                </div>
 
-                {/* Price */}
-                <div 
-                  className="text-3xl font-black mb-6"
-                  style={{ color: config.primaryColor }}
-                >
-                  {service.price}
+                  <Button 
+                    className="w-full rounded-xl py-6 transition-all duration-500 group-hover:shadow-lg text-white font-semibold"
+                    style={{ 
+                      background: service.popular 
+                        ? `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`
+                        : 'rgba(255,255,255,0.1)',
+                    }}
+                  >
+                    Réserver ce service
+                    <ChevronRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-2" />
+                  </Button>
                 </div>
-
-                <Button 
-                  className="w-full rounded-xl transition-all duration-300 group-hover:shadow-lg"
-                  style={{ 
-                    background: service.popular 
-                      ? `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`
-                      : undefined,
-                    backgroundColor: service.popular ? undefined : config.primaryColor + "10",
-                    color: service.popular ? "white" : config.primaryColor,
-                  }}
-                >
-                  Réserver ce service
-                  <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                </Button>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Booking Form Section with Glass Effect */}
+      {/* Gallery Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
+              Nos{" "}
+              <span 
+                className="bg-clip-text text-transparent"
+                style={{ backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+              >
+                installations
+              </span>
+            </h2>
+          </div>
+          
+          {/* Marquee Gallery */}
+          <div className="relative overflow-hidden">
+            <div className="flex gap-6 animate-[marquee_30s_linear_infinite]">
+              {[...galleryImages, ...galleryImages].map((img, i) => (
+                <div 
+                  key={i}
+                  className="flex-shrink-0 w-80 h-56 rounded-2xl overflow-hidden shadow-2xl border border-white/10 transition-transform duration-500 hover:scale-105"
+                >
+                  <img src={img} alt="" className="w-full h-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Booking Form Section */}
       <section id="reservation" className="py-24 relative overflow-hidden">
-        {/* Background */}
+        {/* Background Pattern */}
         <div 
           className="absolute inset-0 opacity-5"
           style={{ 
             backgroundImage: `radial-gradient(${config.primaryColor} 1px, transparent 1px)`,
-            backgroundSize: '30px 30px'
+            backgroundSize: '40px 40px'
           }}
         />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto">
-            <Card className="p-8 md:p-12 backdrop-blur-sm border-border/50 shadow-2xl rounded-3xl overflow-hidden relative">
-              {/* Gradient Border Effect */}
+            <Card className="p-8 md:p-12 bg-slate-900/80 backdrop-blur-xl border-white/10 shadow-2xl rounded-3xl overflow-hidden relative">
+              {/* Gradient Border */}
               <div 
-                className="absolute inset-0 rounded-3xl opacity-20"
+                className="absolute inset-0 rounded-3xl opacity-30 pointer-events-none"
                 style={{ 
-                  background: `linear-gradient(135deg, ${config.primaryColor}, transparent, ${config.accentColor})`,
+                  background: `linear-gradient(135deg, ${config.primaryColor}50, transparent 50%, ${config.accentColor}50)`,
                 }}
               />
               
               <div className="relative z-10">
                 <div className="text-center mb-12">
                   <Badge 
-                    className="mb-4 px-4 py-2"
-                    style={{ backgroundColor: config.primaryColor + "20", color: config.primaryColor }}
+                    className="mb-6 px-6 py-2 border-0"
+                    style={{ 
+                      background: `linear-gradient(135deg, ${config.primaryColor}30, ${config.accentColor}30)`,
+                      color: config.accentColor 
+                    }}
                   >
                     <Calendar className="w-4 h-4 mr-2" />
                     Étape 1 sur 2
                   </Badge>
-                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                  <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">
                     Choisissez votre{" "}
                     <span 
                       className="bg-clip-text text-transparent"
@@ -394,14 +551,14 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                       créneau
                     </span>
                   </h2>
-                  <p className="text-muted-foreground">Sélectionnez une date et un horaire qui vous conviennent</p>
+                  <p className="text-slate-400 text-lg">Sélectionnez une date et un horaire qui vous conviennent</p>
                 </div>
 
                 <div className="space-y-10">
                   {/* Date Selection */}
                   <div>
-                    <label className="block text-sm font-semibold mb-4 flex items-center gap-2">
-                      <Calendar className="w-4 h-4" style={{ color: config.primaryColor }} />
+                    <label className="block text-sm font-bold mb-4 text-white flex items-center gap-2">
+                      <Calendar className="w-5 h-5" style={{ color: config.primaryColor }} />
                       Sélectionner une date
                     </label>
                     <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
@@ -417,23 +574,23 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                           <button
                             key={i}
                             onClick={() => setSelectedDate(date.toISOString())}
-                            className={`p-4 rounded-2xl text-center transition-all duration-300 ${
+                            className={`p-4 rounded-2xl text-center transition-all duration-500 ${
                               isSelected
-                                ? "text-white shadow-xl scale-105"
-                                : "bg-muted/50 hover:bg-muted border border-border/50 hover:border-border"
+                                ? "shadow-2xl scale-105"
+                                : "bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20"
                             }`}
                             style={
                               isSelected
                                 ? { 
                                     background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                                    boxShadow: `0 10px 30px ${config.primaryColor}40`
+                                    boxShadow: `0 15px 40px ${config.primaryColor}50`
                                   }
                                 : {}
                             }
                           >
-                            <div className="text-xs capitalize opacity-70">{day}</div>
-                            <div className="text-2xl font-bold">{num}</div>
-                            <div className="text-xs capitalize opacity-70">{month}</div>
+                            <div className={`text-xs capitalize ${isSelected ? 'text-white/80' : 'text-slate-500'}`}>{day}</div>
+                            <div className={`text-2xl font-black ${isSelected ? 'text-white' : 'text-white'}`}>{num}</div>
+                            <div className={`text-xs capitalize ${isSelected ? 'text-white/80' : 'text-slate-500'}`}>{month}</div>
                           </button>
                         );
                       })}
@@ -442,8 +599,8 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
 
                   {/* Time Slots */}
                   <div>
-                    <label className="block text-sm font-semibold mb-4 flex items-center gap-2">
-                      <Clock className="w-4 h-4" style={{ color: config.primaryColor }} />
+                    <label className="block text-sm font-bold mb-4 text-white flex items-center gap-2">
+                      <Clock className="w-5 h-5" style={{ color: config.primaryColor }} />
                       Sélectionner un horaire
                     </label>
                     <div className="grid grid-cols-4 gap-3">
@@ -455,18 +612,18 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                             key={i}
                             disabled={!slot.available}
                             onClick={() => slot.available && setSelectedTime(slot.time)}
-                            className={`p-4 rounded-2xl text-center transition-all duration-300 font-semibold ${
+                            className={`p-4 rounded-2xl text-center transition-all duration-500 font-bold ${
                               !slot.available 
-                                ? "bg-muted/30 text-muted-foreground/50 cursor-not-allowed line-through"
+                                ? "bg-white/5 text-slate-600 cursor-not-allowed line-through"
                                 : isSelected
-                                  ? "text-white shadow-xl scale-105"
-                                  : "bg-muted/50 hover:bg-muted border border-border/50 hover:border-border"
+                                  ? "shadow-2xl scale-105"
+                                  : "bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white"
                             }`}
                             style={
                               isSelected && slot.available
                                 ? { 
                                     background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                                    boxShadow: `0 10px 30px ${config.primaryColor}40`
+                                    boxShadow: `0 15px 40px ${config.primaryColor}50`
                                   }
                                 : {}
                             }
@@ -479,61 +636,53 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                   </div>
 
                   {/* Contact Form */}
-                  <div className="grid md:grid-cols-2 gap-6 pt-6 border-t border-border/50">
+                  <div className="grid md:grid-cols-2 gap-6 pt-6 border-t border-white/10">
                     <div className="space-y-2">
-                      <label className="block text-sm font-semibold">Nom complet</label>
+                      <label className="block text-sm font-bold text-white">Nom complet</label>
                       <input
                         type="text"
-                        className="w-full px-5 py-4 rounded-xl border border-border bg-background/50 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                        className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500 focus:ring-2 focus:border-transparent transition-all focus:outline-none"
                         placeholder="Jean Dupont"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="block text-sm font-semibold">Email</label>
+                      <label className="block text-sm font-bold text-white">Email</label>
                       <input
                         type="email"
-                        className="w-full px-5 py-4 rounded-xl border border-border bg-background/50 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                        className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500 focus:ring-2 focus:border-transparent transition-all"
                         placeholder="jean@exemple.fr"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="block text-sm font-semibold">Téléphone</label>
+                      <label className="block text-sm font-bold text-white">Téléphone</label>
                       <input
                         type="tel"
-                        className="w-full px-5 py-4 rounded-xl border border-border bg-background/50 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+                        className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500 focus:ring-2 focus:border-transparent transition-all"
                         placeholder="+1 514 123 4567"
                       />
                     </div>
                     <div className="space-y-2">
-                      <label className="block text-sm font-semibold">Nombre de personnes</label>
-                      <select className="w-full px-5 py-4 rounded-xl border border-border bg-background/50 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all">
-                        <option>1 personne</option>
-                        <option>2 personnes</option>
-                        <option>3 personnes</option>
-                        <option>4+ personnes</option>
+                      <label className="block text-sm font-bold text-white">Nombre de personnes</label>
+                      <select className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white focus:ring-2 focus:border-transparent transition-all">
+                        <option className="bg-slate-900">1 personne</option>
+                        <option className="bg-slate-900">2 personnes</option>
+                        <option className="bg-slate-900">3 personnes</option>
+                        <option className="bg-slate-900">4+ personnes</option>
                       </select>
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="block text-sm font-semibold">Remarques (optionnel)</label>
-                    <textarea
-                      className="w-full px-5 py-4 rounded-xl border border-border bg-background/50 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all h-28 resize-none"
-                      placeholder="Informations supplémentaires que vous souhaitez partager..."
-                    />
-                  </div>
-
                   <Button
                     size="lg"
-                    className="w-full py-7 text-lg rounded-2xl shadow-2xl transition-all duration-300 hover:scale-[1.02] group"
+                    className="w-full py-8 text-xl rounded-2xl shadow-2xl transition-all duration-500 hover:scale-[1.02] group font-bold text-white"
                     style={{ 
                       background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                      boxShadow: `0 20px 40px ${config.primaryColor}30`
+                      boxShadow: `0 25px 50px ${config.primaryColor}40`
                     }}
                   >
-                    <CheckCircle2 className="w-5 h-5 mr-2" />
+                    <CheckCircle2 className="w-6 h-6 mr-3" />
                     Confirmer la réservation
-                    <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                    <ArrowRight className="w-6 h-6 ml-3 transition-transform group-hover:translate-x-2" />
                   </Button>
                 </div>
               </div>
@@ -542,78 +691,73 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features Grid */}
       <section className="py-24 relative overflow-hidden">
-        <div 
-          className="absolute bottom-0 left-0 w-[800px] h-[800px] rounded-full blur-3xl opacity-5"
-          style={{ backgroundColor: config.accentColor }}
-        />
-        
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {[
               { 
                 icon: Zap, 
                 title: "Disponibilité en Direct", 
                 description: "Consultez les créneaux disponibles en temps réel, mis à jour instantanément",
-                gradient: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`
+                image: galleryImages[0]
               },
               { 
                 icon: CheckCircle2, 
                 title: "Confirmation Immédiate", 
                 description: "Recevez votre confirmation par email et SMS dès que votre réservation est validée",
-                gradient: `linear-gradient(135deg, ${config.accentColor}, ${config.secondaryColor})`
+                image: galleryImages[1]
               },
               { 
                 icon: Bell, 
                 title: "Rappels Automatiques", 
                 description: "Notifications personnalisées 24h et 1h avant votre rendez-vous",
-                gradient: `linear-gradient(135deg, ${config.secondaryColor}, ${config.primaryColor})`
+                image: galleryImages[2]
               },
             ].map((feature, i) => (
               <Card 
                 key={i} 
-                className="p-8 text-center transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl group animate-fade-in overflow-hidden relative"
+                className="overflow-hidden transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl group animate-fade-in bg-slate-900/50 border-white/10"
                 style={{ animationDelay: `${i * 100}ms` }}
               >
-                {/* Hover Glow */}
-                <div 
-                  className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-                  style={{ background: feature.gradient }}
-                />
-                
-                <div
-                  className="w-20 h-20 rounded-3xl mx-auto mb-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110 relative"
-                  style={{ background: feature.gradient }}
-                >
-                  <feature.icon className="w-10 h-10 text-white" />
+                {/* Image */}
+                <div className="relative h-40 overflow-hidden">
+                  <img 
+                    src={feature.image} 
+                    alt={feature.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent" />
+                  <div
+                    className="absolute bottom-4 left-4 w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl"
+                    style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                  >
+                    <feature.icon className="w-7 h-7 text-white" />
+                  </div>
                 </div>
-                <h3 className="font-bold text-xl mb-3">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                
+                <div className="p-6">
+                  <h3 className="font-bold text-xl mb-3 text-white">{feature.title}</h3>
+                  <p className="text-slate-400 leading-relaxed">{feature.description}</p>
+                </div>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials with Gradient Background */}
+      {/* Testimonials */}
       <section className="py-24 relative overflow-hidden">
         <div 
-          className="absolute inset-0"
+          className="absolute inset-0 opacity-10"
           style={{ 
-            background: `linear-gradient(135deg, ${config.primaryColor}08, ${config.accentColor}08)` 
+            background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` 
           }}
         />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <Badge 
-              className="mb-4 px-4 py-2"
-              style={{ backgroundColor: config.primaryColor + "20", color: config.primaryColor }}
-            >
-              Témoignages
-            </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
               Ils nous font{" "}
               <span 
                 className="bg-clip-text text-transparent"
@@ -632,31 +776,31 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
             ].map((review, i) => (
               <Card 
                 key={i} 
-                className="p-8 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl animate-fade-in"
+                className="p-8 transition-all duration-500 hover:-translate-y-4 hover:shadow-2xl animate-fade-in bg-slate-900/80 backdrop-blur-sm border-white/10"
                 style={{ animationDelay: `${i * 100}ms` }}
               >
                 <div className="flex gap-1 mb-6">
                   {[...Array(review.rating)].map((_, si) => (
                     <Star 
                       key={si} 
-                      className="w-5 h-5 fill-current" 
+                      className="w-6 h-6 fill-current" 
                       style={{ color: config.accentColor }} 
                     />
                   ))}
                 </div>
-                <p className="text-muted-foreground mb-6 leading-relaxed text-lg italic">
+                <p className="text-slate-300 mb-6 leading-relaxed text-lg">
                   "Système de réservation très simple et efficace. J'ai pu réserver mon rendez-vous en 2 minutes!"
                 </p>
                 <div className="flex items-center gap-4">
                   <div 
-                    className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold"
+                    className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg"
                     style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                   >
                     {review.avatar}
                   </div>
                   <div>
-                    <p className="font-bold">{review.name}</p>
-                    <p className="text-sm text-muted-foreground">{review.role}</p>
+                    <p className="font-bold text-white">{review.name}</p>
+                    <p className="text-sm text-slate-400">{review.role}</p>
                   </div>
                 </div>
               </Card>
@@ -666,7 +810,7 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 relative overflow-hidden">
+      <section className="py-32 relative overflow-hidden">
         <div 
           className="absolute inset-0"
           style={{ 
@@ -676,32 +820,40 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
         <div 
           className="absolute inset-0 opacity-20"
           style={{ 
-            backgroundImage: `radial-gradient(white 1px, transparent 1px)`,
-            backgroundSize: '30px 30px'
+            backgroundImage: `radial-gradient(white 2px, transparent 2px)`,
+            backgroundSize: '40px 40px'
           }}
         />
         
+        {/* Floating Images */}
+        <div className="absolute top-10 left-10 w-32 h-40 rounded-2xl overflow-hidden rotate-[-12deg] shadow-2xl opacity-40 hidden lg:block">
+          <img src={galleryImages[0]} alt="" className="w-full h-full object-cover" />
+        </div>
+        <div className="absolute bottom-10 right-10 w-40 h-48 rounded-2xl overflow-hidden rotate-[8deg] shadow-2xl opacity-40 hidden lg:block">
+          <img src={galleryImages[1]} alt="" className="w-full h-full object-cover" />
+        </div>
+        
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-5xl md:text-7xl font-black text-white mb-8">
             Prêt à réserver ?
           </h2>
-          <p className="text-white/80 text-xl mb-10 max-w-2xl mx-auto">
+          <p className="text-white/90 text-xl md:text-2xl mb-12 max-w-2xl mx-auto">
             Réservez votre créneau en quelques clics et recevez une confirmation instantanée
           </p>
           <Button 
             size="lg"
-            className="bg-white text-lg px-10 py-7 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl"
+            className="bg-white text-xl px-12 py-8 rounded-2xl shadow-2xl transition-all duration-500 hover:scale-110 hover:shadow-xl font-bold"
             style={{ color: config.primaryColor }}
           >
-            <Calendar className="w-5 h-5 mr-2" />
+            <Calendar className="w-6 h-6 mr-3" />
             Réserver maintenant
-            <ArrowRight className="w-5 h-5 ml-2" />
+            <ArrowRight className="w-6 h-6 ml-3" />
           </Button>
         </div>
       </section>
 
-      {/* Modern Footer */}
-      <footer className="border-t py-16 bg-muted/30">
+      {/* Footer */}
+      <footer className="border-t border-white/10 py-16 bg-slate-950">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
             <div>
@@ -709,34 +861,21 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                 {config.logo && (
                   <img src={config.logo} alt="Logo" className="h-12 w-auto object-contain" />
                 )}
-                <span className="font-bold text-xl">{config.companyName}</span>
+                <span className="font-bold text-xl text-white">{config.companyName}</span>
               </div>
-              <p className="text-muted-foreground mb-4">Réservation en ligne simplifiée pour une expérience client exceptionnelle.</p>
-              <div className="flex gap-3">
-                {['facebook', 'twitter', 'instagram'].map((social) => (
-                  <div 
-                    key={social}
-                    className="w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 cursor-pointer"
-                    style={{ backgroundColor: config.primaryColor + "15" }}
-                  >
-                    <span className="text-xs" style={{ color: config.primaryColor }}>
-                      {social[0].toUpperCase()}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              <p className="text-slate-400 mb-6">Réservation en ligne simplifiée pour une expérience client exceptionnelle.</p>
             </div>
             <div>
-              <h4 className="font-bold mb-6">Services</h4>
-              <ul className="space-y-3 text-muted-foreground">
-                <li><a href="#" className="hover:text-primary transition-colors">Nos prestations</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">Tarifs</a></li>
-                <li><a href="#" className="hover:text-primary transition-colors">FAQ</a></li>
+              <h4 className="font-bold mb-6 text-white">Services</h4>
+              <ul className="space-y-3 text-slate-400">
+                <li><a href="#" className="hover:text-white transition-colors">Nos prestations</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Tarifs</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6">Contact</h4>
-              <ul className="space-y-3 text-muted-foreground">
+              <h4 className="font-bold mb-6 text-white">Contact</h4>
+              <ul className="space-y-3 text-slate-400">
                 <li className="flex items-center gap-2">
                   <Mail className="w-4 h-4" style={{ color: config.primaryColor }} />
                   contact@example.com
@@ -752,17 +891,17 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
               </ul>
             </div>
             <div>
-              <h4 className="font-bold mb-6">Newsletter</h4>
-              <p className="text-muted-foreground mb-4">Restez informé de nos actualités</p>
+              <h4 className="font-bold mb-6 text-white">Newsletter</h4>
+              <p className="text-slate-400 mb-4">Restez informé de nos actualités</p>
               <div className="flex gap-2">
                 <input 
                   type="email" 
                   placeholder="Votre email" 
-                  className="flex-1 px-4 py-2 rounded-xl border border-border bg-background"
+                  className="flex-1 px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500"
                 />
                 <Button 
-                  className="rounded-xl"
-                  style={{ backgroundColor: config.primaryColor }}
+                  className="rounded-xl text-white"
+                  style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                 >
                   <ArrowRight className="w-4 h-4" />
                 </Button>
@@ -770,16 +909,19 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
             </div>
           </div>
           
-          <div className="border-t pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
+          <div className="border-t border-white/10 pt-8 text-center text-sm text-slate-500">
             <p>© 2024 {config.companyName}. Tous droits réservés.</p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-primary transition-colors">Confidentialité</a>
-              <a href="#" className="hover:text-primary transition-colors">Conditions</a>
-              <a href="#" className="hover:text-primary transition-colors">Cookies</a>
-            </div>
           </div>
         </div>
       </footer>
+
+      {/* Custom CSS for marquee animation */}
+      <style>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      `}</style>
     </div>
   );
 };
