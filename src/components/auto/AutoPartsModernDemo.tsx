@@ -223,84 +223,75 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       </nav>
 
       {/* ═══════════════════════════════════════════════════════════════
-          HERO SECTION
+          HERO SECTION - Style capture référence
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative bg-gradient-to-r from-slate-100 to-slate-50 overflow-hidden">
-        <div className="container mx-auto px-4 py-16 lg:py-24">
+      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-100 overflow-hidden min-h-[500px] lg:min-h-[600px]">
+        <div className="container mx-auto px-4 py-12 lg:py-20">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             {/* Left Content */}
-            <div className="relative z-10">
-              <Badge 
-                className="mb-4 px-4 py-2 text-sm font-medium"
-                style={{ backgroundColor: `${config.primaryColor}15`, color: config.primaryColor }}
-              >
-                Large sélection de pièces auto
-              </Badge>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 mb-4 leading-tight">
-                Aux meilleurs
-                <span 
-                  className="block"
-                  style={{ color: config.primaryColor }}
-                >
-                  PRIX!
-                </span>
-              </h1>
-              <div className="flex items-center gap-4 mb-6">
-                <span className="text-slate-500 text-lg">À partir de</span>
-                <span 
-                  className="text-4xl font-black px-4 py-2 rounded-lg text-white"
-                  style={{ backgroundColor: config.accentColor || config.primaryColor }}
-                >
-                  69,00 $
-                </span>
-              </div>
-              <p className="text-slate-600 text-lg mb-8 max-w-md">
-                Plus de 50,000 pièces en stock. Livraison rapide partout au Québec.
+            <div className="relative z-10 order-2 lg:order-1">
+              <p className="text-lg md:text-xl text-slate-600 mb-2 italic">
+                <span className="font-semibold text-slate-800">Large sélection</span> de pièces auto
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Button 
-                  size="lg"
-                  className="text-white px-8 shadow-lg hover:shadow-xl transition-shadow"
-                  style={{ backgroundColor: config.primaryColor }}
-                >
-                  Magasiner maintenant
-                  <ChevronRight className="w-5 h-5 ml-2" />
-                </Button>
-                <Button 
-                  size="lg"
-                  variant="outline"
-                  className="border-2 px-8"
-                  style={{ borderColor: config.primaryColor, color: config.primaryColor }}
-                >
-                  Voir les promotions
-                </Button>
-              </div>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 leading-none mb-2">
+                AUX PLUS BAS
+              </h1>
+              <h1 
+                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none mb-8"
+                style={{ color: config.primaryColor }}
+              >
+                PRIX!
+              </h1>
+              
+              <Button 
+                size="lg"
+                className="text-white px-8 py-6 text-lg font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all hover:scale-105"
+                style={{ backgroundColor: config.primaryColor }}
+              >
+                Explorer maintenant
+              </Button>
             </div>
 
-            {/* Right - Hero Image */}
-            <div className="relative">
-              <div 
-                className="absolute -top-10 -right-10 w-96 h-96 rounded-full opacity-20 blur-3xl"
-                style={{ backgroundColor: config.primaryColor }}
-              />
-              <img 
-                src={productAuto1} 
-                alt="Pièces automobiles" 
-                className="relative z-10 w-full max-w-lg mx-auto rounded-2xl shadow-2xl transform hover:scale-105 transition-transform duration-500"
-              />
+            {/* Right - Hero Image with Price Badge */}
+            <div className="relative order-1 lg:order-2">
+              {/* Price Badge - Floating circle */}
+              <div className="absolute top-4 left-1/4 z-20 transform -translate-x-1/2 animate-bounce">
+                <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-4 border-slate-100">
+                  <span className="text-slate-500 text-xs md:text-sm">À partir de</span>
+                  <span 
+                    className="text-2xl md:text-3xl font-black"
+                    style={{ color: config.primaryColor }}
+                  >
+                    69,00 $
+                  </span>
+                </div>
+              </div>
+              
+              {/* Auto Parts Collage Image */}
+              <div className="relative">
+                <img 
+                  src={productAuto1} 
+                  alt="Pièces automobiles" 
+                  className="relative z-10 w-full max-w-2xl mx-auto transform hover:scale-102 transition-transform duration-500"
+                />
+                {/* Additional parts floating effect */}
+                <img 
+                  src={productAuto2} 
+                  alt="" 
+                  className="absolute top-0 right-0 w-1/3 opacity-80 transform translate-x-4 -translate-y-4 rounded-lg shadow-lg hidden lg:block"
+                />
+                <img 
+                  src={productAuto3} 
+                  alt="" 
+                  className="absolute bottom-0 left-0 w-1/4 opacity-80 transform -translate-x-4 translate-y-4 rounded-lg shadow-lg hidden lg:block"
+                />
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Decorative shapes */}
-        <div 
-          className="absolute top-20 right-1/4 w-20 h-20 rounded-full opacity-10 animate-pulse"
-          style={{ backgroundColor: config.primaryColor }}
-        />
-        <div 
-          className="absolute bottom-10 left-1/4 w-32 h-32 rounded-full opacity-10 animate-pulse"
-          style={{ backgroundColor: config.accentColor || config.primaryColor }}
-        />
+        {/* Bottom gradient fade */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-200/50 to-transparent" />
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
