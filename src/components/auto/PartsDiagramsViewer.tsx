@@ -1,16 +1,24 @@
 import { useState } from "react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { FileText, Download, ZoomIn, Maximize2 } from "lucide-react";
+import { FileText, Download, ZoomIn, Maximize2, BookOpen, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
-export const PartsDiagramsViewer = () => {
+interface PartsDiagramsViewerProps {
+  primaryColor?: string;
+  accentColor?: string;
+}
+
+export const PartsDiagramsViewer = ({ 
+  primaryColor = "#3B82F6", 
+  accentColor = "#8B5CF6" 
+}: PartsDiagramsViewerProps) => {
   const [selectedDiagram, setSelectedDiagram] = useState<{
     title: string;
     type: string;
     description: string;
   } | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   const diagrams = [
     {
@@ -19,7 +27,8 @@ export const PartsDiagramsViewer = () => {
       type: "Schéma technique",
       description: "Schéma détaillé du système de freinage avec toutes les références de pièces OEM",
       pages: "12 pages",
-      format: "PDF"
+      format: "PDF",
+      icon: "brake"
     },
     {
       id: 2,
@@ -27,7 +36,8 @@ export const PartsDiagramsViewer = () => {
       type: "Guide d'installation",
       description: "Guide pas-à-pas pour l'installation des amortisseurs avec photos et couples de serrage",
       pages: "8 pages",
-      format: "PDF"
+      format: "PDF",
+      icon: "suspension"
     },
     {
       id: 3,
@@ -35,7 +45,8 @@ export const PartsDiagramsViewer = () => {
       type: "Schéma technique",
       description: "Circuit électrique complet avec codes couleurs et références de connecteurs",
       pages: "15 pages",
-      format: "PDF"
+      format: "PDF",
+      icon: "electrical"
     },
     {
       id: 4,
@@ -43,12 +54,12 @@ export const PartsDiagramsViewer = () => {
       type: "Schéma éclaté",
       description: "Vue éclatée du moteur avec numérotation de chaque composant et références",
       pages: "20 pages",
-      format: "PDF"
+      format: "PDF",
+      icon: "engine"
     },
   ];
 
   const handleDownload = (title: string) => {
-    // Simulate download
     console.log(`Downloading: ${title}`);
   };
 
@@ -58,57 +69,125 @@ export const PartsDiagramsViewer = () => {
 
   return (
     <>
-      <section className="py-12">
-        <div className="container mx-auto px-4">
+      <section className="relative py-24 overflow-hidden bg-slate-950">
+        {/* Background */}
+        <div 
+          className="absolute inset-0"
+          style={{ 
+            background: `linear-gradient(180deg, transparent 0%, ${primaryColor}05 50%, transparent 100%)`
+          }}
+        />
+        
+        {/* Decorative elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div 
+            className="absolute top-1/4 -right-20 w-80 h-80 rounded-full blur-3xl opacity-10"
+            style={{ backgroundColor: primaryColor }}
+          />
+          <div 
+            className="absolute bottom-1/4 -left-20 w-60 h-60 rounded-full blur-3xl opacity-10"
+            style={{ backgroundColor: accentColor }}
+          />
+        </div>
+
+        <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-8">
-              <h3 className="text-2xl font-semibold mb-2">Diagrammes et schémas techniques</h3>
-              <p className="text-muted-foreground">
+            {/* Header */}
+            <div className="text-center mb-12">
+              <div 
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+                style={{ 
+                  background: `linear-gradient(135deg, ${primaryColor}20, ${accentColor}20)`,
+                  border: `1px solid ${primaryColor}30`
+                }}
+              >
+                <BookOpen className="w-4 h-4" style={{ color: primaryColor }} />
+                <span className="text-sm font-medium text-white">Documentation technique</span>
+              </div>
+              
+              <h3 className="text-4xl md:text-5xl font-black text-white mb-4">
+                Diagrammes et{' '}
+                <span 
+                  className="bg-clip-text text-transparent"
+                  style={{ backgroundImage: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
+                >
+                  schémas techniques
+                </span>
+              </h3>
+              <p className="text-xl text-slate-400 max-w-2xl mx-auto">
                 Accédez aux schémas détaillés et guides d'installation pour chaque pièce
               </p>
             </div>
 
+            {/* Diagrams Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {diagrams.map((diagram) => (
-                <Card key={diagram.id} className="p-6 hover:shadow-lg transition-all">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <FileText className="w-6 h-6 text-primary" />
+              {diagrams.map((diagram, index) => (
+                <div 
+                  key={diagram.id} 
+                  className="group relative rounded-2xl p-6 backdrop-blur-xl transition-all duration-500"
+                  style={{
+                    background: hoveredCard === index ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    transform: hoveredCard === index ? 'translateY(-4px)' : 'translateY(0)',
+                    boxShadow: hoveredCard === index ? `0 20px 40px -15px ${primaryColor}30` : 'none'
+                  }}
+                  onMouseEnter={() => setHoveredCard(index)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  <div className="flex items-start gap-5">
+                    {/* Icon */}
+                    <div 
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0 transition-all duration-300"
+                      style={{ 
+                        background: hoveredCard === index 
+                          ? `linear-gradient(135deg, ${primaryColor}, ${accentColor})`
+                          : `linear-gradient(135deg, ${primaryColor}20, ${accentColor}20)`
+                      }}
+                    >
+                      <FileText 
+                        className="w-7 h-7 transition-colors duration-300" 
+                        style={{ color: hoveredCard === index ? 'white' : primaryColor }} 
+                      />
                     </div>
                     
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-semibold text-lg">{diagram.title}</h4>
-                        <Badge variant="secondary" className="ml-2">
+                    <div className="flex-1 min-w-0">
+                      {/* Header */}
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <h4 className="font-bold text-xl text-white">{diagram.title}</h4>
+                        <Badge 
+                          className="flex-shrink-0 text-white border-0"
+                          style={{ background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
+                        >
                           {diagram.format}
                         </Badge>
                       </div>
                       
-                      <p className="text-sm text-muted-foreground mb-1">{diagram.type}</p>
-                      <p className="text-sm mb-3">{diagram.description}</p>
-                      <p className="text-xs text-muted-foreground mb-4">{diagram.pages}</p>
+                      {/* Meta */}
+                      <p className="text-sm font-medium mb-2" style={{ color: primaryColor }}>{diagram.type}</p>
+                      <p className="text-sm text-slate-400 mb-2 line-clamp-2">{diagram.description}</p>
+                      <p className="text-xs text-slate-500 mb-5">{diagram.pages}</p>
 
-                      <div className="flex gap-2">
+                      {/* Actions */}
+                      <div className="flex gap-3">
                         <Button 
                           onClick={() => handleViewDiagram(diagram)}
-                          variant="default"
-                          size="sm"
-                          className="flex-1"
+                          className="flex-1 rounded-xl text-white font-semibold transition-all hover:scale-[1.02]"
+                          style={{ background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
                         >
-                          <ZoomIn className="w-4 h-4 mr-1" />
+                          <ZoomIn className="w-4 h-4 mr-2" />
                           Visualiser
                         </Button>
                         <Button 
                           onClick={() => handleDownload(diagram.title)}
                           variant="outline"
-                          size="sm"
+                          className="rounded-xl border-white/20 text-white hover:bg-white/10"
                         >
                           <Download className="w-4 h-4" />
                         </Button>
                       </div>
                     </div>
                   </div>
-                </Card>
+                </div>
               ))}
             </div>
           </div>
@@ -117,14 +196,20 @@ export const PartsDiagramsViewer = () => {
 
       {/* Diagram Preview Modal */}
       <Dialog open={!!selectedDiagram} onOpenChange={() => setSelectedDiagram(null)}>
-        <DialogContent className="max-w-4xl max-h-[90vh]">
+        <DialogContent 
+          className="max-w-4xl max-h-[90vh] border-0"
+          style={{
+            background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+            boxShadow: `0 25px 100px -20px ${primaryColor}40`
+          }}
+        >
           <DialogHeader>
-            <DialogTitle className="flex items-center justify-between">
-              <span>{selectedDiagram?.title}</span>
+            <DialogTitle className="flex items-center justify-between text-white">
+              <span className="text-xl font-bold">{selectedDiagram?.title}</span>
               <Button 
                 onClick={() => selectedDiagram && handleDownload(selectedDiagram.title)}
-                variant="outline"
-                size="sm"
+                className="rounded-xl text-white"
+                style={{ background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
               >
                 <Download className="w-4 h-4 mr-2" />
                 Télécharger
@@ -132,25 +217,49 @@ export const PartsDiagramsViewer = () => {
             </DialogTitle>
           </DialogHeader>
           
-          <div className="space-y-4">
-            <div className="bg-muted/30 rounded-lg p-4">
-              <p className="text-sm text-muted-foreground mb-2">{selectedDiagram?.type}</p>
-              <p className="text-sm">{selectedDiagram?.description}</p>
+          <div className="space-y-6">
+            {/* Info Card */}
+            <div 
+              className="rounded-xl p-5"
+              style={{ 
+                background: `linear-gradient(135deg, ${primaryColor}10, ${accentColor}10)`,
+                border: `1px solid ${primaryColor}20`
+              }}
+            >
+              <p className="text-sm font-medium mb-1" style={{ color: primaryColor }}>{selectedDiagram?.type}</p>
+              <p className="text-sm text-slate-300">{selectedDiagram?.description}</p>
             </div>
 
             {/* Simulated diagram preview */}
-            <div className="bg-gradient-to-br from-muted/50 to-muted/30 rounded-lg p-12 min-h-[400px] flex flex-col items-center justify-center border-2 border-dashed border-border">
-              <Maximize2 className="w-16 h-16 text-muted-foreground/50 mb-4" />
-              <p className="text-muted-foreground text-center mb-2">Aperçu du diagramme</p>
-              <p className="text-sm text-muted-foreground/70 text-center max-w-md">
+            <div 
+              className="rounded-2xl p-12 min-h-[400px] flex flex-col items-center justify-center"
+              style={{
+                background: 'rgba(255,255,255,0.03)',
+                border: '2px dashed rgba(255,255,255,0.1)'
+              }}
+            >
+              <div 
+                className="w-20 h-20 rounded-2xl flex items-center justify-center mb-6"
+                style={{ background: `linear-gradient(135deg, ${primaryColor}20, ${accentColor}20)` }}
+              >
+                <Maximize2 className="w-10 h-10" style={{ color: primaryColor }} />
+              </div>
+              <p className="text-white font-semibold text-lg text-center mb-2">Aperçu du diagramme</p>
+              <p className="text-sm text-slate-500 text-center max-w-md mb-8">
                 Dans une vraie application, ce serait un visualiseur PDF ou une visionneuse d'image interactive
               </p>
-              <div className="mt-6 flex gap-2">
-                <Button variant="outline" size="sm">
+              <div className="flex gap-3">
+                <Button 
+                  variant="outline" 
+                  className="rounded-xl border-white/20 text-white hover:bg-white/10"
+                >
                   <ZoomIn className="w-4 h-4 mr-2" />
                   Zoom +
                 </Button>
-                <Button variant="outline" size="sm">
+                <Button 
+                  className="rounded-xl text-white"
+                  style={{ background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
+                >
                   Page suivante
                 </Button>
               </div>
