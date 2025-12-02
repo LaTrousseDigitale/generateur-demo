@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ShowcaseWebsiteDemo } from "./ShowcaseWebsiteDemo";
 import { EcommerceDemo } from "./EcommerceDemo";
 import { BookingDemo } from "./BookingDemo";
+import { AutoShowcaseDemo } from "./auto/AutoShowcaseDemo";
 
 interface FullDemoViewProps {
   config: DemoConfig;
@@ -25,6 +26,10 @@ export const FullDemoView = ({ config, onBack, hideBackButton = false }: FullDem
     }
     
     if (config.websiteType === "vitrine") {
+      // Démo vitrine spéciale pour l'automobile
+      if (config.industry === "auto" || config.industry === "pieces-auto") {
+        return <AutoShowcaseDemo config={config} onBack={onBack} />;
+      }
       return <ShowcaseWebsiteDemo config={config} onBack={onBack} />;
     }
     
