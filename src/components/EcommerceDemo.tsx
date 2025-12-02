@@ -289,8 +289,16 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
+            {/* Back button + Logo */}
             <div className="flex items-center gap-3">
+              <Button 
+                variant="ghost" 
+                size="icon"
+                onClick={onBack} 
+                className={`rounded-full ${scrollY > 50 ? 'bg-slate-100 text-slate-700 hover:bg-slate-200' : 'bg-white/10 text-white hover:bg-white/20'}`}
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
               {config.logo ? (
                 <img src={config.logo} alt="Logo" className="h-10 w-auto object-contain" />
               ) : (
@@ -409,15 +417,6 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
         )}
       </nav>
 
-      {/* Back button */}
-      <Button 
-        variant="ghost" 
-        onClick={onBack} 
-        className="fixed top-6 left-6 z-50 bg-black/30 backdrop-blur-md text-white hover:bg-black/50 rounded-full shadow-lg"
-      >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Retour
-      </Button>
 
       {/* ═══════════════════════════════════════════════════════════════
           HERO SECTION - Split layout with product showcase
