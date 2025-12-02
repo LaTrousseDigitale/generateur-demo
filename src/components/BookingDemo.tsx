@@ -5,10 +5,11 @@ import { DemoConfig } from "./DemoGenerator";
 import { 
   ArrowLeft, Download, Share2, Calendar, Clock, MapPin, Users, 
   CheckCircle2, Star, Menu, ChevronRight, Sparkles, Zap, Shield, 
-  Phone, Mail, Bell, ArrowRight, Play, Heart, Award, TrendingUp
+  Phone, Mail, Bell, ArrowRight, Play, Heart, Award, TrendingUp,
+  ChevronDown, Quote, ArrowUpRight, X
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getThemeStyles, type DemoTheme } from "@/types/demoThemes";
 
 // Import booking images
@@ -23,18 +24,63 @@ interface BookingDemoProps {
   onBack: () => void;
 }
 
+// Animated counter hook
+const useCountUp = (end: number, duration: number = 2000, trigger: boolean = false) => {
+  const [count, setCount] = useState(0);
+  
+  useEffect(() => {
+    if (!trigger) return;
+    let startTime: number;
+    let animationFrame: number;
+    
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      setCount(Math.floor(progress * end));
+      if (progress < 1) {
+        animationFrame = requestAnimationFrame(animate);
+      }
+    };
+    
+    animationFrame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(animationFrame);
+  }, [end, duration, trigger]);
+  
+  return count;
+};
+
 export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
   const { toast } = useToast();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [scrollY, setScrollY] = useState(0);
+  const [activeSection, setActiveSection] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [statsVisible, setStatsVisible] = useState(false);
+  const statsRef = useRef<HTMLDivElement>(null);
 
-  // Parallax effect
+  // Parallax and scroll effects
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+      
+      // Check if stats section is visible
+      if (statsRef.current) {
+        const rect = statsRef.current.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.8) {
+          setStatsVisible(true);
+        }
+      }
+    };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Animated counters
+  const counter1 = useCountUp(15000, 2000, statsVisible);
+  const counter2 = useCountUp(98, 1500, statsVisible);
+  const counter3 = useCountUp(24, 1000, statsVisible);
+  const counter4 = useCountUp(5, 800, statsVisible);
 
   // Map industry to hero images
   const industryHeroImages = {
@@ -82,1038 +128,956 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
     { time: "17:00", available: true },
   ];
 
-  const services: Record<string, Array<{ name: string; duration: string; price: string; icon: typeof Users; popular: boolean; image: string }>> = {
+  const services: Record<string, Array<{ name: string; duration: string; price: string; icon: typeof Users; popular: boolean; image: string; description: string }>> = {
     sante: [
-      { name: "Consultation Générale", duration: "30 min", price: "75 $", icon: Users, popular: false, image: bookingHealthClinic },
-      { name: "Consultation Spécialisée", duration: "45 min", price: "120 $", icon: Star, popular: true, image: bookingArchitectureOffice },
-      { name: "Suivi Médical", duration: "20 min", price: "60 $", icon: Calendar, popular: false, image: bookingRestaurantInterior },
+      { name: "Consultation générale", duration: "30 min", price: "75 $", icon: Users, popular: false, image: bookingHealthClinic, description: "Évaluation complète de votre état de santé" },
+      { name: "Consultation spécialisée", duration: "45 min", price: "120 $", icon: Star, popular: true, image: bookingArchitectureOffice, description: "Expertise pointue pour des besoins spécifiques" },
+      { name: "Suivi médical", duration: "20 min", price: "60 $", icon: Calendar, popular: false, image: bookingRestaurantInterior, description: "Accompagnement régulier de votre santé" },
     ],
     restauration: [
-      { name: "Table 2 Personnes", duration: "2h", price: "Gratuit", icon: Users, popular: false, image: bookingRestaurantInterior },
-      { name: "Table 4 Personnes", duration: "2h", price: "Gratuit", icon: Users, popular: true, image: bookingHealthClinic },
-      { name: "Salle Privée 8-12 pers", duration: "3h", price: "150 $", icon: Star, popular: false, image: bookingArchitectureOffice },
+      { name: "Table 2 personnes", duration: "2h", price: "Gratuit", icon: Users, popular: false, image: bookingRestaurantInterior, description: "Dîner intime avec vue panoramique" },
+      { name: "Table 4 personnes", duration: "2h", price: "Gratuit", icon: Users, popular: true, image: bookingHealthClinic, description: "Parfait pour un repas en famille ou entre amis" },
+      { name: "Salle privée 8-12 pers", duration: "3h", price: "150 $", icon: Star, popular: false, image: bookingArchitectureOffice, description: "Espace exclusif pour vos événements" },
     ],
     "arts-scene": [
-      { name: "Billet Standard", duration: "Parterre", price: "45 $", icon: Users, popular: false, image: bookingRestaurantInterior },
-      { name: "Billet Premium", duration: "Balcon VIP", price: "85 $", icon: Star, popular: true, image: bookingArchitectureOffice },
-      { name: "Loge Privée", duration: "4 personnes", price: "320 $", icon: Award, popular: false, image: bookingHealthClinic },
+      { name: "Billet standard", duration: "Parterre", price: "45 $", icon: Users, popular: false, image: bookingRestaurantInterior, description: "Vivez le spectacle au cœur de l'action" },
+      { name: "Billet premium", duration: "Balcon VIP", price: "85 $", icon: Star, popular: true, image: bookingArchitectureOffice, description: "Vue imprenable et service privilégié" },
+      { name: "Loge privée", duration: "4 personnes", price: "320 $", icon: Award, popular: false, image: bookingHealthClinic, description: "Intimité et confort pour un moment unique" },
     ],
     auto: [
-      { name: "Diagnostic Complet", duration: "45 min", price: "89 $", icon: Shield, popular: false, image: bookingAutoService },
-      { name: "Entretien Standard", duration: "2h", price: "149 $", icon: Star, popular: true, image: bookingConstructionOffice },
-      { name: "Révision Complète", duration: "4h", price: "299 $", icon: Award, popular: false, image: bookingArchitectureOffice },
+      { name: "Diagnostic complet", duration: "45 min", price: "89 $", icon: Shield, popular: false, image: bookingAutoService, description: "Analyse approfondie de votre véhicule" },
+      { name: "Entretien standard", duration: "2h", price: "149 $", icon: Star, popular: true, image: bookingConstructionOffice, description: "Maintenance préventive complète" },
+      { name: "Révision complète", duration: "4h", price: "299 $", icon: Award, popular: false, image: bookingArchitectureOffice, description: "Service premium tout inclus" },
     ],
     construction: [
-      { name: "Consultation Projet", duration: "1h", price: "Gratuit", icon: Users, popular: false, image: bookingConstructionOffice },
-      { name: "Estimation Détaillée", duration: "Sur site", price: "150 $", icon: Star, popular: true, image: bookingArchitectureOffice },
-      { name: "Suivi de Chantier", duration: "Mensuel", price: "500 $", icon: Award, popular: false, image: bookingAutoService },
+      { name: "Consultation projet", duration: "1h", price: "Gratuit", icon: Users, popular: false, image: bookingConstructionOffice, description: "Discutons de votre vision" },
+      { name: "Estimation détaillée", duration: "Sur site", price: "150 $", icon: Star, popular: true, image: bookingArchitectureOffice, description: "Devis précis et transparent" },
+      { name: "Suivi de chantier", duration: "Mensuel", price: "500 $", icon: Award, popular: false, image: bookingAutoService, description: "Accompagnement expert de A à Z" },
     ],
     architecture: [
-      { name: "Première Rencontre", duration: "1h", price: "Gratuit", icon: Users, popular: false, image: bookingArchitectureOffice },
-      { name: "Étude de Faisabilité", duration: "1 semaine", price: "750 $", icon: Star, popular: true, image: bookingConstructionOffice },
-      { name: "Plans Complets", duration: "3-4 semaines", price: "2 500 $", icon: Award, popular: false, image: bookingHealthClinic },
+      { name: "Première rencontre", duration: "1h", price: "Gratuit", icon: Users, popular: false, image: bookingArchitectureOffice, description: "Échangeons sur vos aspirations" },
+      { name: "Étude de faisabilité", duration: "1 semaine", price: "750 $", icon: Star, popular: true, image: bookingConstructionOffice, description: "Analyse complète de votre projet" },
+      { name: "Plans complets", duration: "3-4 semaines", price: "2 500 $", icon: Award, popular: false, image: bookingHealthClinic, description: "Conception architecturale détaillée" },
     ],
     education: [
-      { name: "Cours Découverte", duration: "1h", price: "25 $", icon: Users, popular: false, image: bookingArchitectureOffice },
-      { name: "Formation Intensive", duration: "1 journée", price: "195 $", icon: Star, popular: true, image: bookingHealthClinic },
-      { name: "Programme Complet", duration: "10 semaines", price: "1 200 $", icon: Award, popular: false, image: bookingRestaurantInterior },
+      { name: "Cours découverte", duration: "1h", price: "25 $", icon: Users, popular: false, image: bookingArchitectureOffice, description: "Premier pas vers l'apprentissage" },
+      { name: "Formation intensive", duration: "1 journée", price: "195 $", icon: Star, popular: true, image: bookingHealthClinic, description: "Immersion totale et progression rapide" },
+      { name: "Programme complet", duration: "10 semaines", price: "1 200 $", icon: Award, popular: false, image: bookingRestaurantInterior, description: "Parcours complet vers l'expertise" },
     ],
     services: [
-      { name: "Consultation Initiale", duration: "60 min", price: "180 $", icon: Users, popular: false, image: bookingArchitectureOffice },
-      { name: "Session de Suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true, image: bookingHealthClinic },
-      { name: "Audit Complet", duration: "2h", price: "375 $", icon: Star, popular: false, image: bookingConstructionOffice },
+      { name: "Consultation initiale", duration: "60 min", price: "180 $", icon: Users, popular: false, image: bookingArchitectureOffice, description: "Analyse de vos besoins" },
+      { name: "Session de suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true, image: bookingHealthClinic, description: "Accompagnement continu" },
+      { name: "Audit complet", duration: "2h", price: "375 $", icon: Star, popular: false, image: bookingConstructionOffice, description: "Évaluation approfondie" },
     ],
     "services-pro": [
-      { name: "Consultation Initiale", duration: "60 min", price: "180 $", icon: Users, popular: false, image: bookingArchitectureOffice },
-      { name: "Session de Suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true, image: bookingHealthClinic },
-      { name: "Audit Complet", duration: "2h", price: "375 $", icon: Star, popular: false, image: bookingConstructionOffice },
+      { name: "Consultation initiale", duration: "60 min", price: "180 $", icon: Users, popular: false, image: bookingArchitectureOffice, description: "Analyse de vos besoins" },
+      { name: "Session de suivi", duration: "30 min", price: "90 $", icon: Calendar, popular: true, image: bookingHealthClinic, description: "Accompagnement continu" },
+      { name: "Audit complet", duration: "2h", price: "375 $", icon: Star, popular: false, image: bookingConstructionOffice, description: "Évaluation approfondie" },
     ],
   };
 
   // Titres de section adaptés par industrie
-  const sectionTitles: Record<string, { badge: string; title: string; subtitle: string; duration: string }> = {
+  const sectionTitles: Record<string, { badge: string; title: string; subtitle: string; duration: string; heroTitle: string; heroSubtitle: string }> = {
     "arts-scene": { 
       badge: "Billetterie", 
       title: "Choisissez vos billets", 
       subtitle: "Sélectionnez votre type de place et réservez votre soirée",
-      duration: "Emplacement"
+      duration: "Emplacement",
+      heroTitle: "Vivez des moments\ninoubliables",
+      heroSubtitle: "Réservez vos places pour les plus beaux spectacles"
     },
     restauration: { 
       badge: "Réservations", 
       title: "Réservez votre table", 
       subtitle: "Choisissez le type de table et l'heure qui vous conviennent",
-      duration: "Capacité"
+      duration: "Capacité",
+      heroTitle: "Une expérience\ngastronomique unique",
+      heroSubtitle: "Réservez votre table dans notre établissement d'exception"
     },
     auto: { 
       badge: "Services auto", 
       title: "Nos services", 
       subtitle: "Sélectionnez le service dont votre véhicule a besoin",
-      duration: "Durée"
+      duration: "Durée",
+      heroTitle: "L'excellence\nautomobile",
+      heroSubtitle: "Prenez rendez-vous avec nos experts"
     },
     sante: { 
       badge: "Consultations", 
       title: "Nos consultations", 
       subtitle: "Choisissez le type de consultation adapté à vos besoins",
-      duration: "Durée"
+      duration: "Durée",
+      heroTitle: "Votre santé,\nnotre priorité",
+      heroSubtitle: "Prenez rendez-vous avec nos spécialistes"
     },
     education: { 
       badge: "Formations", 
       title: "Nos formations", 
       subtitle: "Choisissez le programme qui correspond à vos objectifs",
-      duration: "Durée"
+      duration: "Durée",
+      heroTitle: "Développez\nvos compétences",
+      heroSubtitle: "Inscrivez-vous à nos formations d'excellence"
+    },
+    architecture: { 
+      badge: "Rendez-vous", 
+      title: "Nos services", 
+      subtitle: "De la conception à la réalisation de vos projets",
+      duration: "Durée",
+      heroTitle: "Concevons\nl'extraordinaire",
+      heroSubtitle: "Prenez rendez-vous pour donner vie à vos projets"
+    },
+    construction: { 
+      badge: "Consultations", 
+      title: "Nos services", 
+      subtitle: "Accompagnement expert pour tous vos projets",
+      duration: "Durée",
+      heroTitle: "Bâtissons\nl'avenir",
+      heroSubtitle: "Prenez rendez-vous avec nos experts en construction"
     },
     default: { 
       badge: "Nos prestations", 
       title: "Choisissez votre service", 
       subtitle: "Sélectionnez le service qui vous intéresse et réservez votre créneau",
-      duration: "Durée"
+      duration: "Durée",
+      heroTitle: "Réservez votre\nrendez-vous",
+      heroSubtitle: "Prenez rendez-vous en quelques clics"
     },
   };
 
   const currentTitles = sectionTitles[config.industry] || sectionTitles.default;
-
   const availableServices = services[config.industry as keyof typeof services] || services["services-pro"];
 
   const stats = [
-    { value: "15K+", label: "Clients satisfaits", icon: Heart },
-    { value: "98%", label: "Taux de satisfaction", icon: TrendingUp },
-    { value: "24/7", label: "Support disponible", icon: Shield },
-    { value: "5★", label: "Note moyenne", icon: Award },
+    { value: counter1, suffix: "+", label: "Clients satisfaits", icon: Heart },
+    { value: counter2, suffix: "%", label: "Taux de satisfaction", icon: TrendingUp },
+    { value: counter3, suffix: "/7", label: "Support disponible", icon: Shield },
+    { value: counter4, suffix: "★", label: "Note moyenne", icon: Award },
+  ];
+
+  const testimonials = [
+    { name: "Sophie Martin", role: "Cliente fidèle", text: "Une expérience exceptionnelle du début à la fin. Je recommande vivement!", rating: 5 },
+    { name: "Pierre Dubois", role: "Entrepreneur", text: "Professionnalisme et qualité de service irréprochables. Mon partenaire de confiance.", rating: 5 },
+    { name: "Marie Laurent", role: "Directrice", text: "Le meilleur choix que j'ai fait. Service rapide, équipe à l'écoute.", rating: 5 },
   ];
 
   // Get theme-based styles
   const theme = config.theme || "moderne";
-  const themeStyles = getThemeStyles(theme, config.primaryColor);
   
-  // Theme-specific classes
-  const getPageBg = () => {
+  // Theme-specific classes - COMPLETELY DIFFERENT per theme
+  const getThemeConfig = () => {
     switch(theme) {
-      case "moderne": return "bg-gradient-to-br from-slate-50 via-white to-slate-100";
-      case "rustique": return "bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900";
-      case "futuriste": return "bg-gradient-to-br from-slate-950 via-indigo-950/50 to-slate-950";
-      default: return "bg-slate-950";
+      case "moderne":
+        return {
+          pageBg: "bg-white",
+          heroOverlay: "bg-gradient-to-br from-white/95 via-slate-50/90 to-white/80",
+          headerBg: "bg-white/80 backdrop-blur-xl border-b border-slate-200/50",
+          cardBg: "bg-white border border-slate-100 shadow-xl shadow-slate-200/50",
+          cardHover: "hover:shadow-2xl hover:-translate-y-2",
+          textPrimary: "text-slate-900",
+          textSecondary: "text-slate-600",
+          textMuted: "text-slate-400",
+          sectionBg: "bg-slate-50",
+          accentBg: "bg-slate-100",
+          buttonStyle: "shadow-lg hover:shadow-xl",
+          badgeStyle: "bg-slate-100 text-slate-700 border border-slate-200",
+          inputStyle: "border-slate-200 bg-white focus:border-slate-400",
+          dividerColor: "fill-white",
+          glowEffect: "",
+          shapeColor: "bg-slate-200/30",
+        };
+      case "rustique":
+        return {
+          pageBg: "bg-stone-950",
+          heroOverlay: "bg-gradient-to-br from-stone-950/90 via-stone-900/85 to-amber-950/80",
+          headerBg: "bg-stone-900/90 backdrop-blur-xl border-b border-amber-900/30",
+          cardBg: "bg-gradient-to-br from-stone-900 to-stone-800 border border-amber-800/20",
+          cardHover: "hover:border-amber-700/40 hover:-translate-y-2",
+          textPrimary: "text-amber-50",
+          textSecondary: "text-stone-300",
+          textMuted: "text-stone-500",
+          sectionBg: "bg-stone-900",
+          accentBg: "bg-amber-900/20",
+          buttonStyle: "shadow-lg shadow-amber-900/30",
+          badgeStyle: "bg-amber-900/30 text-amber-200 border border-amber-800/30",
+          inputStyle: "border-amber-900/30 bg-stone-900 text-stone-100 focus:border-amber-700",
+          dividerColor: "fill-stone-950",
+          glowEffect: "",
+          shapeColor: "bg-amber-900/10",
+        };
+      case "futuriste":
+        return {
+          pageBg: "bg-slate-950",
+          heroOverlay: "bg-gradient-to-br from-slate-950/80 via-indigo-950/70 to-purple-950/60",
+          headerBg: "bg-slate-950/80 backdrop-blur-xl border-b border-white/10",
+          cardBg: "bg-white/5 backdrop-blur-2xl border border-white/10",
+          cardHover: "hover:bg-white/10 hover:border-white/20 hover:-translate-y-2 hover:shadow-[0_0_60px_rgba(99,102,241,0.3)]",
+          textPrimary: "text-white",
+          textSecondary: "text-slate-300",
+          textMuted: "text-slate-500",
+          sectionBg: "bg-slate-900/50",
+          accentBg: "bg-indigo-500/10",
+          buttonStyle: "shadow-[0_0_30px_rgba(99,102,241,0.4)]",
+          badgeStyle: "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-200 border border-indigo-500/30",
+          inputStyle: "border-white/20 bg-white/5 text-white focus:border-indigo-500",
+          dividerColor: "fill-slate-950",
+          glowEffect: "shadow-[0_0_100px_rgba(99,102,241,0.2)]",
+          shapeColor: "bg-indigo-500/5",
+        };
+      default:
+        return {
+          pageBg: "bg-slate-950",
+          heroOverlay: "bg-slate-950/70",
+          headerBg: "bg-slate-900/80 backdrop-blur-xl",
+          cardBg: "bg-slate-900/80 border border-white/10",
+          cardHover: "hover:bg-slate-800/80",
+          textPrimary: "text-white",
+          textSecondary: "text-slate-300",
+          textMuted: "text-slate-500",
+          sectionBg: "bg-slate-900",
+          accentBg: "bg-slate-800",
+          buttonStyle: "",
+          badgeStyle: "bg-slate-800 text-slate-200",
+          inputStyle: "border-white/20 bg-slate-900",
+          dividerColor: "fill-slate-950",
+          glowEffect: "",
+          shapeColor: "bg-slate-800/50",
+        };
     }
   };
 
-  const getTextColor = () => {
-    switch(theme) {
-      case "moderne": return "text-slate-900";
-      case "rustique": return "text-amber-50";
-      case "futuriste": return "text-white";
-      default: return "text-white";
-    }
-  };
-
-  const getSubtextColor = () => {
-    switch(theme) {
-      case "moderne": return "text-slate-600";
-      case "rustique": return "text-stone-300";
-      case "futuriste": return "text-slate-300";
-      default: return "text-slate-300";
-    }
-  };
-
-  const getCardBg = () => {
-    switch(theme) {
-      case "moderne": return "bg-white border border-slate-200 shadow-lg";
-      case "rustique": return "bg-stone-800/80 border border-amber-900/30 backdrop-blur-sm";
-      case "futuriste": return "bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_30px_rgba(99,102,241,0.15)]";
-      default: return "bg-slate-900/80 backdrop-blur-xl border border-white/10";
-    }
-  };
-
-  const getHeaderBg = () => {
-    switch(theme) {
-      case "moderne": return "bg-white/90 backdrop-blur-xl border border-slate-200 shadow-lg";
-      case "rustique": return "bg-stone-900/90 backdrop-blur-xl border border-amber-900/30";
-      case "futuriste": return "bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(99,102,241,0.2)]";
-      default: return "bg-slate-900/80 backdrop-blur-xl border border-white/10";
-    }
-  };
-
-  const getHeroOverlay = () => {
-    switch(theme) {
-      case "moderne": return "bg-white/60";
-      case "rustique": return "bg-stone-900/70";
-      case "futuriste": return "bg-slate-950/60";
-      default: return "bg-slate-950/70";
-    }
-  };
+  const themeConfig = getThemeConfig();
 
   return (
-    <div className={`min-h-screen ${getPageBg()} ${getTextColor()} overflow-hidden`}>
-      {/* Floating Header */}
-      <div className="fixed top-4 left-4 right-4 z-50">
-        <div className={`${getHeaderBg()} rounded-2xl shadow-2xl`}>
-          <div className="container mx-auto px-6 py-3">
-            <div className="flex items-center justify-between">
+    <div className={`min-h-screen ${themeConfig.pageBg} overflow-hidden`}>
+      
+      {/* ═══════════════════════════════════════════════════════════════
+          FLOATING NAVIGATION - Premium glassmorphism header
+      ═══════════════════════════════════════════════════════════════ */}
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        scrollY > 100 ? themeConfig.headerBg : 'bg-transparent'
+      }`}>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className="flex items-center gap-3">
+              {config.logo ? (
+                <img src={config.logo} alt="Logo" className="h-10 w-auto object-contain" />
+              ) : (
+                <div 
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
+                  style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                >
+                  {config.companyName.charAt(0)}
+                </div>
+              )}
+              <span className={`font-bold text-xl hidden sm:block ${scrollY > 100 ? themeConfig.textPrimary : 'text-white'}`}>
+                {config.companyName}
+              </span>
+            </div>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-8">
+              {['Accueil', 'Services', 'À propos', 'Témoignages', 'Contact'].map((item) => (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className={`text-sm font-medium transition-colors relative group ${
+                    scrollY > 100 ? themeConfig.textSecondary : 'text-white/80'
+                  } hover:${scrollY > 100 ? themeConfig.textPrimary : 'text-white'}`}
+                >
+                  {item}
+                  <span 
+                    className="absolute -bottom-1 left-0 w-0 h-0.5 group-hover:w-full transition-all duration-300"
+                    style={{ backgroundColor: config.primaryColor }}
+                  />
+                </a>
+              ))}
+            </div>
+
+            {/* Actions */}
+            <div className="flex items-center gap-3">
               <Button 
                 variant="ghost" 
-                onClick={onBack} 
-                className={theme === "moderne" ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"}
+                size="icon" 
+                className={`hidden sm:flex ${scrollY > 100 ? themeConfig.textSecondary : 'text-white/80'}`}
+                onClick={handleShare}
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour
+                <Share2 className="w-5 h-5" />
               </Button>
-              <div className="flex items-center gap-3">
-                {config.logo && (
-                  <img src={config.logo} alt="Logo" className="h-10 w-auto object-contain" />
-                )}
-                <span className="font-bold text-lg hidden sm:block">{config.companyName}</span>
-              </div>
-              <div className="flex gap-2">
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  onClick={handleShare} 
-                  className={theme === "moderne" ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"}
-                >
-                  <Share2 className="w-4 h-4" />
-                </Button>
-                <Button 
-                  onClick={handleExport}
-                  className={`rounded-xl shadow-lg transition-all duration-300 hover:scale-105 text-white ${theme === "futuriste" ? "shadow-[0_0_20px_rgba(99,102,241,0.4)]" : ""}`}
-                  style={{ 
-                    background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                  }}
-                >
-                  <Download className="w-4 h-4 mr-2" />
-                  <span className="hidden sm:inline">Télécharger</span>
-                </Button>
-              </div>
+              <Button 
+                className={`rounded-full px-6 text-white ${themeConfig.buttonStyle}`}
+                style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+              >
+                <Calendar className="w-4 h-4 mr-2" />
+                <span className="hidden sm:inline">Réserver</span>
+              </Button>
+              
+              {/* Mobile menu button */}
+              <Button 
+                variant="ghost" 
+                size="icon"
+                className={`lg:hidden ${scrollY > 100 ? themeConfig.textPrimary : 'text-white'}`}
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </Button>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Epic Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Video-like Background with Parallax */}
+        {/* Mobile Navigation */}
+        {mobileMenuOpen && (
+          <div className={`lg:hidden ${themeConfig.headerBg} border-t border-white/10`}>
+            <div className="container mx-auto px-4 py-4 space-y-3">
+              {['Accueil', 'Services', 'À propos', 'Témoignages', 'Contact'].map((item) => (
+                <a 
+                  key={item}
+                  href={`#${item.toLowerCase()}`}
+                  className={`block py-2 text-lg font-medium ${themeConfig.textSecondary}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* Back button - Fixed */}
+      <Button 
+        variant="ghost" 
+        onClick={onBack} 
+        className="fixed top-24 left-4 z-40 bg-black/20 backdrop-blur-sm text-white hover:bg-black/40 rounded-full"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Retour
+      </Button>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          HERO SECTION - Full-screen parallax with animated elements
+      ═══════════════════════════════════════════════════════════════ */}
+      <section id="accueil" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Parallax Background Image */}
         <div 
-          className="absolute inset-0 scale-125 transition-transform duration-100"
+          className="absolute inset-0 scale-110"
           style={{ 
             backgroundImage: `url(${heroImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            transform: `scale(1.25) translateY(${scrollY * 0.3}px)`,
+            transform: `scale(1.1) translateY(${scrollY * 0.4}px)`,
+            transition: 'transform 0.1s ease-out'
           }}
         />
         
-        {/* Dark Overlay for text visibility - Theme-based */}
-        <div className={`absolute inset-0 ${getHeroOverlay()}`} />
+        {/* Theme-specific overlay */}
+        <div className={`absolute inset-0 ${themeConfig.heroOverlay}`} />
         
-        {/* Gradient Overlays */}
+        {/* Gradient mesh overlay */}
         <div 
-          className="absolute inset-0 mix-blend-overlay"
+          className="absolute inset-0"
           style={{ 
-            background: `linear-gradient(135deg, ${config.primaryColor}40 0%, transparent 50%, ${config.accentColor}30 100%)` 
+            background: `
+              radial-gradient(ellipse at 20% 20%, ${config.primaryColor}30 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 80%, ${config.accentColor}25 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 50%, ${config.secondaryColor}15 0%, transparent 70%)
+            `
           }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
-        
-        {/* Animated Floating Elements */}
-        <div 
-          className="absolute top-32 right-20 w-80 h-80 rounded-full blur-[100px] animate-pulse"
-          style={{ backgroundColor: config.primaryColor, opacity: 0.3 }}
-        />
-        <div 
-          className="absolute bottom-32 left-20 w-96 h-96 rounded-full blur-[120px] animate-pulse"
-          style={{ backgroundColor: config.accentColor, opacity: 0.2, animationDelay: '2s' }}
-        />
-        <div 
-          className="absolute top-1/2 left-1/4 w-64 h-64 rounded-full blur-[80px] animate-pulse"
-          style={{ backgroundColor: config.secondaryColor, opacity: 0.15, animationDelay: '4s' }}
         />
 
-        {/* Floating Image Cards */}
-        <div 
-          className="absolute top-40 right-10 md:right-20 w-32 md:w-48 h-40 md:h-60 rounded-2xl overflow-hidden shadow-2xl border border-white/20 animate-fade-in hidden lg:block"
-          style={{ 
-            animationDelay: '0.5s',
-            transform: `translateY(${scrollY * -0.1}px) rotate(6deg)`,
-          }}
-        >
-          <img src={galleryImages[0]} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
+        {/* Animated floating shapes */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {/* Large blob top-right */}
+          <div 
+            className={`absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full blur-3xl opacity-30 ${themeConfig.shapeColor}`}
+            style={{ 
+              backgroundColor: config.primaryColor,
+              transform: `translateY(${scrollY * 0.2}px) rotate(${scrollY * 0.02}deg)`,
+              animation: 'pulse 8s ease-in-out infinite'
+            }}
+          />
+          {/* Medium blob bottom-left */}
+          <div 
+            className={`absolute -bottom-20 -left-20 w-[400px] h-[400px] rounded-full blur-3xl opacity-20`}
+            style={{ 
+              backgroundColor: config.accentColor,
+              transform: `translateY(${scrollY * -0.15}px)`,
+              animation: 'pulse 6s ease-in-out infinite 2s'
+            }}
+          />
+          {/* Small accent shapes */}
+          {theme === "futuriste" && (
+            <>
+              <div 
+                className="absolute top-1/4 left-1/4 w-2 h-2 rounded-full bg-indigo-400 animate-ping"
+                style={{ animationDuration: '3s' }}
+              />
+              <div 
+                className="absolute top-1/3 right-1/3 w-1 h-1 rounded-full bg-purple-400 animate-ping"
+                style={{ animationDuration: '2.5s', animationDelay: '1s' }}
+              />
+              <div 
+                className="absolute bottom-1/3 left-1/3 w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"
+                style={{ animationDuration: '4s', animationDelay: '0.5s' }}
+              />
+            </>
+          )}
         </div>
-        <div 
-          className="absolute bottom-40 left-10 md:left-20 w-28 md:w-40 h-36 md:h-52 rounded-2xl overflow-hidden shadow-2xl border border-white/20 animate-fade-in hidden lg:block"
-          style={{ 
-            animationDelay: '0.7s',
-            transform: `translateY(${scrollY * -0.15}px) rotate(-8deg)`,
-          }}
-        >
-          <img src={galleryImages[1]} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
-        </div>
-        <div 
-          className="absolute top-60 left-32 w-24 md:w-32 h-32 md:h-40 rounded-2xl overflow-hidden shadow-2xl border border-white/20 animate-fade-in hidden xl:block"
-          style={{ 
-            animationDelay: '0.9s',
-            transform: `translateY(${scrollY * -0.2}px) rotate(12deg)`,
-          }}
-        >
-          <img src={galleryImages[2]} alt="" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent" />
+
+        {/* Floating gallery cards - Desktop only */}
+        <div className="absolute inset-0 hidden xl:block pointer-events-none">
+          <div 
+            className="absolute top-32 right-16 w-48 h-64 rounded-2xl overflow-hidden shadow-2xl border border-white/20"
+            style={{ 
+              transform: `translateY(${scrollY * -0.2}px) rotate(6deg)`,
+              opacity: Math.max(0, 1 - scrollY / 500)
+            }}
+          >
+            <img src={galleryImages[0]} alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          </div>
+          <div 
+            className="absolute bottom-48 left-16 w-40 h-52 rounded-2xl overflow-hidden shadow-2xl border border-white/20"
+            style={{ 
+              transform: `translateY(${scrollY * -0.15}px) rotate(-8deg)`,
+              opacity: Math.max(0, 1 - scrollY / 600)
+            }}
+          >
+            <img src={galleryImages[1]} alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+          </div>
         </div>
 
         {/* Hero Content */}
-        <div className="container mx-auto px-4 pt-32 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Animated Badge */}
+        <div className="relative z-10 container mx-auto px-4 pt-32 pb-20">
+          <div className="max-w-5xl mx-auto text-center">
+            {/* Animated badge */}
             <div 
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full mb-8 animate-fade-in border border-white/20 shadow-2xl"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 animate-fade-in backdrop-blur-sm"
               style={{ 
-                background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
+                background: `linear-gradient(135deg, ${config.primaryColor}90, ${config.accentColor}90)`,
+                boxShadow: theme === "futuriste" ? `0 0 40px ${config.primaryColor}50` : undefined
               }}
             >
-              <Sparkles className="w-5 h-5 text-white animate-pulse" />
-              <span className="text-white font-semibold">Réservation en ligne instantanée</span>
-              <Sparkles className="w-5 h-5 text-white animate-pulse" />
+              <Sparkles className="w-4 h-4 text-white" />
+              <span className="text-white font-medium text-sm">Réservation en ligne instantanée</span>
             </div>
 
-            {/* Main Title */}
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-none tracking-tight">
-              <span 
-                className="block animate-fade-in text-white"
-                style={{ animationDelay: '0.1s' }}
-              >
-                Réservez votre
-              </span>
-              <span 
-                className="block animate-fade-in bg-clip-text text-transparent py-2"
-                style={{ 
-                  animationDelay: '0.2s',
-                  backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor}, ${config.secondaryColor})`,
-                }}
-              >
-                rendez-vous
-              </span>
-              <span 
-                className="block animate-fade-in text-white"
-                style={{ animationDelay: '0.3s' }}
-              >
-                en quelques clics
-              </span>
+            {/* Main headline with line breaks */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[0.9] tracking-tight">
+              {currentTitles.heroTitle.split('\n').map((line, i) => (
+                <span 
+                  key={i}
+                  className={`block animate-fade-in ${
+                    i === 1 
+                      ? 'bg-clip-text text-transparent' 
+                      : theme === "moderne" ? 'text-slate-900' : 'text-white'
+                  }`}
+                  style={{ 
+                    animationDelay: `${i * 0.15}s`,
+                    ...(i === 1 && { backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` })
+                  }}
+                >
+                  {line}
+                </span>
+              ))}
             </h1>
 
             {/* Subtitle */}
             <p 
-              className="text-xl md:text-2xl text-slate-300 mb-12 max-w-2xl mx-auto animate-fade-in leading-relaxed"
-              style={{ animationDelay: '0.4s' }}
+              className={`text-xl md:text-2xl mb-12 max-w-2xl mx-auto animate-fade-in ${
+                theme === "moderne" ? 'text-slate-600' : 'text-white/80'
+              }`}
+              style={{ animationDelay: '0.3s' }}
             >
-              Système de réservation simple et rapide. 
-              <span className="text-white font-semibold"> Choisissez votre créneau</span> et 
-              <span className="text-white font-semibold"> confirmez instantanément.</span>
+              {currentTitles.heroSubtitle}
             </p>
 
-            {/* Feature Pills */}
-            <div 
-              className="flex items-center justify-center gap-3 md:gap-6 flex-wrap mb-12 animate-fade-in"
-              style={{ animationDelay: '0.5s' }}
-            >
-              {[
-                { icon: Zap, text: "Temps réel" },
-                { icon: CheckCircle2, text: "Confirmation instantanée" },
-                { icon: Bell, text: "Rappels auto" },
-              ].map((feature, i) => (
-                <div 
-                  key={i}
-                  className="flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 transition-all duration-500 hover:bg-white/20 hover:scale-110 cursor-pointer group"
-                >
-                  <feature.icon 
-                    className="w-5 h-5 transition-transform group-hover:rotate-12" 
-                    style={{ color: config.accentColor }}
-                  />
-                  <span className="text-white font-medium">{feature.text}</span>
-                </div>
-              ))}
-            </div>
-
             {/* CTA Buttons */}
-            <div 
-              className="flex items-center justify-center gap-4 animate-fade-in"
-              style={{ animationDelay: '0.6s' }}
-            >
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
               <Button 
                 size="lg"
-                className="text-lg px-10 py-7 rounded-2xl shadow-2xl transition-all duration-500 hover:scale-110 group text-white"
-                style={{ 
-                  background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                  boxShadow: `0 25px 50px ${config.primaryColor}50`
-                }}
+                className={`rounded-full px-8 py-6 text-lg font-semibold text-white group ${themeConfig.buttonStyle}`}
+                style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
               >
-                <Calendar className="w-6 h-6 mr-2" />
-                Réserver maintenant
-                <ArrowRight className="w-6 h-6 ml-2 transition-transform group-hover:translate-x-2" />
+                <Calendar className="w-5 h-5 mr-2" />
+                Prendre rendez-vous
+                <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button 
                 size="lg"
                 variant="outline"
-                className="text-lg px-8 py-7 rounded-2xl border-2 border-white/30 bg-white/5 backdrop-blur-sm text-white hover:bg-white/10 hover:border-white/50 transition-all duration-300"
+                className={`rounded-full px-8 py-6 text-lg font-semibold ${
+                  theme === "moderne" 
+                    ? 'border-slate-300 text-slate-700 hover:bg-slate-100' 
+                    : 'border-white/30 text-white hover:bg-white/10'
+                }`}
               >
                 <Play className="w-5 h-5 mr-2" />
                 Voir la vidéo
               </Button>
             </div>
+
+            {/* Scroll indicator */}
+            <div 
+              className={`absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce ${
+                theme === "moderne" ? 'text-slate-400' : 'text-white/50'
+              }`}
+            >
+              <ChevronDown className="w-8 h-8" />
+            </div>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-8 h-14 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
-            <div 
-              className="w-2 h-4 rounded-full animate-pulse"
-              style={{ backgroundColor: config.primaryColor }}
+        {/* Wave divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" className="w-full h-auto">
+            <path 
+              className={themeConfig.dividerColor}
+              d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,69.3C960,85,1056,107,1152,101.3C1248,96,1344,64,1392,48L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"
             />
-          </div>
+          </svg>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 relative overflow-hidden bg-slate-900/50">
+      {/* ═══════════════════════════════════════════════════════════════
+          STATS SECTION - Animated counters with icons
+      ═══════════════════════════════════════════════════════════════ */}
+      <section ref={statsRef} className={`py-20 ${themeConfig.pageBg}`}>
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-            {stats.map((stat, i) => (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+            {stats.map((stat, index) => (
               <div 
-                key={i}
-                className="text-center p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm animate-fade-in transition-all duration-500 hover:bg-white/10 hover:scale-105"
-                style={{ animationDelay: `${i * 100}ms` }}
+                key={index}
+                className={`text-center p-6 rounded-3xl ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-500`}
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <stat.icon 
-                  className="w-8 h-8 mx-auto mb-3"
-                  style={{ color: config.accentColor }}
-                />
                 <div 
-                  className="text-4xl font-black mb-1"
-                  style={{ color: config.primaryColor }}
+                  className="w-16 h-16 rounded-2xl mx-auto mb-4 flex items-center justify-center"
+                  style={{ background: `linear-gradient(135deg, ${config.primaryColor}20, ${config.accentColor}20)` }}
                 >
-                  {stat.value}
+                  <stat.icon className="w-8 h-8" style={{ color: config.primaryColor }} />
                 </div>
-                <div className="text-slate-400 text-sm">{stat.label}</div>
+                <div className={`text-4xl lg:text-5xl font-black mb-2 ${themeConfig.textPrimary}`}>
+                  {stat.value}{stat.suffix}
+                </div>
+                <div className={themeConfig.textSecondary}>{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Services Section - Premium Design */}
-      <section id="services" className="py-32 relative overflow-hidden">
-        {/* Background Elements */}
-        <div 
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full blur-[200px] opacity-10"
-          style={{ backgroundColor: config.primaryColor }}
-        />
-        <div 
-          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[150px] opacity-10"
-          style={{ backgroundColor: config.accentColor }}
-        />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-20">
-            <div 
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8 border border-white/10"
-              style={{ 
-                background: `linear-gradient(135deg, ${config.primaryColor}15, ${config.accentColor}15)`,
-              }}
-            >
-              <Sparkles className="w-4 h-4" style={{ color: config.accentColor }} />
-              <span className="text-sm font-medium" style={{ color: config.accentColor }}>{currentTitles.badge}</span>
-            </div>
-            <h2 className="text-5xl md:text-7xl font-black mb-8 text-white tracking-tight">
-              {currentTitles.title.split(' ').slice(0, -1).join(' ')}{" "}
-              <span 
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-              >
-                {currentTitles.title.split(' ').slice(-1)[0]}
-              </span>
+      {/* ═══════════════════════════════════════════════════════════════
+          SERVICES SECTION - Premium cards with hover effects
+      ═══════════════════════════════════════════════════════════════ */}
+      <section id="services" className={`py-24 ${themeConfig.sectionBg}`}>
+        {/* Section header */}
+        <div className="container mx-auto px-4 mb-16">
+          <div className="text-center max-w-3xl mx-auto">
+            <Badge className={`mb-4 ${themeConfig.badgeStyle}`}>
+              {currentTitles.badge}
+            </Badge>
+            <h2 className={`text-4xl md:text-5xl font-black mb-6 ${themeConfig.textPrimary}`}>
+              {currentTitles.title.split(' ').slice(0, -1).join(' ')}{' '}
+              <span style={{ color: config.primaryColor }}>{currentTitles.title.split(' ').slice(-1)}</span>
             </h2>
-            <p className="text-slate-400 text-xl max-w-2xl mx-auto leading-relaxed">
+            <p className={`text-xl ${themeConfig.textSecondary}`}>
               {currentTitles.subtitle}
             </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-            {availableServices.map((service, i) => (
-              <div
-                key={i}
-                className={`relative group animate-fade-in ${
-                  service.popular ? 'md:-translate-y-6' : ''
-                }`}
-                style={{ animationDelay: `${i * 150}ms` }}
-              >
-                {/* Card */}
-                <div 
-                  className={`relative rounded-3xl overflow-hidden transition-all duration-700 ${
-                    service.popular 
-                      ? 'shadow-[0_25px_80px_-15px_rgba(0,0,0,0.5)]' 
-                      : 'hover:shadow-[0_25px_80px_-15px_rgba(0,0,0,0.4)]'
-                  }`}
-                  style={{
-                    background: 'linear-gradient(180deg, rgba(30,30,40,0.9) 0%, rgba(15,15,25,0.95) 100%)',
-                  }}
-                >
-                  {/* Gradient Border Effect */}
-                  <div 
-                    className={`absolute inset-0 rounded-3xl transition-opacity duration-500 ${
-                      service.popular ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                    }`}
-                    style={{
-                      background: `linear-gradient(135deg, ${config.primaryColor}40, transparent, ${config.accentColor}40)`,
-                      padding: '1px',
-                    }}
-                  />
-                  
-                  {/* Inner Content */}
-                  <div className="relative">
-                    {/* Image Container */}
-                    <div className="relative h-56 overflow-hidden">
-                      <img 
-                        src={service.image} 
-                        alt={service.name}
-                        className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
-                      />
-                      
-                      {/* Overlay Gradient */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-slate-950/20" />
-                      
-                      {/* Popular Badge */}
-                      {service.popular && (
-                        <div 
-                          className="absolute top-5 right-5 px-4 py-2 rounded-full text-white text-sm font-bold shadow-2xl flex items-center gap-2 backdrop-blur-sm"
-                          style={{ 
-                            background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                            boxShadow: `0 10px 30px ${config.primaryColor}50`
-                          }}
-                        >
-                          <Star className="w-4 h-4 fill-white" />
-                          Populaire
-                        </div>
-                      )}
-                      
-                      {/* Price - Glassmorphism Style */}
-                      <div className="absolute bottom-5 left-5">
-                        <div 
-                          className="px-5 py-3 rounded-2xl backdrop-blur-xl border border-white/20"
-                          style={{ 
-                            background: 'rgba(255,255,255,0.1)',
-                          }}
-                        >
-                          <span className="text-3xl font-black text-white tracking-tight">
-                            {service.price}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-7">
-                      {/* Service Name with animated underline */}
-                      <div className="mb-4">
-                        <h3 className="text-2xl font-bold text-white mb-2 transition-all duration-300 group-hover:tracking-wide">
-                          {service.name}
-                        </h3>
-                        <div 
-                          className="h-1 rounded-full transition-all duration-500 group-hover:w-full"
-                          style={{ 
-                            width: service.popular ? '100%' : '40%',
-                            background: `linear-gradient(90deg, ${config.primaryColor}, ${config.accentColor})`,
-                          }}
-                        />
-                      </div>
-
-                      {/* Duration */}
-                      <div className="flex items-center gap-3 mb-7">
-                        <div 
-                          className="w-10 h-10 rounded-xl flex items-center justify-center"
-                          style={{ backgroundColor: `${config.primaryColor}20` }}
-                        >
-                          <Clock className="w-5 h-5" style={{ color: config.primaryColor }} />
-                        </div>
-                        <div>
-                          <p className="text-slate-500 text-xs uppercase tracking-wider">{currentTitles.duration}</p>
-                          <p className="text-white font-semibold">{service.duration}</p>
-                        </div>
-                      </div>
-
-                      {/* Button */}
-                      <Button 
-                        className={`w-full rounded-2xl py-7 text-base font-bold transition-all duration-500 group-hover:shadow-2xl ${
-                          service.popular ? 'text-white' : 'text-white hover:text-white'
-                        }`}
-                        style={{ 
-                          background: service.popular 
-                            ? `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`
-                            : 'rgba(255,255,255,0.08)',
-                          boxShadow: service.popular ? `0 15px 40px ${config.primaryColor}40` : undefined,
-                        }}
-                      >
-                        <span>Réserver ce service</span>
-                        <ArrowRight className="w-5 h-5 ml-2 transition-transform duration-500 group-hover:translate-x-2" />
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Decorative glow under popular card */}
-                {service.popular && (
-                  <div 
-                    className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-8 blur-2xl rounded-full"
-                    style={{ backgroundColor: config.primaryColor, opacity: 0.4 }}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
         </div>
-      </section>
 
-      {/* Gallery Section */}
-      <section className="py-24 relative overflow-hidden">
+        {/* Services grid */}
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
-              Nos{" "}
-              <span 
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-              >
-                installations
-              </span>
-            </h2>
-          </div>
-          
-          {/* Marquee Gallery */}
-          <div className="relative overflow-hidden">
-            <div className="flex gap-6 animate-[marquee_30s_linear_infinite]">
-              {[...galleryImages, ...galleryImages].map((img, i) => (
-                <div 
-                  key={i}
-                  className="flex-shrink-0 w-80 h-56 rounded-2xl overflow-hidden shadow-2xl border border-white/10 transition-transform duration-500 hover:scale-105"
-                >
-                  <img src={img} alt="" className="w-full h-full object-cover" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Booking Form Section */}
-      <section id="reservation" className="py-24 relative overflow-hidden">
-        {/* Background Pattern */}
-        <div 
-          className="absolute inset-0 opacity-5"
-          style={{ 
-            backgroundImage: `radial-gradient(${config.primaryColor} 1px, transparent 1px)`,
-            backgroundSize: '40px 40px'
-          }}
-        />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-5xl mx-auto">
-            <Card className="p-8 md:p-12 bg-slate-900/80 backdrop-blur-xl border-white/10 shadow-2xl rounded-3xl overflow-hidden relative">
-              {/* Gradient Border */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {availableServices.map((service, index) => (
               <div 
-                className="absolute inset-0 rounded-3xl opacity-30 pointer-events-none"
-                style={{ 
-                  background: `linear-gradient(135deg, ${config.primaryColor}50, transparent 50%, ${config.accentColor}50)`,
-                }}
-              />
-              
-              <div className="relative z-10">
-                <div className="text-center mb-12">
-                  <Badge 
-                    className="mb-6 px-6 py-2 border-0"
-                    style={{ 
-                      background: `linear-gradient(135deg, ${config.primaryColor}30, ${config.accentColor}30)`,
-                      color: config.accentColor 
-                    }}
-                  >
-                    <Calendar className="w-4 h-4 mr-2" />
-                    Étape 1 sur 2
-                  </Badge>
-                  <h2 className="text-3xl md:text-5xl font-black mb-4 text-white">
-                    Choisissez votre{" "}
-                    <span 
-                      className="bg-clip-text text-transparent"
-                      style={{ backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                key={index}
+                className={`group relative rounded-3xl overflow-hidden ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-500`}
+              >
+                {/* Service image */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={service.image} 
+                    alt={service.name}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  
+                  {/* Popular badge */}
+                  {service.popular && (
+                    <div 
+                      className="absolute top-4 right-4 px-3 py-1 rounded-full text-white text-xs font-bold"
+                      style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                     >
-                      créneau
-                    </span>
-                  </h2>
-                  <p className="text-slate-400 text-lg">Sélectionnez une date et un horaire qui vous conviennent</p>
+                      Populaire
+                    </div>
+                  )}
+
+                  {/* Price overlay */}
+                  <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
+                    <span className="text-white text-2xl font-black">{service.price}</span>
+                    <span className="text-white/70 text-sm">{service.duration}</span>
+                  </div>
                 </div>
 
-                <div className="space-y-10">
-                  {/* Date Selection */}
-                  <div>
-                    <label className="block text-sm font-bold mb-4 text-white flex items-center gap-2">
-                      <Calendar className="w-5 h-5" style={{ color: config.primaryColor }} />
-                      Sélectionner une date
-                    </label>
-                    <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
-                      {Array.from({ length: 7 }, (_, i) => {
-                        const date = new Date();
-                        date.setDate(date.getDate() + i);
-                        const day = date.toLocaleDateString("fr-FR", { weekday: "short" });
-                        const num = date.getDate();
-                        const month = date.toLocaleDateString("fr-FR", { month: "short" });
-                        const isSelected = selectedDate === date.toISOString();
-                        
-                        return (
-                          <button
-                            key={i}
-                            onClick={() => setSelectedDate(date.toISOString())}
-                            className={`p-4 rounded-2xl text-center transition-all duration-500 ${
-                              isSelected
-                                ? "shadow-2xl scale-105"
-                                : "bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20"
-                            }`}
-                            style={
-                              isSelected
-                                ? { 
-                                    background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                                    boxShadow: `0 15px 40px ${config.primaryColor}50`
-                                  }
-                                : {}
-                            }
-                          >
-                            <div className={`text-xs capitalize ${isSelected ? 'text-white/80' : 'text-slate-500'}`}>{day}</div>
-                            <div className={`text-2xl font-black ${isSelected ? 'text-white' : 'text-white'}`}>{num}</div>
-                            <div className={`text-xs capitalize ${isSelected ? 'text-white/80' : 'text-slate-500'}`}>{month}</div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Time Slots */}
-                  <div>
-                    <label className="block text-sm font-bold mb-4 text-white flex items-center gap-2">
-                      <Clock className="w-5 h-5" style={{ color: config.primaryColor }} />
-                      Sélectionner un horaire
-                    </label>
-                    <div className="grid grid-cols-4 gap-3">
-                      {timeSlots.map((slot, i) => {
-                        const isSelected = selectedTime === slot.time;
-                        
-                        return (
-                          <button
-                            key={i}
-                            disabled={!slot.available}
-                            onClick={() => slot.available && setSelectedTime(slot.time)}
-                            className={`p-4 rounded-2xl text-center transition-all duration-500 font-bold ${
-                              !slot.available 
-                                ? "bg-white/5 text-slate-600 cursor-not-allowed line-through"
-                                : isSelected
-                                  ? "shadow-2xl scale-105"
-                                  : "bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 text-white"
-                            }`}
-                            style={
-                              isSelected && slot.available
-                                ? { 
-                                    background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                                    boxShadow: `0 15px 40px ${config.primaryColor}50`
-                                  }
-                                : {}
-                            }
-                          >
-                            {slot.time}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Contact Form */}
-                  <div className="grid md:grid-cols-2 gap-6 pt-6 border-t border-white/10">
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-white">Nom complet</label>
-                      <input
-                        type="text"
-                        className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500 focus:ring-2 focus:border-transparent transition-all focus:outline-none"
-                        placeholder="Jean Dupont"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-white">Email</label>
-                      <input
-                        type="email"
-                        className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500 focus:ring-2 focus:border-transparent transition-all"
-                        placeholder="jean@exemple.fr"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-white">Téléphone</label>
-                      <input
-                        type="tel"
-                        className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500 focus:ring-2 focus:border-transparent transition-all"
-                        placeholder="+1 514 123 4567"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="block text-sm font-bold text-white">Nombre de personnes</label>
-                      <select className="w-full px-5 py-4 rounded-xl border border-white/10 bg-white/5 text-white focus:ring-2 focus:border-transparent transition-all">
-                        <option className="bg-slate-900">1 personne</option>
-                        <option className="bg-slate-900">2 personnes</option>
-                        <option className="bg-slate-900">3 personnes</option>
-                        <option className="bg-slate-900">4+ personnes</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <Button
-                    size="lg"
-                    className="w-full py-8 text-xl rounded-2xl shadow-2xl transition-all duration-500 hover:scale-[1.02] group font-bold text-white"
-                    style={{ 
-                      background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
-                      boxShadow: `0 25px 50px ${config.primaryColor}40`
-                    }}
+                {/* Service content */}
+                <div className="p-6">
+                  <h3 className={`text-xl font-bold mb-2 ${themeConfig.textPrimary}`}>
+                    {service.name}
+                  </h3>
+                  <p className={`mb-6 ${themeConfig.textSecondary}`}>
+                    {service.description}
+                  </p>
+                  <Button 
+                    className="w-full rounded-xl text-white group-hover:scale-105 transition-transform"
+                    style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                   >
-                    <CheckCircle2 className="w-6 h-6 mr-3" />
-                    Confirmer la réservation
-                    <ArrowRight className="w-6 h-6 ml-3 transition-transform group-hover:translate-x-2" />
+                    Réserver
+                    <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
               </div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="py-24 relative overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              { 
-                icon: Zap, 
-                title: "Disponibilité en Direct", 
-                description: "Consultez les créneaux disponibles en temps réel, mis à jour instantanément",
-                image: galleryImages[0]
-              },
-              { 
-                icon: CheckCircle2, 
-                title: "Confirmation Immédiate", 
-                description: "Recevez votre confirmation par email et SMS dès que votre réservation est validée",
-                image: galleryImages[1]
-              },
-              { 
-                icon: Bell, 
-                title: "Rappels Automatiques", 
-                description: "Notifications personnalisées 24h et 1h avant votre rendez-vous",
-                image: galleryImages[2]
-              },
-            ].map((feature, i) => (
-              <Card 
-                key={i} 
-                className="overflow-hidden transition-all duration-700 hover:-translate-y-4 hover:shadow-2xl group animate-fade-in bg-slate-900/50 border-white/10"
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                {/* Image */}
-                <div className="relative h-40 overflow-hidden">
-                  <img 
-                    src={feature.image} 
-                    alt={feature.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent" />
-                  <div
-                    className="absolute bottom-4 left-4 w-14 h-14 rounded-2xl flex items-center justify-center shadow-xl"
-                    style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-                  >
-                    <feature.icon className="w-7 h-7 text-white" />
-                  </div>
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="font-bold text-xl mb-3 text-white">{feature.title}</h3>
-                  <p className="text-slate-400 leading-relaxed">{feature.description}</p>
-                </div>
-              </Card>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 relative overflow-hidden">
-        <div 
-          className="absolute inset-0 opacity-10"
-          style={{ 
-            background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` 
-          }}
-        />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
-              Ils nous font{" "}
-              <span 
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-              >
-                confiance
-              </span>
-            </h2>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {[
-              { name: "Marie L.", role: "Cliente régulière", rating: 5, avatar: "M" },
-              { name: "Thomas B.", role: "Nouveau client", rating: 5, avatar: "T" },
-              { name: "Sophie M.", role: "Cliente VIP", rating: 5, avatar: "S" },
-            ].map((review, i) => (
-              <Card 
-                key={i} 
-                className="p-8 transition-all duration-500 hover:-translate-y-4 hover:shadow-2xl animate-fade-in bg-slate-900/80 backdrop-blur-sm border-white/10"
-                style={{ animationDelay: `${i * 100}ms` }}
-              >
-                <div className="flex gap-1 mb-6">
-                  {[...Array(review.rating)].map((_, si) => (
-                    <Star 
-                      key={si} 
-                      className="w-6 h-6 fill-current" 
-                      style={{ color: config.accentColor }} 
-                    />
-                  ))}
-                </div>
-                <p className="text-slate-300 mb-6 leading-relaxed text-lg">
-                  "Système de réservation très simple et efficace. J'ai pu réserver mon rendez-vous en 2 minutes!"
-                </p>
+      {/* ═══════════════════════════════════════════════════════════════
+          BOOKING SECTION - Split layout with form
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={`py-24 ${themeConfig.pageBg}`}>
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            {/* Left side - Image with overlay */}
+            <div className="relative rounded-3xl overflow-hidden h-[500px] lg:h-[600px]">
+              <img 
+                src={galleryImages[2]} 
+                alt="Réservation"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-transparent" />
+              
+              {/* Floating info card */}
+              <div className={`absolute bottom-6 left-6 right-6 p-6 rounded-2xl ${
+                theme === "moderne" ? 'bg-white' : 'bg-white/10 backdrop-blur-xl border border-white/20'
+              }`}>
                 <div className="flex items-center gap-4">
                   <div 
-                    className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg"
+                    className="w-14 h-14 rounded-xl flex items-center justify-center"
                     style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                   >
-                    {review.avatar}
+                    <Calendar className="w-7 h-7 text-white" />
                   </div>
                   <div>
-                    <p className="font-bold text-white">{review.name}</p>
-                    <p className="text-sm text-slate-400">{review.role}</p>
+                    <div className={`font-bold ${theme === "moderne" ? 'text-slate-900' : 'text-white'}`}>
+                      Réservation instantanée
+                    </div>
+                    <div className={theme === "moderne" ? 'text-slate-600' : 'text-white/70'}>
+                      Confirmez votre rendez-vous en quelques clics
+                    </div>
                   </div>
                 </div>
-              </Card>
+              </div>
+            </div>
+
+            {/* Right side - Booking form */}
+            <div>
+              <Badge className={`mb-4 ${themeConfig.badgeStyle}`}>
+                Réservation
+              </Badge>
+              <h2 className={`text-4xl md:text-5xl font-black mb-6 ${themeConfig.textPrimary}`}>
+                Choisissez votre{' '}
+                <span style={{ color: config.primaryColor }}>créneau</span>
+              </h2>
+              <p className={`text-lg mb-8 ${themeConfig.textSecondary}`}>
+                Sélectionnez la date et l'heure qui vous conviennent le mieux. Notre équipe vous confirmera votre rendez-vous sous 24h.
+              </p>
+
+              {/* Date picker placeholder */}
+              <div className={`p-6 rounded-2xl mb-6 ${themeConfig.cardBg}`}>
+                <label className={`block text-sm font-medium mb-3 ${themeConfig.textPrimary}`}>
+                  Sélectionnez une date
+                </label>
+                <div className="grid grid-cols-7 gap-2">
+                  {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((day, i) => (
+                    <div key={i} className={`text-center text-xs font-medium py-2 ${themeConfig.textMuted}`}>
+                      {day}
+                    </div>
+                  ))}
+                  {Array.from({ length: 28 }, (_, i) => i + 1).map((day) => (
+                    <button
+                      key={day}
+                      onClick={() => setSelectedDate(String(day))}
+                      className={`p-2 rounded-lg text-sm font-medium transition-all ${
+                        selectedDate === String(day)
+                          ? 'text-white'
+                          : day === 15 || day === 22
+                          ? `${themeConfig.textMuted} cursor-not-allowed opacity-50`
+                          : `${themeConfig.textSecondary} hover:bg-white/10`
+                      }`}
+                      style={selectedDate === String(day) ? { background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` } : {}}
+                      disabled={day === 15 || day === 22}
+                    >
+                      {day}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Time slots */}
+              <div className={`p-6 rounded-2xl mb-6 ${themeConfig.cardBg}`}>
+                <label className={`block text-sm font-medium mb-3 ${themeConfig.textPrimary}`}>
+                  Horaire disponible
+                </label>
+                <div className="grid grid-cols-4 gap-3">
+                  {timeSlots.map((slot) => (
+                    <button
+                      key={slot.time}
+                      onClick={() => slot.available && setSelectedTime(slot.time)}
+                      className={`p-3 rounded-xl text-sm font-medium transition-all ${
+                        selectedTime === slot.time
+                          ? 'text-white'
+                          : !slot.available
+                          ? `${themeConfig.textMuted} cursor-not-allowed opacity-50 line-through`
+                          : `${themeConfig.textSecondary} hover:bg-white/10 ${theme === "moderne" ? 'bg-slate-100' : 'bg-white/5'}`
+                      }`}
+                      style={selectedTime === slot.time ? { background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` } : {}}
+                      disabled={!slot.available}
+                    >
+                      {slot.time}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA */}
+              <Button 
+                size="lg"
+                className={`w-full rounded-xl text-white py-6 text-lg font-semibold ${themeConfig.buttonStyle}`}
+                style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+              >
+                Confirmer la réservation
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          TESTIMONIALS SECTION - Modern carousel style
+      ═══════════════════════════════════════════════════════════════ */}
+      <section id="témoignages" className={`py-24 ${themeConfig.sectionBg}`}>
+        <div className="container mx-auto px-4">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <Badge className={`mb-4 ${themeConfig.badgeStyle}`}>
+              Témoignages
+            </Badge>
+            <h2 className={`text-4xl md:text-5xl font-black mb-6 ${themeConfig.textPrimary}`}>
+              Ce que disent{' '}
+              <span style={{ color: config.primaryColor }}>nos clients</span>
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div 
+                key={index}
+                className={`relative p-8 rounded-3xl ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-500`}
+              >
+                {/* Quote icon */}
+                <div 
+                  className="absolute -top-4 left-8 w-10 h-10 rounded-xl flex items-center justify-center"
+                  style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                >
+                  <Quote className="w-5 h-5 text-white" />
+                </div>
+
+                {/* Stars */}
+                <div className="flex gap-1 mb-6 mt-4">
+                  {Array.from({ length: testimonial.rating }).map((_, i) => (
+                    <Star key={i} className="w-5 h-5 fill-current" style={{ color: config.accentColor }} />
+                  ))}
+                </div>
+
+                {/* Quote text */}
+                <p className={`text-lg mb-6 ${themeConfig.textSecondary}`}>
+                  "{testimonial.text}"
+                </p>
+
+                {/* Author */}
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold"
+                    style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                  >
+                    {testimonial.name.split(' ').map(n => n[0]).join('')}
+                  </div>
+                  <div>
+                    <div className={`font-bold ${themeConfig.textPrimary}`}>{testimonial.name}</div>
+                    <div className={themeConfig.textMuted}>{testimonial.role}</div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
+      {/* ═══════════════════════════════════════════════════════════════
+          CTA SECTION - Bold final call to action
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="relative py-32 overflow-hidden">
+        {/* Background with parallax */}
         <div 
           className="absolute inset-0"
           style={{ 
-            background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` 
+            backgroundImage: `url(${galleryImages[3]})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
           }}
         />
         <div 
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0"
           style={{ 
-            backgroundImage: `radial-gradient(white 2px, transparent 2px)`,
-            backgroundSize: '40px 40px'
+            background: `linear-gradient(135deg, ${config.primaryColor}E0 0%, ${config.accentColor}D0 100%)`
           }}
         />
-        
-        {/* Floating Images */}
-        <div className="absolute top-10 left-10 w-32 h-40 rounded-2xl overflow-hidden rotate-[-12deg] shadow-2xl opacity-40 hidden lg:block">
-          <img src={galleryImages[0]} alt="" className="w-full h-full object-cover" />
-        </div>
-        <div className="absolute bottom-10 right-10 w-40 h-48 rounded-2xl overflow-hidden rotate-[8deg] shadow-2xl opacity-40 hidden lg:block">
-          <img src={galleryImages[1]} alt="" className="w-full h-full object-cover" />
-        </div>
-        
-        <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-8">
-            Prêt à réserver ?
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-6xl font-black text-white mb-6">
+            Prêt à nous rejoindre ?
           </h2>
-          <p className="text-white/90 text-xl md:text-2xl mb-12 max-w-2xl mx-auto">
-            Réservez votre créneau en quelques clics et recevez une confirmation instantanée
+          <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+            Réservez dès maintenant et profitez d'une expérience exceptionnelle avec notre équipe de professionnels.
           </p>
-          <Button 
-            size="lg"
-            className="bg-white text-xl px-12 py-8 rounded-2xl shadow-2xl transition-all duration-500 hover:scale-110 hover:shadow-xl font-bold"
-            style={{ color: config.primaryColor }}
-          >
-            <Calendar className="w-6 h-6 mr-3" />
-            Réserver maintenant
-            <ArrowRight className="w-6 h-6 ml-3" />
-          </Button>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button 
+              size="lg"
+              className="rounded-full px-10 py-6 text-lg font-semibold bg-white hover:bg-white/90 shadow-xl"
+              style={{ color: config.primaryColor }}
+            >
+              <Calendar className="w-5 h-5 mr-2" />
+              Réserver maintenant
+            </Button>
+            <Button 
+              size="lg"
+              variant="outline"
+              className="rounded-full px-10 py-6 text-lg font-semibold border-2 border-white text-white hover:bg-white/10"
+            >
+              <Phone className="w-5 h-5 mr-2" />
+              Nous contacter
+            </Button>
+          </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-white/10 py-16 bg-slate-950">
+      {/* ═══════════════════════════════════════════════════════════════
+          FOOTER
+      ═══════════════════════════════════════════════════════════════ */}
+      <footer className={`py-16 ${theme === "moderne" ? 'bg-slate-900' : themeConfig.pageBg}`}>
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-12 mb-12">
-            <div>
+            {/* Brand */}
+            <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                {config.logo && (
-                  <img src={config.logo} alt="Logo" className="h-12 w-auto object-contain" />
+                {config.logo ? (
+                  <img src={config.logo} alt="Logo" className="h-10 w-auto object-contain" />
+                ) : (
+                  <div 
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
+                    style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                  >
+                    {config.companyName.charAt(0)}
+                  </div>
                 )}
                 <span className="font-bold text-xl text-white">{config.companyName}</span>
               </div>
-              <p className="text-slate-400 mb-6">Réservation en ligne simplifiée pour une expérience client exceptionnelle.</p>
-            </div>
-            <div>
-              <h4 className="font-bold mb-6 text-white">Services</h4>
-              <ul className="space-y-3 text-slate-400">
-                <li><a href="#" className="hover:text-white transition-colors">Nos prestations</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Tarifs</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-6 text-white">Contact</h4>
-              <ul className="space-y-3 text-slate-400">
-                <li className="flex items-center gap-2">
-                  <Mail className="w-4 h-4" style={{ color: config.primaryColor }} />
-                  contact@example.com
-                </li>
-                <li className="flex items-center gap-2">
-                  <Phone className="w-4 h-4" style={{ color: config.primaryColor }} />
-                  +1 514 123 4567
-                </li>
-                <li className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4" style={{ color: config.primaryColor }} />
-                  123 Rue Exemple, Montréal
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-bold mb-6 text-white">Newsletter</h4>
-              <p className="text-slate-400 mb-4">Restez informé de nos actualités</p>
-              <div className="flex gap-2">
-                <input 
-                  type="email" 
-                  placeholder="Votre email" 
-                  className="flex-1 px-4 py-3 rounded-xl border border-white/10 bg-white/5 text-white placeholder-slate-500"
-                />
-                <Button 
-                  className="rounded-xl text-white"
-                  style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
-                >
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
+              <p className="text-slate-400 mb-6 max-w-md">
+                Votre partenaire de confiance pour une expérience exceptionnelle. Réservez en ligne en quelques clics.
+              </p>
+              <div className="flex gap-4">
+                {['facebook', 'twitter', 'instagram', 'linkedin'].map((social) => (
+                  <a 
+                    key={social}
+                    href="#"
+                    className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                  >
+                    <span className="sr-only">{social}</span>
+                    <div className="w-5 h-5 bg-white/60 rounded" />
+                  </a>
+                ))}
               </div>
             </div>
+
+            {/* Links */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Navigation</h4>
+              <ul className="space-y-3">
+                {['Accueil', 'Services', 'À propos', 'Témoignages', 'Contact'].map((item) => (
+                  <li key={item}>
+                    <a href="#" className="text-slate-400 hover:text-white transition-colors">{item}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Contact</h4>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-3 text-slate-400">
+                  <Phone className="w-4 h-4" />
+                  <span>+1 (555) 123-4567</span>
+                </li>
+                <li className="flex items-center gap-3 text-slate-400">
+                  <Mail className="w-4 h-4" />
+                  <span>contact@{config.companyName.toLowerCase().replace(/\s+/g, '')}.com</span>
+                </li>
+                <li className="flex items-center gap-3 text-slate-400">
+                  <MapPin className="w-4 h-4" />
+                  <span>123 Rue Principale, Montréal</span>
+                </li>
+              </ul>
+            </div>
           </div>
-          
-          <div className="border-t border-white/10 pt-8 text-center text-sm text-slate-500">
-            <p>© 2024 {config.companyName}. Tous droits réservés.</p>
+
+          {/* Copyright */}
+          <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-slate-500 text-sm">
+              © 2024 {config.companyName}. Tous droits réservés.
+            </p>
+            <div className="flex gap-6 text-sm">
+              <a href="#" className="text-slate-500 hover:text-white transition-colors">Mentions légales</a>
+              <a href="#" className="text-slate-500 hover:text-white transition-colors">Confidentialité</a>
+              <a href="#" className="text-slate-500 hover:text-white transition-colors">CGV</a>
+            </div>
           </div>
         </div>
       </footer>
 
-      {/* Custom CSS for marquee animation */}
-      <style>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-      `}</style>
+      {/* Export/Share floating buttons */}
+      <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-40">
+        <Button 
+          size="icon"
+          onClick={handleShare}
+          className="w-12 h-12 rounded-full shadow-lg bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20"
+        >
+          <Share2 className="w-5 h-5" />
+        </Button>
+        <Button 
+          size="icon"
+          onClick={handleExport}
+          className={`w-12 h-12 rounded-full shadow-lg text-white ${themeConfig.buttonStyle}`}
+          style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+        >
+          <Download className="w-5 h-5" />
+        </Button>
+      </div>
     </div>
   );
 };
