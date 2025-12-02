@@ -413,7 +413,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       <Button 
         variant="ghost" 
         onClick={onBack} 
-        className="fixed top-24 left-4 z-40 bg-black/20 backdrop-blur-sm text-white hover:bg-black/40 rounded-full"
+        className="fixed top-6 left-6 z-50 bg-black/30 backdrop-blur-md text-white hover:bg-black/50 rounded-full shadow-lg"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Retour
