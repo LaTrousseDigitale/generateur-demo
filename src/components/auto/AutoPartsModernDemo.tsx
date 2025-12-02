@@ -18,6 +18,8 @@ import productAuto2 from "@/assets/product-auto-2.jpg";
 import productAuto3 from "@/assets/product-auto-3.jpg";
 import productAuto4 from "@/assets/product-auto-4.jpg";
 import heroAutoBanner from "@/assets/hero-auto-banner.png";
+import promoAutoPartsRed from "@/assets/promo-auto-parts-red.jpg";
+import promoAutoPartsDark from "@/assets/promo-auto-parts-dark.jpg";
 
 interface AutoPartsModernDemoProps {
   config: DemoConfig;
@@ -471,27 +473,18 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
           <div className="grid md:grid-cols-2 gap-6">
             <Card 
               className="relative overflow-hidden rounded-2xl p-8 text-white min-h-[200px]"
-              style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor || '#f97316'})` }}
             >
-              {/* Background auto parts pattern */}
-              <div className="absolute inset-0 opacity-10">
-                <svg className="absolute right-0 top-0 w-40 h-40 text-white" viewBox="0 0 100 100" fill="currentColor">
-                  <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="3" fill="none"/>
-                  <circle cx="50" cy="50" r="25" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <circle cx="50" cy="50" r="10" fill="currentColor"/>
-                  {/* Gear teeth */}
-                  {[...Array(8)].map((_, i) => (
-                    <rect key={i} x="47" y="5" width="6" height="12" fill="currentColor" transform={`rotate(${i * 45} 50 50)`}/>
-                  ))}
-                </svg>
-                <svg className="absolute left-10 bottom-5 w-24 h-24 text-white" viewBox="0 0 100 100" fill="currentColor">
-                  <ellipse cx="50" cy="50" rx="45" ry="45" stroke="currentColor" strokeWidth="8" fill="none"/>
-                  <ellipse cx="50" cy="50" rx="30" ry="30" stroke="currentColor" strokeWidth="4" fill="none"/>
-                  <circle cx="50" cy="50" r="8" fill="currentColor"/>
-                </svg>
-              </div>
-              <div className="absolute right-0 bottom-0 w-32 h-32 opacity-20">
-                <Car className="w-full h-full" />
+              {/* Background image with red auto parts */}
+              <div className="absolute inset-0">
+                <img 
+                  src={promoAutoPartsRed} 
+                  alt="Pièces automobiles" 
+                  className="w-full h-full object-cover"
+                />
+                <div 
+                  className="absolute inset-0" 
+                  style={{ background: `linear-gradient(135deg, ${config.primaryColor}cc, ${config.accentColor || '#f97316'}99)` }}
+                />
               </div>
               <div className="relative z-10">
                 <Badge className="bg-white/20 text-white mb-3">Nouvelles arrivages</Badge>
@@ -504,31 +497,18 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
             </Card>
             
             <Card 
-              className="relative overflow-hidden rounded-2xl p-8 text-white min-h-[200px] bg-slate-900"
+              className="relative overflow-hidden rounded-2xl p-8 text-white min-h-[200px]"
             >
-              {/* Background auto parts pattern with red accents */}
+              {/* Background image with dark auto parts */}
               <div className="absolute inset-0">
+                <img 
+                  src={promoAutoPartsDark} 
+                  alt="Pièces automobiles" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-slate-900/60" />
                 {/* Red accent glow */}
-                <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full opacity-20" style={{ backgroundColor: config.primaryColor, filter: 'blur(40px)' }}/>
-                <div className="absolute -left-5 -bottom-5 w-32 h-32 rounded-full opacity-15" style={{ backgroundColor: config.primaryColor, filter: 'blur(30px)' }}/>
-                {/* Brake disc pattern */}
-                <svg className="absolute right-5 bottom-5 w-36 h-36 opacity-10" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" stroke="#fff" strokeWidth="2" fill="none"/>
-                  <circle cx="50" cy="50" r="38" stroke="#fff" strokeWidth="1" fill="none"/>
-                  <circle cx="50" cy="50" r="20" stroke={config.primaryColor} strokeWidth="2" fill="none"/>
-                  <circle cx="50" cy="50" r="8" fill={config.primaryColor} opacity="0.5"/>
-                  {/* Ventilation holes */}
-                  {[...Array(6)].map((_, i) => (
-                    <circle key={i} cx={50 + 30 * Math.cos(i * Math.PI / 3)} cy={50 + 30 * Math.sin(i * Math.PI / 3)} r="4" fill="#fff"/>
-                  ))}
-                </svg>
-                {/* Piston pattern */}
-                <svg className="absolute left-8 top-8 w-20 h-20 opacity-10" viewBox="0 0 100 100">
-                  <rect x="30" y="10" width="40" height="60" rx="5" stroke="#fff" strokeWidth="2" fill="none"/>
-                  <rect x="35" y="70" width="30" height="20" stroke={config.primaryColor} strokeWidth="2" fill="none"/>
-                  <line x1="35" y1="30" x2="65" y2="30" stroke="#fff" strokeWidth="2"/>
-                  <line x1="35" y1="45" x2="65" y2="45" stroke="#fff" strokeWidth="2"/>
-                </svg>
+                <div className="absolute -right-10 -top-10 w-40 h-40 rounded-full opacity-30" style={{ backgroundColor: config.primaryColor, filter: 'blur(40px)' }}/>
               </div>
               <div className="relative z-10">
                 <Badge className="bg-yellow-500 text-slate-900 mb-3">Solde 70%</Badge>
