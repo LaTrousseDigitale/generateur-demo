@@ -810,7 +810,10 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
         />
       )}
       {config.industry === "auto" && config.autoCompatibility?.includes("Diagrammes et schémas de pièces") && (
-        <PartsDiagramsViewer />
+        <PartsDiagramsViewer 
+          primaryColor={config.primaryColor}
+          accentColor={config.accentColor}
+        />
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
