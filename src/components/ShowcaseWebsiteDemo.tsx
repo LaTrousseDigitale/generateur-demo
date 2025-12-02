@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "./DemoGenerator";
-import { DynamicFeaturesSection } from "./DynamicFeaturesSection";
+import { InlineFeatures } from "./InlineFeatures";
 import { 
   ArrowLeft, Download, Share2, ArrowRight, CheckCircle2, Star, Mail, 
   Phone, MapPin, Menu, Play, Sparkles, Award, Users, TrendingUp, 
@@ -542,6 +542,16 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
+          INLINE FEATURES - EARLY (after stats/intro)
+      ═══════════════════════════════════════════════════════════════ */}
+      <InlineFeatures 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={theme === "moderne"}
+        position="early"
+      />
+
+      {/* ═══════════════════════════════════════════════════════════════
           SERVICES SECTION
       ═══════════════════════════════════════════════════════════════ */}
       <section id="services" className={`py-24 ${themeConfig.sectionAlt}`}>
@@ -580,6 +590,16 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          INLINE FEATURES - MIDDLE (after services)
+      ═══════════════════════════════════════════════════════════════ */}
+      <InlineFeatures 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={theme === "moderne"}
+        position="middle"
+      />
 
       {/* ═══════════════════════════════════════════════════════════════
           PROJECTS / PORTFOLIO SECTION
@@ -907,12 +927,13 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          DYNAMIC FEATURES SECTION
+          INLINE FEATURES SECTIONS
       ═══════════════════════════════════════════════════════════════ */}
-      <DynamicFeaturesSection 
+      <InlineFeatures 
         config={config} 
         themeConfig={themeConfig}
         isLightTheme={theme === "moderne"}
+        position="late"
       />
 
       {/* ═══════════════════════════════════════════════════════════════

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "./DemoGenerator";
-import { DynamicFeaturesSection } from "./DynamicFeaturesSection";
+import { InlineFeatures } from "./InlineFeatures";
 import { 
   ArrowLeft, Download, Share2, ShoppingCart, Search, Heart, Star, 
   TrendingUp, Filter, ChevronRight, Menu, ArrowRight, Truck, Shield,
@@ -881,12 +881,13 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          DYNAMIC FEATURES SECTION
+          INLINE FEATURES SECTIONS
       ═══════════════════════════════════════════════════════════════ */}
-      <DynamicFeaturesSection 
+      <InlineFeatures 
         config={config} 
         themeConfig={themeConfig}
         isLightTheme={theme === "moderne"}
+        position="late"
       />
 
       {/* ═══════════════════════════════════════════════════════════════
