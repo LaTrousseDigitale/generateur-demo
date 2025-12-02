@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle, AlertCircle, Car, ShieldCheck, Loader2 } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { CheckCircle2, XCircle, AlertCircle, Car, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface PartsCompatibilityCheckerProps {
@@ -11,8 +12,8 @@ interface PartsCompatibilityCheckerProps {
 
 export const PartsCompatibilityChecker = ({ 
   selectedVehicle, 
-  primaryColor = "#3B82F6", 
-  accentColor = "#8B5CF6" 
+  primaryColor = "#dc2626", 
+  accentColor = "#f97316" 
 }: PartsCompatibilityCheckerProps) => {
   const [selectedPart, setSelectedPart] = useState<string | null>(null);
   const [checking, setChecking] = useState(false);
@@ -50,182 +51,123 @@ export const PartsCompatibilityChecker = ({
   const getResultStyles = (result: 'compatible' | 'incompatible' | 'warning') => {
     switch (result) {
       case 'compatible':
-        return { bg: 'rgba(16, 185, 129, 0.1)', border: 'rgba(16, 185, 129, 0.3)', text: '#10B981' };
+        return { bg: '#dcfce7', border: '#86efac', text: '#16a34a', icon: CheckCircle2 };
       case 'warning':
-        return { bg: 'rgba(245, 158, 11, 0.1)', border: 'rgba(245, 158, 11, 0.3)', text: '#F59E0B' };
+        return { bg: '#fef3c7', border: '#fcd34d', text: '#d97706', icon: AlertCircle };
       case 'incompatible':
-        return { bg: 'rgba(239, 68, 68, 0.1)', border: 'rgba(239, 68, 68, 0.3)', text: '#EF4444' };
+        return { bg: '#fee2e2', border: '#fca5a5', text: '#dc2626', icon: XCircle };
     }
   };
 
   return (
-    <section className="relative py-24 overflow-hidden bg-slate-950">
-      {/* Background */}
-      <div 
-        className="absolute inset-0"
-        style={{ 
-          background: `radial-gradient(ellipse at bottom, ${accentColor}08 0%, transparent 50%)`
-        }}
-      />
-      
-      {/* Decorative lines */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-        <svg className="absolute top-0 left-0 w-full h-full">
-          <defs>
-            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="0.5" opacity="0.1"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <div 
-                className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${primaryColor}30, ${accentColor}30)` }}
-              >
-                <ShieldCheck className="w-7 h-7" style={{ color: primaryColor }} />
-              </div>
-            </div>
-            
-            <h3 className="text-4xl md:text-5xl font-black text-white mb-4">
-              Vérification de{' '}
-              <span 
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
-              >
-                compatibilité
-              </span>
-            </h3>
-            
-            {isDemoMode && (
-              <Badge 
-                className="mb-6 text-white border-0"
-                style={{ background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
-              >
-                Mode démonstration
-              </Badge>
-            )}
-            
-            {/* Vehicle Card */}
+    <div className="space-y-6">
+      {/* Vehicle Display */}
+      <Card className="bg-white border border-slate-200 rounded-xl p-6">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div className="flex items-center gap-4">
             <div 
-              className="inline-flex items-center gap-4 px-6 py-4 rounded-2xl mb-6 backdrop-blur-xl"
+              className="w-12 h-12 rounded-xl flex items-center justify-center"
+              style={{ backgroundColor: `${primaryColor}15` }}
+            >
+              <Car className="w-6 h-6" style={{ color: primaryColor }} />
+            </div>
+            <div>
+              <p className="text-sm text-slate-500">Véhicule sélectionné</p>
+              <p className="font-bold text-xl text-slate-900">
+                {displayVehicle.year} {displayVehicle.make} {displayVehicle.model}
+              </p>
+            </div>
+          </div>
+          {isDemoMode && (
+            <Badge className="bg-amber-100 text-amber-700 border border-amber-200">
+              Mode démonstration
+            </Badge>
+          )}
+        </div>
+      </Card>
+
+      {/* Parts Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {parts.map((part) => {
+          const isSelected = selectedPart === part.id;
+          const hasResult = isSelected && compatibilityResult;
+          const resultStyles = hasResult ? getResultStyles(compatibilityResult!) : null;
+          const ResultIcon = resultStyles?.icon;
+          
+          return (
+            <Card 
+              key={part.id} 
+              className="bg-white border rounded-xl p-5 transition-all duration-300 hover:shadow-lg"
               style={{
-                background: 'rgba(255,255,255,0.05)',
-                border: '1px solid rgba(255,255,255,0.1)'
+                borderColor: hasResult ? resultStyles?.border : '#e2e8f0',
+                backgroundColor: hasResult ? resultStyles?.bg : 'white'
               }}
             >
-              <div 
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: `linear-gradient(135deg, ${primaryColor}30, ${accentColor}30)` }}
-              >
-                <Car className="w-5 h-5" style={{ color: primaryColor }} />
+              <div className="flex justify-between items-start mb-3">
+                <div>
+                  <h4 className="font-bold text-lg text-slate-900">{part.name}</h4>
+                  <p className="text-sm text-slate-500">Code: {part.code}</p>
+                </div>
+                
+                {hasResult && ResultIcon && (
+                  <Badge 
+                    className="text-white border-0"
+                    style={{ backgroundColor: resultStyles?.text }}
+                  >
+                    <ResultIcon className="w-4 h-4 mr-1" />
+                    {compatibilityResult === 'compatible' && 'Compatible'}
+                    {compatibilityResult === 'warning' && 'Vérifier'}
+                    {compatibilityResult === 'incompatible' && 'Incompatible'}
+                  </Badge>
+                )}
               </div>
-              <div className="text-left">
-                <p className="text-xs text-slate-500 uppercase tracking-wider">Véhicule</p>
-                <p className="font-bold text-white text-lg">
-                  {displayVehicle.year} {displayVehicle.make} {displayVehicle.model}
-                </p>
-              </div>
-              {isDemoMode && (
-                <Badge className="bg-white/10 text-slate-300 border border-white/20">
-                  Exemple
-                </Badge>
-              )}
-            </div>
-            
-            <p className="text-slate-400 text-lg">
-              Cliquez sur "Vérifier" pour voir la compatibilité en temps réel
-            </p>
-          </div>
 
-          {/* Parts Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {parts.map((part) => {
-              const isSelected = selectedPart === part.id;
-              const hasResult = isSelected && compatibilityResult;
-              const resultStyles = hasResult ? getResultStyles(compatibilityResult!) : null;
-              
-              return (
+              <p className="text-lg font-bold mb-4" style={{ color: primaryColor }}>
+                {part.price} CAD
+              </p>
+
+              {hasResult && (
                 <div 
-                  key={part.id} 
-                  className="group relative rounded-2xl p-6 backdrop-blur-xl transition-all duration-500 hover:-translate-y-1"
-                  style={{
-                    background: 'rgba(255,255,255,0.03)',
-                    border: hasResult 
-                      ? `2px solid ${resultStyles?.border}` 
-                      : '1px solid rgba(255,255,255,0.1)',
-                    boxShadow: hasResult ? `0 0 40px ${resultStyles?.bg}` : 'none'
+                  className="mb-4 p-3 rounded-lg border"
+                  style={{ 
+                    backgroundColor: 'white',
+                    borderColor: resultStyles?.border
                   }}
                 >
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h4 className="font-bold text-xl text-white mb-1">{part.name}</h4>
-                      <p className="text-sm text-slate-500">Code: {part.code}</p>
-                      <p 
-                        className="text-lg font-bold mt-2"
-                        style={{ color: primaryColor }}
-                      >
-                        {part.price} CAD
-                      </p>
-                    </div>
-                    
-                    {hasResult && (
-                      <Badge 
-                        className="text-white border-0"
-                        style={{ backgroundColor: resultStyles?.text }}
-                      >
-                        {compatibilityResult === 'compatible' && <CheckCircle2 className="w-4 h-4 mr-1" />}
-                        {compatibilityResult === 'warning' && <AlertCircle className="w-4 h-4 mr-1" />}
-                        {compatibilityResult === 'incompatible' && <XCircle className="w-4 h-4 mr-1" />}
-                        {compatibilityResult === 'compatible' && 'Compatible'}
-                        {compatibilityResult === 'warning' && 'Vérifier'}
-                        {compatibilityResult === 'incompatible' && 'Incompatible'}
-                      </Badge>
-                    )}
-                  </div>
-
-                  {hasResult && (
-                    <div 
-                      className="mb-5 p-4 rounded-xl"
-                      style={{ 
-                        background: resultStyles?.bg,
-                        border: `1px solid ${resultStyles?.border}`
-                      }}
-                    >
-                      <p className="text-sm font-medium" style={{ color: resultStyles?.text }}>
-                        {compatibilityResult === 'compatible' && '✓ Cette pièce est 100% compatible avec votre véhicule'}
-                        {compatibilityResult === 'warning' && '⚠ Compatibilité partielle - vérification manuelle recommandée'}
-                        {compatibilityResult === 'incompatible' && '✗ Cette pièce n\'est pas compatible avec votre véhicule'}
-                      </p>
-                    </div>
-                  )}
-
-                  <Button 
-                    onClick={() => handleCheckCompatibility(part.id)}
-                    disabled={checking && isSelected}
-                    className="w-full rounded-xl font-semibold transition-all hover:scale-[1.02] bg-white/10 border border-white/20 text-slate-200 hover:bg-white/20 hover:text-white"
-                  >
-                    {checking && isSelected ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Vérification...
-                      </>
-                    ) : (
-                      'Vérifier la compatibilité'
-                    )}
-                  </Button>
+                  <p className="text-sm font-medium" style={{ color: resultStyles?.text }}>
+                    {compatibilityResult === 'compatible' && '✓ Cette pièce est 100% compatible avec votre véhicule'}
+                    {compatibilityResult === 'warning' && '⚠ Compatibilité partielle - vérification manuelle recommandée'}
+                    {compatibilityResult === 'incompatible' && '✗ Cette pièce n\'est pas compatible avec votre véhicule'}
+                  </p>
                 </div>
-              );
-            })}
-          </div>
-        </div>
+              )}
+
+              <Button 
+                onClick={() => handleCheckCompatibility(part.id)}
+                disabled={checking && isSelected}
+                variant={hasResult ? "outline" : "default"}
+                className="w-full rounded-lg font-semibold"
+                style={{ 
+                  backgroundColor: hasResult ? 'white' : primaryColor,
+                  color: hasResult ? primaryColor : 'white',
+                  borderColor: hasResult ? primaryColor : undefined
+                }}
+              >
+                {checking && isSelected ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Vérification...
+                  </>
+                ) : hasResult ? (
+                  'Vérifier à nouveau'
+                ) : (
+                  'Vérifier la compatibilité'
+                )}
+              </Button>
+            </Card>
+          );
+        })}
       </div>
-    </section>
+    </div>
   );
 };
