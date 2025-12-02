@@ -57,6 +57,15 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
   const [selectedMake, setSelectedMake] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
 
+  // Valeurs par défaut pour éviter les erreurs
+  const safeConfig = {
+    ...config,
+    companyName: config.companyName || "AutoParts",
+    primaryColor: config.primaryColor || "#dc2626",
+    accentColor: config.accentColor || "#f97316",
+    secondaryColor: config.secondaryColor || "#fbbf24",
+  };
+
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
@@ -67,6 +76,11 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
     setCartCount(prev => prev + 1);
     toast({ title: "Ajouté au panier!", description: "Produit ajouté avec succès" });
   };
+
+  console.log("AutoPartsModernDemo config:", config);
+  console.log("Features:", config.features);
+  console.log("AutoSearchFeatures:", config.autoSearchFeatures);
+  console.log("AutoCompatibility:", config.autoCompatibility);
 
   const years = ["2024", "2023", "2022", "2021", "2020", "2019", "2018"];
   const makes = ["Toyota", "Honda", "Ford", "Chevrolet", "BMW", "Mercedes", "Audi"];
