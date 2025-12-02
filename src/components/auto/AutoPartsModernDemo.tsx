@@ -244,12 +244,24 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
               <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-none drop-shadow-sm">
                 AUX PLUS BAS
               </h1>
-              <h1 
-                className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-none drop-shadow-sm"
-                style={{ color: config.primaryColor }}
-              >
-                PRIX!
-              </h1>
+              <div className="flex items-center gap-4 md:gap-6">
+                <h1 
+                  className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-none drop-shadow-sm"
+                  style={{ color: config.primaryColor }}
+                >
+                  PRIX!
+                </h1>
+                {/* Badge prix */}
+                <div 
+                  className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full shadow-xl flex flex-col items-center justify-center border-2"
+                  style={{ backgroundColor: config.primaryColor, borderColor: 'white' }}
+                >
+                  <span className="text-white/80 text-[8px] md:text-[10px]">À partir de</span>
+                  <span className="text-white text-sm md:text-lg lg:text-xl font-black">
+                    69,00 $
+                  </span>
+                </div>
+              </div>
               <div className="pt-2 md:pt-4">
                 <Button 
                   size="lg"
@@ -260,19 +272,6 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
                 </Button>
               </div>
             </div>
-          </div>
-        </div>
-        
-        {/* Badge prix - positionné à droite */}
-        <div className="absolute bottom-4 md:bottom-8 right-1/4 md:right-1/3">
-          <div 
-            className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full shadow-xl flex flex-col items-center justify-center border-2"
-            style={{ backgroundColor: config.primaryColor, borderColor: 'white' }}
-          >
-            <span className="text-white/80 text-[8px] md:text-[10px]">À partir de</span>
-            <span className="text-white text-sm md:text-lg lg:text-xl font-black">
-              69,00 $
-            </span>
           </div>
         </div>
       </section>
