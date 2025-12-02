@@ -510,11 +510,10 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
                 </Button>
                 <Button 
                   size="lg"
-                  variant="outline"
-                  className={`rounded-full px-8 py-6 text-lg font-semibold ${
+                  className={`rounded-full px-8 py-6 text-lg font-semibold border ${
                     theme === "moderne" 
-                      ? 'border-slate-300 text-slate-700 hover:bg-slate-100' 
-                      : 'border-white/30 text-white hover:bg-white/10'
+                      ? 'bg-white/80 border-slate-300 text-slate-700 hover:bg-slate-100' 
+                      : 'bg-white/10 border-white/30 text-slate-200 hover:bg-white/20 hover:text-white'
                   }`}
                 >
                   <Play className="w-5 h-5 mr-2" />
