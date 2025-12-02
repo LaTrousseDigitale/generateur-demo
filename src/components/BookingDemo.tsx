@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
+import { getThemeStyles, type DemoTheme } from "@/types/demoThemes";
 
 // Import booking images
 import bookingAutoService from "@/assets/booking-auto-service.jpg";
@@ -180,17 +181,76 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
     { value: "5★", label: "Note moyenne", icon: Award },
   ];
 
+  // Get theme-based styles
+  const theme = config.theme || "moderne";
+  const themeStyles = getThemeStyles(theme, config.primaryColor);
+  
+  // Theme-specific classes
+  const getPageBg = () => {
+    switch(theme) {
+      case "moderne": return "bg-gradient-to-br from-slate-50 via-white to-slate-100";
+      case "rustique": return "bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900";
+      case "futuriste": return "bg-gradient-to-br from-slate-950 via-indigo-950/50 to-slate-950";
+      default: return "bg-slate-950";
+    }
+  };
+
+  const getTextColor = () => {
+    switch(theme) {
+      case "moderne": return "text-slate-900";
+      case "rustique": return "text-amber-50";
+      case "futuriste": return "text-white";
+      default: return "text-white";
+    }
+  };
+
+  const getSubtextColor = () => {
+    switch(theme) {
+      case "moderne": return "text-slate-600";
+      case "rustique": return "text-stone-300";
+      case "futuriste": return "text-slate-300";
+      default: return "text-slate-300";
+    }
+  };
+
+  const getCardBg = () => {
+    switch(theme) {
+      case "moderne": return "bg-white border border-slate-200 shadow-lg";
+      case "rustique": return "bg-stone-800/80 border border-amber-900/30 backdrop-blur-sm";
+      case "futuriste": return "bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_30px_rgba(99,102,241,0.15)]";
+      default: return "bg-slate-900/80 backdrop-blur-xl border border-white/10";
+    }
+  };
+
+  const getHeaderBg = () => {
+    switch(theme) {
+      case "moderne": return "bg-white/90 backdrop-blur-xl border border-slate-200 shadow-lg";
+      case "rustique": return "bg-stone-900/90 backdrop-blur-xl border border-amber-900/30";
+      case "futuriste": return "bg-slate-900/80 backdrop-blur-xl border border-white/10 shadow-[0_0_50px_rgba(99,102,241,0.2)]";
+      default: return "bg-slate-900/80 backdrop-blur-xl border border-white/10";
+    }
+  };
+
+  const getHeroOverlay = () => {
+    switch(theme) {
+      case "moderne": return "bg-white/60";
+      case "rustique": return "bg-stone-900/70";
+      case "futuriste": return "bg-slate-950/60";
+      default: return "bg-slate-950/70";
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
+    <div className={`min-h-screen ${getPageBg()} ${getTextColor()} overflow-hidden`}>
       {/* Floating Header */}
       <div className="fixed top-4 left-4 right-4 z-50">
-        <div className="bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl">
+        <div className={`${getHeaderBg()} rounded-2xl shadow-2xl`}>
           <div className="container mx-auto px-6 py-3">
             <div className="flex items-center justify-between">
               <Button 
                 variant="ghost" 
                 onClick={onBack} 
-                className="text-white hover:bg-white/10"
+                className={theme === "moderne" ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"}
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Retour
@@ -206,13 +266,13 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
                   variant="ghost" 
                   size="icon" 
                   onClick={handleShare} 
-                  className="text-white hover:bg-white/10"
+                  className={theme === "moderne" ? "text-slate-700 hover:bg-slate-100" : "text-white hover:bg-white/10"}
                 >
                   <Share2 className="w-4 h-4" />
                 </Button>
                 <Button 
                   onClick={handleExport}
-                  className="rounded-xl shadow-lg transition-all duration-300 hover:scale-105 text-white"
+                  className={`rounded-xl shadow-lg transition-all duration-300 hover:scale-105 text-white ${theme === "futuriste" ? "shadow-[0_0_20px_rgba(99,102,241,0.4)]" : ""}`}
                   style={{ 
                     background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})`,
                   }}
@@ -239,8 +299,8 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
           }}
         />
         
-        {/* Dark Overlay for text visibility */}
-        <div className="absolute inset-0 bg-slate-950/70" />
+        {/* Dark Overlay for text visibility - Theme-based */}
+        <div className={`absolute inset-0 ${getHeroOverlay()}`} />
         
         {/* Gradient Overlays */}
         <div 
