@@ -27,6 +27,13 @@ import categoryOilsFluids from "@/assets/category-oils-fluids.jpg";
 import categoryLights from "@/assets/category-lights.jpg";
 import categoryReplacementParts from "@/assets/category-replacement-parts.jpg";
 import categoryTools from "@/assets/category-tools.jpg";
+// Brand logos
+import brandBosch from "@/assets/brand-bosch.jpg";
+import brandDenso from "@/assets/brand-denso.jpg";
+import brandAcdelco from "@/assets/brand-acdelco.jpg";
+import brandMotorcraft from "@/assets/brand-motorcraft.jpg";
+import brandNgk from "@/assets/brand-ngk.jpg";
+import brandMonroe from "@/assets/brand-monroe.jpg";
 
 interface AutoPartsModernDemoProps {
   config: DemoConfig;
@@ -109,7 +116,12 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
   ];
 
   const brands = [
-    "Bosch", "Denso", "ACDelco", "Motorcraft", "NGK", "Monroe"
+    { name: "Bosch", logo: brandBosch },
+    { name: "Denso", logo: brandDenso },
+    { name: "ACDelco", logo: brandAcdelco },
+    { name: "Motorcraft", logo: brandMotorcraft },
+    { name: "NGK", logo: brandNgk },
+    { name: "Monroe", logo: brandMonroe }
   ];
 
   const navLinks = ["Accueil", "Catalogue", "Pièces OEM", "Promotions", "Blog", "Contact"];
@@ -630,13 +642,17 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
             </h2>
           </div>
 
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
             {brands.map((brand, i) => (
               <div 
                 key={i}
-                className="px-8 py-4 bg-slate-100 rounded-xl text-slate-700 font-bold text-lg hover:bg-slate-200 cursor-pointer transition-colors"
+                className="bg-white rounded-xl p-4 flex items-center justify-center h-24 hover:shadow-lg cursor-pointer transition-all group"
               >
-                {brand}
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name}
+                  className="max-h-16 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all"
+                />
               </div>
             ))}
           </div>
