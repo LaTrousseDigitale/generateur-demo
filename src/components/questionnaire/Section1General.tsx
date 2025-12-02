@@ -25,7 +25,10 @@ const INDUSTRY_OBJECTIVES: Record<string, string[]> = {
   architecture: ["Mettre en valeur le portfolio de projets", "Présenter l'équipe et l'expertise", "Générer des demandes de consultation", "Partager des études de cas détaillées", "Montrer le processus de travail"],
   tech: ["Générer des prospects B2B", "Présenter les solutions/produits tech", "Offrir une documentation en ligne", "Permettre les démos ou essais gratuits", "Intégrer un système de tickets support"],
   transport: ["Permettre les réservations/demandes de transport", "Afficher les tarifs et zones desservies", "Suivre les livraisons en temps réel", "Gérer la flotte de véhicules", "Optimiser les itinéraires"],
-  "arts-scene": ["Vendre des billets en ligne", "Présenter les spectacles et artistes", "Gérer les abonnements de saison", "Promouvoir les événements à venir", "Partager photos et vidéos des performances"]
+  "arts-scene": ["Vendre des billets en ligne", "Présenter les spectacles et artistes", "Gérer les abonnements de saison", "Promouvoir les événements à venir", "Partager photos et vidéos des performances"],
+  demenagement: ["Permettre les demandes de soumission en ligne", "Calculer les coûts selon distance et volume", "Gérer le calendrier des déménagements", "Offrir des services additionnels (emballage, stockage)", "Suivre les projets et équipes en temps réel"],
+  immobilier: ["Afficher les propriétés avec visites virtuelles", "Générer des prospects acheteurs/vendeurs", "Permettre la prise de rendez-vous de visite", "Gérer le pipeline de ventes", "Calculer les estimations de valeur"],
+  finances: ["Offrir un portail client sécurisé", "Permettre le partage de documents confidentiels", "Automatiser les rappels et échéances", "Générer des rapports financiers", "Gérer la conformité réglementaire"],
 };
 
 // Objectifs par défaut

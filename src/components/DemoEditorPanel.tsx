@@ -14,7 +14,7 @@ import {
   ArrowLeft, Eye, RefreshCw, Sparkles, Car, UtensilsCrossed, 
   Building2, Stethoscope, ShoppingBag, Briefcase, GraduationCap,
   Hammer, Palette, Check, Globe, Lock, Users, FileText, ShoppingCart, Star,
-  Sun, Moon, Zap
+  Sun, Moon, Zap, Truck, Home, Calculator
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, MODULES } from "@/types/questionnaire";
@@ -412,6 +412,9 @@ const INDUSTRY_RECOMMENDED_MODULES: Record<string, string[]> = {
   tech: ["tickets", "base-connaissances", "projets-lite"],
   transport: ["projets-lite", "kpi-dashboard", "chat-interne"],
   "arts-scene": ["rendez-vous", "crm-lite", "kpi-dashboard"],
+  demenagement: ["calculateur-pdf", "projets-lite", "rendez-vous"],
+  immobilier: ["crm-lite", "rendez-vous", "signatures"],
+  finances: ["signatures", "base-connaissances", "kpi-dashboard"],
 };
 
 // Templates par industrie
@@ -537,6 +540,45 @@ const DEMO_TEMPLATES: Array<{
       primaryColor: "#db2777",
       accentColor: "#ec4899",
       secondaryColor: "#f9a8d4",
+    },
+  },
+  {
+    id: "demenagement",
+    name: "Déménagement",
+    description: "Soumissions en ligne et gestion des projets",
+    icon: <Truck className="w-6 h-6" />,
+    config: {
+      industry: "demenagement",
+      companyName: "Déménagement Express",
+      primaryColor: "#2563eb",
+      accentColor: "#3b82f6",
+      secondaryColor: "#93c5fd",
+    },
+  },
+  {
+    id: "immobilier",
+    name: "Secteur immobilier",
+    description: "Annonces, visites virtuelles et gestion de prospects",
+    icon: <Home className="w-6 h-6" />,
+    config: {
+      industry: "immobilier",
+      companyName: "Immobilier Plus",
+      primaryColor: "#16a34a",
+      accentColor: "#22c55e",
+      secondaryColor: "#86efac",
+    },
+  },
+  {
+    id: "finances",
+    name: "Services financiers",
+    description: "Portail client sécurisé et gestion documentaire",
+    icon: <Calculator className="w-6 h-6" />,
+    config: {
+      industry: "finances",
+      companyName: "Cabinet Comptable ABC",
+      primaryColor: "#0f172a",
+      accentColor: "#1e293b",
+      secondaryColor: "#475569",
     },
   },
 ];

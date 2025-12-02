@@ -26,6 +26,9 @@ const INDUSTRY_RECOMMENDED_MODULES: Record<string, string[]> = {
   tech: ["tickets", "base-connaissances", "projets-lite"],
   transport: ["projets-lite", "kpi-dashboard", "chat-interne"],
   "arts-scene": ["rendez-vous", "crm-lite", "kpi-dashboard"],
+  demenagement: ["calculateur-pdf", "projets-lite", "rendez-vous"],
+  immobilier: ["crm-lite", "rendez-vous", "signatures"],
+  finances: ["signatures", "base-connaissances", "kpi-dashboard"],
 };
 
 // Descriptions personnalisées par industrie
@@ -59,6 +62,21 @@ const INDUSTRY_MODULE_DESCRIPTIONS: Record<string, Record<string, string>> = {
     "crm-lite": "Gérez vos donateurs, membres et bénévoles",
     "base-connaissances": "Ressources et documentation pour bénévoles",
     "kpi-dashboard": "Suivez les dons, bénévolat et impact",
+  },
+  demenagement: {
+    "calculateur-pdf": "Calculez automatiquement les coûts selon volume et distance",
+    "projets-lite": "Planifiez les déménagements et assignez les équipes",
+    "rendez-vous": "Planification des visites d'estimation à domicile",
+  },
+  immobilier: {
+    "crm-lite": "Gérez vos prospects acheteurs, vendeurs et propriétés",
+    "rendez-vous": "Planification des visites de propriétés",
+    "signatures": "Offres d'achat et contrats signés électroniquement",
+  },
+  finances: {
+    "signatures": "Documents fiscaux et contrats signés en toute sécurité",
+    "base-connaissances": "Documentation fiscale et guides pour clients",
+    "kpi-dashboard": "Tableaux de bord financiers et suivi des dossiers",
   },
 };
 
