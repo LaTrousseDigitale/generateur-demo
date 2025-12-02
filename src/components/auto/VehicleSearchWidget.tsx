@@ -56,18 +56,18 @@ export const VehicleSearchWidget = ({
     switch(theme) {
       case "futuriste":
         return {
-          card: "bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_40px_rgba(99,102,241,0.2)]",
+          card: "bg-white/10 backdrop-blur-xl border border-white/20",
           tabActive: "text-white",
           tabInactive: "text-slate-400 hover:text-white bg-white/5",
           title: "text-white",
-          subtitle: "text-slate-400",
-          badge: "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-200 border border-indigo-500/30",
-          input: "bg-white/10 border border-white/20 text-white placeholder:text-slate-500 focus:border-indigo-500",
+          subtitle: "text-slate-300",
+          badge: "text-white/90 border border-white/30",
+          input: "bg-white/10 border border-white/20 text-white placeholder:text-slate-500",
           inputText: "text-white",
           label: "text-slate-300",
-          highlight: "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border border-indigo-500/30",
-          highlightText: "text-indigo-200",
-          button: `bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 shadow-[0_0_20px_rgba(99,102,241,0.4)]`,
+          highlight: "border border-white/30",
+          highlightText: "text-white",
+          button: "",
         };
       case "rustique":
         return {
@@ -91,11 +91,11 @@ export const VehicleSearchWidget = ({
           tabInactive: "text-slate-600 hover:text-slate-900 bg-slate-50",
           title: "text-slate-900",
           subtitle: "text-slate-500",
-          badge: `bg-[${primaryColor}15] text-[${primaryColor}]`,
-          input: "bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2 focus:ring-red-500",
+          badge: "",
+          input: "bg-slate-50 border border-slate-200 text-slate-900 focus:ring-2",
           inputText: "text-slate-900",
           label: "text-slate-700",
-          highlight: `bg-[${primaryColor}10]`,
+          highlight: "",
           highlightText: "text-slate-900",
           button: "",
         };
@@ -104,8 +104,11 @@ export const VehicleSearchWidget = ({
 
   const styles = getThemeStyles();
 
+  // Dynamic card shadow for futuriste
+  const cardShadowStyle = theme === "futuriste" ? { boxShadow: `0 0 40px ${primaryColor}30` } : {};
+
   return (
-    <Card className={`${styles.card} rounded-2xl overflow-hidden`}>
+    <Card className={`${styles.card} rounded-2xl overflow-hidden`} style={cardShadowStyle}>
       {/* Header with tabs */}
       <div className={`border-b ${theme === 'moderne' ? 'border-slate-200' : theme === 'rustique' ? 'border-amber-900/30' : 'border-white/10'}`}>
         <div className="flex">
@@ -143,8 +146,11 @@ export const VehicleSearchWidget = ({
       <div className="p-6 md:p-8">
         {searchMode === 'vin' ? (
           <div className="space-y-6">
-            <div className="text-center mb-6">
-              <Badge className={styles.badge}>
+          <div className="text-center mb-6">
+              <Badge 
+                className={styles.badge}
+                style={{ backgroundColor: `${primaryColor}20`, borderColor: `${primaryColor}50` }}
+              >
                 Recherche instantanée
               </Badge>
               <h3 className={`text-xl font-bold mt-3 mb-2 ${styles.title}`}>
@@ -176,7 +182,10 @@ export const VehicleSearchWidget = ({
             )}
 
             {vinNumber.length === 17 && (
-              <div className={`p-4 rounded-xl flex items-center gap-3 ${styles.highlight}`}>
+              <div 
+                className={`p-4 rounded-xl flex items-center gap-3 ${styles.highlight}`}
+                style={{ backgroundColor: `${primaryColor}15`, borderColor: `${primaryColor}30` }}
+              >
                 <Sparkles className="w-5 h-5" style={{ color: primaryColor }} />
                 <div>
                   <p className={`font-semibold ${styles.highlightText}`}>VIN détecté!</p>
@@ -188,7 +197,10 @@ export const VehicleSearchWidget = ({
         ) : (
           <div className="space-y-6">
             <div className="text-center mb-6">
-              <Badge className={styles.badge}>
+              <Badge 
+                className={styles.badge}
+                style={{ backgroundColor: `${primaryColor}20`, borderColor: `${primaryColor}50` }}
+              >
                 Sélection manuelle
               </Badge>
               <h3 className={`text-xl font-bold mt-3 mb-2 ${styles.title}`}>
@@ -247,7 +259,10 @@ export const VehicleSearchWidget = ({
           onClick={handleSearch}
           disabled={!isSearchEnabled}
           className={`w-full mt-6 h-14 text-base font-bold rounded-xl text-white disabled:opacity-40 transition-all hover:scale-[1.02] active:scale-[0.98] ${styles.button}`}
-          style={{ backgroundColor: theme === 'moderne' ? primaryColor : undefined }}
+          style={{ 
+            backgroundColor: theme !== 'rustique' ? primaryColor : undefined,
+            boxShadow: theme === 'futuriste' ? `0 0 20px ${primaryColor}40` : undefined
+          }}
         >
           <Search className="w-5 h-5 mr-2" />
           Rechercher les pièces compatibles
