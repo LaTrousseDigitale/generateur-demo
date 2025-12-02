@@ -114,10 +114,10 @@ const PORTAL_HR_FEATURES = [
   "Évaluations de performance",
 ];
 
-// Fonctionnalités spécifiques par industrie
-const INDUSTRY_FEATURES: Record<string, { title: string; features: string[] }> = {
+// Fonctionnalités spécifiques par industrie - E-COMMERCE
+const INDUSTRY_ECOMMERCE_FEATURES: Record<string, { title: string; features: string[] }> = {
   auto: {
-    title: "Fonctionnalités Automobile",
+    title: "Fonctionnalités E-commerce Automobile",
     features: [
       "Recherche par année/marque/modèle",
       "Recherche par numéro VIN",
@@ -128,91 +128,36 @@ const INDUSTRY_FEATURES: Record<string, { title: string; features: string[] }> =
     ],
   },
   restauration: {
-    title: "Fonctionnalités Restauration",
+    title: "Fonctionnalités E-commerce Restauration",
     features: [
       "Menu en ligne avec photos et descriptions",
-      "Système de réservation de tables",
       "Commande en ligne (pick-up / livraison)",
       "Gestion des allergènes et restrictions alimentaires",
       "Programme de fidélité",
       "Horaires d'ouverture dynamiques",
+      "Paiement en ligne intégré",
     ],
   },
   sante: {
-    title: "Fonctionnalités Santé & Bien-être",
+    title: "Fonctionnalités E-commerce Santé",
     features: [
-      "Prise de rendez-vous en ligne",
-      "Rappels automatiques par courriel/SMS",
-      "Formulaires de consentement électroniques",
-      "Dossiers patients sécurisés",
-      "Téléconsultation vidéo",
+      "Boutique de produits santé/bien-être",
+      "Prise de rendez-vous payante",
+      "Abonnements et forfaits",
+      "Vente de suppléments/produits",
+      "Gestion des ordonnances",
       "Conformité réglementaire santé",
     ],
   },
   construction: {
-    title: "Fonctionnalités Construction",
+    title: "Fonctionnalités E-commerce Construction",
     features: [
-      "Portfolio de projets avec galerie",
+      "Catalogue de matériaux",
       "Générateur de soumissions PDF",
-      "Suivi de chantiers",
-      "Gestion des sous-traitants",
-      "Signatures électroniques contrats",
-      "Calendrier de disponibilité",
-    ],
-  },
-  education: {
-    title: "Fonctionnalités Éducation",
-    features: [
-      "Catalogue de cours en ligne",
-      "Inscriptions et paiements",
-      "Portail étudiant sécurisé",
-      "Suivi de progression",
-      "Certificats automatisés",
-      "Classes virtuelles intégrées",
-    ],
-  },
-  obnl: {
-    title: "Fonctionnalités OBNL",
-    features: [
-      "Dons en ligne sécurisés",
-      "Gestion des membres et bénévoles",
-      "Campagnes de financement",
-      "Rapports d'impact",
-      "Événements et inscriptions",
-      "Reçus fiscaux automatiques",
-    ],
-  },
-  services: {
-    title: "Fonctionnalités Services Pro",
-    features: [
-      "Formulaire de contact avancé",
-      "Prise de rendez-vous",
-      "Devis en ligne",
-      "Témoignages clients",
-      "Intégration calendrier",
-      "Chat en direct",
-    ],
-  },
-  architecture: {
-    title: "Fonctionnalités Architecture & Design",
-    features: [
-      "Portfolio projets haute résolution",
-      "Galerie avant/après",
-      "Processus de travail illustré",
-      "Visualisation 3D intégrée",
-      "Demandes de projets personnalisés",
-      "Prix et distinctions",
-    ],
-  },
-  tech: {
-    title: "Fonctionnalités Tech & Startups",
-    features: [
-      "Documentation technique",
-      "Système de tickets support",
-      "Base de connaissances",
-      "Intégrations API",
-      "Tableau de bord analytics",
-      "Onboarding automatisé",
+      "Calcul automatique de quantités",
+      "Gestion des prix par volume",
+      "Livraison sur chantier",
+      "Comptes professionnels B2B",
     ],
   },
   commerce: {
@@ -226,26 +171,229 @@ const INDUSTRY_FEATURES: Record<string, { title: string; features: string[] }> =
       "Promotions et codes promo",
     ],
   },
-  transport: {
-    title: "Fonctionnalités Transport & Logistique",
+  education: {
+    title: "Fonctionnalités E-commerce Éducation",
     features: [
-      "Suivi de livraisons en temps réel",
+      "Catalogue de cours en ligne",
+      "Inscriptions et paiements",
+      "Abonnements récurrents",
+      "Certificats automatisés",
+      "Accès limité dans le temps",
+      "Bundles de formations",
+    ],
+  },
+  obnl: {
+    title: "Fonctionnalités E-commerce OBNL",
+    features: [
+      "Dons en ligne sécurisés",
+      "Campagnes de financement",
+      "Boutique de merchandising",
+      "Billets d'événements",
+      "Adhésions et cotisations",
+      "Reçus fiscaux automatiques",
+    ],
+  },
+  services: {
+    title: "Fonctionnalités E-commerce Services",
+    features: [
+      "Vente de forfaits et services",
+      "Réservation et paiement en ligne",
+      "Cartes-cadeaux",
+      "Abonnements récurrents",
+      "Facturation automatique",
+      "Gestion des créneaux",
+    ],
+  },
+  architecture: {
+    title: "Fonctionnalités E-commerce Architecture",
+    features: [
+      "Vente de plans et designs",
+      "Consultations payantes",
+      "Forfaits de services",
+      "Licences d'utilisation",
+      "Devis personnalisés",
+      "Paiement par étapes",
+    ],
+  },
+  tech: {
+    title: "Fonctionnalités E-commerce Tech",
+    features: [
+      "Vente de licences logicielles",
+      "Abonnements SaaS",
+      "Support premium payant",
+      "Téléchargements digitaux",
+      "API et intégrations",
+      "Plans tarifaires multiples",
+    ],
+  },
+  transport: {
+    title: "Fonctionnalités E-commerce Transport",
+    features: [
+      "Réservation en ligne",
       "Calculateur de tarifs",
-      "Gestion de flotte",
-      "Réservations en ligne",
-      "Rapports de performance",
-      "Intégration GPS",
+      "Suivi de livraisons en temps réel",
+      "Abonnements transport",
+      "Facturation automatique",
+      "Gestion de flottes",
     ],
   },
   "arts-scene": {
-    title: "Fonctionnalités Arts de la scène",
+    title: "Fonctionnalités E-commerce Arts",
     features: [
       "Billetterie en ligne",
+      "Réservations de places",
+      "Abonnements saisonniers",
+      "Merchandising",
+      "Dons et mécénat",
+      "Réservations de groupe",
+    ],
+  },
+};
+
+// Fonctionnalités spécifiques par industrie - SITE VITRINE
+const INDUSTRY_VITRINE_FEATURES: Record<string, { title: string; features: string[] }> = {
+  auto: {
+    title: "Fonctionnalités Garage / Concessionnaire",
+    features: [
+      "Prise de rendez-vous en ligne",
+      "Galerie de réalisations / véhicules",
+      "Présentation des services",
+      "Demande de soumission",
+      "Témoignages clients",
+      "Carte et directions",
+      "Horaires d'ouverture",
+    ],
+  },
+  restauration: {
+    title: "Fonctionnalités Restaurant Vitrine",
+    features: [
+      "Menu avec photos",
+      "Système de réservation de tables",
+      "Galerie de l'ambiance",
+      "Présentation du chef / équipe",
+      "Carte des vins",
+      "Événements spéciaux",
+      "Horaires et contact",
+    ],
+  },
+  sante: {
+    title: "Fonctionnalités Santé Vitrine",
+    features: [
+      "Prise de rendez-vous en ligne",
+      "Présentation des services",
+      "Équipe et spécialités",
+      "Témoignages patients",
+      "FAQ santé",
+      "Formulaire de contact sécurisé",
+      "Carte / Accès",
+    ],
+  },
+  construction: {
+    title: "Fonctionnalités Construction Vitrine",
+    features: [
+      "Portfolio de projets avec galerie",
+      "Présentation des services",
+      "Demande de soumission",
+      "Témoignages clients",
+      "Certifications / Licences",
+      "Zone de service",
+      "Équipe et expertise",
+    ],
+  },
+  commerce: {
+    title: "Fonctionnalités Commerce Vitrine",
+    features: [
+      "Présentation des produits phares",
+      "Localisation du magasin",
+      "Horaires d'ouverture",
+      "Événements et promotions",
+      "Témoignages clients",
+      "Newsletter",
+      "Réseaux sociaux",
+    ],
+  },
+  education: {
+    title: "Fonctionnalités Éducation Vitrine",
+    features: [
+      "Présentation des programmes",
+      "Calendrier des sessions",
+      "Équipe pédagogique",
+      "Témoignages étudiants",
+      "FAQ et admissions",
+      "Visite virtuelle",
+      "Contact et localisation",
+    ],
+  },
+  obnl: {
+    title: "Fonctionnalités OBNL Vitrine",
+    features: [
+      "Mission et valeurs",
+      "Équipe et bénévoles",
+      "Projets et réalisations",
+      "Rapports d'impact",
+      "Événements à venir",
+      "Comment nous aider",
+      "Contact et localisation",
+    ],
+  },
+  services: {
+    title: "Fonctionnalités Services Vitrine",
+    features: [
+      "Présentation des services",
+      "Processus de travail",
+      "Équipe et expertise",
+      "Témoignages clients",
+      "Demande de devis",
+      "FAQ",
+      "Contact et localisation",
+    ],
+  },
+  architecture: {
+    title: "Fonctionnalités Architecture Vitrine",
+    features: [
+      "Portfolio projets haute résolution",
+      "Galerie avant/après",
+      "Processus de travail illustré",
+      "Prix et distinctions",
+      "Équipe et philosophie",
+      "Demandes de projets",
+      "Contact et localisation",
+    ],
+  },
+  tech: {
+    title: "Fonctionnalités Tech Vitrine",
+    features: [
+      "Présentation du produit/service",
+      "Fonctionnalités clés",
+      "Témoignages et cas d'usage",
+      "Équipe et culture",
+      "Blog technique",
+      "Documentation",
+      "Contact et démo",
+    ],
+  },
+  transport: {
+    title: "Fonctionnalités Transport Vitrine",
+    features: [
+      "Services offerts",
+      "Zones desservies",
+      "Flotte et équipements",
+      "Témoignages clients",
+      "Demande de devis",
+      "Suivi en temps réel",
+      "Contact et localisation",
+    ],
+  },
+  "arts-scene": {
+    title: "Fonctionnalités Arts Vitrine",
+    features: [
       "Calendrier d'événements",
       "Galerie multimédia",
       "Biographies artistes",
-      "Newsletter et abonnements",
-      "Réservations de groupe",
+      "Historique et mission",
+      "Presse et revues",
+      "Newsletter",
+      "Contact et localisation",
     ],
   },
 };
@@ -883,19 +1031,47 @@ export const DemoEditorPanel = () => {
                       </div>
                     )}
 
-                    {/* Fonctionnalités spécifiques à l'industrie */}
-                    {INDUSTRY_FEATURES[config.industry] && (
+                    {/* Fonctionnalités spécifiques à l'industrie - VITRINE */}
+                    {config.serviceType === "website" && config.websiteType === "vitrine" && INDUSTRY_VITRINE_FEATURES[config.industry] && (
                       <div className="border-t pt-6">
                         <div className="flex items-center gap-2 mb-3">
                           <Sparkles className="w-4 h-4 text-primary" />
-                          <h3 className="font-medium">{INDUSTRY_FEATURES[config.industry].title}</h3>
+                          <h3 className="font-medium">{INDUSTRY_VITRINE_FEATURES[config.industry].title}</h3>
                           <Badge variant="secondary" className="text-xs">Recommandé</Badge>
                         </div>
                         <p className="text-xs text-muted-foreground mb-4">
-                          Fonctionnalités adaptées à votre industrie
+                          Fonctionnalités adaptées à votre industrie (site vitrine)
                         </p>
                         <div className="grid gap-3">
-                          {INDUSTRY_FEATURES[config.industry].features.map(feature => (
+                          {INDUSTRY_VITRINE_FEATURES[config.industry].features.map(feature => (
+                            <label
+                              key={feature}
+                              className="flex items-center gap-2 p-3 rounded-lg border border-primary/30 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors"
+                            >
+                              <Checkbox
+                                checked={(config.autoCompatibility || []).includes(feature)}
+                                onCheckedChange={() => toggleArrayFeature("autoCompatibility", feature)}
+                              />
+                              <span className="text-sm">{feature}</span>
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Fonctionnalités spécifiques à l'industrie - E-COMMERCE */}
+                    {config.serviceType === "website" && config.websiteType === "ecommerce" && INDUSTRY_ECOMMERCE_FEATURES[config.industry] && (
+                      <div className="border-t pt-6">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Sparkles className="w-4 h-4 text-primary" />
+                          <h3 className="font-medium">{INDUSTRY_ECOMMERCE_FEATURES[config.industry].title}</h3>
+                          <Badge variant="secondary" className="text-xs">Recommandé</Badge>
+                        </div>
+                        <p className="text-xs text-muted-foreground mb-4">
+                          Fonctionnalités adaptées à votre industrie (e-commerce)
+                        </p>
+                        <div className="grid gap-3">
+                          {INDUSTRY_ECOMMERCE_FEATURES[config.industry].features.map(feature => (
                             <label
                               key={feature}
                               className="flex items-center gap-2 p-3 rounded-lg border border-primary/30 bg-primary/5 cursor-pointer hover:bg-primary/10 transition-colors"
