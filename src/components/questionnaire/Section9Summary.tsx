@@ -18,7 +18,7 @@ export const Section9Summary = ({
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <FileText className="w-5 h-5 text-primary" />
-          Résumé et Contact
+          Résumé et contact
         </h3>
         <p className="text-sm text-muted-foreground">
           Derniers détails avant de voir votre démo personnalisée

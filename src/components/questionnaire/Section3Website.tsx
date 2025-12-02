@@ -22,7 +22,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Globe className="w-5 h-5 text-primary" />
-          Configuration du Site Web
+          Configuration du site web
         </h3>
         <p className="text-sm text-muted-foreground">Définissez le type et les fonctionnalités de votre site</p>
       </div>
@@ -34,7 +34,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="vitrine" id="vitrine" />
             <label htmlFor="vitrine" className="text-sm cursor-pointer">
-              Site Vitrine - Présentation de vos services/produits
+              Site vitrine - Présentation de vos services/produits
             </label>
           </div>
           <div className="flex items-center space-x-2">
@@ -46,7 +46,7 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="organisationnel" id="organisationnel" />
             <label htmlFor="organisationnel" className="text-sm cursor-pointer">
-              Organisationnel - Intranet / Documentation
+              Organisationnel - Intranet / documentation
             </label>
           </div>
         </RadioGroup>

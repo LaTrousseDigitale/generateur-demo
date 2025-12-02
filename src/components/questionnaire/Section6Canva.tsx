@@ -56,7 +56,7 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Palette className="w-5 h-5 text-primary" />
-          Services Canva
+          Services graphiques
         </h3>
         <p className="text-sm text-muted-foreground">
           Sélectionnez les types de designs que vous souhaitez

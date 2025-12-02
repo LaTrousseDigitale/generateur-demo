@@ -15,7 +15,7 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <DollarSign className="w-5 h-5 text-primary" />
-          Options Financières
+          Options financières
         </h3>
         <p className="text-sm text-muted-foreground">Choisissez le mode de paiement qui vous convient</p>
       </div>

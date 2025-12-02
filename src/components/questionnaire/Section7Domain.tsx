@@ -15,7 +15,7 @@ export const Section7Domain = ({
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Server className="w-5 h-5 text-primary" />
-          Domaine & Hébergement
+          Domaine et hébergement
         </h3>
         <p className="text-sm text-muted-foreground">Configuration de votre nom de domaine et hébergement</p>
       </div>
