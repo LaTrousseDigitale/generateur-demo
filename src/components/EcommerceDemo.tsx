@@ -674,17 +674,27 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
       {/* Auto-specific sections */}
       {config.industry === "auto" && config.autoCompatibility?.includes("Recherche par année/marque/modèle") && (
-        <VehicleSearchWidget 
-          onSearch={handleVehicleSearch} 
-          primaryColor={config.primaryColor}
-          accentColor={config.accentColor}
-        />
+        <section className={`py-16 ${themeConfig.sectionBg}`}>
+          <div className="container mx-auto px-4">
+            <VehicleSearchWidget 
+              onSearch={handleVehicleSearch} 
+              primaryColor={config.primaryColor}
+              accentColor={config.accentColor}
+              theme={theme as "moderne" | "rustique" | "futuriste"}
+            />
+          </div>
+        </section>
       )}
       {config.industry === "auto" && config.autoCompatibility?.includes("Catalogue pièces OEM vs aftermarket") && (
-        <OEMAftermarketCatalog 
-          primaryColor={config.primaryColor}
-          accentColor={config.accentColor}
-        />
+        <section className={`py-16 ${themeConfig.sectionBg}`}>
+          <div className="container mx-auto px-4">
+            <OEMAftermarketCatalog 
+              primaryColor={config.primaryColor}
+              accentColor={config.accentColor}
+              theme={theme as "moderne" | "rustique" | "futuriste"}
+            />
+          </div>
+        </section>
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -808,17 +818,27 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
       {/* Auto compatibility sections */}
       {config.industry === "auto" && config.autoCompatibility?.includes("Compatibilité automatique des pièces") && (
-        <PartsCompatibilityChecker 
-          selectedVehicle={selectedVehicle}
-          primaryColor={config.primaryColor}
-          accentColor={config.accentColor}
-        />
+        <section className={`py-16 ${themeConfig.sectionBg}`}>
+          <div className="container mx-auto px-4">
+            <PartsCompatibilityChecker 
+              selectedVehicle={selectedVehicle}
+              primaryColor={config.primaryColor}
+              accentColor={config.accentColor}
+              theme={theme as "moderne" | "rustique" | "futuriste"}
+            />
+          </div>
+        </section>
       )}
       {config.industry === "auto" && config.autoCompatibility?.includes("Diagrammes et schémas de pièces") && (
-        <PartsDiagramsViewer 
-          primaryColor={config.primaryColor}
-          accentColor={config.accentColor}
-        />
+        <section className={`py-16 ${themeConfig.sectionBg}`}>
+          <div className="container mx-auto px-4">
+            <PartsDiagramsViewer 
+              primaryColor={config.primaryColor}
+              accentColor={config.accentColor}
+              theme={theme as "moderne" | "rustique" | "futuriste"}
+            />
+          </div>
+        </section>
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
