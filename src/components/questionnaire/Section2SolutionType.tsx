@@ -41,7 +41,7 @@ export const Section2SolutionType = ({ data, onChange }: Section2Props) => {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="text-xl font-bold mb-2">Type de Solution</h3>
+        <h3 className="text-xl font-bold mb-2">Type de solution</h3>
         <p className="text-sm text-muted-foreground">
           Sélectionnez toutes les solutions qui vous intéressent
         </p>

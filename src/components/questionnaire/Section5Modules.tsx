@@ -88,7 +88,7 @@ export const Section5Modules = ({ data, onChange, isModuleSelected }: Section5Pr
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-primary" />
-          Modules Additionnels
+          Modules additionnels
         </h3>
         <p className="text-sm text-muted-foreground">
           {isModuleSelected

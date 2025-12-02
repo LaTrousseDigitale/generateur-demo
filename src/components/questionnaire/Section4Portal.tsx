@@ -23,7 +23,7 @@ export const Section4Portal = ({ data, onChange }: Section4Props) => {
       <div>
         <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
           <Lock className="w-5 h-5 text-primary" />
-          Configuration du Portail
+          Configuration du portail
         </h3>
         <p className="text-sm text-muted-foreground">Définissez le type et les fonctionnalités de votre portail</p>
       </div>
@@ -35,13 +35,13 @@ export const Section4Portal = ({ data, onChange }: Section4Props) => {
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="client" id="portal-client" />
             <label htmlFor="portal-client" className="text-sm cursor-pointer">
-              Portail Client - Espace client sécurisé
+              Portail client - Espace client sécurisé
             </label>
           </div>
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="employes" id="portal-employes" />
             <label htmlFor="portal-employes" className="text-sm cursor-pointer">
-              Portail Employés - Gestion d'équipe et projets
+              Portail employés - Gestion d'équipe et projets
             </label>
           </div>
           <div className="flex items-center space-x-2">
@@ -53,7 +53,7 @@ export const Section4Portal = ({ data, onChange }: Section4Props) => {
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="mixte" id="portal-mixte" />
             <label htmlFor="portal-mixte" className="text-sm cursor-pointer">
-              Portail Mixte - Combinaison de plusieurs types
+              Portail mixte - Combinaison de plusieurs types
             </label>
           </div>
         </RadioGroup>
@@ -104,7 +104,7 @@ export const Section4Portal = ({ data, onChange }: Section4Props) => {
       {/* Fonctionnalités selon le type */}
       {(data.portalType === "client" || data.portalType === "mixte") && (
         <Card className="p-4 space-y-3 bg-primary/5 border-primary/20">
-          <Label className="font-semibold">Fonctionnalités - Portail Client</Label>
+          <Label className="font-semibold">Fonctionnalités - Portail client</Label>
           {["Consultation de documents", "Signatures électroniques", "Factures et paiements", "Historique des transactions", "Formulaires personnalisés"].map(
             (feature) => (
               <div key={feature} className="flex items-center space-x-2">
@@ -124,7 +124,7 @@ export const Section4Portal = ({ data, onChange }: Section4Props) => {
 
       {(data.portalType === "employes" || data.portalType === "mixte") && (
         <Card className="p-4 space-y-3 bg-secondary/5 border-secondary/20">
-          <Label className="font-semibold">Fonctionnalités - Portail Employés</Label>
+          <Label className="font-semibold">Fonctionnalités - Portail employés</Label>
           {["Feuilles de temps", "Gestion de projets", "Documentation interne", "Onboarding automatisé", "Chat d'équipe"].map(
             (feature) => (
               <div key={feature} className="flex items-center space-x-2">
