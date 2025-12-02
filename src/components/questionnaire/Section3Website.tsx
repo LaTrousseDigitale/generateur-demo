@@ -86,6 +86,257 @@ export const Section3Website = ({ data, onChange }: Section3Props) => {
               </div>
             ))}
           </div>
+
+          {/* Questions spécifiques vitrine - Automobile */}
+          {data.industry === "auto" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-foreground">
+                Questions spécifiques - Garage / Concessionnaire
+              </Label>
+              
+              <div className="space-y-2">
+                <Label>Type d'entreprise *</Label>
+                <RadioGroup
+                  value={data.autoVitrineType || ""}
+                  onValueChange={(value) => onChange({ autoVitrineType: value })}
+                >
+                  {[
+                    "Garage mécanique / Atelier de réparation",
+                    "Concessionnaire automobile",
+                    "Carrosserie",
+                    "Centre de pneus",
+                    "Lave-auto / Détailing",
+                    "Location de véhicules"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`vitrine-auto-${type}`} />
+                      <label htmlFor={`vitrine-auto-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-3">
+                <Label>Services à mettre en avant</Label>
+                {[
+                  "Entretien préventif (huile, freins, pneus)",
+                  "Réparations mécaniques",
+                  "Diagnostic électronique",
+                  "Carrosserie et peinture",
+                  "Climatisation / Chauffage",
+                  "Vente de véhicules d'occasion",
+                  "Inspection / Certification"
+                ].map((service) => (
+                  <div key={service} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`vitrine-service-${service}`}
+                      checked={(data.autoVitrineServices || []).includes(service)}
+                      onCheckedChange={() => toggleItem("autoVitrineServices", service)}
+                    />
+                    <label htmlFor={`vitrine-service-${service}`} className="text-sm cursor-pointer">
+                      {service}
+                    </label>
+                  </div>
+                ))}
+              </div>
+
+              <div className="space-y-3">
+                <Label>Fonctionnalités souhaitées</Label>
+                {[
+                  "Prise de rendez-vous en ligne",
+                  "Demande de soumission",
+                  "Galerie de réalisations",
+                  "Présentation de l'équipe",
+                  "Témoignages clients",
+                  "Carte / Directions",
+                  "Horaires d'ouverture"
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`vitrine-feat-${feature}`}
+                      checked={(data.autoVitrineFeatures || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("autoVitrineFeatures", feature)}
+                    />
+                    <label htmlFor={`vitrine-feat-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Questions spécifiques vitrine - Restauration */}
+          {data.industry === "restauration" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-foreground">
+                Questions spécifiques - Restaurant
+              </Label>
+              
+              <div className="space-y-2">
+                <Label>Type d'établissement *</Label>
+                <RadioGroup
+                  value={data.restaurantVitrineType || ""}
+                  onValueChange={(value) => onChange({ restaurantVitrineType: value })}
+                >
+                  {[
+                    "Restaurant traditionnel",
+                    "Café / Bistro",
+                    "Restaurant gastronomique",
+                    "Bar / Pub",
+                    "Traiteur / Événementiel"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`vitrine-resto-${type}`} />
+                      <label htmlFor={`vitrine-resto-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-3">
+                <Label>Éléments à mettre en avant</Label>
+                {[
+                  "Menu avec photos",
+                  "Réservation de table",
+                  "Galerie de l'ambiance",
+                  "Présentation du chef / équipe",
+                  "Carte des vins",
+                  "Événements spéciaux",
+                  "Horaires et contact"
+                ].map((element) => (
+                  <div key={element} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`vitrine-resto-${element}`}
+                      checked={(data.restaurantVitrineElements || []).includes(element)}
+                      onCheckedChange={() => toggleItem("restaurantVitrineElements", element)}
+                    />
+                    <label htmlFor={`vitrine-resto-${element}`} className="text-sm cursor-pointer">
+                      {element}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Questions spécifiques vitrine - Santé */}
+          {data.industry === "sante" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-foreground">
+                Questions spécifiques - Santé et bien-être
+              </Label>
+              
+              <div className="space-y-2">
+                <Label>Type de pratique *</Label>
+                <RadioGroup
+                  value={data.healthVitrineType || ""}
+                  onValueChange={(value) => onChange({ healthVitrineType: value })}
+                >
+                  {[
+                    "Clinique médicale",
+                    "Cabinet dentaire",
+                    "Physiothérapie / Ostéopathie",
+                    "Spa / Centre bien-être",
+                    "Psychologue / Thérapeute",
+                    "Clinique vétérinaire"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`vitrine-health-${type}`} />
+                      <label htmlFor={`vitrine-health-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-3">
+                <Label>Fonctionnalités souhaitées</Label>
+                {[
+                  "Prise de rendez-vous en ligne",
+                  "Présentation des services",
+                  "Équipe et spécialités",
+                  "Témoignages patients",
+                  "FAQ santé",
+                  "Formulaire de contact sécurisé",
+                  "Carte / Accès"
+                ].map((feature) => (
+                  <div key={feature} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`vitrine-health-${feature}`}
+                      checked={(data.healthVitrineFeatures || []).includes(feature)}
+                      onCheckedChange={() => toggleItem("healthVitrineFeatures", feature)}
+                    />
+                    <label htmlFor={`vitrine-health-${feature}`} className="text-sm cursor-pointer">
+                      {feature}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
+
+          {/* Questions spécifiques vitrine - Construction */}
+          {data.industry === "construction" && (
+            <Card className="p-4 space-y-4 bg-accent/5 border-accent/30 mt-4">
+              <Label className="text-base font-bold text-foreground">
+                Questions spécifiques - Construction
+              </Label>
+              
+              <div className="space-y-2">
+                <Label>Type d'entreprise *</Label>
+                <RadioGroup
+                  value={data.constructionVitrineType || ""}
+                  onValueChange={(value) => onChange({ constructionVitrineType: value })}
+                >
+                  {[
+                    "Entrepreneur général",
+                    "Rénovation résidentielle",
+                    "Construction commerciale",
+                    "Électricien / Plombier",
+                    "Paysagiste / Aménagement extérieur",
+                    "Toiture / Revêtement"
+                  ].map((type) => (
+                    <div key={type} className="flex items-center space-x-2">
+                      <RadioGroupItem value={type} id={`vitrine-constr-${type}`} />
+                      <label htmlFor={`vitrine-constr-${type}`} className="text-sm cursor-pointer">
+                        {type}
+                      </label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              </div>
+
+              <div className="space-y-3">
+                <Label>Éléments à mettre en avant</Label>
+                {[
+                  "Portfolio de projets",
+                  "Services offerts",
+                  "Demande de soumission",
+                  "Témoignages clients",
+                  "Certifications / Licences",
+                  "Zone de service",
+                  "Équipe et expertise"
+                ].map((element) => (
+                  <div key={element} className="flex items-center space-x-2">
+                    <Checkbox
+                      id={`vitrine-constr-${element}`}
+                      checked={(data.constructionVitrineElements || []).includes(element)}
+                      onCheckedChange={() => toggleItem("constructionVitrineElements", element)}
+                    />
+                    <label htmlFor={`vitrine-constr-${element}`} className="text-sm cursor-pointer">
+                      {element}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
         </Card>
       )}
 
