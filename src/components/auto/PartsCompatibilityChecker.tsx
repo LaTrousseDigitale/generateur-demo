@@ -209,8 +209,7 @@ export const PartsCompatibilityChecker = ({
                   <Button 
                     onClick={() => handleCheckCompatibility(part.id)}
                     disabled={checking && isSelected}
-                    variant="outline"
-                    className="w-full rounded-xl font-semibold transition-all hover:scale-[1.02] border-white/20 text-white hover:bg-white/10"
+                    className="w-full rounded-xl font-semibold transition-all hover:scale-[1.02] bg-white/10 border border-white/20 text-slate-200 hover:bg-white/20 hover:text-white"
                   >
                     {checking && isSelected ? (
                       <>
