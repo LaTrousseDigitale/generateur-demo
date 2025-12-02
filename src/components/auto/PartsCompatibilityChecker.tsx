@@ -67,14 +67,14 @@ export const PartsCompatibilityChecker = ({
       case "futuriste":
         return {
           vehicleCard: "bg-white/10 backdrop-blur-xl border border-white/20",
-          iconBg: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
+          iconBg: "",
           title: "text-white",
           subtitle: "text-slate-400",
-          price: "text-indigo-400",
-          badge: "bg-amber-500/20 text-amber-300 border border-amber-500/30",
-          partCard: "bg-white/10 backdrop-blur-xl border border-white/20 hover:shadow-[0_0_30px_rgba(99,102,241,0.2)]",
-          buttonDefault: "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white",
-          buttonOutline: "bg-white/10 border border-white/20 text-indigo-300 hover:bg-white/20",
+          price: "",
+          badge: "text-amber-300 border border-amber-500/30",
+          partCard: "bg-white/10 backdrop-blur-xl border border-white/20 hover:-translate-y-1",
+          buttonDefault: "text-white",
+          buttonOutline: "bg-white/10 border border-white/20 text-slate-300 hover:bg-white/20",
         };
       case "rustique":
         return {
@@ -91,14 +91,14 @@ export const PartsCompatibilityChecker = ({
       default:
         return {
           vehicleCard: "bg-white border border-slate-200",
-          iconBg: `bg-[${primaryColor}15]`,
+          iconBg: "",
           title: "text-slate-900",
           subtitle: "text-slate-500",
-          price: `text-[${primaryColor}]`,
+          price: "",
           badge: "bg-amber-100 text-amber-700 border border-amber-200",
           partCard: "bg-white border border-slate-200 hover:shadow-lg",
-          buttonDefault: `bg-[${primaryColor}] text-white`,
-          buttonOutline: `border-[${primaryColor}] text-[${primaryColor}] bg-white`,
+          buttonDefault: "text-white",
+          buttonOutline: "",
         };
     }
   };
@@ -114,14 +114,17 @@ export const PartsCompatibilityChecker = ({
   return (
     <div className="space-y-6">
       {/* Vehicle Display */}
-      <Card className={`${styles.vehicleCard} rounded-xl p-6`}>
+      <Card 
+        className={`${styles.vehicleCard} rounded-xl p-6`}
+        style={{ boxShadow: theme === 'futuriste' ? `0 0 30px ${primaryColor}20` : undefined }}
+      >
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div className="flex items-center gap-4">
             <div 
               className={`w-12 h-12 rounded-xl flex items-center justify-center ${styles.iconBg}`}
-              style={{ backgroundColor: theme === 'moderne' ? `${primaryColor}15` : undefined }}
+              style={{ backgroundColor: theme !== 'rustique' ? `${primaryColor}20` : undefined }}
             >
-              <Car className="w-6 h-6" style={{ color: theme === 'moderne' ? primaryColor : theme === 'futuriste' ? '#818cf8' : '#fbbf24' }} />
+              <Car className="w-6 h-6" style={{ color: theme !== 'rustique' ? primaryColor : '#fbbf24' }} />
             </div>
             <div>
               <p className={`text-sm ${styles.subtitle}`}>Véhicule sélectionné</p>
@@ -131,7 +134,10 @@ export const PartsCompatibilityChecker = ({
             </div>
           </div>
           {isDemoMode && (
-            <Badge className={styles.badge}>
+            <Badge 
+              className={styles.badge}
+              style={{ backgroundColor: theme === 'futuriste' ? `${primaryColor}20` : undefined }}
+            >
               Mode démonstration
             </Badge>
           )}
@@ -153,6 +159,7 @@ export const PartsCompatibilityChecker = ({
               style={{
                 borderColor: hasResult ? resultColors?.border : undefined,
                 backgroundColor: hasResult && theme === 'moderne' ? resultColors?.bg : undefined,
+                boxShadow: theme === 'futuriste' && !hasResult ? `0 0 20px ${primaryColor}15` : undefined,
               }}
             >
               <div className="flex justify-between items-start mb-3">
@@ -174,7 +181,7 @@ export const PartsCompatibilityChecker = ({
                 )}
               </div>
 
-              <p className={`text-lg font-bold mb-4 ${styles.price}`} style={{ color: theme === 'moderne' ? primaryColor : undefined }}>
+              <p className={`text-lg font-bold mb-4 ${styles.price}`} style={{ color: theme !== 'rustique' ? primaryColor : undefined }}>
                 {part.price} CAD
               </p>
 
@@ -200,9 +207,10 @@ export const PartsCompatibilityChecker = ({
                 variant={hasResult ? "outline" : "default"}
                 className={`w-full rounded-lg font-semibold ${hasResult ? styles.buttonOutline : styles.buttonDefault}`}
                 style={{ 
-                  backgroundColor: !hasResult && theme === 'moderne' ? primaryColor : undefined,
-                  borderColor: hasResult && theme === 'moderne' ? primaryColor : undefined,
-                  color: hasResult && theme === 'moderne' ? primaryColor : undefined,
+                  backgroundColor: !hasResult && theme !== 'rustique' ? primaryColor : undefined,
+                  borderColor: hasResult && theme !== 'rustique' ? primaryColor : undefined,
+                  color: hasResult && theme !== 'rustique' ? primaryColor : undefined,
+                  boxShadow: !hasResult && theme === 'futuriste' ? `0 0 15px ${primaryColor}40` : undefined,
                 }}
               >
                 {checking && isSelected ? (

@@ -117,21 +117,21 @@ export const OEMAftermarketCatalog = ({
       case "futuriste":
         return {
           filterCard: "bg-white/10 backdrop-blur-xl border border-white/20",
-          productCard: "bg-white/10 backdrop-blur-xl border border-white/20 hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] hover:-translate-y-1",
+          productCard: "bg-white/10 backdrop-blur-xl border border-white/20 hover:-translate-y-1",
           emptyCard: "bg-white/10 backdrop-blur-xl border border-white/20",
           label: "text-slate-300",
           title: "text-white",
           subtitle: "text-slate-400",
-          price: "text-indigo-400",
+          price: "",
           text: "text-slate-300",
           metaText: "text-slate-500",
           tabsBg: "bg-white/5 border border-white/10",
-          tabActive: "data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white",
+          tabActive: "",
           input: "bg-white/10 border border-white/20 text-white",
-          badgeOem: "bg-gradient-to-r from-indigo-500 to-purple-500 text-white",
-          badgeAftermarket: "bg-gradient-to-r from-emerald-500 to-teal-500 text-white",
-          badgeStock: "bg-amber-500/20 text-amber-300 border border-amber-500/30",
-          buttonPrimary: "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.3)]",
+          badgeOem: "text-white",
+          badgeAftermarket: "bg-emerald-500 text-white",
+          badgeStock: "text-amber-300 border border-amber-500/30",
+          buttonPrimary: "text-white",
           buttonSecondary: "bg-white/10 border border-white/20 text-slate-300",
           checkIcon: "text-emerald-400",
           stockIcon: "text-emerald-400",
@@ -166,16 +166,16 @@ export const OEMAftermarketCatalog = ({
           label: "text-slate-700",
           title: "text-slate-900",
           subtitle: "text-slate-500",
-          price: `text-[${primaryColor}]`,
+          price: "",
           text: "text-slate-600",
           metaText: "text-slate-500",
           tabsBg: "bg-slate-100",
           tabActive: "data-[state=active]:bg-white data-[state=active]:shadow-sm",
           input: "bg-slate-50 border border-slate-200 text-slate-900",
-          badgeOem: `bg-[${primaryColor}] text-white`,
+          badgeOem: "text-white",
           badgeAftermarket: "bg-emerald-500 text-white",
           badgeStock: "bg-amber-100 text-amber-700 border border-amber-200",
-          buttonPrimary: `bg-[${primaryColor}] text-white`,
+          buttonPrimary: "text-white",
           buttonSecondary: "bg-slate-100 text-slate-600",
           checkIcon: "text-emerald-500",
           stockIcon: "text-emerald-600",
@@ -198,18 +198,30 @@ export const OEMAftermarketCatalog = ({
                 <TabsTrigger 
                   value="all" 
                   className={`rounded-md text-sm ${styles.tabActive}`}
+                  style={{ 
+                    backgroundColor: selectedFilter === 'all' && theme !== 'rustique' ? primaryColor : undefined,
+                    color: selectedFilter === 'all' && theme !== 'rustique' ? 'white' : undefined
+                  }}
                 >
                   Tous
                 </TabsTrigger>
                 <TabsTrigger 
                   value="oem"
                   className={`rounded-md text-sm ${styles.tabActive}`}
+                  style={{ 
+                    backgroundColor: selectedFilter === 'oem' && theme !== 'rustique' ? primaryColor : undefined,
+                    color: selectedFilter === 'oem' && theme !== 'rustique' ? 'white' : undefined
+                  }}
                 >
                   OEM
                 </TabsTrigger>
                 <TabsTrigger 
                   value="aftermarket"
                   className={`rounded-md text-sm ${styles.tabActive}`}
+                  style={{ 
+                    backgroundColor: selectedFilter === 'aftermarket' && theme !== 'rustique' ? primaryColor : undefined,
+                    color: selectedFilter === 'aftermarket' && theme !== 'rustique' ? 'white' : undefined
+                  }}
                 >
                   Aftermarket
                 </TabsTrigger>
@@ -220,7 +232,7 @@ export const OEMAftermarketCatalog = ({
           {/* Price Range */}
           <div>
             <label className={`block text-sm font-semibold mb-3 ${styles.label}`}>
-              Prix: <span style={{ color: theme === 'moderne' ? primaryColor : theme === 'futuriste' ? '#818cf8' : '#fbbf24' }}>{priceRange[0]} $ - {priceRange[1]} $ CAD</span>
+              Prix: <span style={{ color: primaryColor }}>{priceRange[0]} $ - {priceRange[1]} $ CAD</span>
             </label>
             <Slider
               value={priceRange}
@@ -250,7 +262,7 @@ export const OEMAftermarketCatalog = ({
 
       {/* Results Count */}
       <div>
-        <span className="font-semibold" style={{ color: theme === 'moderne' ? primaryColor : theme === 'futuriste' ? '#818cf8' : '#fbbf24' }}>
+        <span className="font-semibold" style={{ color: primaryColor }}>
           {filteredParts.length} pièce{filteredParts.length > 1 ? 's' : ''} trouvée{filteredParts.length > 1 ? 's' : ''}
         </span>
       </div>
@@ -261,17 +273,21 @@ export const OEMAftermarketCatalog = ({
           <Card 
             key={part.id} 
             className={`${styles.productCard} rounded-xl p-6 transition-all duration-300`}
+            style={{ boxShadow: theme === 'futuriste' ? `0 0 25px ${primaryColor}20` : undefined }}
           >
             {/* Tags */}
             <div className="flex justify-between items-start mb-4">
               <Badge 
                 className={`border-0 ${part.type === 'oem' ? styles.badgeOem : styles.badgeAftermarket}`}
-                style={{ backgroundColor: part.type === 'oem' && theme === 'moderne' ? primaryColor : undefined }}
+                style={{ backgroundColor: part.type === 'oem' && theme !== 'rustique' ? primaryColor : undefined }}
               >
                 {part.type === 'oem' ? 'OEM' : 'Aftermarket'}
               </Badge>
               {!part.inStock && (
-                <Badge className={styles.badgeStock}>
+                <Badge 
+                  className={styles.badgeStock}
+                  style={{ backgroundColor: theme === 'futuriste' ? `${primaryColor}20` : undefined }}
+                >
                   Sur commande
                 </Badge>
               )}
@@ -295,7 +311,7 @@ export const OEMAftermarketCatalog = ({
               <div className="flex items-baseline gap-2">
                 <span 
                   className={`text-2xl font-black ${styles.price}`}
-                  style={{ color: theme === 'moderne' ? primaryColor : undefined }}
+                  style={{ color: theme !== 'rustique' ? primaryColor : undefined }}
                 >
                   {part.price.toLocaleString('fr-CA', { minimumFractionDigits: 2 })} $
                 </span>
@@ -334,7 +350,10 @@ export const OEMAftermarketCatalog = ({
             {/* CTA Button */}
             <Button 
               className={`w-full rounded-lg font-semibold ${part.inStock ? styles.buttonPrimary : styles.buttonSecondary}`}
-              style={{ backgroundColor: part.inStock && theme === 'moderne' ? primaryColor : undefined }}
+              style={{ 
+                backgroundColor: part.inStock && theme !== 'rustique' ? primaryColor : undefined,
+                boxShadow: part.inStock && theme === 'futuriste' ? `0 0 15px ${primaryColor}40` : undefined
+              }}
             >
               <ShoppingCart className="w-4 h-4 mr-2" />
               {part.inStock ? 'Ajouter au panier' : 'Commander'}

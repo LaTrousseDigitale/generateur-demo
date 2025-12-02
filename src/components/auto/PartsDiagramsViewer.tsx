@@ -74,18 +74,18 @@ export const PartsDiagramsViewer = ({
     switch(theme) {
       case "futuriste":
         return {
-          card: "bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_0_30px_rgba(99,102,241,0.15)] hover:shadow-[0_0_40px_rgba(99,102,241,0.25)] hover:-translate-y-1",
-          iconBg: "bg-gradient-to-br from-indigo-500/20 to-purple-500/20",
+          card: "bg-white/10 backdrop-blur-xl border border-white/20 hover:-translate-y-1",
+          iconBg: "",
           title: "text-white",
-          subtitle: "text-indigo-300",
+          subtitle: "text-slate-300",
           text: "text-slate-400",
           meta: "text-slate-500",
-          badge: "bg-gradient-to-r from-indigo-500 to-purple-500 text-white",
-          buttonPrimary: "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.3)]",
+          badge: "text-white",
+          buttonPrimary: "text-white",
           buttonSecondary: "bg-white/10 border border-white/20 text-slate-300 hover:bg-white/20",
           dialogBg: "bg-slate-900 border border-white/20",
           dialogTitle: "text-white",
-          infoBg: "bg-gradient-to-r from-indigo-500/10 to-purple-500/10 border border-indigo-500/20",
+          infoBg: "",
           previewBg: "bg-white/5 border-2 border-dashed border-white/20",
         };
       case "rustique":
@@ -107,23 +107,29 @@ export const PartsDiagramsViewer = ({
       default: // moderne
         return {
           card: "bg-white border border-slate-200 hover:shadow-xl hover:-translate-y-1",
-          iconBg: `bg-[${primaryColor}15]`,
+          iconBg: "",
           title: "text-slate-900",
-          subtitle: `text-[${primaryColor}]`,
+          subtitle: "",
           text: "text-slate-500",
           meta: "text-slate-400",
-          badge: `bg-[${primaryColor}] text-white`,
-          buttonPrimary: `bg-[${primaryColor}] text-white`,
+          badge: "text-white",
+          buttonPrimary: "text-white",
           buttonSecondary: "border-slate-200 text-slate-600 hover:bg-slate-50",
           dialogBg: "bg-white border border-slate-200",
           dialogTitle: "text-slate-900",
-          infoBg: `bg-[${primaryColor}10]`,
+          infoBg: "",
           previewBg: "bg-slate-50 border-2 border-dashed border-slate-200",
         };
     }
   };
 
   const styles = getThemeStyles();
+
+  // Dynamic styles based on primaryColor for futuriste/moderne
+  const getCardShadow = () => {
+    if (theme === 'futuriste') return { boxShadow: `0 0 30px ${primaryColor}25` };
+    return {};
+  };
 
   return (
     <>
@@ -134,13 +140,14 @@ export const PartsDiagramsViewer = ({
             <Card 
               key={diagram.id} 
               className={`${styles.card} rounded-xl p-6 transition-all duration-300`}
+              style={getCardShadow()}
             >
               <div className="flex items-start gap-5">
                 <div 
                   className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${styles.iconBg}`}
-                  style={{ backgroundColor: theme === 'moderne' ? `${primaryColor}15` : undefined }}
+                  style={{ backgroundColor: theme !== 'rustique' ? `${primaryColor}15` : undefined }}
                 >
-                  <IconComponent className="w-7 h-7" style={{ color: theme === 'moderne' ? primaryColor : theme === 'futuriste' ? '#818cf8' : '#fbbf24' }} />
+                  <IconComponent className="w-7 h-7" style={{ color: theme !== 'rustique' ? primaryColor : '#fbbf24' }} />
                 </div>
                 
                 <div className="flex-1 min-w-0">
@@ -148,13 +155,13 @@ export const PartsDiagramsViewer = ({
                     <h4 className={`font-bold text-lg ${styles.title}`}>{diagram.title}</h4>
                     <Badge 
                       className={`flex-shrink-0 border-0 ${styles.badge}`}
-                      style={{ backgroundColor: theme === 'moderne' ? primaryColor : undefined }}
+                      style={{ backgroundColor: theme !== 'rustique' ? primaryColor : undefined }}
                     >
                       {diagram.format}
                     </Badge>
                   </div>
                   
-                  <p className={`text-sm font-medium mb-2 ${styles.subtitle}`} style={{ color: theme === 'moderne' ? primaryColor : undefined }}>{diagram.type}</p>
+                  <p className={`text-sm font-medium mb-2 ${styles.subtitle}`} style={{ color: theme !== 'rustique' ? primaryColor : undefined }}>{diagram.type}</p>
                   <p className={`text-sm mb-2 line-clamp-2 ${styles.text}`}>{diagram.description}</p>
                   <p className={`text-xs mb-4 ${styles.meta}`}>{diagram.pages}</p>
 
@@ -163,7 +170,10 @@ export const PartsDiagramsViewer = ({
                       onClick={() => handleViewDiagram(diagram)}
                       size="sm"
                       className={`flex-1 rounded-lg font-semibold ${styles.buttonPrimary}`}
-                      style={{ backgroundColor: theme === 'moderne' ? primaryColor : undefined }}
+                      style={{ 
+                        backgroundColor: theme !== 'rustique' ? primaryColor : undefined,
+                        boxShadow: theme === 'futuriste' ? `0 0 15px ${primaryColor}40` : undefined
+                      }}
                     >
                       <ZoomIn className="w-4 h-4 mr-2" />
                       Visualiser
@@ -192,7 +202,10 @@ export const PartsDiagramsViewer = ({
               <Button 
                 onClick={() => selectedDiagram && handleDownload(selectedDiagram.title)}
                 className={`rounded-lg ${styles.buttonPrimary}`}
-                style={{ backgroundColor: theme === 'moderne' ? primaryColor : undefined }}
+                style={{ 
+                  backgroundColor: theme !== 'rustique' ? primaryColor : undefined,
+                  boxShadow: theme === 'futuriste' ? `0 0 15px ${primaryColor}40` : undefined
+                }}
               >
                 <Download className="w-4 h-4 mr-2" />
                 Télécharger
@@ -201,17 +214,23 @@ export const PartsDiagramsViewer = ({
           </DialogHeader>
           
           <div className="space-y-6">
-            <div className={`rounded-xl p-5 ${styles.infoBg}`} style={{ backgroundColor: theme === 'moderne' ? `${primaryColor}10` : undefined }}>
-              <p className={`text-sm font-medium mb-1 ${styles.subtitle}`} style={{ color: theme === 'moderne' ? primaryColor : undefined }}>{selectedDiagram?.type}</p>
+            <div 
+              className={`rounded-xl p-5 ${styles.infoBg}`} 
+              style={{ 
+                backgroundColor: theme !== 'rustique' ? `${primaryColor}10` : undefined,
+                borderColor: theme === 'futuriste' ? `${primaryColor}30` : undefined
+              }}
+            >
+              <p className={`text-sm font-medium mb-1 ${styles.subtitle}`} style={{ color: theme !== 'rustique' ? primaryColor : undefined }}>{selectedDiagram?.type}</p>
               <p className={`text-sm ${styles.text}`}>{selectedDiagram?.description}</p>
             </div>
 
             <div className={`rounded-xl p-12 min-h-[400px] flex flex-col items-center justify-center ${styles.previewBg}`}>
               <div 
                 className={`w-20 h-20 rounded-xl flex items-center justify-center mb-6 ${styles.iconBg}`}
-                style={{ backgroundColor: theme === 'moderne' ? `${primaryColor}15` : undefined }}
+                style={{ backgroundColor: theme !== 'rustique' ? `${primaryColor}15` : undefined }}
               >
-                <Maximize2 className="w-10 h-10" style={{ color: theme === 'moderne' ? primaryColor : theme === 'futuriste' ? '#818cf8' : '#fbbf24' }} />
+                <Maximize2 className="w-10 h-10" style={{ color: theme !== 'rustique' ? primaryColor : '#fbbf24' }} />
               </div>
               <p className={`font-semibold text-lg text-center mb-2 ${styles.title}`}>Aperçu du diagramme</p>
               <p className={`text-sm text-center max-w-md mb-8 ${styles.text}`}>
@@ -224,7 +243,10 @@ export const PartsDiagramsViewer = ({
                 </Button>
                 <Button 
                   className={`rounded-lg ${styles.buttonPrimary}`}
-                  style={{ backgroundColor: theme === 'moderne' ? primaryColor : undefined }}
+                  style={{ 
+                    backgroundColor: theme !== 'rustique' ? primaryColor : undefined,
+                    boxShadow: theme === 'futuriste' ? `0 0 15px ${primaryColor}40` : undefined
+                  }}
                 >
                   Page suivante
                 </Button>
