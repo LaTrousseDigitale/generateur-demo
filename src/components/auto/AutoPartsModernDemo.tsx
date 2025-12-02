@@ -20,6 +20,13 @@ import productAuto4 from "@/assets/product-auto-4.jpg";
 import heroAutoBanner from "@/assets/hero-auto-banner.png";
 import promoAutoPartsRed from "@/assets/promo-auto-parts-red.jpg";
 import promoAutoPartsDark from "@/assets/promo-auto-parts-dark.jpg";
+// Category images
+import categoryWheelsTires from "@/assets/category-wheels-tires.jpg";
+import categorySmartDevices from "@/assets/category-smart-devices.jpg";
+import categoryOilsFluids from "@/assets/category-oils-fluids.jpg";
+import categoryLights from "@/assets/category-lights.jpg";
+import categoryReplacementParts from "@/assets/category-replacement-parts.jpg";
+import categoryTools from "@/assets/category-tools.jpg";
 
 interface AutoPartsModernDemoProps {
   config: DemoConfig;
@@ -69,12 +76,36 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
   ];
 
   const categories = [
-    { name: "Moteur & filtres", icon: Settings, count: "2,450+" },
-    { name: "Freins & suspension", icon: Disc, count: "1,890+" },
-    { name: "Électrique & batteries", icon: Battery, count: "1,240+" },
-    { name: "Carrosserie & éclairage", icon: Car, count: "3,100+" },
-    { name: "Performance", icon: Gauge, count: "890+" },
-    { name: "Outils & équipement", icon: Wrench, count: "1,560+" },
+    { 
+      name: "Roues & pneus", 
+      image: categoryWheelsTires,
+      items: ["Pneus", "Accessoires pneus", "Chaînes à neige", "Jantes", "Accessoires jantes"]
+    },
+    { 
+      name: "Appareils intelligents", 
+      image: categorySmartDevices,
+      items: ["Caméra tableau de bord", "Appareils Bluetooth", "Connexion USB", "Écran TV", "Haut-parleurs auto"]
+    },
+    { 
+      name: "Huiles & fluides", 
+      image: categoryOilsFluids,
+      items: ["Huiles moteur", "Liquides de frein", "Réparation carrosserie", "Direction assistée", "Liquides transmission"]
+    },
+    { 
+      name: "Éclairage", 
+      image: categoryLights,
+      items: ["Phares avant", "Éclairage intérieur", "Feux arrière LED", "Feux d'avertissement", "Ruban adhésif/Réparation"]
+    },
+    { 
+      name: "Pièces de rechange", 
+      image: categoryReplacementParts,
+      items: ["Pièces de frein", "Amortisseurs & suspension", "Échappement & émission", "Filtres de rechange", "Éclairage & électrique"]
+    },
+    { 
+      name: "Outils & équipement", 
+      image: categoryTools,
+      items: ["Coffres à outils", "Ensembles d'outils", "Clés à chocs", "Compresseurs à air", "Outils manuels"]
+    },
   ];
 
   const brands = [
@@ -526,29 +557,56 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           SHOP BY CATEGORIES
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-16 bg-slate-900 text-white">
+      <section className="py-16 bg-slate-100">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <Badge className="bg-white/10 text-white mb-4">Parcourir</Badge>
-            <h2 className="text-3xl md:text-4xl font-bold">
+            <Badge 
+              className="mb-4"
+              style={{ backgroundColor: `${config.primaryColor}15`, color: config.primaryColor }}
+            >
+              Parcourir
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
               • MAGASINER PAR CATÉGORIE •
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {categories.map((cat, i) => (
               <Card 
                 key={i}
-                className="group bg-slate-800 border-slate-700 rounded-xl p-6 text-center cursor-pointer hover:bg-slate-700 transition-all"
+                className="group bg-white border-0 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-all flex items-start gap-4"
               >
-                <div 
-                  className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center transition-transform group-hover:scale-110"
-                  style={{ backgroundColor: `${config.primaryColor}20` }}
-                >
-                  <cat.icon className="w-8 h-8" style={{ color: config.primaryColor }} />
+                <div className="w-28 h-28 flex-shrink-0">
+                  <img 
+                    src={cat.image} 
+                    alt={cat.name}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform"
+                  />
                 </div>
-                <h3 className="font-semibold text-white text-sm mb-1">{cat.name}</h3>
-                <p className="text-slate-400 text-xs">{cat.count} produits</p>
+                <div className="flex-1">
+                  <h3 
+                    className="font-bold text-lg mb-3 uppercase"
+                    style={{ color: config.primaryColor }}
+                  >
+                    {cat.name}
+                  </h3>
+                  <ul className="space-y-1 mb-4">
+                    {cat.items.map((item, j) => (
+                      <li key={j} className="text-slate-600 text-sm flex items-center gap-2">
+                        <span className="w-1 h-1 bg-slate-400 rounded-full" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                  <Button 
+                    size="sm"
+                    className="text-white text-xs"
+                    style={{ backgroundColor: config.primaryColor }}
+                  >
+                    Voir plus
+                  </Button>
+                </div>
               </Card>
             ))}
           </div>
