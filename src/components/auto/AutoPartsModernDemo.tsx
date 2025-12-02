@@ -234,32 +234,28 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
           className="w-full h-auto object-cover min-h-[300px] md:min-h-[400px]"
         />
         
-        {/* Overlay texte français - positionné sur la gauche */}
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full md:w-1/2 lg:w-2/5 h-full flex items-center pl-6 md:pl-12 lg:pl-20">
-            <div className="space-y-3 md:space-y-4">
-              <p className="text-sm md:text-lg lg:text-xl text-slate-600 italic">
-                <span className="font-bold text-slate-800">Large sélection</span> de pièces auto
-              </p>
-              <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-none drop-shadow-sm">
-                AUX PLUS BAS
-              </h1>
-              <h1 
-                className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-none drop-shadow-sm"
-                style={{ color: config.primaryColor }}
-              >
-                PRIX!
-              </h1>
-              <div className="pt-2 md:pt-4">
-                <Button 
-                  size="lg"
-                  className="text-white px-5 md:px-8 py-2.5 md:py-3 text-xs md:text-base font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all"
-                  style={{ backgroundColor: config.primaryColor }}
-                >
-                  Explorer maintenant
-                </Button>
-              </div>
-            </div>
+        {/* Overlay texte français - centré */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center bg-white/80 backdrop-blur-sm px-8 py-6 md:px-12 md:py-8 rounded-2xl shadow-xl">
+            <p className="text-sm md:text-lg lg:text-xl text-slate-600 italic mb-2">
+              <span className="font-bold text-slate-800">Large sélection</span> de pièces auto
+            </p>
+            <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-none">
+              AUX PLUS BAS
+            </h1>
+            <h1 
+              className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-none mb-4 md:mb-6"
+              style={{ color: config.primaryColor }}
+            >
+              PRIX!
+            </h1>
+            <Button 
+              size="lg"
+              className="text-white px-5 md:px-8 py-2.5 md:py-3 text-xs md:text-base font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all"
+              style={{ backgroundColor: config.primaryColor }}
+            >
+              Explorer maintenant
+            </Button>
           </div>
         </div>
         
