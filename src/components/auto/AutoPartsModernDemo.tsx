@@ -716,7 +716,8 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
                 toast({ title: "Véhicule sélectionné", description: `${year} ${make} ${model}` });
               }}
               primaryColor={config.primaryColor} 
-              accentColor={config.accentColor || "#f97316"} 
+              accentColor={config.accentColor || "#f97316"}
+              theme="moderne"
             />
           </div>
         </section>
@@ -740,7 +741,8 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
             </div>
             <PartsDiagramsViewer 
               primaryColor={config.primaryColor} 
-              accentColor={config.accentColor || "#f97316"} 
+              accentColor={config.accentColor || "#f97316"}
+              theme="moderne"
             />
           </div>
         </section>
@@ -765,7 +767,8 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
             <PartsCompatibilityChecker 
               selectedVehicle={selectedYear && selectedMake && selectedModel ? { year: selectedYear, make: selectedMake, model: selectedModel } : null}
               primaryColor={config.primaryColor} 
-              accentColor={config.accentColor || "#f97316"} 
+              accentColor={config.accentColor || "#f97316"}
+              theme="moderne"
             />
           </div>
         </section>
@@ -789,7 +792,8 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
             </div>
             <OEMAftermarketCatalog 
               primaryColor={config.primaryColor} 
-              accentColor={config.accentColor || "#f97316"} 
+              accentColor={config.accentColor || "#f97316"}
+              theme="moderne"
             />
           </div>
         </section>

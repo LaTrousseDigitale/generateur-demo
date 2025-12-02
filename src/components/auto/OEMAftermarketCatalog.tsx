@@ -9,9 +9,14 @@ import { Slider } from "@/components/ui/slider";
 interface OEMAftermarketCatalogProps {
   primaryColor?: string;
   accentColor?: string;
+  theme?: "moderne" | "rustique" | "futuriste";
 }
 
-export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = "#f97316" }: OEMAftermarketCatalogProps) => {
+export const OEMAftermarketCatalog = ({ 
+  primaryColor = "#dc2626", 
+  accentColor = "#f97316",
+  theme = "moderne"
+}: OEMAftermarketCatalogProps) => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [selectedFilter, setSelectedFilter] = useState<'all' | 'oem' | 'aftermarket'>('all');
   const [sortBy, setSortBy] = useState<'price' | 'rating' | 'popularity'>('popularity');
@@ -106,31 +111,105 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
       return b.reviews - a.reviews;
     });
 
+  // Theme styles
+  const getThemeStyles = () => {
+    switch(theme) {
+      case "futuriste":
+        return {
+          filterCard: "bg-white/10 backdrop-blur-xl border border-white/20",
+          productCard: "bg-white/10 backdrop-blur-xl border border-white/20 hover:shadow-[0_0_30px_rgba(99,102,241,0.2)] hover:-translate-y-1",
+          emptyCard: "bg-white/10 backdrop-blur-xl border border-white/20",
+          label: "text-slate-300",
+          title: "text-white",
+          subtitle: "text-slate-400",
+          price: "text-indigo-400",
+          text: "text-slate-300",
+          metaText: "text-slate-500",
+          tabsBg: "bg-white/5 border border-white/10",
+          tabActive: "data-[state=active]:bg-gradient-to-r data-[state=active]:from-indigo-600 data-[state=active]:to-purple-600 data-[state=active]:text-white",
+          input: "bg-white/10 border border-white/20 text-white",
+          badgeOem: "bg-gradient-to-r from-indigo-500 to-purple-500 text-white",
+          badgeAftermarket: "bg-gradient-to-r from-emerald-500 to-teal-500 text-white",
+          badgeStock: "bg-amber-500/20 text-amber-300 border border-amber-500/30",
+          buttonPrimary: "bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.3)]",
+          buttonSecondary: "bg-white/10 border border-white/20 text-slate-300",
+          checkIcon: "text-emerald-400",
+          stockIcon: "text-emerald-400",
+        };
+      case "rustique":
+        return {
+          filterCard: "bg-stone-800/80 border border-amber-900/30",
+          productCard: "bg-stone-800/80 border border-amber-900/30 hover:border-amber-700/40 hover:-translate-y-1",
+          emptyCard: "bg-stone-800/80 border border-amber-900/30",
+          label: "text-stone-300",
+          title: "text-amber-50",
+          subtitle: "text-stone-400",
+          price: "text-amber-400",
+          text: "text-stone-300",
+          metaText: "text-stone-500",
+          tabsBg: "bg-stone-700/50 border border-amber-900/30",
+          tabActive: "data-[state=active]:bg-amber-700 data-[state=active]:text-white",
+          input: "bg-stone-700/50 border border-amber-900/30 text-amber-50",
+          badgeOem: "bg-amber-700 text-white",
+          badgeAftermarket: "bg-emerald-700 text-white",
+          badgeStock: "bg-amber-900/30 text-amber-200 border border-amber-800/30",
+          buttonPrimary: "bg-amber-700 hover:bg-amber-600 text-white",
+          buttonSecondary: "bg-stone-700/50 border border-amber-900/30 text-stone-300",
+          checkIcon: "text-emerald-500",
+          stockIcon: "text-emerald-500",
+        };
+      default:
+        return {
+          filterCard: "bg-white border border-slate-200",
+          productCard: "bg-white border border-slate-200 hover:shadow-xl hover:-translate-y-1",
+          emptyCard: "bg-white border border-slate-200",
+          label: "text-slate-700",
+          title: "text-slate-900",
+          subtitle: "text-slate-500",
+          price: `text-[${primaryColor}]`,
+          text: "text-slate-600",
+          metaText: "text-slate-500",
+          tabsBg: "bg-slate-100",
+          tabActive: "data-[state=active]:bg-white data-[state=active]:shadow-sm",
+          input: "bg-slate-50 border border-slate-200 text-slate-900",
+          badgeOem: `bg-[${primaryColor}] text-white`,
+          badgeAftermarket: "bg-emerald-500 text-white",
+          badgeStock: "bg-amber-100 text-amber-700 border border-amber-200",
+          buttonPrimary: `bg-[${primaryColor}] text-white`,
+          buttonSecondary: "bg-slate-100 text-slate-600",
+          checkIcon: "text-emerald-500",
+          stockIcon: "text-emerald-600",
+        };
+    }
+  };
+
+  const styles = getThemeStyles();
+
   return (
     <div className="space-y-8">
       {/* Filters Card */}
-      <Card className="bg-white border border-slate-200 rounded-xl p-6">
+      <Card className={`${styles.filterCard} rounded-xl p-6`}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Type Filter */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-3">Type de pièce</label>
+            <label className={`block text-sm font-semibold mb-3 ${styles.label}`}>Type de pièce</label>
             <Tabs value={selectedFilter} onValueChange={(v) => setSelectedFilter(v as any)}>
-              <TabsList className="grid w-full grid-cols-3 bg-slate-100 p-1 rounded-lg">
+              <TabsList className={`grid w-full grid-cols-3 p-1 rounded-lg ${styles.tabsBg}`}>
                 <TabsTrigger 
                   value="all" 
-                  className="rounded-md text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className={`rounded-md text-sm ${styles.tabActive}`}
                 >
                   Tous
                 </TabsTrigger>
                 <TabsTrigger 
                   value="oem"
-                  className="rounded-md text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className={`rounded-md text-sm ${styles.tabActive}`}
                 >
                   OEM
                 </TabsTrigger>
                 <TabsTrigger 
                   value="aftermarket"
-                  className="rounded-md text-sm data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                  className={`rounded-md text-sm ${styles.tabActive}`}
                 >
                   Aftermarket
                 </TabsTrigger>
@@ -140,8 +219,8 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
 
           {/* Price Range */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-3">
-              Prix: <span style={{ color: primaryColor }}>{priceRange[0]} $ - {priceRange[1]} $ CAD</span>
+            <label className={`block text-sm font-semibold mb-3 ${styles.label}`}>
+              Prix: <span style={{ color: theme === 'moderne' ? primaryColor : theme === 'futuriste' ? '#818cf8' : '#fbbf24' }}>{priceRange[0]} $ - {priceRange[1]} $ CAD</span>
             </label>
             <Slider
               value={priceRange}
@@ -155,11 +234,11 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
 
           {/* Sort */}
           <div>
-            <label className="block text-sm font-semibold text-slate-700 mb-3">Trier par</label>
+            <label className={`block text-sm font-semibold mb-3 ${styles.label}`}>Trier par</label>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="w-full px-4 py-2.5 rounded-lg bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
+              className={`w-full px-4 py-2.5 rounded-lg transition-all ${styles.input}`}
             >
               <option value="popularity">Popularité</option>
               <option value="price">Prix</option>
@@ -171,7 +250,7 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
 
       {/* Results Count */}
       <div>
-        <span style={{ color: primaryColor }} className="font-semibold">
+        <span className="font-semibold" style={{ color: theme === 'moderne' ? primaryColor : theme === 'futuriste' ? '#818cf8' : '#fbbf24' }}>
           {filteredParts.length} pièce{filteredParts.length > 1 ? 's' : ''} trouvée{filteredParts.length > 1 ? 's' : ''}
         </span>
       </div>
@@ -181,46 +260,47 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
         {filteredParts.map((part) => (
           <Card 
             key={part.id} 
-            className="bg-white border border-slate-200 rounded-xl p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+            className={`${styles.productCard} rounded-xl p-6 transition-all duration-300`}
           >
             {/* Tags */}
             <div className="flex justify-between items-start mb-4">
               <Badge 
-                className="text-white border-0"
-                style={{ 
-                  backgroundColor: part.type === 'oem' ? primaryColor : '#10B981'
-                }}
+                className={`border-0 ${part.type === 'oem' ? styles.badgeOem : styles.badgeAftermarket}`}
+                style={{ backgroundColor: part.type === 'oem' && theme === 'moderne' ? primaryColor : undefined }}
               >
                 {part.type === 'oem' ? 'OEM' : 'Aftermarket'}
               </Badge>
               {!part.inStock && (
-                <Badge className="bg-amber-100 text-amber-700 border border-amber-200">
+                <Badge className={styles.badgeStock}>
                   Sur commande
                 </Badge>
               )}
             </div>
 
             {/* Title & Brand */}
-            <h4 className="font-bold text-lg text-slate-900 mb-1">{part.name}</h4>
-            <p className="text-slate-500 text-sm mb-3">{part.brand}</p>
+            <h4 className={`font-bold text-lg mb-1 ${styles.title}`}>{part.name}</h4>
+            <p className={`text-sm mb-3 ${styles.subtitle}`}>{part.brand}</p>
 
             {/* Rating */}
             <div className="flex items-center gap-2 mb-4">
               <div className="flex items-center">
                 <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                <span className="ml-1 text-sm font-semibold text-slate-900">{part.rating}</span>
+                <span className={`ml-1 text-sm font-semibold ${styles.title}`}>{part.rating}</span>
               </div>
-              <span className="text-sm text-slate-400">({part.reviews} avis)</span>
+              <span className={`text-sm ${styles.metaText}`}>({part.reviews} avis)</span>
             </div>
 
             {/* Price */}
             <div className="mb-4">
               <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-black" style={{ color: primaryColor }}>
+                <span 
+                  className={`text-2xl font-black ${styles.price}`}
+                  style={{ color: theme === 'moderne' ? primaryColor : undefined }}
+                >
                   {part.price.toLocaleString('fr-CA', { minimumFractionDigits: 2 })} $
                 </span>
                 {part.originalPrice && (
-                  <span className="text-sm text-slate-400 line-through">
+                  <span className={`text-sm line-through ${styles.metaText}`}>
                     {part.originalPrice.toLocaleString('fr-CA', { minimumFractionDigits: 2 })} $
                   </span>
                 )}
@@ -231,20 +311,20 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
             <div className="space-y-2 mb-4">
               {part.features.slice(0, 3).map((feature, idx) => (
                 <div key={idx} className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-slate-600">{feature}</span>
+                  <CheckCircle2 className={`w-4 h-4 mt-0.5 flex-shrink-0 ${styles.checkIcon}`} />
+                  <span className={`text-sm ${styles.text}`}>{feature}</span>
                 </div>
               ))}
             </div>
 
             {/* Meta */}
-            <div className="flex items-center gap-4 text-sm text-slate-500 mb-4">
+            <div className={`flex items-center gap-4 text-sm mb-4 ${styles.metaText}`}>
               <div className="flex items-center gap-1">
                 <Shield className="w-4 h-4" />
                 <span>{part.warranty}</span>
               </div>
               {part.inStock && (
-                <div className="flex items-center gap-1 text-emerald-600">
+                <div className={`flex items-center gap-1 ${styles.stockIcon}`}>
                   <Package className="w-4 h-4" />
                   <span>En stock</span>
                 </div>
@@ -253,8 +333,8 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
 
             {/* CTA Button */}
             <Button 
-              className="w-full rounded-lg font-semibold text-white"
-              style={{ backgroundColor: part.inStock ? primaryColor : '#64748b' }}
+              className={`w-full rounded-lg font-semibold ${part.inStock ? styles.buttonPrimary : styles.buttonSecondary}`}
+              style={{ backgroundColor: part.inStock && theme === 'moderne' ? primaryColor : undefined }}
             >
               <ShoppingCart className="w-4 h-4 mr-2" />
               {part.inStock ? 'Ajouter au panier' : 'Commander'}
@@ -264,10 +344,10 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#dc2626", accentColor = 
       </div>
 
       {filteredParts.length === 0 && (
-        <Card className="bg-white border border-slate-200 rounded-xl p-16 text-center">
-          <Package className="w-16 h-16 mx-auto mb-4 text-slate-300" />
-          <h4 className="text-xl font-bold text-slate-900 mb-2">Aucune pièce trouvée</h4>
-          <p className="text-slate-500">
+        <Card className={`${styles.emptyCard} rounded-xl p-16 text-center`}>
+          <Package className={`w-16 h-16 mx-auto mb-4 ${styles.metaText}`} />
+          <h4 className={`text-xl font-bold mb-2 ${styles.title}`}>Aucune pièce trouvée</h4>
+          <p className={styles.subtitle}>
             Essayez d'ajuster vos filtres pour voir plus de résultats
           </p>
         </Card>
