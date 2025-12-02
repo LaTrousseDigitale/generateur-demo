@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "./DemoGenerator";
+import { DynamicFeaturesSection } from "./DynamicFeaturesSection";
 import { 
   ArrowLeft, Download, Share2, ArrowRight, CheckCircle2, Star, Mail, 
   Phone, MapPin, Menu, Play, Sparkles, Award, Users, TrendingUp, 
@@ -904,6 +905,15 @@ export const ShowcaseWebsiteDemo = ({ config, onBack }: ShowcaseWebsiteDemoProps
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          DYNAMIC FEATURES SECTION
+      ═══════════════════════════════════════════════════════════════ */}
+      <DynamicFeaturesSection 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={theme === "moderne"}
+      />
 
       {/* ═══════════════════════════════════════════════════════════════
           FOOTER

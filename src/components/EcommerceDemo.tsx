@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "./DemoGenerator";
+import { DynamicFeaturesSection } from "./DynamicFeaturesSection";
 import { 
   ArrowLeft, Download, Share2, ShoppingCart, Search, Heart, Star, 
   TrendingUp, Filter, ChevronRight, Menu, ArrowRight, Truck, Shield,
@@ -878,6 +879,15 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          DYNAMIC FEATURES SECTION
+      ═══════════════════════════════════════════════════════════════ */}
+      <DynamicFeaturesSection 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={theme === "moderne"}
+      />
 
       {/* ═══════════════════════════════════════════════════════════════
           FOOTER

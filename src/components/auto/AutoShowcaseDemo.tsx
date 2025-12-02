@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "../DemoGenerator";
+import { DynamicFeaturesSection } from "../DynamicFeaturesSection";
 import { 
   ArrowLeft, ArrowRight, CheckCircle2, Star, Mail, 
   Phone, MapPin, Menu, Wrench, Shield, Clock,
@@ -480,95 +481,13 @@ export const AutoShowcaseDemo = ({ config, onBack }: AutoShowcaseDemoProps) => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          SELECTED FEATURES SECTION - Dynamic based on config
+          DYNAMIC FEATURES SECTION
       ═══════════════════════════════════════════════════════════════ */}
-      {((config.autoCompatibility && config.autoCompatibility.length > 0) || 
-        (config.websitePages && config.websitePages.length > 0) ||
-        (config.websiteSections && config.websiteSections.length > 0)) && (
-        <section className={`py-24 ${themeConfig.sectionAlt}`}>
-          <div className="container mx-auto px-6">
-            <div className="text-center mb-16">
-              <Badge 
-                className="mb-4"
-                style={{ backgroundColor: `${config.primaryColor}20`, color: config.primaryColor }}
-              >
-                Fonctionnalités
-              </Badge>
-              <h2 className={`text-4xl md:text-5xl font-black ${themeConfig.textPrimary}`}>
-                Votre site inclut
-              </h2>
-              <p className={`mt-4 text-lg ${themeConfig.textSecondary}`}>
-                Toutes les fonctionnalités sélectionnées pour votre projet
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {/* Pages principales */}
-              {config.websitePages && config.websitePages.map((page, index) => (
-                <div 
-                  key={`page-${index}`}
-                  className={`p-6 ${themeConfig.cardBg} transition-all duration-300 hover:scale-105`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div 
-                      className="w-12 h-12 flex items-center justify-center text-white"
-                      style={{ backgroundColor: config.primaryColor }}
-                    >
-                      <CheckCircle2 className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className={`font-bold ${themeConfig.textPrimary}`}>{page}</p>
-                      <p className={`text-sm ${themeConfig.textSecondary}`}>Page principale</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {/* Sections */}
-              {config.websiteSections && config.websiteSections.map((section, index) => (
-                <div 
-                  key={`section-${index}`}
-                  className={`p-6 ${themeConfig.cardBg} transition-all duration-300 hover:scale-105`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div 
-                      className="w-12 h-12 flex items-center justify-center text-white"
-                      style={{ backgroundColor: config.accentColor }}
-                    >
-                      <CheckCircle2 className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className={`font-bold ${themeConfig.textPrimary}`}>{section}</p>
-                      <p className={`text-sm ${themeConfig.textSecondary}`}>Section</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {/* Fonctionnalités industrie */}
-              {config.autoCompatibility && config.autoCompatibility.map((feature, index) => (
-                <div 
-                  key={`feature-${index}`}
-                  className={`p-6 ${themeConfig.cardBg} transition-all duration-300 hover:scale-105`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div 
-                      className="w-12 h-12 flex items-center justify-center text-white"
-                      style={{ backgroundColor: config.secondaryColor || config.primaryColor }}
-                    >
-                      <CheckCircle2 className="w-6 h-6" />
-                    </div>
-                    <div>
-                      <p className={`font-bold ${themeConfig.textPrimary}`}>{feature}</p>
-                      <p className={`text-sm ${themeConfig.textSecondary}`}>Fonctionnalité</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+      <DynamicFeaturesSection 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={isLightTheme}
+      />
 
       {/* ═══════════════════════════════════════════════════════════════
           TESTIMONIALS SECTION
