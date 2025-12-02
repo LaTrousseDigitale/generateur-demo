@@ -13,10 +13,18 @@ import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 
 // Import product images
-import productAuto1 from "@/assets/product-auto-1.jpg";
-import productAuto2 from "@/assets/product-auto-2.jpg";
-import productAuto3 from "@/assets/product-auto-3.jpg";
-import productAuto4 from "@/assets/product-auto-4.jpg";
+import productMotorOil from "@/assets/product-motor-oil.jpg";
+import productBrakePads from "@/assets/product-brake-pads.jpg";
+import productAirFilter from "@/assets/product-air-filter.jpg";
+import productBattery from "@/assets/product-battery.jpg";
+import productShocks from "@/assets/product-shocks.jpg";
+import productTimingBelt from "@/assets/product-timing-belt.jpg";
+import productSparkPlugs from "@/assets/product-spark-plugs.jpg";
+import productBrakeRotors from "@/assets/product-brake-rotors.jpg";
+import productAcCompressor from "@/assets/product-ac-compressor.jpg";
+import productLedHeadlights from "@/assets/product-led-headlights.jpg";
+import productRadiator from "@/assets/product-radiator.jpg";
+import productClutchKit from "@/assets/product-clutch-kit.jpg";
 import heroAutoBanner from "@/assets/hero-auto-banner.png";
 import promoAutoPartsRed from "@/assets/promo-auto-parts-red.jpg";
 import promoAutoPartsDark from "@/assets/promo-auto-parts-dark.jpg";
@@ -65,21 +73,21 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
   const models = ["Corolla", "Camry", "Civic", "Accord", "F-150", "Silverado"];
 
   const bestSellers = [
-    { name: "Huile moteur synthétique 5W-30", price: "64,95 $", oldPrice: "79,99 $", image: productAuto1, tag: "Promo", rating: 4.9 },
-    { name: "Kit plaquettes de frein céramique", price: "149,95 $", oldPrice: "189,99 $", image: productAuto2, tag: "Bestseller", rating: 4.8 },
-    { name: "Filtre à air haute performance", price: "89,99 $", oldPrice: "109,99 $", image: productAuto3, tag: null, rating: 4.7 },
-    { name: "Batterie AGM 12V 70Ah", price: "199,95 $", oldPrice: "249,99 $", image: productAuto4, tag: "Populaire", rating: 4.9 },
-    { name: "Amortisseurs avant (paire)", price: "279,99 $", oldPrice: "349,99 $", image: productAuto1, tag: null, rating: 4.6 },
-    { name: "Courroie de distribution", price: "124,95 $", oldPrice: "159,99 $", image: productAuto2, tag: "-22%", rating: 4.8 },
-    { name: "Bougies d'allumage iridium x4", price: "54,99 $", oldPrice: "69,99 $", image: productAuto3, tag: null, rating: 4.7 },
-    { name: "Rotors de frein ventilés", price: "189,99 $", oldPrice: "229,99 $", image: productAuto4, tag: "Premium", rating: 4.9 },
+    { name: "Huile moteur synthétique 5W-30", price: "64,95 $", oldPrice: "79,99 $", image: productMotorOil, tag: "Promo", rating: 4.9 },
+    { name: "Kit plaquettes de frein céramique", price: "149,95 $", oldPrice: "189,99 $", image: productBrakePads, tag: "Bestseller", rating: 4.8 },
+    { name: "Filtre à air haute performance", price: "89,99 $", oldPrice: "109,99 $", image: productAirFilter, tag: null, rating: 4.7 },
+    { name: "Batterie AGM 12V 70Ah", price: "199,95 $", oldPrice: "249,99 $", image: productBattery, tag: "Populaire", rating: 4.9 },
+    { name: "Amortisseurs avant (paire)", price: "279,99 $", oldPrice: "349,99 $", image: productShocks, tag: null, rating: 4.6 },
+    { name: "Courroie de distribution", price: "124,95 $", oldPrice: "159,99 $", image: productTimingBelt, tag: "-22%", rating: 4.8 },
+    { name: "Bougies d'allumage iridium x4", price: "54,99 $", oldPrice: "69,99 $", image: productSparkPlugs, tag: null, rating: 4.7 },
+    { name: "Rotors de frein ventilés", price: "189,99 $", oldPrice: "229,99 $", image: productBrakeRotors, tag: "Premium", rating: 4.9 },
   ];
 
   const newArrivals = [
-    { name: "Compresseur A/C remanufacturé", price: "349,99 $", image: productAuto3, isNew: true },
-    { name: "Phares LED H11", price: "89,95 $", image: productAuto4, isNew: true },
-    { name: "Capteur O2 universel", price: "65,95 $", image: productAuto1, isNew: true },
-    { name: "Thermostat avec boîtier", price: "79,99 $", image: productAuto2, isNew: true },
+    { name: "Compresseur A/C remanufacturé", price: "349,99 $", image: productAcCompressor, isNew: true },
+    { name: "Phares LED H11", price: "89,95 $", image: productLedHeadlights, isNew: true },
+    { name: "Radiateur aluminium", price: "265,95 $", image: productRadiator, isNew: true },
+    { name: "Kit embrayage complet", price: "379,99 $", image: productClutchKit, isNew: true },
   ];
 
   const categories = [
