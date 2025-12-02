@@ -161,7 +161,7 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#3B82F6", accentColor = 
                   <TabsList className="grid w-full grid-cols-3 bg-white/5 border border-white/10 p-1 rounded-xl">
                     <TabsTrigger 
                       value="all" 
-                      className="rounded-lg data-[state=active]:text-white transition-all"
+                      className="rounded-lg text-slate-400 data-[state=active]:text-white transition-all"
                       style={{ 
                         backgroundColor: selectedFilter === 'all' ? primaryColor : 'transparent'
                       }}
@@ -170,7 +170,7 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#3B82F6", accentColor = 
                     </TabsTrigger>
                     <TabsTrigger 
                       value="oem"
-                      className="rounded-lg data-[state=active]:text-white transition-all"
+                      className="rounded-lg text-slate-400 data-[state=active]:text-white transition-all"
                       style={{ 
                         backgroundColor: selectedFilter === 'oem' ? primaryColor : 'transparent'
                       }}
@@ -179,7 +179,7 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#3B82F6", accentColor = 
                     </TabsTrigger>
                     <TabsTrigger 
                       value="aftermarket"
-                      className="rounded-lg data-[state=active]:text-white transition-all"
+                      className="rounded-lg text-slate-400 data-[state=active]:text-white transition-all"
                       style={{ 
                         backgroundColor: selectedFilter === 'aftermarket' ? primaryColor : 'transparent'
                       }}
@@ -318,7 +318,7 @@ export const OEMAftermarketCatalog = ({ primaryColor = "#3B82F6", accentColor = 
 
                 {/* CTA Button */}
                 <Button 
-                  className="w-full rounded-xl text-white font-semibold transition-all hover:scale-[1.02]"
+                  className={`w-full rounded-xl font-semibold transition-all hover:scale-[1.02] ${part.inStock ? 'text-white' : 'text-slate-300 hover:text-white hover:bg-white/10'}`}
                   style={{ 
                     background: part.inStock 
                       ? `linear-gradient(135deg, ${primaryColor}, ${accentColor})`
