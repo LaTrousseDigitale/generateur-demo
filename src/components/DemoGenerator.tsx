@@ -417,7 +417,7 @@ export const DemoGenerator = () => {
       </>;
   }
   const getSectionTitle = () => {
-    const titles = ["Informations Générales", "Type de Solution", "Configuration Site Web", "Configuration Portail", "Modules Additionnels", "Services Canva", "Identité de Marque", "Domaine & Hébergement", "Options Financières", "Résumé et Contact", "Aperçu Final"];
+    const titles = ["Informations générales", "Type de solution", "Configuration site web", "Configuration portail", "Modules additionnels", "Services graphiques", "Identité de marque", "Domaine et hébergement", "Options financières", "Résumé et contact", "Aperçu final"];
     return titles[currentStep - 1];
   };
   return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
@@ -426,7 +426,7 @@ export const DemoGenerator = () => {
         <div className="text-center mb-4 sm:mb-8 animate-fade-in">
           <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4 relative">
             <Layout className="w-6 h-6 sm:w-8 sm:h-8 text-primary flex-shrink-0" />
-            <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">Générateur de démos</h1>
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">Générateur de démo</h1>
             <div className="absolute right-2 sm:right-4 flex gap-1">
               <Link to="/editor">
                 <Button variant="ghost" size="icon" title="Éditeur rapide">
