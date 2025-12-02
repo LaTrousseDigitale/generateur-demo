@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "./DemoGenerator";
-import { DynamicFeaturesSection } from "./DynamicFeaturesSection";
+import { InlineFeatures } from "./InlineFeatures";
 import { 
   ArrowLeft, Download, Share2, Calendar, Clock, MapPin, Users, 
   CheckCircle2, Star, Menu, ChevronRight, Sparkles, Zap, Shield, 
@@ -670,6 +670,16 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
+          INLINE FEATURES - EARLY (after stats)
+      ═══════════════════════════════════════════════════════════════ */}
+      <InlineFeatures 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={theme === "moderne"}
+        position="early"
+      />
+
+      {/* ═══════════════════════════════════════════════════════════════
           SERVICES SECTION - Premium cards with hover effects
       ═══════════════════════════════════════════════════════════════ */}
       <section id="services" className={`py-24 ${themeConfig.sectionBg}`}>
@@ -744,6 +754,16 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          INLINE FEATURES - MIDDLE (after services)
+      ═══════════════════════════════════════════════════════════════ */}
+      <InlineFeatures 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={theme === "moderne"}
+        position="middle"
+      />
 
       {/* ═══════════════════════════════════════════════════════════════
           BOOKING SECTION - Split layout with form
@@ -978,12 +998,13 @@ export const BookingDemo = ({ config, onBack }: BookingDemoProps) => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          DYNAMIC FEATURES SECTION
+          INLINE FEATURES SECTIONS
       ═══════════════════════════════════════════════════════════════ */}
-      <DynamicFeaturesSection 
+      <InlineFeatures 
         config={config} 
         themeConfig={themeConfig}
         isLightTheme={theme === "moderne"}
+        position="late"
       />
 
       {/* ═══════════════════════════════════════════════════════════════

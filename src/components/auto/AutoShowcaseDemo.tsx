@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DemoConfig } from "../DemoGenerator";
-import { DynamicFeaturesSection } from "../DynamicFeaturesSection";
+import { InlineFeatures } from "../InlineFeatures";
 import { 
   ArrowLeft, ArrowRight, CheckCircle2, Star, Mail, 
   Phone, MapPin, Menu, Wrench, Shield, Clock,
@@ -357,6 +357,16 @@ export const AutoShowcaseDemo = ({ config, onBack }: AutoShowcaseDemoProps) => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
+          INLINE FEATURES - EARLY (after stats)
+      ═══════════════════════════════════════════════════════════════ */}
+      <InlineFeatures 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={isLightTheme}
+        position="early"
+      />
+
+      {/* ═══════════════════════════════════════════════════════════════
           SERVICES SECTION - Square cards with parallax images
       ═══════════════════════════════════════════════════════════════ */}
       <section id="services" className={`py-24 ${themeConfig.sectionAlt}`}>
@@ -432,6 +442,16 @@ export const AutoShowcaseDemo = ({ config, onBack }: AutoShowcaseDemoProps) => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
+          INLINE FEATURES - MIDDLE (after services)
+      ═══════════════════════════════════════════════════════════════ */}
+      <InlineFeatures 
+        config={config} 
+        themeConfig={themeConfig}
+        isLightTheme={isLightTheme}
+        position="middle"
+      />
+
+      {/* ═══════════════════════════════════════════════════════════════
           EXPERTISE SECTION - Full width parallax
       ═══════════════════════════════════════════════════════════════ */}
       <section 
@@ -481,12 +501,13 @@ export const AutoShowcaseDemo = ({ config, onBack }: AutoShowcaseDemoProps) => {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          DYNAMIC FEATURES SECTION
+          INLINE FEATURES SECTIONS
       ═══════════════════════════════════════════════════════════════ */}
-      <DynamicFeaturesSection 
+      <InlineFeatures 
         config={config} 
         themeConfig={themeConfig}
         isLightTheme={isLightTheme}
+        position="late"
       />
 
       {/* ═══════════════════════════════════════════════════════════════
