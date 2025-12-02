@@ -1,12 +1,11 @@
 import { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { DemoConfig } from "./DemoGenerator";
 import { 
   CheckCircle2, FileText, Layout, Cog, Globe, Users, 
   ShoppingCart, Calendar, Shield, Zap, Star, Award,
-  X, Play, Clock, Phone, Mail, MapPin, CreditCard,
+  Clock, Phone, Mail, MapPin, CreditCard,
   Eye, ArrowRight, Bell, MessageSquare, Send
 } from "lucide-react";
 
@@ -435,24 +434,41 @@ export const DynamicFeaturesSection = ({ config, themeConfig, isLightTheme = fal
 
   return (
     <>
-      <section className={`py-24 ${bgClass}`}>
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <Badge 
-              className="mb-4"
-              style={{ backgroundColor: `${config.primaryColor}20`, color: config.primaryColor }}
+      <section className={`py-20 ${bgClass} relative overflow-hidden`}>
+        {/* Background decorations */}
+        <div 
+          className="absolute top-0 right-0 w-96 h-96 rounded-full blur-3xl opacity-20"
+          style={{ background: `radial-gradient(circle, ${config.primaryColor}, transparent)` }}
+        />
+        <div 
+          className="absolute bottom-0 left-0 w-64 h-64 rounded-full blur-3xl opacity-15"
+          style={{ background: `radial-gradient(circle, ${config.accentColor}, transparent)` }}
+        />
+        
+        <div className="container mx-auto px-6 relative z-10">
+          {/* Header avec badge premium */}
+          <div className="text-center mb-12">
+            <div 
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6 backdrop-blur-sm border"
+              style={{ 
+                backgroundColor: `${config.primaryColor}15`, 
+                borderColor: `${config.primaryColor}30`,
+                color: config.primaryColor 
+              }}
             >
-              Fonctionnalités incluses
-            </Badge>
-            <h2 className={`text-4xl md:text-5xl font-black ${themeConfig.textPrimary}`}>
-              Votre solution sur mesure
+              <Zap className="w-4 h-4" />
+              <span className="text-sm font-semibold">{allFeatures.length} fonctionnalités incluses</span>
+            </div>
+            <h2 className={`text-3xl md:text-4xl lg:text-5xl font-black ${themeConfig.textPrimary} mb-4`}>
+              Tout ce dont vous avez besoin
             </h2>
-            <p className={`mt-4 text-lg ${themeConfig.textSecondary} max-w-2xl mx-auto`}>
-              Cliquez sur une fonctionnalité pour voir un aperçu interactif
+            <p className={`text-base md:text-lg ${themeConfig.textSecondary} max-w-xl mx-auto`}>
+              Explorez chaque fonctionnalité en cliquant dessus
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {/* Grid de fonctionnalités */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
             {allFeatures.map((feature, index) => {
               const Icon = feature.icon;
               const isModule = feature.type === 'Module additionnel';
@@ -461,45 +477,73 @@ export const DynamicFeaturesSection = ({ config, themeConfig, isLightTheme = fal
                 <button
                   key={`feature-${index}`}
                   onClick={() => setSelectedFeature(feature)}
-                  className={`p-5 ${themeConfig.cardBg} transition-all duration-300 hover:scale-105 rounded-xl text-left group cursor-pointer ${
-                    isModule ? 'border-2' : ''
+                  className={`group relative p-6 rounded-2xl text-left transition-all duration-300 hover:-translate-y-1 hover:shadow-xl backdrop-blur-sm border ${
+                    isLightTheme 
+                      ? 'bg-white/80 border-slate-200/80 hover:border-slate-300' 
+                      : 'bg-white/5 border-white/10 hover:border-white/20'
                   }`}
-                  style={isModule ? { borderColor: `${config.primaryColor}40` } : {}}
+                  style={{
+                    boxShadow: isModule ? `0 0 30px ${config.primaryColor}15` : undefined
+                  }}
                 >
-                  <div className="flex items-center gap-4">
+                  {/* Gradient overlay on hover */}
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: `linear-gradient(135deg, ${config.primaryColor}08, ${config.accentColor}08)` }}
+                  />
+                  
+                  <div className="relative flex items-start gap-4">
+                    {/* Icon avec gradient */}
                     <div 
-                      className="w-12 h-12 rounded-xl flex items-center justify-center text-white shrink-0 transition-transform group-hover:scale-110"
-                      style={{ backgroundColor: isModule ? undefined : feature.color, background: isModule ? `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` : undefined }}
+                      className="w-14 h-14 rounded-xl flex items-center justify-center text-white shrink-0 shadow-lg transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+                      style={{ 
+                        background: isModule 
+                          ? `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` 
+                          : `linear-gradient(135deg, ${feature.color}, ${feature.color}dd)`
+                      }}
                     >
-                      <Icon className="w-6 h-6" />
+                      <Icon className="w-7 h-7" />
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <p className={`font-bold truncate ${themeConfig.textPrimary}`}>{feature.name}</p>
-                      <p className={`text-xs ${themeConfig.textSecondary}`}>{feature.type}</p>
+                    
+                    <div className="flex-1 min-w-0">
+                      <p className={`font-bold text-base mb-1 ${themeConfig.textPrimary} group-hover:translate-x-1 transition-transform`}>
+                        {feature.name}
+                      </p>
+                      <p className={`text-xs ${themeConfig.textSecondary} flex items-center gap-1.5`}>
+                        {isModule && <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />}
+                        {feature.type}
+                      </p>
                     </div>
+                    
+                    {/* Play indicator */}
                     <div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
+                      className="w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shrink-0 scale-75 group-hover:scale-100"
                       style={{ backgroundColor: `${config.primaryColor}20` }}
                     >
-                      <Play className="w-4 h-4" style={{ color: config.primaryColor }} />
+                      <Eye className="w-5 h-5" style={{ color: config.primaryColor }} />
                     </div>
                   </div>
+                  
+                  {/* Module badge */}
+                  {isModule && (
+                    <div 
+                      className="absolute -top-2 -right-2 px-2 py-0.5 rounded-full text-xs font-bold text-white shadow-lg"
+                      style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
+                    >
+                      Premium
+                    </div>
+                  )}
                 </button>
               );
             })}
           </div>
 
-          {/* Compteur de fonctionnalités */}
-          <div className="mt-12 text-center">
-            <div 
-              className="inline-flex items-center gap-3 px-6 py-3 rounded-full"
-              style={{ backgroundColor: `${config.primaryColor}10` }}
-            >
-              <CheckCircle2 className="w-5 h-5" style={{ color: config.primaryColor }} />
-              <span className={`font-semibold ${themeConfig.textPrimary}`}>
-                {allFeatures.length} fonctionnalités incluses
-              </span>
-            </div>
+          {/* CTA subtil */}
+          <div className="mt-10 text-center">
+            <p className={`text-sm ${themeConfig.textSecondary} flex items-center justify-center gap-2`}>
+              <MessageSquare className="w-4 h-4" style={{ color: config.primaryColor }} />
+              Cliquez sur une fonctionnalité pour la découvrir en détail
+            </p>
           </div>
         </div>
       </section>
