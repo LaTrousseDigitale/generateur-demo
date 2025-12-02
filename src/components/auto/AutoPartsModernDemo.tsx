@@ -263,8 +263,8 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
           </div>
         </div>
         
-        {/* Badge prix - positionné en bas à gauche */}
-        <div className="absolute bottom-4 md:bottom-8 left-6 md:left-12 lg:left-20">
+        {/* Badge prix - positionné au centre */}
+        <div className="absolute bottom-4 md:bottom-8 left-1/2 -translate-x-1/2">
           <div 
             className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full shadow-xl flex flex-col items-center justify-center border-2"
             style={{ backgroundColor: config.primaryColor, borderColor: 'white' }}
