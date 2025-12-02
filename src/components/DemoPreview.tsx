@@ -29,13 +29,13 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
   const getServiceTitle = () => {
     switch (config.serviceType) {
       case "portal":
-        return "Portail d'Entreprise";
+        return "Portail d'entreprise";
       case "website":
-        return "Solution Web";
+        return "Solution web";
       case "module":
-        return "Module Complémentaire";
+        return "Module complémentaire";
       default:
-        return "Votre Démo";
+        return "Votre démo";
     }
   };
 
@@ -50,7 +50,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
       careers: "Carrières",
       booking: "Réservations",
       calculator: "Calculatrice",
-      "project-manager": "Gestionnaire de Projets",
+      "project-manager": "Gestionnaire de projets",
       "hr-dashboard": "Tableau RH",
       "it-support": "Support TI",
     };
@@ -61,7 +61,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
     <Card className="p-6 shadow-elegant animate-slide-up">
       <div className="flex items-center gap-2 mb-4">
         <Rocket className="w-5 h-5 text-primary" />
-        <h3 className="text-xl font-bold">Aperçu en Temps Réel</h3>
+        <h3 className="text-xl font-bold">Aperçu en temps réel</h3>
       </div>
 
       {/* Preview Area */}
@@ -107,7 +107,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
           {/* Animated Construction Preview */}
           <div className="space-y-3">
             <h5 className="font-semibold" style={{ color: config.primaryColor }}>
-              Aperçu Vidéo du Développement
+              Aperçu vidéo du développement
             </h5>
             <div className="relative rounded-lg overflow-hidden bg-background aspect-video border-2" style={{ borderColor: config.primaryColor + "20" }}>
               {/* Animated Website Construction */}
@@ -230,7 +230,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
           {config.features.length > 0 && (
             <div className="space-y-3">
               <h5 className="font-semibold" style={{ color: config.primaryColor }}>
-                Fonctionnalités Incluses
+                Fonctionnalités incluses
               </h5>
               <div className="flex flex-wrap gap-2">
                 {getFeatureLabels().map((feature, index) => (
@@ -253,7 +253,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
           {/* Color Palette */}
           <div className="space-y-3">
             <h5 className="font-semibold" style={{ color: config.primaryColor }}>
-              Palette de Couleurs
+              Palette de couleurs
             </h5>
             <div className="flex gap-3">
               <div className="flex-1 space-y-2">
@@ -290,7 +290,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
                   color: "white",
                 }}
               >
-                Découvrir la Solution Complète
+                Découvrir la solution complète
               </Button>
             </div>
           )}
@@ -305,7 +305,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
         </Button>
         <Button variant="outline" className="flex-1" size="sm" onClick={handleContact}>
           <Calendar className="w-4 h-4 mr-2" />
-          Appel Découverte
+          Appel découverte
         </Button>
       </div>
     </Card>
