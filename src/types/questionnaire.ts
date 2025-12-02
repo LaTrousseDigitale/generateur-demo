@@ -120,6 +120,9 @@ export const INDUSTRIES = [
   { value: "architecture", label: "Architecture et design" },
   { value: "auto", label: "Vente automobile et pièces" },
   { value: "arts-scene", label: "Arts de la scène" },
+  { value: "demenagement", label: "Déménagement" },
+  { value: "immobilier", label: "Secteur immobilier" },
+  { value: "finances", label: "Services financiers et comptabilité" },
   { value: "autre", label: "Autre industrie" },
 ];
 

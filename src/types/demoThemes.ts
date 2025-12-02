@@ -62,6 +62,7 @@ export const INDUSTRY_SUGGESTED_THEMES: Record<string, DemoTheme> = {
   auto: "futuriste",
   transport: "futuriste",
   sante: "futuriste",
+  finances: "futuriste",
   
   // Style moderne suggéré (défaut)
   services: "moderne",
@@ -69,6 +70,8 @@ export const INDUSTRY_SUGGESTED_THEMES: Record<string, DemoTheme> = {
   education: "moderne",
   obnl: "moderne",
   architecture: "moderne",
+  demenagement: "moderne",
+  immobilier: "moderne",
 };
 
 export const getDefaultThemeForIndustry = (industry: string): DemoTheme => {
