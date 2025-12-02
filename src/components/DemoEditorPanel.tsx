@@ -524,18 +524,18 @@ export const DemoEditorPanel = () => {
             <Card>
               <CardContent className="p-6">
                 <Tabs defaultValue="templates" className="w-full">
-                  <TabsList className="grid w-full grid-cols-5 mb-6">
-                    <TabsTrigger value="templates" className="flex items-center gap-1">
+                  <TabsList className="flex flex-wrap w-full justify-start gap-1 mb-6 h-auto p-1">
+                    <TabsTrigger value="templates" className="flex items-center gap-1 px-3 py-2">
                       <Sparkles className="w-3 h-3" />
-                      <span className="hidden sm:inline">Templates</span>
+                      <span>Templates</span>
                     </TabsTrigger>
-                    <TabsTrigger value="style" className="flex items-center gap-1">
+                    <TabsTrigger value="style" className="flex items-center gap-1 px-3 py-2">
                       <Palette className="w-3 h-3" />
-                      <span className="hidden sm:inline">Style</span>
+                      <span>Style</span>
                     </TabsTrigger>
-                    <TabsTrigger value="solution">Solution</TabsTrigger>
-                    <TabsTrigger value="features">Fonctionnalités</TabsTrigger>
-                    <TabsTrigger value="branding">Branding</TabsTrigger>
+                    <TabsTrigger value="solution" className="px-3 py-2">Solution</TabsTrigger>
+                    <TabsTrigger value="features" className="px-3 py-2">Fonctionnalités</TabsTrigger>
+                    <TabsTrigger value="branding" className="px-3 py-2">Branding</TabsTrigger>
                   </TabsList>
 
                   {/* Templates Tab */}

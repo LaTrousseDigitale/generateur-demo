@@ -15,6 +15,7 @@ import { VehicleSearchWidget } from "./auto/VehicleSearchWidget";
 import { PartsCompatibilityChecker } from "./auto/PartsCompatibilityChecker";
 import { PartsDiagramsViewer } from "./auto/PartsDiagramsViewer";
 import { OEMAftermarketCatalog } from "./auto/OEMAftermarketCatalog";
+import { AutoPartsModernDemo } from "./auto/AutoPartsModernDemo";
 import { getThemeStyles, type DemoTheme } from "@/types/demoThemes";
 
 // Import product images
@@ -277,6 +278,11 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
   };
 
   const themeConfig = getThemeConfig();
+
+  // Use specialized modern auto demo for automotive + moderne theme
+  if (config.industry === "auto" && theme === "moderne") {
+    return <AutoPartsModernDemo config={config} onBack={onBack} />;
+  }
 
   return (
     <div className={`min-h-screen ${themeConfig.pageBg} overflow-hidden`}>
