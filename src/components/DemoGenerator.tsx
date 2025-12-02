@@ -92,6 +92,17 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
     secondaryColor: data.secondaryColor,
     logo: data.logo,
     companyName: data.companyName,
+    // Website type
+    websiteType: data.websiteType,
+    websitePages: data.websitePages,
+    websiteSections: data.websiteSections,
+    // Portal type
+    portalType: data.portalType,
+    portalUsers: data.portalUsers,
+    portalRoles: data.portalRoles,
+    portalClientFeatures: data.portalClientFeatures,
+    portalEmployeeFeatures: data.portalEmployeeFeatures,
+    portalHRFeatures: data.portalHRFeatures,
     // Industry-specific features
     ecommerceNeeds: data.ecommerceNeeds,
     autoCompatibility: data.autoCompatibility,
@@ -104,7 +115,9 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
     restaurantSalesType: data.restaurantSalesType,
     retailFeatures: data.retailFeatures,
     retailType: data.retailType,
-    retailProductTypes: data.retailProductTypes
+    retailProductTypes: data.retailProductTypes,
+    // Modules
+    selectedModules: data.selectedModules
   };
 };
 export const DemoGenerator = () => {
