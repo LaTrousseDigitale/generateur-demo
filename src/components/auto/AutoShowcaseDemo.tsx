@@ -308,7 +308,11 @@ export const AutoShowcaseDemo = ({ config, onBack }: AutoShowcaseDemoProps) => {
               <Button 
                 size="lg"
                 variant="outline"
-                className="border-white/30 text-white hover:bg-white/10 h-14 px-8"
+                className={`h-14 px-8 ${
+                  isLightTheme 
+                    ? 'border-slate-800 text-slate-900 hover:bg-slate-100' 
+                    : 'border-white/30 text-white hover:bg-white/10'
+                }`}
               >
                 <Phone className="w-5 h-5 mr-2" />
                 Nous appeler
