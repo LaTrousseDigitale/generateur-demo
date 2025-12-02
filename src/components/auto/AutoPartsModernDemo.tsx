@@ -12,6 +12,12 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect } from "react";
 
+// Import specialized auto components
+import { VehicleSearchWidget } from "./VehicleSearchWidget";
+import { PartsCompatibilityChecker } from "./PartsCompatibilityChecker";
+import { PartsDiagramsViewer } from "./PartsDiagramsViewer";
+import { OEMAftermarketCatalog } from "./OEMAftermarketCatalog";
+
 // Import product images
 import productMotorOil from "@/assets/product-motor-oil.jpg";
 import productBrakePads from "@/assets/product-brake-pads.jpg";
@@ -680,6 +686,166 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
           </div>
         </div>
       </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          FONCTIONNALITÉS AUTOMOBILE SPÉCIALISÉES
+          (Affichées selon les options cochées dans le questionnaire)
+      ═══════════════════════════════════════════════════════════════ */}
+      
+      {/* Recherche par numéro VIN */}
+      {config.autoCompatibility?.includes("Recherche par numéro VIN") && (
+        <section className="py-16 bg-slate-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <Badge 
+                className="mb-4"
+                style={{ backgroundColor: `${config.primaryColor}15`, color: config.primaryColor }}
+              >
+                Recherche avancée
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+                • RECHERCHE PAR VIN •
+              </h2>
+              <p className="text-slate-600 mt-2">Trouvez les pièces exactes pour votre véhicule</p>
+            </div>
+            <VehicleSearchWidget 
+              onSearch={(year, make, model) => {
+                setSelectedYear(year);
+                setSelectedMake(make);
+                setSelectedModel(model);
+                toast({ title: "Véhicule sélectionné", description: `${year} ${make} ${model}` });
+              }}
+              primaryColor={config.primaryColor} 
+              accentColor={config.accentColor || "#f97316"} 
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Diagrammes et schémas de pièces */}
+      {config.autoCompatibility?.includes("Diagrammes et schémas de pièces") && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <Badge 
+                className="mb-4"
+                style={{ backgroundColor: `${config.primaryColor}15`, color: config.primaryColor }}
+              >
+                Schémas techniques
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+                • DIAGRAMMES DE PIÈCES •
+              </h2>
+              <p className="text-slate-600 mt-2">Visualisez l'emplacement exact des pièces</p>
+            </div>
+            <PartsDiagramsViewer 
+              primaryColor={config.primaryColor} 
+              accentColor={config.accentColor || "#f97316"} 
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Compatibilité automatique des pièces */}
+      {config.autoCompatibility?.includes("Compatibilité automatique des pièces") && (
+        <section className="py-16 bg-slate-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <Badge 
+                className="mb-4"
+                style={{ backgroundColor: `${config.primaryColor}15`, color: config.primaryColor }}
+              >
+                Vérification instantanée
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+                • COMPATIBILITÉ DES PIÈCES •
+              </h2>
+              <p className="text-slate-600 mt-2">Vérifiez la compatibilité avant d'acheter</p>
+            </div>
+            <PartsCompatibilityChecker 
+              selectedVehicle={selectedYear && selectedMake && selectedModel ? { year: selectedYear, make: selectedMake, model: selectedModel } : null}
+              primaryColor={config.primaryColor} 
+              accentColor={config.accentColor || "#f97316"} 
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Catalogue pièces OEM vs aftermarket */}
+      {config.autoCompatibility?.includes("Catalogue pièces OEM vs aftermarket") && (
+        <section className="py-16">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-8">
+              <Badge 
+                className="mb-4"
+                style={{ backgroundColor: `${config.primaryColor}15`, color: config.primaryColor }}
+              >
+                Comparaison
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+                • CATALOGUE OEM vs AFTERMARKET •
+              </h2>
+              <p className="text-slate-600 mt-2">Comparez les options pour faire le meilleur choix</p>
+            </div>
+            <OEMAftermarketCatalog 
+              primaryColor={config.primaryColor} 
+              accentColor={config.accentColor || "#f97316"} 
+            />
+          </div>
+        </section>
+      )}
+
+      {/* Gestion de garanties */}
+      {config.autoCompatibility?.includes("Gestion de garanties") && (
+        <section className="py-16 bg-slate-900 text-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <Badge className="mb-4 bg-white/20 text-white">
+                Protection maximale
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold">
+                • GESTION DE GARANTIES •
+              </h2>
+              <p className="text-slate-400 mt-2">Suivez et gérez vos garanties en un seul endroit</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-6">
+              <Card className="bg-slate-800 border-slate-700 p-6 text-center">
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: config.primaryColor }}>
+                  <Shield className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Garantie standard</h3>
+                <p className="text-slate-400 text-sm mb-4">2 ans sur toutes les pièces OEM</p>
+                <Button variant="outline" className="border-slate-600 text-white hover:bg-slate-700">
+                  En savoir plus
+                </Button>
+              </Card>
+              <Card className="bg-slate-800 border-slate-700 p-6 text-center relative overflow-hidden">
+                <Badge className="absolute top-4 right-4" style={{ backgroundColor: config.primaryColor }}>
+                  Populaire
+                </Badge>
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: config.accentColor || "#f97316" }}>
+                  <Shield className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Garantie étendue</h3>
+                <p className="text-slate-400 text-sm mb-4">5 ans avec couverture complète</p>
+                <Button className="text-white" style={{ backgroundColor: config.primaryColor }}>
+                  Souscrire
+                </Button>
+              </Card>
+              <Card className="bg-slate-800 border-slate-700 p-6 text-center">
+                <div className="w-16 h-16 mx-auto rounded-full flex items-center justify-center mb-4 bg-slate-700">
+                  <RotateCcw className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-xl font-bold mb-2">Suivi des garanties</h3>
+                <p className="text-slate-400 text-sm mb-4">Tableau de bord personnalisé</p>
+                <Button variant="outline" className="border-slate-600 text-white hover:bg-slate-700">
+                  Mon espace
+                </Button>
+              </Card>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ═══════════════════════════════════════════════════════════════
           FEATURES BAR
