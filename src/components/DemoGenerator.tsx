@@ -7,17 +7,7 @@ import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
 import { ArrowRight, ArrowLeft, Layout, RotateCcw, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { QuestionnaireData } from "@/types/questionnaire";
 import { Section1General } from "./questionnaire/Section1General";
 import { Section2SolutionType } from "./questionnaire/Section2SolutionType";
@@ -31,9 +21,7 @@ import { Section7Domain } from "./questionnaire/Section7Domain";
 import { Section8Finances } from "./questionnaire/Section8Finances";
 import { Section9Summary } from "./questionnaire/Section9Summary";
 import { useQuoteSubmission } from "@/hooks/useQuoteSubmission";
-
 export type ServiceType = "portal" | "website" | "module" | null;
-
 export interface DemoConfig {
   serviceType: ServiceType;
   features: string[];
@@ -74,7 +62,6 @@ export interface DemoConfig {
   // Modules
   selectedModules?: string[];
 }
-
 const TOTAL_STEPS = 11;
 
 // Convert QuestionnaireData to DemoConfig
@@ -87,17 +74,7 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
   } else if ((data.solutionTypes || []).includes("module")) {
     serviceType = "module";
   }
-
-  const features = [
-    ...(data.websitePages || []),
-    ...(data.websiteSections || []),
-    ...(data.ecommerceNeeds || []),
-    ...(data.portalClientFeatures || []),
-    ...(data.portalEmployeeFeatures || []),
-    ...(data.portalHRFeatures || []),
-    ...(data.selectedModules || []),
-  ];
-
+  const features = [...(data.websitePages || []), ...(data.websiteSections || []), ...(data.ecommerceNeeds || []), ...(data.portalClientFeatures || []), ...(data.portalEmployeeFeatures || []), ...(data.portalHRFeatures || []), ...(data.selectedModules || [])];
   return {
     serviceType,
     features,
@@ -123,13 +100,14 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
     restaurantSalesType: data.restaurantSalesType,
     retailFeatures: data.retailFeatures,
     retailType: data.retailType,
-    retailProductTypes: data.retailProductTypes,
+    retailProductTypes: data.retailProductTypes
   };
 };
-
 export const DemoGenerator = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const { submitQuote } = useQuoteSubmission();
+  const {
+    submitQuote
+  } = useQuoteSubmission();
   const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData>(() => {
     const saved = localStorage.getItem("questionnaire-data");
     if (saved) {
@@ -204,7 +182,7 @@ export const DemoGenerator = () => {
       features: [],
       companySize: "",
       budget: "",
-      timeline: "",
+      timeline: ""
     };
   });
   const [showFinalDemo, setShowFinalDemo] = useState(false);
@@ -214,33 +192,30 @@ export const DemoGenerator = () => {
   useEffect(() => {
     localStorage.setItem("questionnaire-data", JSON.stringify(questionnaireData));
   }, [questionnaireData]);
-
   const demoConfig = convertToDemoConfig(questionnaireData);
-  const progress = (currentStep / TOTAL_STEPS) * 100;
-
+  const progress = currentStep / TOTAL_STEPS * 100;
   const updateData = (updates: Partial<QuestionnaireData>) => {
-    setQuestionnaireData({ ...questionnaireData, ...updates });
+    setQuestionnaireData({
+      ...questionnaireData,
+      ...updates
+    });
   };
 
   // Navigation logic with conditional sections
   const getNextSection = (current: number) => {
     const hasWebsite = (questionnaireData.solutionTypes || []).includes("website");
     const hasPortal = (questionnaireData.solutionTypes || []).includes("portal");
-
     if (current === 2 && !hasWebsite) return 4;
     if (current === 3 && !hasPortal) return 5;
     return current + 1;
   };
-
   const getPreviousSection = (current: number) => {
     const hasWebsite = (questionnaireData.solutionTypes || []).includes("website");
     const hasPortal = (questionnaireData.solutionTypes || []).includes("portal");
-
     if (current === 5 && !hasPortal) return 3;
     if (current === 4 && !hasWebsite) return 2;
     return current - 1;
   };
-
   const canProceed = () => {
     switch (currentStep) {
       case 1:
@@ -257,16 +232,12 @@ export const DemoGenerator = () => {
         const hasCanvaServices = questionnaireData.canvaServices && questionnaireData.canvaServices.length > 0;
         const hasQuantity = questionnaireData.canvaQuantity;
         const hasFrequency = questionnaireData.canvaFrequency;
-        
         if (!hasCanvaServices || !hasQuantity || !hasFrequency) return false;
-        
+
         // Si forfait sur mesure (20+), vérifier les champs additionnels
         if (questionnaireData.canvaQuantity === "20+") {
-          return questionnaireData.canvaCustomQuantity && 
-                 questionnaireData.canvaCustomDesignTypes && 
-                 questionnaireData.canvaCustomDeadline;
+          return questionnaireData.canvaCustomQuantity && questionnaireData.canvaCustomDesignTypes && questionnaireData.canvaCustomDeadline;
         }
-        
         return true;
       case 7:
         return questionnaireData.companyName;
@@ -280,33 +251,29 @@ export const DemoGenerator = () => {
         return true;
     }
   };
-
   const calculateEstimatedPrice = (): number => {
     let basePrice = 0;
-    
+
     // Base price by solution type
     if ((questionnaireData.solutionTypes || []).includes("website")) basePrice += 2000;
     if ((questionnaireData.solutionTypes || []).includes("portal")) basePrice += 5000;
     if ((questionnaireData.solutionTypes || []).includes("module")) basePrice += 1500;
-    
+
     // Additional modules
     basePrice += (questionnaireData.selectedModules?.length || 0) * 500;
-    
+
     // Canva services
     const canvaCount = parseInt(questionnaireData.canvaQuantity || "0") || 0;
     basePrice += canvaCount * 50;
-    
     return basePrice;
   };
-
   const handleSubmitDemo = async () => {
     try {
       const calculatedPrice = calculateEstimatedPrice();
-      
       const response = await fetch('https://ohbrtlbdabiojwohdoxj.supabase.co/functions/v1/receive-demo-request', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           company_name: questionnaireData.companyName,
@@ -328,15 +295,13 @@ export const DemoGenerator = () => {
             "Mode de paiement": questionnaireData.paymentMode,
             "Niveau de maintenance": questionnaireData.maintenanceLevel,
             "Budget mensuel": questionnaireData.monthlyBudget,
-            "Autres besoins": questionnaireData.otherNeeds,
+            "Autres besoins": questionnaireData.otherNeeds
           },
           estimated_amount: calculatedPrice,
           demo_description: `Démo personnalisée pour ${questionnaireData.companyName} - ${questionnaireData.industry}`
         })
       });
-
       const result = await response.json();
-      
       if (result.success && result.signup_url) {
         window.location.href = result.signup_url;
       }
@@ -344,7 +309,6 @@ export const DemoGenerator = () => {
       console.error('Erreur lors de l\'envoi au portail:', error);
     }
   };
-
   const handleNext = async () => {
     if (currentStep < TOTAL_STEPS) {
       const nextSection = getNextSection(currentStep);
@@ -352,22 +316,19 @@ export const DemoGenerator = () => {
     } else {
       // Save quote to database when completing the questionnaire
       await submitQuote(questionnaireData);
-      
+
       // Send to external portal
       await handleSubmitDemo();
-      
       setShowFinalDemo(true);
       setTimeout(() => setShowQuoteModal(true), 1000);
     }
   };
-
   const handleBack = () => {
     if (currentStep > 1) {
       const prevSection = getPreviousSection(currentStep);
       setCurrentStep(prevSection);
     }
   };
-
   const handleReset = () => {
     const initialData: QuestionnaireData = {
       companyName: "",
@@ -443,71 +404,38 @@ export const DemoGenerator = () => {
       features: [],
       companySize: "",
       budget: "",
-      timeline: "",
+      timeline: ""
     };
-    
     localStorage.removeItem("questionnaire-data");
     setQuestionnaireData(initialData);
     setCurrentStep(1);
   };
-
   if (showFinalDemo) {
-    return (
-      <>
+    return <>
         <FullDemoView config={demoConfig} onBack={() => setShowFinalDemo(false)} />
-        <QuoteModal 
-          open={showQuoteModal} 
-          onOpenChange={setShowQuoteModal}
-          data={questionnaireData}
-        />
-      </>
-    );
+        <QuoteModal open={showQuoteModal} onOpenChange={setShowQuoteModal} data={questionnaireData} />
+      </>;
   }
-
   const getSectionTitle = () => {
-    const titles = [
-      "Informations Générales",
-      "Type de Solution",
-      "Configuration Site Web",
-      "Configuration Portail",
-      "Modules Additionnels",
-      "Services Canva",
-      "Identité de Marque",
-      "Domaine & Hébergement",
-      "Options Financières",
-      "Résumé et Contact",
-      "Aperçu Final",
-    ];
+    const titles = ["Informations Générales", "Type de Solution", "Configuration Site Web", "Configuration Portail", "Modules Additionnels", "Services Canva", "Identité de Marque", "Domaine & Hébergement", "Options Financières", "Résumé et Contact", "Aperçu Final"];
     return titles[currentStep - 1];
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+  return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         {/* Header */}
         <div className="text-center mb-4 sm:mb-8 animate-fade-in">
           <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4 relative">
             <Layout className="w-6 h-6 sm:w-8 sm:h-8 text-primary flex-shrink-0" />
-            <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Générateur de Démos
-            </h1>
+            <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">Générateur de démos</h1>
             <div className="absolute right-2 sm:right-4 flex gap-1">
               <Link to="/editor">
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  title="Éditeur rapide"
-                >
+                <Button variant="ghost" size="icon" title="Éditeur rapide">
                   <Pencil className="w-4 h-4" />
                 </Button>
               </Link>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button 
-                    variant="ghost" 
-                    size="icon"
-                    title="Réinitialiser le questionnaire"
-                  >
+                  <Button variant="ghost" size="icon" title="Réinitialiser le questionnaire">
                     <RotateCcw className="w-4 h-4" />
                   </Button>
                 </AlertDialogTrigger>
@@ -554,62 +482,35 @@ export const DemoGenerator = () => {
               {currentStep === 2 && <Section2SolutionType data={questionnaireData} onChange={updateData} />}
               {currentStep === 3 && <Section3Website data={questionnaireData} onChange={updateData} />}
               {currentStep === 4 && <Section4Portal data={questionnaireData} onChange={updateData} />}
-              {currentStep === 5 && (
-                <Section5Modules
-                  data={questionnaireData}
-                  onChange={updateData}
-                  isModuleSelected={(questionnaireData.solutionTypes || []).includes("module")}
-                />
-              )}
+              {currentStep === 5 && <Section5Modules data={questionnaireData} onChange={updateData} isModuleSelected={(questionnaireData.solutionTypes || []).includes("module")} />}
               {currentStep === 6 && <Section6Canva data={questionnaireData} onChange={updateData} />}
-              {currentStep === 7 && (
-                <div className="space-y-6">
-                  <LogoUploader
-                    logo={questionnaireData.logo}
-                    companyName={questionnaireData.companyName}
-                    onLogoChange={(logo) => updateData({ logo })}
-                    onCompanyNameChange={(name) => updateData({ companyName: name })}
-                  />
-                  <ColorCustomizer
-                    primaryColor={questionnaireData.primaryColor}
-                    accentColor={questionnaireData.accentColor}
-                    secondaryColor={questionnaireData.secondaryColor}
-                    onColorChange={updateData}
-                  />
-                </div>
-              )}
+              {currentStep === 7 && <div className="space-y-6">
+                  <LogoUploader logo={questionnaireData.logo} companyName={questionnaireData.companyName} onLogoChange={logo => updateData({
+                logo
+              })} onCompanyNameChange={name => updateData({
+                companyName: name
+              })} />
+                  <ColorCustomizer primaryColor={questionnaireData.primaryColor} accentColor={questionnaireData.accentColor} secondaryColor={questionnaireData.secondaryColor} onColorChange={updateData} />
+                </div>}
               {currentStep === 8 && <Section7Domain data={questionnaireData} onChange={updateData} />}
               {currentStep === 9 && <Section8Finances data={questionnaireData} onChange={updateData} />}
               {currentStep === 10 && <Section9Summary data={questionnaireData} onChange={updateData} />}
-              {currentStep === 11 && (
-                <div className="text-center py-12 space-y-4">
+              {currentStep === 11 && <div className="text-center py-12 space-y-4">
                   <h3 className="text-2xl font-bold text-primary">🎉 Prêt à découvrir votre démo !</h3>
                   <p className="text-muted-foreground text-lg">
                     Cliquez sur "Voir ma démo" pour visualiser votre solution personnalisée
                   </p>
-                </div>
-              )}
+                </div>}
             </div>
 
             {/* Navigation Buttons */}
             <div className="flex justify-between gap-2 mt-4 sm:mt-8 pt-4 sm:pt-6 border-t">
-              <Button 
-                variant="outline" 
-                onClick={handleBack} 
-                disabled={currentStep === 1}
-                className="flex-1 sm:flex-initial"
-                size="sm"
-              >
+              <Button variant="outline" onClick={handleBack} disabled={currentStep === 1} className="flex-1 sm:flex-initial" size="sm">
                 <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
                 <span className="hidden sm:inline">Précédent</span>
               </Button>
 
-              <Button 
-                onClick={handleNext} 
-                disabled={!canProceed()}
-                className="flex-1 sm:flex-initial"
-                size="sm"
-              >
+              <Button onClick={handleNext} disabled={!canProceed()} className="flex-1 sm:flex-initial" size="sm">
                 <span className="text-xs sm:text-sm">
                   {currentStep === TOTAL_STEPS ? "Voir ma démo" : "Suivant"}
                 </span>
@@ -626,6 +527,5 @@ export const DemoGenerator = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
