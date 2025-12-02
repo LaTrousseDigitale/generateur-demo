@@ -669,10 +669,17 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
       {/* Auto-specific sections */}
       {config.industry === "auto" && config.autoCompatibility?.includes("Recherche par année/marque/modèle") && (
-        <VehicleSearchWidget onSearch={handleVehicleSearch} />
+        <VehicleSearchWidget 
+          onSearch={handleVehicleSearch} 
+          primaryColor={config.primaryColor}
+          accentColor={config.accentColor}
+        />
       )}
       {config.industry === "auto" && config.autoCompatibility?.includes("Catalogue pièces OEM vs aftermarket") && (
-        <OEMAftermarketCatalog />
+        <OEMAftermarketCatalog 
+          primaryColor={config.primaryColor}
+          accentColor={config.accentColor}
+        />
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
@@ -796,7 +803,11 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
       {/* Auto compatibility sections */}
       {config.industry === "auto" && config.autoCompatibility?.includes("Compatibilité automatique des pièces") && (
-        <PartsCompatibilityChecker selectedVehicle={selectedVehicle} />
+        <PartsCompatibilityChecker 
+          selectedVehicle={selectedVehicle}
+          primaryColor={config.primaryColor}
+          accentColor={config.accentColor}
+        />
       )}
       {config.industry === "auto" && config.autoCompatibility?.includes("Diagrammes et schémas de pièces") && (
         <PartsDiagramsViewer />
