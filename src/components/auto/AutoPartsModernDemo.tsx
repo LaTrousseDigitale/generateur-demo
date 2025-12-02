@@ -17,6 +17,7 @@ import productAuto1 from "@/assets/product-auto-1.jpg";
 import productAuto2 from "@/assets/product-auto-2.jpg";
 import productAuto3 from "@/assets/product-auto-3.jpg";
 import productAuto4 from "@/assets/product-auto-4.jpg";
+import heroAutoBanner from "@/assets/hero-auto-banner.png";
 
 interface AutoPartsModernDemoProps {
   config: DemoConfig;
@@ -223,75 +224,58 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       </nav>
 
       {/* ═══════════════════════════════════════════════════════════════
-          HERO SECTION - Style capture référence
+          HERO SECTION - Bannière image complète avec texte français
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="relative bg-gradient-to-b from-slate-50 via-white to-slate-100 overflow-hidden min-h-[500px] lg:min-h-[600px]">
-        <div className="container mx-auto px-4 py-12 lg:py-20">
-          <div className="grid lg:grid-cols-2 gap-8 items-center">
-            {/* Left Content */}
-            <div className="relative z-10 order-2 lg:order-1">
-              <p className="text-lg md:text-xl text-slate-600 mb-2 italic">
-                <span className="font-semibold text-slate-800">Large sélection</span> de pièces auto
-              </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-slate-900 leading-none mb-2">
-                AUX PLUS BAS
-              </h1>
-              <h1 
-                className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black leading-none mb-8"
-                style={{ color: config.primaryColor }}
-              >
-                PRIX!
-              </h1>
-              
-              <Button 
-                size="lg"
-                className="text-white px-8 py-6 text-lg font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all hover:scale-105"
-                style={{ backgroundColor: config.primaryColor }}
-              >
-                Explorer maintenant
-              </Button>
-            </div>
-
-            {/* Right - Hero Image with Price Badge */}
-            <div className="relative order-1 lg:order-2">
-              {/* Price Badge - Floating circle */}
-              <div className="absolute top-4 left-1/4 z-20 transform -translate-x-1/2 animate-bounce">
-                <div className="w-28 h-28 md:w-32 md:h-32 rounded-full bg-white shadow-2xl flex flex-col items-center justify-center border-4 border-slate-100">
-                  <span className="text-slate-500 text-xs md:text-sm">À partir de</span>
-                  <span 
-                    className="text-2xl md:text-3xl font-black"
-                    style={{ color: config.primaryColor }}
-                  >
-                    69,00 $
-                  </span>
-                </div>
-              </div>
-              
-              {/* Auto Parts Collage Image */}
-              <div className="relative">
-                <img 
-                  src={productAuto1} 
-                  alt="Pièces automobiles" 
-                  className="relative z-10 w-full max-w-2xl mx-auto transform hover:scale-102 transition-transform duration-500"
-                />
-                {/* Additional parts floating effect */}
-                <img 
-                  src={productAuto2} 
-                  alt="" 
-                  className="absolute top-0 right-0 w-1/3 opacity-80 transform translate-x-4 -translate-y-4 rounded-lg shadow-lg hidden lg:block"
-                />
-                <img 
-                  src={productAuto3} 
-                  alt="" 
-                  className="absolute bottom-0 left-0 w-1/4 opacity-80 transform -translate-x-4 translate-y-4 rounded-lg shadow-lg hidden lg:block"
-                />
+      <section className="relative w-full overflow-hidden">
+        {/* Image de fond */}
+        <img 
+          src={heroAutoBanner} 
+          alt="Large sélection de pièces auto aux plus bas prix" 
+          className="w-full h-auto object-cover"
+        />
+        
+        {/* Overlay texte français */}
+        <div className="absolute inset-0 flex items-center">
+          <div className="container mx-auto px-4 md:px-8 lg:px-16">
+            <div className="max-w-md lg:max-w-lg">
+              {/* Fond blanc pour masquer texte anglais */}
+              <div className="bg-gradient-to-r from-white via-white to-transparent py-8 px-4 -ml-4">
+                <p className="text-base md:text-lg lg:text-xl text-slate-500 mb-1 italic">
+                  <span className="font-bold text-slate-800">Large sélection</span> de pièces auto
+                </p>
+                <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-none">
+                  AUX PLUS BAS
+                </h1>
+                <h1 
+                  className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-none mb-6"
+                  style={{ color: config.primaryColor }}
+                >
+                  PRIX!
+                </h1>
+                <Button 
+                  size="lg"
+                  className="text-white px-6 md:px-8 py-3 text-sm md:text-base font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all"
+                  style={{ backgroundColor: config.primaryColor }}
+                >
+                  Explorer maintenant
+                </Button>
               </div>
             </div>
           </div>
+          
+          {/* Badge prix */}
+          <div className="absolute top-1/3 left-1/3 md:left-[35%] transform -translate-y-1/2">
+            <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-white shadow-xl flex flex-col items-center justify-center">
+              <span className="text-slate-500 text-[10px] md:text-xs">À partir de</span>
+              <span 
+                className="text-lg md:text-xl lg:text-2xl font-black"
+                style={{ color: config.primaryColor }}
+              >
+                69,00 $
+              </span>
+            </div>
+          </div>
         </div>
-
-        {/* Bottom gradient fade */}
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-200/50 to-transparent" />
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
