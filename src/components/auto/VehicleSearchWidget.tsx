@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Search, Car, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface VehicleSearchWidgetProps {
   onSearch: (year: string, make: string, model: string) => void;
@@ -8,10 +10,12 @@ interface VehicleSearchWidgetProps {
   accentColor?: string;
 }
 
-export const VehicleSearchWidget = ({ onSearch, primaryColor = "#3B82F6", accentColor = "#8B5CF6" }: VehicleSearchWidgetProps) => {
+export const VehicleSearchWidget = ({ onSearch, primaryColor = "#dc2626", accentColor = "#f97316" }: VehicleSearchWidgetProps) => {
   const [year, setYear] = useState("");
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
+  const [vinNumber, setVinNumber] = useState("");
+  const [searchMode, setSearchMode] = useState<'vehicle' | 'vin'>('vin');
 
   const years = ["2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017"];
   const makes = ["Toyota", "Honda", "Ford", "BMW", "Mercedes", "Volkswagen", "Audi", "Nissan"];
@@ -30,164 +34,181 @@ export const VehicleSearchWidget = ({ onSearch, primaryColor = "#3B82F6", accent
   const availableModels = make ? modelsByMake[make] || [] : [];
 
   const handleSearch = () => {
-    if (year && make && model) {
+    if (searchMode === 'vin' && vinNumber.length === 17) {
+      // Simulated VIN decode
+      onSearch("2022", "Honda", "Civic");
+    } else if (year && make && model) {
       onSearch(year, make, model);
     }
   };
 
-  const isSearchEnabled = year && make && model;
+  const isSearchEnabled = searchMode === 'vin' 
+    ? vinNumber.length === 17 
+    : (year && make && model);
 
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Background with gradient */}
-      <div 
-        className="absolute inset-0"
-        style={{ 
-          background: `linear-gradient(135deg, ${primaryColor}15 0%, transparent 50%, ${accentColor}10 100%)`
-        }}
-      />
-      
-      {/* Decorative elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div 
-          className="absolute -top-20 -right-20 w-80 h-80 rounded-full blur-3xl opacity-20"
-          style={{ backgroundColor: primaryColor }}
-        />
-        <div 
-          className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full blur-3xl opacity-15"
-          style={{ backgroundColor: accentColor }}
-        />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div 
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
-              style={{ 
-                background: `linear-gradient(135deg, ${primaryColor}20, ${accentColor}20)`,
-                border: `1px solid ${primaryColor}30`
-              }}
-            >
-              <Car className="w-4 h-4" style={{ color: primaryColor }} />
-              <span className="text-sm font-medium text-white">Recherche intelligente</span>
-            </div>
-            
-            <h2 className="text-4xl md:text-5xl font-black text-white mb-4">
-              Trouvez les pièces{' '}
-              <span 
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
-              >
-                compatibles
-              </span>
-            </h2>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              Entrez les informations de votre véhicule pour afficher uniquement les pièces compatibles
-            </p>
-          </div>
-          
-          {/* Search Card */}
-          <div 
-            className="relative rounded-3xl p-8 md:p-10 backdrop-blur-xl"
-            style={{
-              background: 'rgba(255,255,255,0.05)',
-              border: '1px solid rgba(255,255,255,0.1)',
-              boxShadow: '0 25px 50px -12px rgba(0,0,0,0.5)'
+    <Card className="bg-white border border-slate-200 rounded-2xl shadow-lg overflow-hidden">
+      {/* Header with tabs */}
+      <div className="border-b border-slate-200">
+        <div className="flex">
+          <button
+            onClick={() => setSearchMode('vin')}
+            className={`flex-1 px-6 py-4 text-sm font-semibold transition-all ${
+              searchMode === 'vin' 
+                ? 'text-white border-b-2' 
+                : 'text-slate-600 hover:text-slate-900 bg-slate-50'
+            }`}
+            style={{ 
+              backgroundColor: searchMode === 'vin' ? primaryColor : undefined,
+              borderColor: searchMode === 'vin' ? primaryColor : undefined
             }}
           >
-            {/* Glow effect */}
-            <div 
-              className="absolute -inset-1 rounded-3xl opacity-20 blur-xl -z-10"
-              style={{ background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
-            />
+            <Search className="w-4 h-4 inline mr-2" />
+            Recherche par VIN
+          </button>
+          <button
+            onClick={() => setSearchMode('vehicle')}
+            className={`flex-1 px-6 py-4 text-sm font-semibold transition-all ${
+              searchMode === 'vehicle' 
+                ? 'text-white border-b-2' 
+                : 'text-slate-600 hover:text-slate-900 bg-slate-50'
+            }`}
+            style={{ 
+              backgroundColor: searchMode === 'vehicle' ? primaryColor : undefined,
+              borderColor: searchMode === 'vehicle' ? primaryColor : undefined
+            }}
+          >
+            <Car className="w-4 h-4 inline mr-2" />
+            Année / Marque / Modèle
+          </button>
+        </div>
+      </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {/* Year Select */}
-              <div className="space-y-3">
-                <label className="block text-sm font-semibold text-white">Année</label>
+      <div className="p-6 md:p-8">
+        {searchMode === 'vin' ? (
+          /* VIN Search */
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Badge 
+                className="mb-3"
+                style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}
+              >
+                Recherche instantanée
+              </Badge>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
+                Entrez votre numéro VIN
+              </h3>
+              <p className="text-slate-500 text-sm">
+                Le VIN (Vehicle Identification Number) se trouve sur le tableau de bord ou la portière
+              </p>
+            </div>
+
+            <div className="relative">
+              <input
+                type="text"
+                value={vinNumber}
+                onChange={(e) => setVinNumber(e.target.value.toUpperCase().slice(0, 17))}
+                placeholder="Ex: 1HGBH41JXMN109186"
+                className="w-full px-5 py-4 text-lg font-mono tracking-widest border-2 border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-red-500 transition-all text-center"
+                maxLength={17}
+              />
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
+                {vinNumber.length}/17
+              </div>
+            </div>
+
+            {vinNumber.length > 0 && vinNumber.length < 17 && (
+              <p className="text-amber-600 text-sm text-center">
+                Le VIN doit contenir exactement 17 caractères
+              </p>
+            )}
+
+            {vinNumber.length === 17 && (
+              <div 
+                className="p-4 rounded-xl flex items-center gap-3"
+                style={{ backgroundColor: `${primaryColor}10` }}
+              >
+                <Sparkles className="w-5 h-5" style={{ color: primaryColor }} />
+                <div>
+                  <p className="font-semibold text-slate-900">VIN détecté!</p>
+                  <p className="text-sm text-slate-600">Cliquez sur rechercher pour voir les pièces compatibles</p>
+                </div>
+              </div>
+            )}
+          </div>
+        ) : (
+          /* Vehicle Selection */
+          <div className="space-y-6">
+            <div className="text-center mb-6">
+              <Badge 
+                className="mb-3"
+                style={{ backgroundColor: `${primaryColor}15`, color: primaryColor }}
+              >
+                Sélection manuelle
+              </Badge>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">
+                Sélectionnez votre véhicule
+              </h3>
+              <p className="text-slate-500 text-sm">
+                Choisissez l'année, la marque et le modèle de votre véhicule
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-slate-700">Année</label>
                 <select 
                   value={year}
                   onChange={(e) => setYear(e.target.value)}
-                  className="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all appearance-none cursor-pointer hover:bg-white/15"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
                 >
-                  <option value="" className="bg-slate-900 text-white">Sélectionner</option>
-                  {years.map(y => <option key={y} value={y} className="bg-slate-900 text-white">{y}</option>)}
+                  <option value="">Sélectionner</option>
+                  {years.map(y => <option key={y} value={y}>{y}</option>)}
                 </select>
               </div>
 
-              {/* Make Select */}
-              <div className="space-y-3">
-                <label className="block text-sm font-semibold text-white">Marque</label>
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-slate-700">Marque</label>
                 <select 
                   value={make}
                   onChange={(e) => {
                     setMake(e.target.value);
                     setModel("");
                   }}
-                  className="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 transition-all appearance-none cursor-pointer hover:bg-white/15"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
                 >
-                  <option value="" className="bg-slate-900 text-white">Sélectionner</option>
-                  {makes.map(m => <option key={m} value={m} className="bg-slate-900 text-white">{m}</option>)}
+                  <option value="">Sélectionner</option>
+                  {makes.map(m => <option key={m} value={m}>{m}</option>)}
                 </select>
               </div>
 
-              {/* Model Select */}
-              <div className="space-y-3">
-                <label className="block text-sm font-semibold text-white">Modèle</label>
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-slate-700">Modèle</label>
                 <select 
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
                   disabled={!make}
-                  className="w-full px-5 py-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed appearance-none cursor-pointer hover:bg-white/15"
+                  className="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  <option value="" className="bg-slate-900 text-white">Sélectionner</option>
-                  {availableModels.map(m => <option key={m} value={m} className="bg-slate-900 text-white">{m}</option>)}
+                  <option value="">Sélectionner</option>
+                  {availableModels.map(m => <option key={m} value={m}>{m}</option>)}
                 </select>
               </div>
-
-              {/* Search Button */}
-              <div className="flex items-end">
-                <Button 
-                  onClick={handleSearch}
-                  disabled={!isSearchEnabled}
-                  className="w-full h-[58px] text-base font-semibold rounded-xl text-white shadow-lg disabled:opacity-40 transition-all hover:scale-[1.02] active:scale-[0.98]"
-                  style={{ 
-                    background: `linear-gradient(135deg, ${primaryColor}, ${accentColor})`,
-                    boxShadow: `0 10px 30px -10px ${primaryColor}80`
-                  }}
-                >
-                  <Search className="w-5 h-5 mr-2" />
-                  Rechercher
-                </Button>
-              </div>
             </div>
-
-            {/* Selected Vehicle Display */}
-            {year && make && model && (
-              <div 
-                className="mt-8 p-5 rounded-2xl flex items-center justify-center gap-3"
-                style={{ 
-                  background: `linear-gradient(135deg, ${primaryColor}20, ${accentColor}20)`,
-                  border: `1px solid ${primaryColor}30`
-                }}
-              >
-                <Sparkles className="w-5 h-5" style={{ color: primaryColor }} />
-                <p className="text-lg font-medium text-white">
-                  Affichage des pièces pour:{' '}
-                  <span 
-                    className="font-bold bg-clip-text text-transparent"
-                    style={{ backgroundImage: `linear-gradient(135deg, ${primaryColor}, ${accentColor})` }}
-                  >
-                    {year} {make} {model}
-                  </span>
-                </p>
-              </div>
-            )}
           </div>
-        </div>
+        )}
+
+        {/* Search Button */}
+        <Button 
+          onClick={handleSearch}
+          disabled={!isSearchEnabled}
+          className="w-full mt-6 h-14 text-base font-bold rounded-xl text-white shadow-lg disabled:opacity-40 transition-all hover:scale-[1.02] active:scale-[0.98]"
+          style={{ backgroundColor: primaryColor }}
+        >
+          <Search className="w-5 h-5 mr-2" />
+          Rechercher les pièces compatibles
+        </Button>
       </div>
-    </section>
+    </Card>
   );
 };
