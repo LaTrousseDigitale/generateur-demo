@@ -179,8 +179,7 @@ export const PartsDiagramsViewer = ({
                         </Button>
                         <Button 
                           onClick={() => handleDownload(diagram.title)}
-                          variant="outline"
-                          className="rounded-xl border-white/20 text-white hover:bg-white/10"
+                          className="rounded-xl bg-white/10 border border-white/20 text-slate-200 hover:bg-white/20 hover:text-white"
                         >
                           <Download className="w-4 h-4" />
                         </Button>
