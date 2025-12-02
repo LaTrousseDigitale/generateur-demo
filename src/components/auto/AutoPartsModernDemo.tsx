@@ -231,30 +231,29 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
         <img 
           src={heroAutoBanner} 
           alt="Large sélection de pièces auto aux plus bas prix" 
-          className="w-full h-auto object-cover"
+          className="w-full h-auto object-cover min-h-[300px] md:min-h-[400px]"
         />
         
-        {/* Overlay texte français */}
+        {/* Overlay texte français - positionné sur la gauche */}
         <div className="absolute inset-0 flex items-center">
-          <div className="container mx-auto px-4 md:px-8 lg:px-16">
-            <div className="max-w-md lg:max-w-lg">
-              {/* Fond blanc pour masquer texte anglais */}
-              <div className="bg-gradient-to-r from-white via-white to-transparent py-8 px-4 -ml-4">
-                <p className="text-base md:text-lg lg:text-xl text-slate-500 mb-1 italic">
-                  <span className="font-bold text-slate-800">Large sélection</span> de pièces auto
-                </p>
-                <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-none">
-                  AUX PLUS BAS
-                </h1>
-                <h1 
-                  className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-none mb-6"
-                  style={{ color: config.primaryColor }}
-                >
-                  PRIX!
-                </h1>
+          <div className="w-full md:w-1/2 lg:w-2/5 h-full flex items-center pl-6 md:pl-12 lg:pl-20">
+            <div className="space-y-3 md:space-y-4">
+              <p className="text-sm md:text-lg lg:text-xl text-slate-600 italic">
+                <span className="font-bold text-slate-800">Large sélection</span> de pièces auto
+              </p>
+              <h1 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-slate-900 leading-none drop-shadow-sm">
+                AUX PLUS BAS
+              </h1>
+              <h1 
+                className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-black leading-none drop-shadow-sm"
+                style={{ color: config.primaryColor }}
+              >
+                PRIX!
+              </h1>
+              <div className="pt-2 md:pt-4">
                 <Button 
                   size="lg"
-                  className="text-white px-6 md:px-8 py-3 text-sm md:text-base font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all"
+                  className="text-white px-5 md:px-8 py-2.5 md:py-3 text-xs md:text-base font-bold uppercase tracking-wide shadow-lg hover:shadow-xl transition-all"
                   style={{ backgroundColor: config.primaryColor }}
                 >
                   Explorer maintenant
@@ -262,18 +261,18 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
               </div>
             </div>
           </div>
-          
-          {/* Badge prix */}
-          <div className="absolute top-1/3 left-1/3 md:left-[35%] transform -translate-y-1/2">
-            <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-white shadow-xl flex flex-col items-center justify-center">
-              <span className="text-slate-500 text-[10px] md:text-xs">À partir de</span>
-              <span 
-                className="text-lg md:text-xl lg:text-2xl font-black"
-                style={{ color: config.primaryColor }}
-              >
-                69,00 $
-              </span>
-            </div>
+        </div>
+        
+        {/* Badge prix - positionné en bas à gauche */}
+        <div className="absolute bottom-4 md:bottom-8 left-6 md:left-12 lg:left-20">
+          <div 
+            className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full shadow-xl flex flex-col items-center justify-center border-2"
+            style={{ backgroundColor: config.primaryColor, borderColor: 'white' }}
+          >
+            <span className="text-white/80 text-[8px] md:text-[10px]">À partir de</span>
+            <span className="text-white text-sm md:text-lg lg:text-xl font-black">
+              69,00 $
+            </span>
           </div>
         </div>
       </section>
