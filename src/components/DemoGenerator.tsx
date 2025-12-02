@@ -21,6 +21,8 @@ import { Section7Domain } from "./questionnaire/Section7Domain";
 import { Section8Finances } from "./questionnaire/Section8Finances";
 import { Section9Summary } from "./questionnaire/Section9Summary";
 import { useQuoteSubmission } from "@/hooks/useQuoteSubmission";
+import type { DemoTheme } from "@/types/demoThemes";
+
 export type ServiceType = "portal" | "website" | "module" | null;
 export interface DemoConfig {
   serviceType: ServiceType;
@@ -35,6 +37,8 @@ export interface DemoConfig {
   secondaryColor: string;
   logo: string | null;
   companyName: string;
+  // Theme/Style
+  theme?: DemoTheme;
   // Website types
   websiteType?: "vitrine" | "ecommerce" | "organisationnel" | null;
   websitePages?: string[];

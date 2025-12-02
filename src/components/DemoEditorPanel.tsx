@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,11 +13,13 @@ import { LogoUploader } from "./LogoUploader";
 import { 
   ArrowLeft, Eye, RefreshCw, Sparkles, Car, UtensilsCrossed, 
   Building2, Stethoscope, ShoppingBag, Briefcase, GraduationCap,
-  Hammer, Palette, Check, Globe, Lock, Users, FileText, ShoppingCart, Star
+  Hammer, Palette, Check, Globe, Lock, Users, FileText, ShoppingCart, Star,
+  Sun, Moon, Zap
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INDUSTRIES, MODULES } from "@/types/questionnaire";
 import type { DemoConfig, ServiceType } from "./DemoGenerator";
+import { DEMO_THEMES, getDefaultThemeForIndustry, type DemoTheme } from "@/types/demoThemes";
 
 // Types de solutions détaillés
 const WEBSITE_TYPES = [
@@ -405,6 +407,7 @@ const DEFAULT_CONFIG: DemoConfig = {
   secondaryColor: "#fbca58",
   logo: null,
   companyName: "Ma Démo",
+  theme: "moderne",
   websitePages: [],
   websiteSections: [],
   portalType: null,
@@ -429,7 +432,8 @@ export const DemoEditorPanel = () => {
   };
 
   const applyTemplate = (template: typeof DEMO_TEMPLATES[0]) => {
-    setConfig({ ...DEFAULT_CONFIG, ...template.config });
+    const suggestedTheme = getDefaultThemeForIndustry(template.config.industry || "services");
+    setConfig({ ...DEFAULT_CONFIG, ...template.config, theme: suggestedTheme });
     setSelectedTemplate(template.id);
   };
 
@@ -520,10 +524,14 @@ export const DemoEditorPanel = () => {
             <Card>
               <CardContent className="p-6">
                 <Tabs defaultValue="templates" className="w-full">
-                  <TabsList className="grid w-full grid-cols-4 mb-6">
+                  <TabsList className="grid w-full grid-cols-5 mb-6">
                     <TabsTrigger value="templates" className="flex items-center gap-1">
                       <Sparkles className="w-3 h-3" />
                       <span className="hidden sm:inline">Templates</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="style" className="flex items-center gap-1">
+                      <Palette className="w-3 h-3" />
+                      <span className="hidden sm:inline">Style</span>
                     </TabsTrigger>
                     <TabsTrigger value="solution">Solution</TabsTrigger>
                     <TabsTrigger value="features">Fonctionnalités</TabsTrigger>
@@ -582,6 +590,102 @@ export const DemoEditorPanel = () => {
                           </CardContent>
                         </Card>
                       ))}
+                    </div>
+                  </TabsContent>
+
+                  {/* Style/Theme Tab */}
+                  <TabsContent value="style" className="space-y-6">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Palette className="w-5 h-5 text-primary" />
+                      <h3 className="font-semibold">Choisissez le style de votre démo</h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Chaque style offre une ambiance unique pour impressionner vos clients
+                    </p>
+                    
+                    {/* Suggested theme badge */}
+                    {config.industry && (
+                      <div className="flex items-center gap-2 mb-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                        <Star className="w-4 h-4 text-primary" />
+                        <span className="text-sm">
+                          Style suggéré pour <strong>{INDUSTRIES.find(i => i.value === config.industry)?.label}</strong> : 
+                          <Badge variant="secondary" className="ml-2">
+                            {DEMO_THEMES.find(t => t.id === getDefaultThemeForIndustry(config.industry))?.name}
+                          </Badge>
+                        </span>
+                      </div>
+                    )}
+
+                    <div className="grid gap-4">
+                      {DEMO_THEMES.map(theme => {
+                        const isSelected = config.theme === theme.id;
+                        const isSuggested = config.industry && getDefaultThemeForIndustry(config.industry) === theme.id;
+                        
+                        return (
+                          <Card 
+                            key={theme.id}
+                            className={`cursor-pointer transition-all overflow-hidden ${
+                              isSelected 
+                                ? 'ring-2 ring-primary shadow-lg' 
+                                : 'hover:border-primary/50 hover:shadow-md'
+                            }`}
+                            onClick={() => updateConfig({ theme: theme.id })}
+                          >
+                            <div className="flex">
+                              {/* Theme Preview */}
+                              <div 
+                                className={`w-32 h-32 flex-shrink-0 relative overflow-hidden bg-gradient-to-br ${theme.preview.bgGradient}`}
+                              >
+                                {/* Mini preview elements */}
+                                <div className="absolute inset-2 flex flex-col gap-1">
+                                  <div className={`h-3 w-12 rounded ${theme.id === 'moderne' ? 'bg-slate-800' : theme.id === 'rustique' ? 'bg-amber-600' : 'bg-indigo-500'}`} />
+                                  <div className={`flex-1 rounded ${theme.id === 'moderne' ? 'bg-slate-100' : theme.id === 'rustique' ? 'bg-stone-700/50' : 'bg-white/10'}`}>
+                                    <div className="p-1 space-y-1">
+                                      <div className={`h-2 w-full rounded ${theme.id === 'moderne' ? 'bg-slate-200' : theme.id === 'rustique' ? 'bg-amber-900/30' : 'bg-indigo-500/30'}`} />
+                                      <div className={`h-2 w-3/4 rounded ${theme.id === 'moderne' ? 'bg-slate-200' : theme.id === 'rustique' ? 'bg-amber-900/30' : 'bg-purple-500/30'}`} />
+                                    </div>
+                                  </div>
+                                  <div className="flex gap-1">
+                                    <div className={`h-4 flex-1 rounded ${theme.id === 'moderne' ? 'bg-slate-200' : theme.id === 'rustique' ? 'bg-stone-700/50' : 'bg-white/10'}`} />
+                                    <div className={`h-4 flex-1 rounded ${theme.id === 'moderne' ? 'bg-slate-200' : theme.id === 'rustique' ? 'bg-stone-700/50' : 'bg-white/10'}`} />
+                                  </div>
+                                </div>
+                                {/* Glow effect for futuriste */}
+                                {theme.preview.accentGlow && (
+                                  <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 via-transparent to-purple-500/20" />
+                                )}
+                              </div>
+                              
+                              {/* Theme Info */}
+                              <CardContent className="flex-1 p-4">
+                                <div className="flex items-start justify-between mb-2">
+                                  <div className="flex items-center gap-2">
+                                    {theme.id === 'moderne' && <Sun className="w-5 h-5 text-amber-500" />}
+                                    {theme.id === 'rustique' && <Moon className="w-5 h-5 text-amber-700" />}
+                                    {theme.id === 'futuriste' && <Zap className="w-5 h-5 text-indigo-500" />}
+                                    <h4 className="font-semibold">{theme.name}</h4>
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    {isSuggested && (
+                                      <Badge variant="outline" className="text-xs border-primary/30 text-primary">
+                                        Suggéré
+                                      </Badge>
+                                    )}
+                                    {isSelected && (
+                                      <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                                        <Check className="w-4 h-4 text-primary-foreground" />
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                                <p className="text-sm text-muted-foreground">
+                                  {theme.description}
+                                </p>
+                              </CardContent>
+                            </div>
+                          </Card>
+                        );
+                      })}
                     </div>
                   </TabsContent>
 
@@ -1001,6 +1105,17 @@ export const DemoEditorPanel = () => {
                   <p className="font-medium">
                     {INDUSTRIES.find(i => i.value === config.industry)?.label || config.industry}
                   </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">Style</p>
+                  <div className="flex items-center gap-2">
+                    {config.theme === 'moderne' && <Sun className="w-4 h-4 text-amber-500" />}
+                    {config.theme === 'rustique' && <Moon className="w-4 h-4 text-amber-700" />}
+                    {config.theme === 'futuriste' && <Zap className="w-4 h-4 text-indigo-500" />}
+                    <p className="font-medium">
+                      {DEMO_THEMES.find(t => t.id === config.theme)?.name || "Moderne"}
+                    </p>
+                  </div>
                 </div>
                 <div className="space-y-2">
                   <p className="text-sm text-muted-foreground">Type de solution</p>
