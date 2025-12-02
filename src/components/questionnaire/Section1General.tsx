@@ -52,8 +52,9 @@ export const Section1General = ({
   };
   return <div className="space-y-6">
       <div>
-        <h3 className="text-xl font-bold mb-2 flex items-center gap-2">Informations générales<Building2 className="w-5 h-5 text-primary" />
-          Informations Générales
+        <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
+          <Building2 className="w-5 h-5 text-primary" />
+          Informations générales
         </h3>
         <p className="text-sm text-muted-foreground">
           Parlez-nous de votre entreprise et de vos besoins
