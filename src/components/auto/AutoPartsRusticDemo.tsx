@@ -376,23 +376,18 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-stone-900">
+      <section className="py-16 bg-stone-950">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-white">PRODUITS <span style={{ color: accentColor }}>VEDETTES</span></h2>
-            <p className="text-stone-400 mt-2">Trouvez les meilleures pièces du marché</p>
-          </div>
-
           {/* Tabs */}
-          <div className="flex justify-center gap-4 mb-8 flex-wrap">
+          <div className="flex justify-center gap-3 mb-12 flex-wrap">
             {productTabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-2 text-sm font-medium transition-colors ${
+                className={`px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-wider transition-all ${
                   activeTab === tab.id 
-                    ? "text-stone-900" 
-                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
+                    ? "text-stone-900 shadow-lg" 
+                    : "bg-stone-800 text-stone-400 hover:bg-stone-700 hover:text-stone-200"
                 }`}
                 style={activeTab === tab.id ? { backgroundColor: accentColor } : {}}
               >
@@ -404,28 +399,42 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           {/* Products Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {featuredProducts.map((product, idx) => (
-              <Card key={idx} className="bg-stone-800 border-stone-700 overflow-hidden group rounded-none">
-                <div className="aspect-square bg-stone-700/50 p-4 flex items-center justify-center">
+              <div key={idx} className="group cursor-pointer">
+                <div className="relative bg-stone-100 aspect-square flex items-center justify-center p-6 border border-stone-200 overflow-hidden">
+                  {/* Discount Badge */}
+                  <div 
+                    className="absolute top-3 left-3 w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-stone-900 z-10"
+                    style={{ backgroundColor: accentColor }}
+                  >
+                    -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+                  </div>
+                  {/* NEW Badge for some products */}
+                  {idx % 3 === 1 && (
+                    <div className="absolute top-3 right-3 bg-cyan-400 text-stone-900 text-xs font-bold px-2 py-1 rounded z-10">
+                      NEW
+                    </div>
+                  )}
                   <img 
                     src={product.image} 
                     alt={product.name} 
                     className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
-                <div className="p-4 text-center">
+                <div className="pt-4 text-center bg-stone-950">
                   <h4 className="text-stone-200 font-medium text-sm mb-2">{product.name}</h4>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-stone-500 line-through text-sm">{product.oldPrice.toFixed(2)} $</span>
                     <span className="font-bold" style={{ color: accentColor }}>{product.price.toFixed(2)} $</span>
+                    <span className="text-stone-500 line-through text-sm">{product.oldPrice.toFixed(2)} $</span>
                   </div>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
 
-          <div className="text-center mt-8">
+          <div className="text-center mt-10">
             <Button 
-              className="bg-transparent border-2 border-stone-400 text-stone-200 hover:bg-stone-400 hover:text-stone-900 rounded-none px-8 py-3 font-semibold transition-colors"
+              className="rounded-full px-8 py-3 font-semibold text-stone-900 hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: accentColor }}
             >
               Voir tous les produits
             </Button>
