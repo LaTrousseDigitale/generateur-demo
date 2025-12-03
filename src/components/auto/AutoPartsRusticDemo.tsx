@@ -303,7 +303,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Categories Row */}
-      <section className="bg-stone-950 py-16 border-b border-stone-800">
+      <section className="bg-stone-950 py-16 border-b border-stone-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center gap-12 flex-wrap">
             {categories.map((cat, idx) => (
@@ -389,7 +389,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Featured Products */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-white sticky top-0 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
         <div className="max-w-7xl mx-auto px-4">
           {/* Tabs */}
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
@@ -456,7 +456,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Deal of the Day */}
-      <section className="relative">
+      <section className="relative sticky top-0 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         <div className="grid grid-cols-1 md:grid-cols-2 relative">
           {/* Left Panel */}
           <div className="relative h-96 overflow-hidden">
@@ -655,7 +655,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Latest Blog */}
-      <section className="py-16 bg-stone-900">
+      <section className="py-16 bg-stone-900 sticky top-0 z-[60] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white">
@@ -694,7 +694,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Service Features */}
-      <section className="py-8" style={{ backgroundColor: accentColor }}>
+      <section className="py-8 sticky top-0 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.4)]" style={{ backgroundColor: accentColor }}>
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex items-center gap-4">
