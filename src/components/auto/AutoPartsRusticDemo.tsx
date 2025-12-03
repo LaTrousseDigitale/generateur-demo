@@ -64,11 +64,18 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
   // Navigation dropdown state
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   
-  // Scroll to section function
+  // Scroll to section function with offset for sticky header
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
+      const headerOffset = 80; // Height of sticky header
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
     }
     setOpenDropdown(null);
   };
@@ -367,7 +374,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Categories Row */}
-      <section id="categories" className="bg-stone-950 py-16 border-b border-stone-800">
+      <section id="categories" className="bg-stone-950 py-16 border-b border-stone-800 sticky top-16 z-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center gap-12 flex-wrap">
             {categories.map((cat, idx) => (
@@ -453,7 +460,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Featured Products */}
-      <section id="products" className="py-16 bg-white">
+      <section id="products" className="py-16 bg-white sticky top-16 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
         <div className="max-w-7xl mx-auto px-4">
           {/* Tabs */}
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
@@ -520,7 +527,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Deal of the Day + Products & Brands Combined Sticky Section */}
-      <div id="deals">
+      <div id="deals" className="sticky top-16 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Deal of the Day */}
         <section className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 relative">
@@ -700,7 +707,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Latest Blog */}
-      <section id="blog" className="py-16 bg-stone-900">
+      <section id="blog" className="py-16 bg-stone-900 sticky top-16 z-[60] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white">
@@ -1188,7 +1195,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Service Features + Footer Combined Sticky Section */}
-      <div>
+      <div className="sticky top-16 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Service Features */}
         <section id="services" className="py-8" style={{ backgroundColor: accentColor }}>
           <div className="max-w-7xl mx-auto px-4">
