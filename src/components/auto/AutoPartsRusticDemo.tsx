@@ -303,15 +303,15 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Categories Row */}
-      <section className="bg-stone-900 py-12 border-b border-stone-800">
+      <section className="bg-stone-950 py-16 border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-center gap-8 flex-wrap">
+          <div className="flex justify-center gap-12 flex-wrap">
             {categories.map((cat, idx) => (
               <div key={idx} className="text-center group cursor-pointer">
-                <div className="w-24 h-24 overflow-hidden mb-3 mx-auto border-2 border-stone-700 group-hover:border-amber-500 transition-colors">
+                <div className="w-32 h-32 rounded-full overflow-hidden mb-4 mx-auto border-4 border-stone-600 group-hover:border-stone-400 transition-colors bg-white">
                   <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
                 </div>
-                <p className="text-stone-300 text-sm font-medium group-hover:text-white transition-colors">{cat.name}</p>
+                <p className="text-stone-300 text-xs font-bold uppercase tracking-wider group-hover:text-white transition-colors">{cat.name}</p>
               </div>
             ))}
           </div>
