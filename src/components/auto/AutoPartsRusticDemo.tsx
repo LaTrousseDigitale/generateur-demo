@@ -375,6 +375,19 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
         </div>
       </section>
 
+      {/* Parallax Divider 1 */}
+      <div 
+        className="h-64 bg-fixed bg-cover bg-center relative"
+        style={{ backgroundImage: `url(${promoAutoParts})` }}
+      >
+        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+          <div className="text-center">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">QUALITÉ GARANTIE</h3>
+            <p className="text-stone-300 text-lg">Des pièces certifiées pour votre véhicule</p>
+          </div>
+        </div>
+      </div>
+
       {/* Featured Products */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
@@ -509,6 +522,25 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
         </div>
       </section>
 
+      {/* Parallax Divider 2 */}
+      <div 
+        className="h-72 bg-fixed bg-cover bg-center relative"
+        style={{ backgroundImage: `url(${heroAuto})` }}
+      >
+        <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
+          <div className="text-center px-4">
+            <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">LIVRAISON RAPIDE</h3>
+            <p className="text-stone-300 text-lg md:text-xl max-w-2xl">Commandez aujourd'hui, recevez demain</p>
+            <Button 
+              className="mt-6 rounded-none px-8 py-6 text-lg font-bold"
+              style={{ backgroundColor: accentColor }}
+            >
+              MAGASINER MAINTENANT
+            </Button>
+          </div>
+        </div>
+      </div>
+
       {/* Latest / Most Viewed / On Sale */}
       <section className="py-16 bg-stone-900">
         <div className="max-w-7xl mx-auto px-4">
@@ -603,6 +635,21 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           </div>
         </div>
       </section>
+
+      {/* Parallax Divider 3 */}
+      <div 
+        className="h-56 bg-fixed bg-cover bg-center relative"
+        style={{ backgroundImage: `url(${categoryWheelsTires})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-black/40 flex items-center">
+          <div className="max-w-7xl mx-auto px-4 w-full">
+            <div className="max-w-xl">
+              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">EXPERTISE AUTOMOBILE</h3>
+              <p className="text-stone-300">Plus de 10 ans d'expérience à votre service</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Latest Blog */}
       <section className="py-16 bg-stone-900">
