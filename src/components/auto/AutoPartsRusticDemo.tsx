@@ -376,7 +376,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-stone-950">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
           {/* Tabs */}
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
@@ -386,8 +386,8 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-6 py-3 rounded-full text-sm font-semibold uppercase tracking-wider transition-all ${
                   activeTab === tab.id 
-                    ? "text-stone-900 shadow-lg" 
-                    : "bg-stone-800 text-stone-400 hover:bg-stone-700 hover:text-stone-200"
+                    ? "text-white shadow-lg" 
+                    : "bg-stone-100 text-stone-600 hover:bg-stone-200"
                 }`}
                 style={activeTab === tab.id ? { backgroundColor: accentColor } : {}}
               >
@@ -399,18 +399,18 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           {/* Products Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {featuredProducts.map((product, idx) => (
-              <div key={idx} className="group cursor-pointer">
-                <div className="relative bg-stone-100 aspect-square flex items-center justify-center p-6 border border-stone-200 overflow-hidden">
+              <div key={idx} className="group cursor-pointer border border-stone-200 hover:shadow-lg transition-shadow">
+                <div className="relative bg-white aspect-square flex items-center justify-center p-6 overflow-hidden">
                   {/* Discount Badge */}
                   <div 
-                    className="absolute top-3 left-3 w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-stone-900 z-10"
+                    className="absolute top-3 left-3 w-12 h-12 rounded-full flex items-center justify-center text-xs font-bold text-white z-10 shadow-md"
                     style={{ backgroundColor: accentColor }}
                   >
                     -{Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
                   </div>
                   {/* NEW Badge for some products */}
                   {idx % 3 === 1 && (
-                    <div className="absolute top-3 right-3 bg-cyan-400 text-stone-900 text-xs font-bold px-2 py-1 rounded z-10">
+                    <div className="absolute top-3 right-3 bg-cyan-400 text-white text-xs font-bold px-3 py-1 rounded z-10">
                       NEW
                     </div>
                   )}
@@ -420,11 +420,11 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                     className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
                   />
                 </div>
-                <div className="pt-4 text-center bg-stone-950">
-                  <h4 className="text-stone-200 font-medium text-sm mb-2">{product.name}</h4>
+                <div className="p-4 text-center bg-white">
+                  <h4 className="text-stone-800 font-medium text-sm mb-2">{product.name}</h4>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="font-bold" style={{ color: accentColor }}>{product.price.toFixed(2)} $</span>
-                    <span className="text-stone-500 line-through text-sm">{product.oldPrice.toFixed(2)} $</span>
+                    <span className="font-bold text-lg" style={{ color: accentColor }}>{product.price.toFixed(2)} $</span>
+                    <span className="text-stone-400 line-through text-sm">{product.oldPrice.toFixed(2)} $</span>
                   </div>
                 </div>
               </div>
@@ -433,7 +433,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
           <div className="text-center mt-10">
             <Button 
-              className="rounded-full px-8 py-3 font-semibold text-stone-900 hover:opacity-90 transition-opacity"
+              className="rounded-full px-10 py-6 font-semibold text-white hover:opacity-90 transition-opacity text-base"
               style={{ backgroundColor: accentColor }}
             >
               Voir tous les produits
