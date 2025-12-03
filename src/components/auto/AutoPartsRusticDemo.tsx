@@ -374,7 +374,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Categories Row */}
-      <section id="categories" className="bg-stone-950 py-16 border-b border-stone-800 sticky top-16 z-10">
+      <section id="categories" className="bg-stone-950 py-16 border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center gap-12 flex-wrap">
             {categories.map((cat, idx) => (
@@ -460,7 +460,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Featured Products */}
-      <section id="products" className="py-16 bg-white sticky top-16 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+      <section id="products" className="py-16 bg-white shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
         <div className="max-w-7xl mx-auto px-4">
           {/* Tabs */}
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
@@ -527,7 +527,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Deal of the Day + Products & Brands Combined Sticky Section */}
-      <div id="deals" className="sticky top-16 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
+      <div id="deals" className="shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Deal of the Day */}
         <section className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 relative">
@@ -707,7 +707,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Latest Blog */}
-      <section id="blog" className="py-16 bg-stone-900 sticky top-16 z-[60] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+      <section id="blog" className="py-16 bg-stone-900 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white">
@@ -1195,7 +1195,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Service Features + Footer Combined Sticky Section */}
-      <div className="sticky top-16 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
+      <div className="shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Service Features */}
         <section id="services" className="py-8" style={{ backgroundColor: accentColor }}>
           <div className="max-w-7xl mx-auto px-4">
