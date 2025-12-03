@@ -503,7 +503,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
             {newArrivals.map((product, i) => (
               <Card 
                 key={i}
@@ -532,6 +532,51 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
                 </div>
               </Card>
             ))}
+          </div>
+
+          {/* Promo Banners - Ferrari & Lexus style */}
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="relative overflow-hidden rounded-xl min-h-[160px] group cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-transparent" />
+              <img 
+                src={productBrakePads} 
+                alt="Pièces premium" 
+                className="absolute right-0 top-0 h-full w-1/2 object-cover opacity-60 group-hover:scale-105 transition-transform"
+              />
+              <div className="relative z-10 p-6 text-white">
+                <Badge className="bg-green-500 text-white mb-2">Nouveaux arrivages</Badge>
+                <h3 className="text-xl font-bold uppercase tracking-wide">Pièces de marque</h3>
+                <h4 className="text-2xl font-black uppercase" style={{ color: config.primaryColor }}>Premium</h4>
+                <Button 
+                  size="sm" 
+                  className="mt-4 text-white"
+                  style={{ backgroundColor: config.primaryColor }}
+                >
+                  Magasiner
+                </Button>
+              </div>
+            </Card>
+            
+            <Card className="relative overflow-hidden rounded-xl min-h-[160px] group cursor-pointer">
+              <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-800 to-transparent" />
+              <img 
+                src={productShocks} 
+                alt="Soldes" 
+                className="absolute right-0 top-0 h-full w-1/2 object-cover opacity-60 group-hover:scale-105 transition-transform"
+              />
+              <div className="relative z-10 p-6 text-white">
+                <Badge className="bg-yellow-500 text-slate-900 mb-2">Solde 70%</Badge>
+                <h3 className="text-xl font-bold uppercase tracking-wide">Grandes marques</h3>
+                <h4 className="text-2xl font-black uppercase" style={{ color: config.accentColor || '#f97316' }}>En rabais</h4>
+                <Button 
+                  size="sm" 
+                  className="mt-4 text-white"
+                  style={{ backgroundColor: config.primaryColor }}
+                >
+                  Voir les offres
+                </Button>
+              </div>
+            </Card>
           </div>
         </div>
       </section>
@@ -597,7 +642,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           SHOP BY CATEGORIES
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-16 bg-slate-100">
+      <section className="py-16 bg-slate-800">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge 
@@ -606,7 +651,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
             >
               Parcourir
             </Badge>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+            <h2 className="text-3xl md:text-4xl font-bold text-white">
               • MAGASINER PAR CATÉGORIE •
             </h2>
           </div>
@@ -682,6 +727,73 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
                   className="max-h-16 max-w-full object-contain grayscale group-hover:grayscale-0 transition-all"
                 />
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          LATEST BLOG
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className="py-16 bg-slate-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge 
+              className="mb-4"
+              style={{ backgroundColor: `${config.primaryColor}15`, color: config.primaryColor }}
+            >
+              Actualités
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900">
+              • DERNIER BLOG •
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Changer vos freins : guide complet pour débutants",
+                excerpt: "Apprenez les étapes essentielles pour remplacer vos plaquettes de frein en toute sécurité...",
+                image: productBrakePads,
+                date: "15 Nov 2024"
+              },
+              {
+                title: "Questions fréquentes sur l'entretien de votre moteur",
+                excerpt: "Découvrez les réponses aux questions les plus courantes concernant l'huile moteur...",
+                image: productMotorOil,
+                date: "12 Nov 2024"
+              },
+              {
+                title: "Qu'est-ce qu'un amortisseur? L'histoire et les types",
+                excerpt: "Tout ce que vous devez savoir sur les amortisseurs, leur fonctionnement et quand les changer...",
+                image: productShocks,
+                date: "8 Nov 2024"
+              }
+            ].map((post, i) => (
+              <Card key={i} className="bg-white border border-slate-200 rounded-xl overflow-hidden group cursor-pointer hover:shadow-xl transition-all">
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={post.image} 
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-5">
+                  <span className="text-xs text-slate-500">{post.date}</span>
+                  <h3 className="font-bold text-slate-900 mt-2 mb-2 line-clamp-2 group-hover:text-slate-700 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 line-clamp-2 mb-4">{post.excerpt}</p>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="text-xs"
+                    style={{ borderColor: config.primaryColor, color: config.primaryColor }}
+                  >
+                    Lire plus
+                  </Button>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
