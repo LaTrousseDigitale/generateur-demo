@@ -322,15 +322,15 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       <section className="bg-stone-950">
         <div className="grid grid-cols-1 md:grid-cols-3">
           {/* Banner 1 - Lights */}
-          <div className="relative h-72 overflow-hidden group">
-            <img src={categoryLights} alt="Lampes et lumières" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-r from-red-900/80 to-red-900/40" />
+          <div className="relative h-72 overflow-hidden group cursor-pointer">
+            <img src={categoryLights} alt="Lampes et lumières" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-900/70 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
             <div className="absolute inset-0 p-8 flex flex-col justify-center">
               <p className="text-sm uppercase tracking-wider font-bold" style={{ color: accentColor }}>Lampes et lumières</p>
               <h3 className="text-3xl font-black text-white mt-1">MÉGA VENTE</h3>
               <p className="text-white/80 text-sm mt-2">Jusqu'à <span style={{ color: accentColor }}>45%</span> de rabais</p>
               <Button 
-                className="mt-4 w-fit font-semibold rounded-full px-6"
+                className="mt-4 w-fit font-semibold rounded-full px-6 transition-transform duration-300 group-hover:scale-105"
                 style={{ backgroundColor: accentColor, color: "#1c1917" }}
               >
                 Magasiner
@@ -339,16 +339,16 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           </div>
 
           {/* Banner 2 - City Auto */}
-          <div className="relative h-72 overflow-hidden group">
-            <img src={heroAuto} alt="City Auto" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-stone-900/70" />
+          <div className="relative h-72 overflow-hidden group cursor-pointer">
+            <img src={heroAuto} alt="City Auto" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-stone-900/75 transition-opacity duration-300 group-hover:opacity-60" />
             <div className="absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
               <h3 className="text-4xl font-black text-white">{companyName || "CITY AUTO"}</h3>
               <p className="text-stone-400 mt-2 text-sm uppercase tracking-wider max-w-xs">
                 Des pièces de qualité pour votre véhicule
               </p>
               <Button 
-                className="mt-4 font-semibold rounded-full px-6"
+                className="mt-4 font-semibold rounded-full px-6 transition-transform duration-300 group-hover:scale-105"
                 style={{ backgroundColor: accentColor, color: "#1c1917" }}
               >
                 Magasiner
@@ -357,15 +357,15 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           </div>
 
           {/* Banner 3 - Body Parts */}
-          <div className="relative h-72 overflow-hidden group">
-            <img src={promoAutoParts} alt="Pièces carrosserie" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-l from-red-900/80 to-red-900/40" />
+          <div className="relative h-72 overflow-hidden group cursor-pointer">
+            <img src={promoAutoParts} alt="Pièces carrosserie" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-l from-stone-950/90 via-stone-900/70 to-transparent transition-opacity duration-300 group-hover:opacity-80" />
             <div className="absolute inset-0 p-8 flex flex-col justify-center items-end text-right">
               <p className="text-sm uppercase tracking-wider font-bold" style={{ color: accentColor }}>Pièces carrosserie</p>
               <h3 className="text-2xl font-black text-white mt-1">POUR TOUS<br />LES VÉHICULES</h3>
               <p className="text-white/80 text-sm mt-2">Un incontournable pour vous</p>
               <Button 
-                className="mt-4 font-semibold rounded-full px-6"
+                className="mt-4 font-semibold rounded-full px-6 transition-transform duration-300 group-hover:scale-105"
                 style={{ backgroundColor: accentColor, color: "#1c1917" }}
               >
                 Magasiner
