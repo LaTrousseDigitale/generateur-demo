@@ -412,7 +412,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           BEST SELLERS
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-16">
+      <section className="py-16 sticky top-20 z-10 bg-white shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge 
@@ -489,7 +489,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           NEW ARRIVALS
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-16 bg-slate-50">
+      <section className="py-16 bg-slate-50 sticky top-20 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge 
@@ -584,7 +584,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           PROMO BANNER
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-8">
+      <section className="py-8 sticky top-20 z-30 bg-white shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-6">
             <Card 
@@ -642,7 +642,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           SHOP BY CATEGORIES
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-16 bg-slate-800">
+      <section className="py-16 bg-slate-800 sticky top-20 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.2)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge 
@@ -701,7 +701,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           SHOP BY BRANDS
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-16">
+      <section className="py-16 sticky top-20 z-50 bg-white shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge 
@@ -735,7 +735,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           LATEST BLOG
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-16 bg-slate-50">
+      <section className="py-16 bg-slate-50 sticky top-20 z-[60] shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge 
@@ -1023,7 +1023,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           FEATURES BAR
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-12 bg-slate-50 border-y border-slate-200">
+      <section className="py-12 bg-slate-50 border-y border-slate-200 sticky top-20 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.1)]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
@@ -1052,7 +1052,7 @@ export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps
       {/* ═══════════════════════════════════════════════════════════════
           FOOTER
       ═══════════════════════════════════════════════════════════════ */}
-      <footer className="bg-slate-900 text-white py-16">
+      <footer className="bg-slate-900 text-white py-16 sticky top-20 z-[80] shadow-[0_-10px_30px_rgba(0,0,0,0.2)]">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             {/* Company Info */}
