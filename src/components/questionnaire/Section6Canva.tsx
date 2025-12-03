@@ -65,7 +65,7 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
 
       {/* Types de services Canva */}
       <div className="space-y-3">
-        <Label>Types de designs souhaités *</Label>
+        <Label>Types de designs souhaités</Label>
         <div className="grid grid-cols-1 gap-3">
           {CANVA_SERVICES.map((service) => (
             <Card key={service.id} className="p-4 hover:bg-accent/5 transition-colors">
@@ -118,7 +118,7 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
 
       {/* Quantité approximative */}
       <div className="space-y-3">
-        <Label>Quantité approximative de designs *</Label>
+        <Label>Quantité approximative de designs</Label>
         <RadioGroup
           value={data.canvaQuantity || ""}
           onValueChange={(value) => onChange({ canvaQuantity: value })}
@@ -171,7 +171,7 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
           {/* Nombre exact de designs */}
           <div className="space-y-2">
             <Label htmlFor="custom-quantity" className="text-foreground">
-              Nombre exact de designs souhaités *
+              Nombre exact de designs souhaités
             </Label>
             <Input
               id="custom-quantity"
@@ -187,7 +187,7 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
           {/* Types de designs détaillés */}
           <div className="space-y-2">
             <Label htmlFor="custom-design-types" className="text-foreground">
-              Types de designs et quantités par type *
+              Types de designs et quantités par type
             </Label>
             <Textarea
               id="custom-design-types"
@@ -205,7 +205,7 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
           {/* Date d'échéance spécifique */}
           <div className="space-y-2">
             <Label htmlFor="custom-deadline" className="text-foreground">
-              Date d'échéance souhaitée *
+              Date d'échéance souhaitée
             </Label>
             <Input
               id="custom-deadline"
@@ -220,7 +220,7 @@ export const Section6Canva = ({ data, onChange }: Section6Props) => {
 
       {/* Fréquence */}
       <div className="space-y-3">
-        <Label>Fréquence des services *</Label>
+        <Label>Fréquence des services</Label>
         <RadioGroup
           value={data.canvaFrequency || ""}
           onValueChange={(value) => onChange({ canvaFrequency: value })}
