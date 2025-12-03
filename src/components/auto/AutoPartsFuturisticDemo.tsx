@@ -47,6 +47,7 @@ import brandMonroe from "@/assets/brand-monroe.jpg";
 import brandMotorcraft from "@/assets/brand-motorcraft.jpg";
 import brandAcdelco from "@/assets/brand-acdelco.jpg";
 import promoAutoParts from "@/assets/promo-auto-parts-dark.jpg";
+import heroAutoFuturistic from "@/assets/hero-auto-futuristic.png";
 
 interface AutoPartsFuturisticDemoProps {
   config: {
@@ -284,152 +285,14 @@ const AutoPartsFuturisticDemo: React.FC<AutoPartsFuturisticDemoProps> = ({ confi
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="hero" className="relative min-h-[600px] overflow-hidden -mt-4">
-        {/* Background gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-red-950/30 to-red-900/20" />
-        
-        {/* Subtle glow */}
-        <div 
-          className="absolute top-0 right-1/4 w-[600px] h-[600px] rounded-full blur-[150px] opacity-15"
-          style={{ background: accentColor }}
+      {/* Hero Section - Image directe */}
+      <section id="hero" className="relative h-[700px] overflow-hidden">
+        {/* Hero image as background */}
+        <img 
+          src={heroAutoFuturistic} 
+          alt="Pièces auto premium" 
+          className="absolute inset-0 w-full h-full object-cover object-top"
         />
-
-        {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 flex items-center min-h-[550px]">
-          {/* Left Content */}
-          <div className="max-w-lg flex-shrink-0">
-            <Badge 
-              className="mb-6 px-4 py-2 text-sm border-0 rounded-full inline-flex items-center gap-2"
-              style={{ background: accentColor, color: "white" }}
-            >
-              <Zap className="w-4 h-4" />
-              Livraison express 24h
-            </Badge>
-            <h1 className="text-5xl md:text-6xl font-black mb-4 leading-tight">
-              Pièces auto
-              <span 
-                className="block"
-                style={{ color: accentColor }}
-              >
-                premium
-              </span>
-            </h1>
-            <p className="text-lg text-slate-400 mb-8">
-              Trouvez les pièces parfaites pour votre véhicule
-            </p>
-            <div className="flex flex-wrap gap-4 mb-8">
-              <Button 
-                size="lg"
-                className="px-6 py-5 text-sm rounded-full flex items-center gap-2"
-                style={{ background: accentColor }}
-              >
-                <ShoppingCart className="w-4 h-4" />
-                Voir la boutique
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-              <Button 
-                size="lg"
-                variant="outline"
-                className="px-6 py-5 text-sm rounded-full border-white/30 bg-transparent hover:bg-white/10 text-white"
-              >
-                <span className="mr-2">▶</span>
-                Voir la vidéo
-              </Button>
-            </div>
-            
-            {/* Trust indicators */}
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex -space-x-2">
-                {["JD", "ML", "PB", "SL"].map((initials, idx) => (
-                  <div 
-                    key={idx}
-                    className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white border-2 border-slate-950"
-                    style={{ background: accentColor }}
-                  >
-                    {initials}
-                  </div>
-                ))}
-              </div>
-              <div className="flex items-center gap-0.5">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
-                ))}
-              </div>
-              <span className="text-slate-400 text-sm">+50 000 clients satisfaits</span>
-            </div>
-          </div>
-
-          {/* Right Content - Floating Cards Composition */}
-          <div className="flex-1 relative hidden lg:block ml-8">
-            {/* Central Car Image Container */}
-            <div className="relative w-full h-[450px]">
-              {/* Main car display area - white background card */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[320px] bg-gradient-to-br from-white to-slate-100 rounded-3xl shadow-2xl overflow-hidden">
-                <img 
-                  src={heroAuto} 
-                  alt="Véhicule" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              {/* Floating product card - Top Right */}
-              <div 
-                className="absolute -top-4 right-4 w-44 bg-white/10 backdrop-blur-xl rounded-2xl p-3 border border-white/20 shadow-xl transform rotate-6"
-              >
-                <div className="relative">
-                  <Badge 
-                    className="absolute -top-2 -left-2 text-xs border-0 px-2"
-                    style={{ background: accentColor }}
-                  >
-                    -30%
-                  </Badge>
-                  <img src={productShocks} alt="Amortisseurs" className="w-full h-20 object-cover rounded-lg mb-2" />
-                </div>
-                <p className="text-white text-xs font-medium">Amortisseurs racing</p>
-                <p style={{ color: accentColor }} className="font-bold text-sm">449,99 $</p>
-              </div>
-              
-              {/* Floating product card - Bottom Left */}
-              <div 
-                className="absolute bottom-16 -left-4 w-40 bg-white/10 backdrop-blur-xl rounded-2xl p-3 border border-white/20 shadow-xl transform -rotate-6"
-              >
-                <img src={productAirFilter} alt="Filtre" className="w-full h-16 object-cover rounded-lg mb-2" />
-                <p className="text-white text-xs font-medium">Filtre à air sport</p>
-                <p style={{ color: accentColor }} className="font-bold text-sm">89,99 $</p>
-              </div>
-              
-              {/* Floating product card - Bottom Center */}
-              <div 
-                className="absolute bottom-4 left-1/2 -translate-x-1/3 w-36 bg-white/10 backdrop-blur-xl rounded-2xl p-2 border border-white/20 shadow-xl"
-              >
-                <img src={productBrakePads} alt="Jante" className="w-full h-14 object-cover rounded-lg mb-1" />
-                <p className="text-white text-xs font-medium truncate">Jante sportive</p>
-                <p style={{ color: accentColor }} className="font-bold text-sm">299,99 $</p>
-              </div>
-
-              {/* Floating action button */}
-              <button 
-                className="absolute bottom-24 right-8 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
-                style={{ background: accentColor }}
-              >
-                <ShoppingCart className="w-5 h-5 text-white" />
-              </button>
-              
-              {/* Decorative dots */}
-              <div className="absolute top-20 right-1/3 w-3 h-3 rounded-full bg-white/50" />
-              <div className="absolute top-32 right-1/4 w-2 h-2 rounded-full" style={{ background: accentColor }} />
-            </div>
-          </div>
-        </div>
-        
-        {/* CSS for float animation */}
-        <style>{`
-          @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(var(--rotation, 0deg)); }
-            50% { transform: translateY(-15px) rotate(var(--rotation, 0deg)); }
-          }
-        `}</style>
       </section>
 
       {/* Categories Grid */}
