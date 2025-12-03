@@ -75,18 +75,18 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
   
   const navItems = [
     { label: "Accueil", hasDropdown: false, sectionId: "hero" },
-    { label: "Fonctionnalités", hasDropdown: true, sectionId: "features", items: [
-      { label: "Recherche avancée", sectionId: "hero" },
-      { label: "Comparateur", sectionId: "products" },
-      { label: "Compatibilité", sectionId: "categories" },
-      { label: "Diagnostics", sectionId: "services" }
+    { label: "Fonctionnalités", hasDropdown: true, sectionId: "feature-search", items: [
+      { label: "Recherche avancée", sectionId: "feature-search" },
+      { label: "Comparateur", sectionId: "feature-compare" },
+      { label: "Compatibilité", sectionId: "feature-compatibility" },
+      { label: "Diagnostics", sectionId: "feature-diagnostics" }
     ]},
-    { label: "Collections", hasDropdown: true, sectionId: "categories", items: [
-      { label: "Freins", sectionId: "products" },
-      { label: "Suspension", sectionId: "products" },
-      { label: "Moteur", sectionId: "products" },
-      { label: "Électrique", sectionId: "products" },
-      { label: "Carrosserie", sectionId: "products" }
+    { label: "Collections", hasDropdown: true, sectionId: "collection-freins", items: [
+      { label: "Freins", sectionId: "collection-freins" },
+      { label: "Suspension", sectionId: "collection-suspension" },
+      { label: "Moteur", sectionId: "collection-moteur" },
+      { label: "Électrique", sectionId: "collection-electrique" },
+      { label: "Carrosserie", sectionId: "collection-carrosserie" }
     ]},
     { label: "Boutique", hasDropdown: true, sectionId: "products", items: [
       { label: "Nouveautés", sectionId: "products" },
@@ -94,11 +94,11 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       { label: "Meilleures ventes", sectionId: "latest-products" },
       { label: "Marques", sectionId: "brands" }
     ]},
-    { label: "Pages", hasDropdown: true, sectionId: "services", items: [
-      { label: "À propos", sectionId: "hero" },
-      { label: "Contact", sectionId: "services" },
-      { label: "FAQ", sectionId: "blog" },
-      { label: "Politique de retour", sectionId: "services" }
+    { label: "Pages", hasDropdown: true, sectionId: "page-about", items: [
+      { label: "À propos", sectionId: "page-about" },
+      { label: "Contact", sectionId: "page-contact" },
+      { label: "FAQ", sectionId: "page-faq" },
+      { label: "Politique de retour", sectionId: "page-returns" }
     ]},
     { label: "Blog", hasDropdown: false, sectionId: "blog" },
   ];
@@ -734,6 +734,455 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                 </div>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== FONCTIONNALITÉS SECTIONS ========== */}
+      
+      {/* Recherche avancée */}
+      <section id="feature-search" className="py-20 bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              RECHERCHE <span style={{ color: accentColor }}>AVANCÉE</span>
+            </h2>
+            <p className="text-stone-400 max-w-2xl mx-auto">
+              Trouvez la pièce exacte pour votre véhicule grâce à notre système de recherche intelligent
+            </p>
+          </div>
+          <div className="bg-stone-900 p-8 border border-stone-800">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <select className="bg-stone-800 border border-stone-700 text-white px-4 py-3 w-full">
+                <option>Sélectionnez l'année</option>
+                {[2024, 2023, 2022, 2021, 2020, 2019, 2018].map(year => (
+                  <option key={year}>{year}</option>
+                ))}
+              </select>
+              <select className="bg-stone-800 border border-stone-700 text-white px-4 py-3 w-full">
+                <option>Sélectionnez la marque</option>
+                {["Toyota", "Honda", "Ford", "Chevrolet", "BMW", "Mercedes"].map(make => (
+                  <option key={make}>{make}</option>
+                ))}
+              </select>
+              <select className="bg-stone-800 border border-stone-700 text-white px-4 py-3 w-full">
+                <option>Sélectionnez le modèle</option>
+              </select>
+              <Button className="w-full font-semibold" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
+                <Search className="w-4 h-4 mr-2" /> Rechercher
+              </Button>
+            </div>
+            <p className="text-stone-500 text-sm text-center">
+              Ou entrez votre numéro VIN pour une recherche précise
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparateur */}
+      <section id="feature-compare" className="py-20 bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              <span style={{ color: accentColor }}>COMPARATEUR</span> DE PIÈCES
+            </h2>
+            <p className="text-stone-400 max-w-2xl mx-auto">
+              Comparez les caractéristiques et prix de plusieurs pièces côte à côte
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { name: "Plaquettes de frein Standard", price: 49.99, quality: "OEM", warranty: "1 an" },
+              { name: "Plaquettes de frein Premium", price: 79.99, quality: "Performance", warranty: "2 ans" },
+              { name: "Plaquettes de frein Racing", price: 129.99, quality: "Compétition", warranty: "3 ans" },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-800 border border-stone-700 p-6">
+                <div className="aspect-square bg-stone-700 mb-4 flex items-center justify-center">
+                  <img src={productBrakePads} alt={item.name} className="w-3/4 h-3/4 object-contain" />
+                </div>
+                <h4 className="text-white font-semibold mb-2">{item.name}</h4>
+                <div className="space-y-2 text-sm text-stone-400 mb-4">
+                  <div className="flex justify-between"><span>Qualité:</span><span className="text-white">{item.quality}</span></div>
+                  <div className="flex justify-between"><span>Garantie:</span><span className="text-white">{item.warranty}</span></div>
+                </div>
+                <div className="text-2xl font-bold mb-4" style={{ color: accentColor }}>{item.price.toFixed(2)} $</div>
+                <Button className="w-full" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
+                  Ajouter au panier
+                </Button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Compatibilité */}
+      <section id="feature-compatibility" className="py-20 bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              VÉRIFICATION DE <span style={{ color: accentColor }}>COMPATIBILITÉ</span>
+            </h2>
+            <p className="text-stone-400 max-w-2xl mx-auto">
+              Assurez-vous que la pièce est compatible avec votre véhicule avant l'achat
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-stone-900 p-8 border border-stone-800">
+              <h3 className="text-xl font-semibold text-white mb-6">Entrez les informations de votre véhicule</h3>
+              <div className="space-y-4">
+                <input type="text" placeholder="Numéro VIN" className="w-full bg-stone-800 border border-stone-700 text-white px-4 py-3" />
+                <input type="text" placeholder="Numéro de pièce (optionnel)" className="w-full bg-stone-800 border border-stone-700 text-white px-4 py-3" />
+                <Button className="w-full font-semibold" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
+                  Vérifier la compatibilité
+                </Button>
+              </div>
+            </div>
+            <div className="bg-stone-900 p-8 border border-stone-800">
+              <h3 className="text-xl font-semibold text-white mb-6">Résultat de compatibilité</h3>
+              <div className="flex items-center gap-4 p-4 bg-green-900/30 border border-green-700">
+                <Shield className="w-8 h-8 text-green-500" />
+                <div>
+                  <p className="text-green-400 font-semibold">Compatible ✓</p>
+                  <p className="text-stone-400 text-sm">Cette pièce est compatible avec votre véhicule</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Diagnostics */}
+      <section id="feature-diagnostics" className="py-20 bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              <span style={{ color: accentColor }}>DIAGNOSTICS</span> VÉHICULE
+            </h2>
+            <p className="text-stone-400 max-w-2xl mx-auto">
+              Identifiez les problèmes de votre véhicule et trouvez les pièces nécessaires
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { symptom: "Voyant moteur allumé", solution: "Vérifier capteur O2, bougies", count: 12 },
+              { symptom: "Bruits de freinage", solution: "Remplacer plaquettes/disques", count: 8 },
+              { symptom: "Problème de démarrage", solution: "Vérifier batterie, alternateur", count: 15 },
+              { symptom: "Surchauffe moteur", solution: "Vérifier radiateur, thermostat", count: 6 },
+              { symptom: "Vibrations au volant", solution: "Équilibrage/alignement roues", count: 4 },
+              { symptom: "Perte de puissance", solution: "Filtre à air, injection", count: 10 },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-800 p-6 border border-stone-700 hover:border-amber-500 transition-colors cursor-pointer">
+                <h4 className="text-white font-semibold mb-2">{item.symptom}</h4>
+                <p className="text-stone-400 text-sm mb-4">{item.solution}</p>
+                <Badge style={{ backgroundColor: accentColor, color: "#1c1917" }}>{item.count} pièces associées</Badge>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== COLLECTIONS SECTIONS ========== */}
+
+      {/* Collection Freins */}
+      <section id="collection-freins" className="py-20 bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              COLLECTION <span style={{ color: accentColor }}>FREINS</span>
+            </h2>
+            <p className="text-stone-400">Plaquettes, disques, étriers et kits complets</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { name: "Kit freins avant", price: 189.99, image: productBrakePads },
+              { name: "Disques ventilés", price: 129.99, image: productBrakeRotors },
+              { name: "Plaquettes céramique", price: 79.99, image: productBrakePads },
+              { name: "Étrier de frein", price: 149.99, image: productBrakeRotors },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-900 border border-stone-800 group cursor-pointer hover:border-amber-500 transition-colors">
+                <div className="aspect-square bg-white p-4">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="p-4">
+                  <h4 className="text-white text-sm mb-2">{item.name}</h4>
+                  <span className="font-bold" style={{ color: accentColor }}>{item.price.toFixed(2)} $</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Collection Suspension */}
+      <section id="collection-suspension" className="py-20 bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              COLLECTION <span style={{ color: accentColor }}>SUSPENSION</span>
+            </h2>
+            <p className="text-stone-400">Amortisseurs, ressorts et composants de suspension</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { name: "Amortisseurs avant", price: 199.99, image: productShocks },
+              { name: "Kit ressorts sport", price: 249.99, image: productTimingBelt },
+              { name: "Bras de suspension", price: 89.99, image: productShocks },
+              { name: "Rotule de direction", price: 59.99, image: productTimingBelt },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-800 border border-stone-700 group cursor-pointer hover:border-amber-500 transition-colors">
+                <div className="aspect-square bg-white p-4">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="p-4">
+                  <h4 className="text-white text-sm mb-2">{item.name}</h4>
+                  <span className="font-bold" style={{ color: accentColor }}>{item.price.toFixed(2)} $</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Collection Moteur */}
+      <section id="collection-moteur" className="py-20 bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              COLLECTION <span style={{ color: accentColor }}>MOTEUR</span>
+            </h2>
+            <p className="text-stone-400">Pièces moteur, filtration et huiles</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { name: "Huile synthétique 5W-30", price: 49.99, image: productMotorOil },
+              { name: "Filtre à huile", price: 14.99, image: productAirFilter },
+              { name: "Courroie distribution", price: 89.99, image: productTimingBelt },
+              { name: "Bougies d'allumage (4)", price: 34.99, image: productSparkPlugs },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-900 border border-stone-800 group cursor-pointer hover:border-amber-500 transition-colors">
+                <div className="aspect-square bg-white p-4">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="p-4">
+                  <h4 className="text-white text-sm mb-2">{item.name}</h4>
+                  <span className="font-bold" style={{ color: accentColor }}>{item.price.toFixed(2)} $</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Collection Électrique */}
+      <section id="collection-electrique" className="py-20 bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              COLLECTION <span style={{ color: accentColor }}>ÉLECTRIQUE</span>
+            </h2>
+            <p className="text-stone-400">Batteries, alternateurs et composants électriques</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { name: "Batterie 12V 600CCA", price: 159.99, image: productBattery },
+              { name: "Alternateur refait", price: 199.99, image: productAcCompressor },
+              { name: "Démarreur", price: 179.99, image: productRadiator },
+              { name: "Phares LED", price: 129.99, image: productLedHeadlights },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-800 border border-stone-700 group cursor-pointer hover:border-amber-500 transition-colors">
+                <div className="aspect-square bg-white p-4">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="p-4">
+                  <h4 className="text-white text-sm mb-2">{item.name}</h4>
+                  <span className="font-bold" style={{ color: accentColor }}>{item.price.toFixed(2)} $</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Collection Carrosserie */}
+      <section id="collection-carrosserie" className="py-20 bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              COLLECTION <span style={{ color: accentColor }}>CARROSSERIE</span>
+            </h2>
+            <p className="text-stone-400">Pare-chocs, rétroviseurs et pièces extérieures</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { name: "Pare-chocs avant", price: 299.99, image: categoryReplacementParts },
+              { name: "Rétroviseur gauche", price: 89.99, image: categorySmartDevices },
+              { name: "Capot", price: 449.99, image: categoryTools },
+              { name: "Aile avant droite", price: 199.99, image: categoryLights },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-900 border border-stone-800 group cursor-pointer hover:border-amber-500 transition-colors">
+                <div className="aspect-square bg-white p-4">
+                  <img src={item.image} alt={item.name} className="w-full h-full object-contain group-hover:scale-110 transition-transform" />
+                </div>
+                <div className="p-4">
+                  <h4 className="text-white text-sm mb-2">{item.name}</h4>
+                  <span className="font-bold" style={{ color: accentColor }}>{item.price.toFixed(2)} $</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== PAGES SECTIONS ========== */}
+
+      {/* À propos */}
+      <section id="page-about" className="py-20 bg-stone-900">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-white mb-6">
+                À PROPOS DE <span style={{ color: accentColor }}>{companyName || "AUTOPIECES"}</span>
+              </h2>
+              <p className="text-stone-400 mb-4">
+                Depuis plus de 15 ans, nous sommes votre partenaire de confiance pour toutes vos pièces automobiles. 
+                Notre équipe d'experts passionnés s'engage à vous offrir des produits de qualité supérieure.
+              </p>
+              <p className="text-stone-400 mb-6">
+                Nous travaillons avec les plus grandes marques de l'industrie pour vous garantir des pièces 
+                certifiées et performantes pour tous types de véhicules.
+              </p>
+              <div className="grid grid-cols-3 gap-4">
+                <div className="text-center">
+                  <div className="text-3xl font-bold" style={{ color: accentColor }}>15+</div>
+                  <div className="text-stone-500 text-sm">Années d'expérience</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold" style={{ color: accentColor }}>50K+</div>
+                  <div className="text-stone-500 text-sm">Clients satisfaits</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold" style={{ color: accentColor }}>100K+</div>
+                  <div className="text-stone-500 text-sm">Pièces en stock</div>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <img src={heroAuto} alt="Notre équipe" className="w-full h-96 object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 to-transparent" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact */}
+      <section id="page-contact" className="py-20 bg-stone-950">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              <span style={{ color: accentColor }}>CONTACTEZ</span>-NOUS
+            </h2>
+            <p className="text-stone-400">Notre équipe est là pour vous aider</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="bg-stone-900 p-8 border border-stone-800">
+              <h3 className="text-xl font-semibold text-white mb-6">Envoyez-nous un message</h3>
+              <form className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <input type="text" placeholder="Nom" className="bg-stone-800 border border-stone-700 text-white px-4 py-3" />
+                  <input type="email" placeholder="Courriel" className="bg-stone-800 border border-stone-700 text-white px-4 py-3" />
+                </div>
+                <input type="text" placeholder="Sujet" className="w-full bg-stone-800 border border-stone-700 text-white px-4 py-3" />
+                <textarea placeholder="Votre message" rows={4} className="w-full bg-stone-800 border border-stone-700 text-white px-4 py-3" />
+                <Button className="w-full font-semibold" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
+                  Envoyer le message
+                </Button>
+              </form>
+            </div>
+            <div className="space-y-6">
+              <div className="bg-stone-900 p-6 border border-stone-800">
+                <h4 className="text-white font-semibold mb-2">Adresse</h4>
+                <p className="text-stone-400">123 Rue des Pièces Auto, Montréal, QC H1A 2B3</p>
+              </div>
+              <div className="bg-stone-900 p-6 border border-stone-800">
+                <h4 className="text-white font-semibold mb-2">Téléphone</h4>
+                <p className="text-stone-400">1-888-345-6789</p>
+              </div>
+              <div className="bg-stone-900 p-6 border border-stone-800">
+                <h4 className="text-white font-semibold mb-2">Courriel</h4>
+                <p className="text-stone-400">info@{(companyName || "autopieces").toLowerCase().replace(/\s/g, "")}.ca</p>
+              </div>
+              <div className="bg-stone-900 p-6 border border-stone-800">
+                <h4 className="text-white font-semibold mb-2">Heures d'ouverture</h4>
+                <p className="text-stone-400">Lun-Ven: 8h-18h | Sam: 9h-17h | Dim: Fermé</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section id="page-faq" className="py-20 bg-stone-900">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              FOIRE AUX <span style={{ color: accentColor }}>QUESTIONS</span>
+            </h2>
+          </div>
+          <div className="space-y-4">
+            {[
+              { q: "Comment puis-je vérifier la compatibilité d'une pièce?", a: "Utilisez notre outil de recherche par VIN ou sélectionnez votre véhicule (année, marque, modèle) pour voir uniquement les pièces compatibles." },
+              { q: "Quels sont les délais de livraison?", a: "La livraison standard prend 3-5 jours ouvrables. La livraison express (1-2 jours) est disponible moyennant des frais supplémentaires." },
+              { q: "Quelle est votre politique de retour?", a: "Vous avez 30 jours pour retourner une pièce non utilisée dans son emballage d'origine. Consultez notre politique de retour pour plus de détails." },
+              { q: "Les pièces sont-elles garanties?", a: "Oui, toutes nos pièces sont couvertes par une garantie minimale d'un an. Certaines pièces premium offrent une garantie prolongée." },
+              { q: "Offrez-vous l'installation?", a: "Nous travaillons avec un réseau de garages partenaires. Contactez-nous pour trouver un installateur près de chez vous." },
+            ].map((item, idx) => (
+              <div key={idx} className="bg-stone-800 border border-stone-700 p-6">
+                <h4 className="text-white font-semibold mb-2">{item.q}</h4>
+                <p className="text-stone-400 text-sm">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Politique de retour */}
+      <section id="page-returns" className="py-20 bg-stone-950">
+        <div className="max-w-4xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              POLITIQUE DE <span style={{ color: accentColor }}>RETOUR</span>
+            </h2>
+          </div>
+          <div className="bg-stone-900 border border-stone-800 p-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: accentColor }}>
+                  <Clock className="w-8 h-8 text-stone-900" />
+                </div>
+                <h4 className="text-white font-semibold mb-2">30 jours</h4>
+                <p className="text-stone-400 text-sm">Pour retourner votre produit</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: accentColor }}>
+                  <Truck className="w-8 h-8 text-stone-900" />
+                </div>
+                <h4 className="text-white font-semibold mb-2">Retour gratuit</h4>
+                <p className="text-stone-400 text-sm">Sur les commandes de 100$ et plus</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style={{ backgroundColor: accentColor }}>
+                  <Shield className="w-8 h-8 text-stone-900" />
+                </div>
+                <h4 className="text-white font-semibold mb-2">Remboursement complet</h4>
+                <p className="text-stone-400 text-sm">Dans les 5-7 jours ouvrables</p>
+              </div>
+            </div>
+            <div className="text-stone-400 text-sm space-y-3">
+              <p>• Les pièces doivent être retournées dans leur emballage d'origine, non utilisées et non installées.</p>
+              <p>• Les pièces électriques et électroniques ne peuvent être retournées que si elles sont défectueuses.</p>
+              <p>• Les frais de retour sont à la charge du client pour les commandes inférieures à 100$.</p>
+              <p>• Contactez notre service client pour obtenir un numéro d'autorisation de retour (AR).</p>
+            </div>
           </div>
         </div>
       </section>
