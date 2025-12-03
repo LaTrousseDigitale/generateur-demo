@@ -693,37 +693,39 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
         </div>
       </section>
 
-      {/* Service Features */}
-      <section className="py-8 sticky top-0 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.4)]" style={{ backgroundColor: accentColor }}>
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex items-center gap-4">
-              <Truck className="w-12 h-12 text-stone-900" />
-              <div>
-                <h4 className="font-bold text-stone-900">Livraison gratuite</h4>
-                <p className="text-stone-800 text-sm">Commandes de 75 $ et plus</p>
+      {/* Service Features + Footer Combined Sticky Section */}
+      <div className="sticky top-0 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
+        {/* Service Features */}
+        <section className="py-8" style={{ backgroundColor: accentColor }}>
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <div className="flex items-center gap-4">
+                <Truck className="w-12 h-12 text-stone-900" />
+                <div>
+                  <h4 className="font-bold text-stone-900">Livraison gratuite</h4>
+                  <p className="text-stone-800 text-sm">Commandes de 75 $ et plus</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Shield className="w-12 h-12 text-stone-900" />
-              <div>
-                <h4 className="font-bold text-stone-900">Garantie remboursement</h4>
-                <p className="text-stone-800 text-sm">Retours sous 30 jours</p>
+              <div className="flex items-center gap-4">
+                <Shield className="w-12 h-12 text-stone-900" />
+                <div>
+                  <h4 className="font-bold text-stone-900">Garantie remboursement</h4>
+                  <p className="text-stone-800 text-sm">Retours sous 30 jours</p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Headphones className="w-12 h-12 text-stone-900" />
-              <div>
-                <h4 className="font-bold text-stone-900">Support en ligne</h4>
-                <p className="text-stone-800 text-sm">Disponible 24/7</p>
+              <div className="flex items-center gap-4">
+                <Headphones className="w-12 h-12 text-stone-900" />
+                <div>
+                  <h4 className="font-bold text-stone-900">Support en ligne</h4>
+                  <p className="text-stone-800 text-sm">Disponible 24/7</p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Footer */}
-      <footer className="bg-stone-950 text-stone-400 py-16">
+        {/* Footer */}
+        <footer className="bg-stone-950 text-stone-400 py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
             {/* About */}
@@ -805,6 +807,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 };
