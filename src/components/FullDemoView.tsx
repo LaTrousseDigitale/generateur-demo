@@ -10,7 +10,6 @@ import { BookingDemo } from "./BookingDemo";
 import { AutoShowcaseDemo } from "./auto/AutoShowcaseDemo";
 import { AutoPartsModernDemo } from "./auto/AutoPartsModernDemo";
 import AutoPartsRusticDemo from "./auto/AutoPartsRusticDemo";
-import AutoPartsFuturisticDemo from "./auto/AutoPartsFuturisticDemo";
 
 interface FullDemoViewProps {
   config: DemoConfig;
@@ -34,9 +33,6 @@ export const FullDemoView = ({ config, onBack, hideBackButton = false }: FullDem
         }
         if (config.theme === "moderne") {
           return <AutoPartsModernDemo config={config} onBack={onBack} />;
-        }
-        if (config.theme === "futuriste") {
-          return <AutoPartsFuturisticDemo config={config} onBack={onBack} />;
         }
       }
       return <EcommerceDemo config={config} onBack={onBack} />;
