@@ -64,7 +64,7 @@ interface AutoPartsFuturisticDemoProps {
 
 const AutoPartsFuturisticDemo: React.FC<AutoPartsFuturisticDemoProps> = ({ config, onBack }) => {
   const { companyName, primaryColor, logoUrl } = config;
-  const accentColor = config.accentColor || "#8B5CF6";
+  const accentColor = config.accentColor || "#F97316";
   
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrollY, setScrollY] = useState(0);
@@ -197,130 +197,116 @@ const AutoPartsFuturisticDemo: React.FC<AutoPartsFuturisticDemoProps> = ({ confi
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-950 text-white">
-      {/* Floating Back Button */}
-      {onBack && (
-        <Button
-          onClick={onBack}
-          variant="outline"
-          size="sm"
-          className="fixed top-4 left-4 z-[100] bg-white/10 backdrop-blur-xl hover:bg-white/20 text-white border-white/20 shadow-lg"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Retour à l'éditeur
-        </Button>
-      )}
-
-      {/* Top Bar */}
-      <div className="bg-black/40 backdrop-blur-xl py-2 px-4 text-xs border-b border-white/10">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <Zap className="w-3 h-3" style={{ color: accentColor }} />
-            <span className="text-slate-400">Livraison express: <span className="text-white font-medium">1-888-FUTUR-AUTO</span></span>
-          </div>
-          <div className="flex items-center gap-6 text-slate-400">
-            <Search className="w-4 h-4 cursor-pointer hover:text-white transition-colors" />
-            <div className="flex items-center gap-1 cursor-pointer hover:text-white transition-colors">
-              <User className="w-4 h-4" />
-              <span>Mon compte</span>
-            </div>
-            <span className="cursor-pointer hover:text-white transition-colors">CAD ▾</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navigation - Glassmorphism */}
-      <header className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrollY > 50 ? "bg-slate-950/90 backdrop-blur-xl shadow-[0_0_30px_rgba(139,92,246,0.15)]" : "bg-transparent"
-      }`}>
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              {logoUrl ? (
-                <img src={logoUrl} alt={companyName} className="h-10 object-contain" />
-              ) : (
-                <div className="flex items-center gap-2">
-                  <div 
-                    className="w-10 h-10 flex items-center justify-center rounded-lg shadow-[0_0_20px_rgba(139,92,246,0.5)]"
-                    style={{ background: `linear-gradient(135deg, ${accentColor}, ${primaryColor})` }}
-                  >
-                    <Zap className="w-5 h-5 text-white" />
-                  </div>
-                  <span className="text-xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-                    {companyName || "FUTURAUTO"}
-                  </span>
-                </div>
-              )}
-            </div>
-
-            {/* Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {navItems.map((item, idx) => (
-                <div 
-                  key={item.label} 
-                  className="relative"
-                  onMouseEnter={() => item.hasDropdown && setOpenDropdown(item.label)}
-                  onMouseLeave={() => setOpenDropdown(null)}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950/50 to-slate-950 text-white">
+      {/* Main Header */}
+      <header className="relative z-50 px-6 py-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Top Navigation Row */}
+          <div className="flex items-center justify-between mb-4">
+            {/* Left: Back + Logo */}
+            <div className="flex items-center gap-4">
+              {onBack && (
+                <button
+                  onClick={onBack}
+                  className="w-10 h-10 rounded-full bg-slate-800/80 flex items-center justify-center hover:bg-slate-700 transition-colors"
                 >
-                  <button 
-                    onClick={() => scrollToSection(item.sectionId)}
-                    className="transition-colors text-sm font-medium bg-transparent border-none cursor-pointer flex items-center gap-1 text-slate-300 hover:text-white"
-                  >
-                    {item.label} {item.hasDropdown && "▾"}
-                  </button>
-                  {item.hasDropdown && openDropdown === item.label && (
-                    <div className="absolute top-full left-0 mt-2 bg-slate-900/95 backdrop-blur-xl shadow-[0_0_30px_rgba(139,92,246,0.2)] border border-white/10 min-w-[200px] z-[100] rounded-lg overflow-hidden">
-                      {item.items?.map((subItem, subIdx) => (
-                        <button
-                          key={subIdx}
-                          onClick={() => scrollToSection(subItem.sectionId)}
-                          className="block w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-white/10 hover:text-white bg-transparent border-none cursor-pointer transition-colors"
-                        >
-                          {subItem.label}
-                        </button>
-                      ))}
+                  <ArrowLeft className="w-5 h-5 text-white" />
+                </button>
+              )}
+              <div className="flex items-center gap-3">
+                {logoUrl ? (
+                  <img src={logoUrl} alt={companyName} className="h-10 object-contain" />
+                ) : (
+                  <>
+                    <div 
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"
+                      style={{ background: accentColor }}
+                    >
+                      A
                     </div>
-                  )}
-                </div>
-              ))}
-            </nav>
+                    <span className="text-lg font-semibold text-white">
+                      {companyName || "AutoParts Pro"}
+                    </span>
+                  </>
+                )}
+              </div>
+            </div>
 
-            {/* Cart Button */}
-            <Button 
-              className="flex items-center gap-2 px-6 py-5 rounded-lg shadow-[0_0_20px_rgba(139,92,246,0.4)] hover:shadow-[0_0_30px_rgba(139,92,246,0.6)] transition-all"
-              style={{ background: `linear-gradient(135deg, ${accentColor}, ${primaryColor})` }}
-            >
-              <ShoppingCart className="w-5 h-5" />
-              <span className="font-semibold">Panier (0)</span>
-            </Button>
+            {/* Center: Search Bar */}
+            <div className="flex-1 max-w-md mx-8 hidden md:block">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+                <input 
+                  type="text"
+                  placeholder="Rechercher un produit..."
+                  className="w-full bg-slate-800/80 rounded-full py-3 pl-12 pr-4 text-sm text-white placeholder:text-slate-400 border-none focus:outline-none focus:ring-2 focus:ring-white/20"
+                />
+              </div>
+            </div>
+
+            {/* Right: Actions */}
+            <div className="flex items-center gap-4">
+              <button className="text-white hover:text-slate-300 transition-colors">
+                <Heart className="w-6 h-6" />
+              </button>
+              <button className="relative text-white hover:text-slate-300 transition-colors">
+                <ShoppingCart className="w-6 h-6" />
+                <span 
+                  className="absolute -top-2 -right-2 w-5 h-5 rounded-full text-xs flex items-center justify-center text-white"
+                  style={{ background: accentColor }}
+                >
+                  3
+                </span>
+              </button>
+              <Button 
+                className="rounded-full px-5 py-2 text-sm font-medium"
+                style={{ background: accentColor }}
+              >
+                Mon compte
+              </Button>
+            </div>
           </div>
+
+          {/* Secondary Navigation */}
+          <nav className="flex items-center gap-8">
+            {["Tous", "Nouveautés", "Promotions", "Meilleures ventes", "Premium"].map((item, idx) => (
+              <button
+                key={item}
+                className={`text-sm font-medium transition-colors bg-transparent border-none cursor-pointer ${
+                  idx === 0 ? "" : "text-slate-400 hover:text-white"
+                }`}
+                style={idx === 0 ? { color: accentColor } : {}}
+              >
+                {item}
+              </button>
+            ))}
+          </nav>
         </div>
       </header>
 
-      {/* Hero Section - Style avec cartes flottantes */}
-      <section id="hero" className="relative min-h-[700px] overflow-hidden">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-rose-950/40 to-slate-950" />
+      {/* Hero Section */}
+      <section id="hero" className="relative min-h-[600px] overflow-hidden -mt-4">
+        {/* Background gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-red-950/30 to-red-900/20" />
         
-        {/* Animated glow orbs */}
+        {/* Subtle glow */}
         <div 
-          className="absolute top-1/4 right-1/3 w-[500px] h-[500px] rounded-full blur-[120px] opacity-20"
+          className="absolute top-0 right-1/4 w-[600px] h-[600px] rounded-full blur-[150px] opacity-15"
           style={{ background: accentColor }}
         />
 
         {/* Hero Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 flex items-center min-h-[700px]">
+        <div className="relative z-10 max-w-7xl mx-auto px-6 py-16 flex items-center min-h-[550px]">
           {/* Left Content */}
-          <div className="max-w-xl flex-shrink-0">
+          <div className="max-w-lg flex-shrink-0">
             <Badge 
-              className="mb-6 px-4 py-2 text-sm border-0 rounded-full"
+              className="mb-6 px-4 py-2 text-sm border-0 rounded-full inline-flex items-center gap-2"
               style={{ background: accentColor, color: "white" }}
             >
-              <Zap className="w-4 h-4 mr-2" />
+              <Zap className="w-4 h-4" />
               Livraison express 24h
             </Badge>
-            <h1 className="text-6xl font-black mb-6 leading-tight">
+            <h1 className="text-5xl md:text-6xl font-black mb-4 leading-tight">
               Pièces auto
               <span 
                 className="block"
@@ -329,23 +315,23 @@ const AutoPartsFuturisticDemo: React.FC<AutoPartsFuturisticDemoProps> = ({ confi
                 premium
               </span>
             </h1>
-            <p className="text-xl text-slate-400 mb-8">
+            <p className="text-lg text-slate-400 mb-8">
               Trouvez les pièces parfaites pour votre véhicule
             </p>
-            <div className="flex gap-4 mb-8">
+            <div className="flex flex-wrap gap-4 mb-8">
               <Button 
                 size="lg"
-                className="px-8 py-6 text-base rounded-full flex items-center gap-2"
+                className="px-6 py-5 text-sm rounded-full flex items-center gap-2"
                 style={{ background: accentColor }}
               >
-                <ShoppingCart className="w-5 h-5" />
+                <ShoppingCart className="w-4 h-4" />
                 Voir la boutique
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-4 h-4" />
               </Button>
               <Button 
                 size="lg"
                 variant="outline"
-                className="px-8 py-6 text-base rounded-full border-white/30 bg-transparent hover:bg-white/10"
+                className="px-6 py-5 text-sm rounded-full border-white/30 bg-transparent hover:bg-white/10 text-white"
               >
                 <span className="mr-2">▶</span>
                 Voir la vidéo
@@ -353,19 +339,19 @@ const AutoPartsFuturisticDemo: React.FC<AutoPartsFuturisticDemoProps> = ({ confi
             </div>
             
             {/* Trust indicators */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 flex-wrap">
               <div className="flex -space-x-2">
                 {["JD", "ML", "PB", "SL"].map((initials, idx) => (
                   <div 
                     key={idx}
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold text-white border-2 border-slate-950"
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-white border-2 border-slate-950"
                     style={{ background: accentColor }}
                   >
                     {initials}
                   </div>
                 ))}
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-0.5">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
                 ))}
@@ -375,11 +361,11 @@ const AutoPartsFuturisticDemo: React.FC<AutoPartsFuturisticDemoProps> = ({ confi
           </div>
 
           {/* Right Content - Floating Cards Composition */}
-          <div className="flex-1 relative hidden lg:block ml-12">
+          <div className="flex-1 relative hidden lg:block ml-8">
             {/* Central Car Image Container */}
-            <div className="relative w-full h-[500px]">
+            <div className="relative w-full h-[450px]">
               {/* Main car display area - white background card */}
-              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[350px] bg-gradient-to-br from-white to-slate-100 rounded-3xl shadow-2xl overflow-hidden">
+              <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[380px] h-[320px] bg-gradient-to-br from-white to-slate-100 rounded-3xl shadow-2xl overflow-hidden">
                 <img 
                   src={heroAuto} 
                   alt="Véhicule" 
@@ -389,48 +375,45 @@ const AutoPartsFuturisticDemo: React.FC<AutoPartsFuturisticDemoProps> = ({ confi
               
               {/* Floating product card - Top Right */}
               <div 
-                className="absolute top-0 right-0 w-48 bg-white/10 backdrop-blur-xl rounded-2xl p-3 border border-white/20 shadow-xl transform rotate-6 hover:rotate-0 transition-transform duration-300"
-                style={{ animation: "float 6s ease-in-out infinite" }}
+                className="absolute -top-4 right-4 w-44 bg-white/10 backdrop-blur-xl rounded-2xl p-3 border border-white/20 shadow-xl transform rotate-6"
               >
                 <div className="relative">
                   <Badge 
-                    className="absolute -top-1 -left-1 text-xs border-0"
+                    className="absolute -top-2 -left-2 text-xs border-0 px-2"
                     style={{ background: accentColor }}
                   >
                     -30%
                   </Badge>
-                  <img src={productShocks} alt="Amortisseurs" className="w-full h-24 object-cover rounded-lg mb-2" />
+                  <img src={productShocks} alt="Amortisseurs" className="w-full h-20 object-cover rounded-lg mb-2" />
                 </div>
-                <p className="text-white text-sm font-medium">Amortisseurs racing</p>
-                <p style={{ color: accentColor }} className="font-bold">449,99 $</p>
+                <p className="text-white text-xs font-medium">Amortisseurs racing</p>
+                <p style={{ color: accentColor }} className="font-bold text-sm">449,99 $</p>
               </div>
               
               {/* Floating product card - Bottom Left */}
               <div 
-                className="absolute bottom-10 left-0 w-44 bg-white/10 backdrop-blur-xl rounded-2xl p-3 border border-white/20 shadow-xl transform -rotate-6 hover:rotate-0 transition-transform duration-300"
-                style={{ animation: "float 5s ease-in-out infinite 1s" }}
+                className="absolute bottom-16 -left-4 w-40 bg-white/10 backdrop-blur-xl rounded-2xl p-3 border border-white/20 shadow-xl transform -rotate-6"
               >
-                <img src={productAirFilter} alt="Filtre" className="w-full h-20 object-cover rounded-lg mb-2" />
-                <p className="text-white text-sm font-medium">Filtre à air sport</p>
-                <p style={{ color: accentColor }} className="font-bold">89,99 $</p>
+                <img src={productAirFilter} alt="Filtre" className="w-full h-16 object-cover rounded-lg mb-2" />
+                <p className="text-white text-xs font-medium">Filtre à air sport</p>
+                <p style={{ color: accentColor }} className="font-bold text-sm">89,99 $</p>
               </div>
               
               {/* Floating product card - Bottom Center */}
               <div 
-                className="absolute bottom-0 left-1/2 -translate-x-1/4 w-40 bg-white/10 backdrop-blur-xl rounded-2xl p-3 border border-white/20 shadow-xl transform rotate-3 hover:rotate-0 transition-transform duration-300"
-                style={{ animation: "float 7s ease-in-out infinite 0.5s" }}
+                className="absolute bottom-4 left-1/2 -translate-x-1/3 w-36 bg-white/10 backdrop-blur-xl rounded-2xl p-2 border border-white/20 shadow-xl"
               >
-                <img src={productBrakePads} alt="Jante" className="w-full h-20 object-cover rounded-lg mb-2" />
-                <p className="text-white text-sm font-medium truncate">Jante sportive</p>
-                <p style={{ color: accentColor }} className="font-bold">299,99 $</p>
+                <img src={productBrakePads} alt="Jante" className="w-full h-14 object-cover rounded-lg mb-1" />
+                <p className="text-white text-xs font-medium truncate">Jante sportive</p>
+                <p style={{ color: accentColor }} className="font-bold text-sm">299,99 $</p>
               </div>
 
               {/* Floating action button */}
               <button 
-                className="absolute bottom-20 right-4 w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
+                className="absolute bottom-24 right-8 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform"
                 style={{ background: accentColor }}
               >
-                <ShoppingCart className="w-6 h-6 text-white" />
+                <ShoppingCart className="w-5 h-5 text-white" />
               </button>
               
               {/* Decorative dots */}
