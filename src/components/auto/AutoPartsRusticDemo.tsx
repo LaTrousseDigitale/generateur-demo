@@ -592,12 +592,12 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Brands */}
-      <section className="py-12 bg-stone-950 border-y border-stone-800">
+      <section className="py-16 bg-stone-200">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-center items-center gap-8 flex-wrap">
+          <div className="flex justify-center items-center gap-6 flex-wrap">
             {brands.map((brand, idx) => (
-              <div key={idx} className="bg-stone-700/50 px-6 py-4 grayscale hover:grayscale-0 transition-all cursor-pointer opacity-70 hover:opacity-100">
-                <img src={brand.logo} alt={brand.name} className="h-10 w-28 object-contain brightness-200" />
+              <div key={idx} className="bg-white w-40 h-24 flex items-center justify-center hover:shadow-lg transition-all cursor-pointer">
+                <img src={brand.logo} alt={brand.name} className="h-10 w-28 object-contain" />
               </div>
             ))}
           </div>
