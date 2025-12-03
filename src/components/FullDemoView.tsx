@@ -8,6 +8,8 @@ import { ShowcaseWebsiteDemo } from "./ShowcaseWebsiteDemo";
 import { EcommerceDemo } from "./EcommerceDemo";
 import { BookingDemo } from "./BookingDemo";
 import { AutoShowcaseDemo } from "./auto/AutoShowcaseDemo";
+import { AutoPartsModernDemo } from "./auto/AutoPartsModernDemo";
+import AutoPartsRusticDemo from "./auto/AutoPartsRusticDemo";
 
 interface FullDemoViewProps {
   config: DemoConfig;
@@ -20,14 +22,25 @@ export const FullDemoView = ({ config, onBack, hideBackButton = false }: FullDem
 
   // Router vers la bonne démo selon le type de site web et l'industrie
   if (config.serviceType === "website") {
+    const isAutoIndustry = config.industry === "auto" || config.industry === "pieces-auto";
+    
     // Priorité au type de site web sélectionné
     if (config.websiteType === "ecommerce") {
+      // Démo e-commerce spéciale pour l'automobile selon le thème
+      if (isAutoIndustry) {
+        if (config.theme === "rustique") {
+          return <AutoPartsRusticDemo config={config} />;
+        }
+        if (config.theme === "moderne") {
+          return <AutoPartsModernDemo config={config} />;
+        }
+      }
       return <EcommerceDemo config={config} onBack={onBack} />;
     }
     
     if (config.websiteType === "vitrine") {
       // Démo vitrine spéciale pour l'automobile
-      if (config.industry === "auto" || config.industry === "pieces-auto") {
+      if (isAutoIndustry) {
         return <AutoShowcaseDemo config={config} onBack={onBack} />;
       }
       return <ShowcaseWebsiteDemo config={config} onBack={onBack} />;

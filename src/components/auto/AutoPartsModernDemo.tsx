@@ -51,7 +51,7 @@ import brandMonroe from "@/assets/brand-monroe.jpg";
 
 interface AutoPartsModernDemoProps {
   config: DemoConfig;
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 export const AutoPartsModernDemo = ({ config, onBack }: AutoPartsModernDemoProps) => {
