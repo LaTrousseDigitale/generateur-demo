@@ -61,6 +61,18 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
   const { companyName, primaryColor, logoUrl } = config;
   const accentColor = config.accentColor || "#F59E0B";
   
+  // Navigation dropdown state
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  
+  const navItems = [
+    { label: "Accueil", hasDropdown: false },
+    { label: "Fonctionnalités", hasDropdown: true, items: ["Recherche avancée", "Comparateur", "Compatibilité", "Diagnostics"] },
+    { label: "Collections", hasDropdown: true, items: ["Freins", "Suspension", "Moteur", "Électrique", "Carrosserie"] },
+    { label: "Boutique", hasDropdown: true, items: ["Nouveautés", "Promotions", "Meilleures ventes", "Marques"] },
+    { label: "Pages", hasDropdown: true, items: ["À propos", "Contact", "FAQ", "Politique de retour"] },
+    { label: "Blog", hasDropdown: false },
+  ];
+  
   // Countdown timer state
   const [timeLeft, setTimeLeft] = useState({
     days: 132,
@@ -218,20 +230,36 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
             {/* Navigation */}
             <nav className="hidden lg:flex items-center gap-6">
-              {["Accueil", "Fonctionnalités", "Collections", "Boutique", "Pages", "Blog"].map((item, idx) => (
-                <button 
-                  key={item} 
-                  onClick={(e) => e.preventDefault()}
-                  className={`transition-colors text-sm font-medium bg-transparent border-none cursor-pointer ${
-                    idx === 0 ? "font-semibold" : "text-stone-700 hover:text-stone-900"
-                  }`}
-                  style={idx === 0 ? { color: accentColor } : {}}
+              {navItems.map((item, idx) => (
+                <div 
+                  key={item.label} 
+                  className="relative"
+                  onMouseEnter={() => item.hasDropdown && setOpenDropdown(item.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
-                  {item} {idx > 0 && idx < 5 && "▾"}
-                </button>
+                  <button 
+                    className={`transition-colors text-sm font-medium bg-transparent border-none cursor-pointer flex items-center gap-1 ${
+                      idx === 0 ? "font-semibold" : "text-stone-700 hover:text-stone-900"
+                    }`}
+                    style={idx === 0 ? { color: accentColor } : {}}
+                  >
+                    {item.label} {item.hasDropdown && "▾"}
+                  </button>
+                  {item.hasDropdown && openDropdown === item.label && (
+                    <div className="absolute top-full left-0 mt-1 bg-white shadow-lg border border-stone-200 min-w-[200px] z-[100]">
+                      {item.items?.map((subItem) => (
+                        <button
+                          key={subItem}
+                          className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent border-none cursor-pointer"
+                        >
+                          {subItem}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               ))}
               <button 
-                onClick={(e) => e.preventDefault()}
                 className="text-stone-900 font-semibold text-sm cursor-pointer hover:opacity-80 bg-transparent border-none"
               >
                 OFFRES SPÉCIALES
