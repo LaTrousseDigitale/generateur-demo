@@ -64,13 +64,43 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
   // Navigation dropdown state
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   
+  // Scroll to section function
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setOpenDropdown(null);
+  };
+  
   const navItems = [
-    { label: "Accueil", hasDropdown: false },
-    { label: "Fonctionnalités", hasDropdown: true, items: ["Recherche avancée", "Comparateur", "Compatibilité", "Diagnostics"] },
-    { label: "Collections", hasDropdown: true, items: ["Freins", "Suspension", "Moteur", "Électrique", "Carrosserie"] },
-    { label: "Boutique", hasDropdown: true, items: ["Nouveautés", "Promotions", "Meilleures ventes", "Marques"] },
-    { label: "Pages", hasDropdown: true, items: ["À propos", "Contact", "FAQ", "Politique de retour"] },
-    { label: "Blog", hasDropdown: false },
+    { label: "Accueil", hasDropdown: false, sectionId: "hero" },
+    { label: "Fonctionnalités", hasDropdown: true, sectionId: "features", items: [
+      { label: "Recherche avancée", sectionId: "hero" },
+      { label: "Comparateur", sectionId: "products" },
+      { label: "Compatibilité", sectionId: "categories" },
+      { label: "Diagnostics", sectionId: "services" }
+    ]},
+    { label: "Collections", hasDropdown: true, sectionId: "categories", items: [
+      { label: "Freins", sectionId: "products" },
+      { label: "Suspension", sectionId: "products" },
+      { label: "Moteur", sectionId: "products" },
+      { label: "Électrique", sectionId: "products" },
+      { label: "Carrosserie", sectionId: "products" }
+    ]},
+    { label: "Boutique", hasDropdown: true, sectionId: "products", items: [
+      { label: "Nouveautés", sectionId: "products" },
+      { label: "Promotions", sectionId: "deals" },
+      { label: "Meilleures ventes", sectionId: "latest-products" },
+      { label: "Marques", sectionId: "brands" }
+    ]},
+    { label: "Pages", hasDropdown: true, sectionId: "services", items: [
+      { label: "À propos", sectionId: "hero" },
+      { label: "Contact", sectionId: "services" },
+      { label: "FAQ", sectionId: "blog" },
+      { label: "Politique de retour", sectionId: "services" }
+    ]},
+    { label: "Blog", hasDropdown: false, sectionId: "blog" },
   ];
   
   // Countdown timer state
@@ -238,6 +268,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                   onMouseLeave={() => setOpenDropdown(null)}
                 >
                   <button 
+                    onClick={() => scrollToSection(item.sectionId)}
                     className={`transition-colors text-sm font-medium bg-transparent border-none cursor-pointer flex items-center gap-1 ${
                       idx === 0 ? "font-semibold" : "text-stone-700 hover:text-stone-900"
                     }`}
@@ -247,12 +278,13 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                   </button>
                   {item.hasDropdown && openDropdown === item.label && (
                     <div className="absolute top-full left-0 mt-1 bg-white shadow-lg border border-stone-200 min-w-[200px] z-[100]">
-                      {item.items?.map((subItem) => (
+                      {item.items?.map((subItem, subIdx) => (
                         <button
-                          key={subItem}
+                          key={subIdx}
+                          onClick={() => scrollToSection(subItem.sectionId)}
                           className="block w-full text-left px-4 py-2 text-sm text-stone-700 hover:bg-stone-100 hover:text-stone-900 bg-transparent border-none cursor-pointer"
                         >
-                          {subItem}
+                          {subItem.label}
                         </button>
                       ))}
                     </div>
@@ -260,6 +292,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                 </div>
               ))}
               <button 
+                onClick={() => scrollToSection("deals")}
                 className="text-stone-900 font-semibold text-sm cursor-pointer hover:opacity-80 bg-transparent border-none"
               >
                 OFFRES SPÉCIALES
@@ -295,7 +328,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Hero Section */}
-      <section className="relative h-[500px] overflow-hidden">
+      <section id="hero" className="relative h-[500px] overflow-hidden">
         <img 
           src={heroAuto} 
           alt="Service de réparation auto" 
@@ -334,7 +367,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Categories Row */}
-      <section className="bg-stone-950 py-16 border-b border-stone-800 sticky top-0 z-10">
+      <section id="categories" className="bg-stone-950 py-16 border-b border-stone-800 sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center gap-12 flex-wrap">
             {categories.map((cat, idx) => (
@@ -420,7 +453,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Featured Products */}
-      <section className="py-16 bg-white sticky top-0 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+      <section id="products" className="py-16 bg-white sticky top-0 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
         <div className="max-w-7xl mx-auto px-4">
           {/* Tabs */}
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
@@ -487,7 +520,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Deal of the Day + Products & Brands Combined Sticky Section */}
-      <div className="sticky top-0 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
+      <div id="deals" className="sticky top-0 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Deal of the Day */}
         <section className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 relative">
@@ -556,7 +589,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
         </section>
 
         {/* Latest / Most Viewed / On Sale */}
-        <section className="py-16 bg-stone-900">
+        <section id="latest-products" className="py-16 bg-stone-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Latest Products */}
@@ -638,7 +671,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Brands */}
-        <section className="py-16 bg-stone-200">
+        <section id="brands" className="py-16 bg-stone-200">
           <div className="max-w-7xl mx-auto px-4">
             <div className="flex justify-center items-center gap-6 flex-wrap">
               {brands.map((brand, idx) => (
@@ -667,7 +700,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Latest Blog */}
-      <section className="py-16 bg-stone-900 sticky top-0 z-[60] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+      <section id="blog" className="py-16 bg-stone-900 sticky top-0 z-[60] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white">
@@ -708,7 +741,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       {/* Service Features + Footer Combined Sticky Section */}
       <div className="sticky top-0 z-[70] shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Service Features */}
-        <section className="py-8" style={{ backgroundColor: accentColor }}>
+        <section id="services" className="py-8" style={{ backgroundColor: accentColor }}>
           <div className="max-w-7xl mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="flex items-center gap-4">
