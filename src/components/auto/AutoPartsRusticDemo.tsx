@@ -434,68 +434,67 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Deal of the Day */}
-      <section className="relative py-20 overflow-hidden">
-        <img 
-          src={promoAutoParts} 
-          alt="Deal du jour" 
-          className="absolute inset-0 w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-stone-950/80" />
-        
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white">
-              OFFRE <span style={{ color: accentColor }}>DU JOUR</span>
-            </h2>
-            <p className="text-stone-400 mt-2">Obtenez 25% de rabais sur tout achat de 200 $ et plus</p>
+      <section className="relative">
+        <div className="grid grid-cols-1 md:grid-cols-2 relative">
+          {/* Left Panel */}
+          <div className="relative h-96 overflow-hidden">
+            <img 
+              src={heroAuto} 
+              alt="Kit éclairage" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-stone-900/60" />
+            <div className="absolute inset-0 p-8 flex flex-col justify-end">
+              <p className="text-stone-300 text-sm">
+                Jusqu'à <span style={{ color: accentColor }}>45%</span> de rabais
+              </p>
+              <h3 className="text-2xl font-bold text-white mt-2">
+                Kit éclairage auto (feux arrière inclus)
+              </h3>
+              <p className="text-stone-400 mt-3">
+                <span className="uppercase text-xs tracking-wider">Prix: </span>
+                <span className="text-2xl font-bold" style={{ color: accentColor }}>1 299,00 $</span>
+              </p>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            {/* Product 1 */}
-            <div className="bg-stone-800/50 backdrop-blur-sm p-6 text-center">
-              <img src={dealProducts[0].image} alt={dealProducts[0].name} className="h-48 mx-auto object-contain mb-4" />
-              <Badge className="mb-2 rounded-none" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
-                {dealProducts[0].discount}
-              </Badge>
-              <h4 className="text-white font-medium mb-2">{dealProducts[0].name}</h4>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-stone-500 line-through">{dealProducts[0].oldPrice.toFixed(2)} $</span>
-                <span className="text-2xl font-bold" style={{ color: accentColor }}>{dealProducts[0].price.toFixed(2)} $</span>
-              </div>
+          {/* Right Panel */}
+          <div className="relative h-96 overflow-hidden">
+            <img 
+              src={promoAutoParts} 
+              alt="Frein tout terrain" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-stone-900/60" />
+            <div className="absolute inset-0 p-8 flex flex-col justify-end items-end text-right">
+              <p className="text-stone-300 text-sm">
+                Jusqu'à <span style={{ color: accentColor }}>35%</span> de rabais
+              </p>
+              <h3 className="text-2xl font-bold text-white mt-2">
+                Frein tout terrain haute performance
+              </h3>
+              <p className="text-stone-400 mt-3">
+                <span className="uppercase text-xs tracking-wider">Prix: </span>
+                <span className="text-2xl font-bold" style={{ color: accentColor }}>1 299,00 $</span>
+              </p>
             </div>
+          </div>
 
-            {/* Countdown */}
-            <div className="text-center">
-              <div className="grid grid-cols-4 gap-2">
-                {[
-                  { value: timeLeft.days, label: "Jours" },
-                  { value: timeLeft.hours, label: "Heures" },
-                  { value: timeLeft.minutes, label: "Minutes" },
-                  { value: timeLeft.seconds, label: "Secondes" },
-                ].map((item, idx) => (
-                  <div 
-                    key={idx} 
-                    className="p-4"
-                    style={{ backgroundColor: accentColor }}
-                  >
-                    <div className="text-3xl font-bold text-stone-900">{item.value}</div>
-                    <div className="text-xs text-stone-800">{item.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Product 2 */}
-            <div className="bg-stone-800/50 backdrop-blur-sm p-6 text-center">
-              <img src={dealProducts[1].image} alt={dealProducts[1].name} className="h-48 mx-auto object-contain mb-4" />
-              <Badge className="mb-2 rounded-none" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
-                {dealProducts[1].discount}
-              </Badge>
-              <h4 className="text-white font-medium mb-2">{dealProducts[1].name}</h4>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-stone-500 line-through">{dealProducts[1].oldPrice.toFixed(2)} $</span>
-                <span className="text-2xl font-bold" style={{ color: accentColor }}>{dealProducts[1].price.toFixed(2)} $</span>
-              </div>
+          {/* Center Countdown */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <div className="bg-white/95 backdrop-blur-sm rounded-full py-6 px-4 flex flex-col items-center gap-3 shadow-2xl">
+              {[
+                { value: timeLeft.days, label: "Jours" },
+                { value: timeLeft.hours, label: "Heures" },
+                { value: timeLeft.minutes, label: "Mins" },
+                { value: timeLeft.seconds, label: "Secs" },
+              ].map((item, idx) => (
+                <div key={idx} className="text-center">
+                  <div className="text-2xl font-bold" style={{ color: accentColor }}>{item.value}</div>
+                  <div className="text-xs text-stone-500 uppercase tracking-wider">{item.label}</div>
+                  {idx < 3 && <div className="w-8 h-px bg-stone-300 mt-3" />}
+                </div>
+              ))}
             </div>
           </div>
         </div>
