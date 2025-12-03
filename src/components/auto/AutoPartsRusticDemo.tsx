@@ -455,94 +455,75 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
         </div>
       </section>
 
-      {/* Deal of the Day */}
-      <section className="relative sticky top-0 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
-        <div className="grid grid-cols-1 md:grid-cols-2 relative">
-          {/* Left Panel */}
-          <div className="relative h-96 overflow-hidden">
-            <img 
-              src={heroAuto} 
-              alt="Kit éclairage" 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-stone-900/60" />
-            <div className="absolute inset-0 p-8 flex flex-col justify-end">
-              <p className="text-stone-300 text-sm">
-                Jusqu'à <span style={{ color: accentColor }}>45%</span> de rabais
-              </p>
-              <h3 className="text-2xl font-bold text-white mt-2">
-                Kit éclairage auto (feux arrière inclus)
-              </h3>
-              <p className="text-stone-400 mt-3">
-                <span className="uppercase text-xs tracking-wider">Prix: </span>
-                <span className="text-2xl font-bold" style={{ color: accentColor }}>1 299,00 $</span>
-              </p>
+      {/* Deal of the Day + Products & Brands Combined Sticky Section */}
+      <div className="sticky top-0 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
+        {/* Deal of the Day */}
+        <section className="relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 relative">
+            {/* Left Panel */}
+            <div className="relative h-96 overflow-hidden">
+              <img 
+                src={heroAuto} 
+                alt="Kit éclairage" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-stone-900/60" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-end">
+                <p className="text-stone-300 text-sm">
+                  Jusqu'à <span style={{ color: accentColor }}>45%</span> de rabais
+                </p>
+                <h3 className="text-2xl font-bold text-white mt-2">
+                  Kit éclairage auto (feux arrière inclus)
+                </h3>
+                <p className="text-stone-400 mt-3">
+                  <span className="uppercase text-xs tracking-wider">Prix: </span>
+                  <span className="text-2xl font-bold" style={{ color: accentColor }}>1 299,00 $</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Right Panel */}
+            <div className="relative h-96 overflow-hidden">
+              <img 
+                src={promoAutoParts} 
+                alt="Frein tout terrain" 
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-stone-900/60" />
+              <div className="absolute inset-0 p-8 flex flex-col justify-end items-end text-right">
+                <p className="text-stone-300 text-sm">
+                  Jusqu'à <span style={{ color: accentColor }}>35%</span> de rabais
+                </p>
+                <h3 className="text-2xl font-bold text-white mt-2">
+                  Frein tout terrain haute performance
+                </h3>
+                <p className="text-stone-400 mt-3">
+                  <span className="uppercase text-xs tracking-wider">Prix: </span>
+                  <span className="text-2xl font-bold" style={{ color: accentColor }}>1 299,00 $</span>
+                </p>
+              </div>
+            </div>
+
+            {/* Center Countdown */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+              <div className="bg-white/95 backdrop-blur-sm rounded-full py-6 px-4 flex flex-col items-center gap-3 shadow-2xl">
+                {[
+                  { value: timeLeft.days, label: "Jours" },
+                  { value: timeLeft.hours, label: "Heures" },
+                  { value: timeLeft.minutes, label: "Mins" },
+                  { value: timeLeft.seconds, label: "Secs" },
+                ].map((item, idx) => (
+                  <div key={idx} className="text-center">
+                    <div className="text-2xl font-bold" style={{ color: accentColor }}>{item.value}</div>
+                    <div className="text-xs text-stone-500 uppercase tracking-wider">{item.label}</div>
+                    {idx < 3 && <div className="w-8 h-px bg-stone-300 mt-3" />}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
+        </section>
 
-          {/* Right Panel */}
-          <div className="relative h-96 overflow-hidden">
-            <img 
-              src={promoAutoParts} 
-              alt="Frein tout terrain" 
-              className="absolute inset-0 w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-stone-900/60" />
-            <div className="absolute inset-0 p-8 flex flex-col justify-end items-end text-right">
-              <p className="text-stone-300 text-sm">
-                Jusqu'à <span style={{ color: accentColor }}>35%</span> de rabais
-              </p>
-              <h3 className="text-2xl font-bold text-white mt-2">
-                Frein tout terrain haute performance
-              </h3>
-              <p className="text-stone-400 mt-3">
-                <span className="uppercase text-xs tracking-wider">Prix: </span>
-                <span className="text-2xl font-bold" style={{ color: accentColor }}>1 299,00 $</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Center Countdown */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-            <div className="bg-white/95 backdrop-blur-sm rounded-full py-6 px-4 flex flex-col items-center gap-3 shadow-2xl">
-              {[
-                { value: timeLeft.days, label: "Jours" },
-                { value: timeLeft.hours, label: "Heures" },
-                { value: timeLeft.minutes, label: "Mins" },
-                { value: timeLeft.seconds, label: "Secs" },
-              ].map((item, idx) => (
-                <div key={idx} className="text-center">
-                  <div className="text-2xl font-bold" style={{ color: accentColor }}>{item.value}</div>
-                  <div className="text-xs text-stone-500 uppercase tracking-wider">{item.label}</div>
-                  {idx < 3 && <div className="w-8 h-px bg-stone-300 mt-3" />}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Parallax Divider 2 */}
-      <div 
-        className="h-72 bg-fixed bg-cover bg-center relative"
-        style={{ backgroundImage: `url(${heroAuto})` }}
-      >
-        <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-          <div className="text-center px-4">
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-4">LIVRAISON RAPIDE</h3>
-            <p className="text-stone-300 text-lg md:text-xl max-w-2xl">Commandez aujourd'hui, recevez demain</p>
-            <Button 
-              className="mt-6 rounded-none px-8 py-6 text-lg font-bold"
-              style={{ backgroundColor: accentColor }}
-            >
-              MAGASINER MAINTENANT
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Products & Brands Combined Sticky Section */}
-      <div className="sticky top-0 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         {/* Latest / Most Viewed / On Sale */}
         <section className="py-16 bg-stone-900">
         <div className="max-w-7xl mx-auto px-4">
