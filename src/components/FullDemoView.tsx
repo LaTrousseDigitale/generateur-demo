@@ -29,10 +29,10 @@ export const FullDemoView = ({ config, onBack, hideBackButton = false }: FullDem
       // Démo e-commerce spéciale pour l'automobile selon le thème
       if (isAutoIndustry) {
         if (config.theme === "rustique") {
-          return <AutoPartsRusticDemo config={config} />;
+          return <AutoPartsRusticDemo config={config} onBack={onBack} />;
         }
         if (config.theme === "moderne") {
-          return <AutoPartsModernDemo config={config} />;
+          return <AutoPartsModernDemo config={config} onBack={onBack} />;
         }
       }
       return <EcommerceDemo config={config} onBack={onBack} />;
