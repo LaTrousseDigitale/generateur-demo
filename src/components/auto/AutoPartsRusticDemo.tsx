@@ -175,27 +175,32 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
   ];
 
   return (
-    <div className="min-h-screen bg-stone-900 text-stone-100">
-      {/* Top Bar */}
-      <div className="bg-stone-950 py-2 px-4 text-xs">
+    <div className="min-h-screen bg-stone-950 text-stone-100">
+      {/* Top Bar - Dark */}
+      <div className="bg-stone-900 py-2 px-4 text-xs border-b border-stone-800">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Phone className="w-3 h-3" style={{ color: accentColor }} />
-            <span>Appelez-nous: 1-888-345-6789</span>
+            <span className="text-stone-300">Téléphone gratuit: <span className="text-white font-medium">1-888-345-6789</span></span>
           </div>
-          <div className="flex items-center gap-4 text-stone-400">
-            <span>CAD</span>
-            <span>Français</span>
+          <div className="flex items-center gap-6 text-stone-400">
+            <Search className="w-4 h-4 cursor-pointer hover:text-white transition-colors" />
+            <div className="flex items-center gap-1 cursor-pointer hover:text-white transition-colors">
+              <User className="w-4 h-4" />
+              <span>Mon compte</span>
+            </div>
+            <span className="cursor-pointer hover:text-white transition-colors">CAD ▾</span>
+            <span className="cursor-pointer hover:text-white transition-colors">Français ▾</span>
           </div>
         </div>
       </div>
 
-      {/* Main Navigation */}
-      <header className="bg-stone-900 border-b border-stone-800 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+      {/* Main Navigation - White Background */}
+      <header className="bg-white sticky top-0 z-50 shadow-md">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               {logoUrl ? (
                 <img src={logoUrl} alt={companyName} className="h-10 object-contain" />
               ) : (
@@ -206,48 +211,57 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                   >
                     <span className="text-stone-900 font-bold text-lg">A</span>
                   </div>
-                  <span className="text-xl font-bold text-white">{companyName || "AUTOPIECES"}</span>
+                  <span className="text-xl font-bold text-stone-900">{companyName || "AUTOPIECES"}</span>
                 </div>
               )}
             </div>
 
             {/* Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
-              {["Accueil", "Fonctionnalités", "Collections", "Boutique", "Pages", "Blog"].map((item) => (
+            <nav className="hidden lg:flex items-center gap-6">
+              {["Accueil", "Fonctionnalités", "Collections", "Boutique", "Pages", "Blog"].map((item, idx) => (
                 <a 
                   key={item} 
                   href="#" 
-                  className="text-stone-300 hover:text-white transition-colors text-sm font-medium"
+                  className={`transition-colors text-sm font-medium ${
+                    idx === 0 ? "font-semibold" : "text-stone-700 hover:text-stone-900"
+                  }`}
+                  style={idx === 0 ? { color: accentColor } : {}}
                 >
-                  {item}
+                  {item} {idx > 0 && idx < 5 && "▾"}
                 </a>
               ))}
-              <Button 
-                className="text-stone-900 font-semibold"
-                style={{ backgroundColor: accentColor }}
-              >
-                Offres spéciales
-              </Button>
+              <span className="text-stone-900 font-semibold text-sm cursor-pointer hover:opacity-80">
+                OFFRES SPÉCIALES
+              </span>
             </nav>
 
-            {/* Actions */}
-            <div className="flex items-center gap-4">
-              <Search className="w-5 h-5 text-stone-400 hover:text-white cursor-pointer" />
-              <User className="w-5 h-5 text-stone-400 hover:text-white cursor-pointer" />
-              <Heart className="w-5 h-5 text-stone-400 hover:text-white cursor-pointer" />
-              <div className="relative">
-                <ShoppingCart className="w-5 h-5 text-stone-400 hover:text-white cursor-pointer" />
-                <span 
-                  className="absolute -top-2 -right-2 w-5 h-5 rounded-full text-xs flex items-center justify-center text-stone-900 font-bold"
-                  style={{ backgroundColor: accentColor }}
-                >
-                  3
-                </span>
+            {/* Cart Button */}
+            <div 
+              className="flex items-center gap-3 px-6 py-4 cursor-pointer hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: accentColor }}
+            >
+              <ShoppingCart className="w-6 h-6 text-stone-900" />
+              <div className="text-stone-900">
+                <div className="text-xs font-bold">VOTRE PANIER</div>
+                <div className="text-sm">0 article(s)</div>
               </div>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Right Sidebar - Fixed */}
+      <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col">
+        {[Heart, ShoppingCart, Search, User].map((Icon, idx) => (
+          <button
+            key={idx}
+            className="w-12 h-12 flex items-center justify-center hover:opacity-80 transition-opacity"
+            style={{ backgroundColor: accentColor }}
+          >
+            <Icon className="w-5 h-5 text-stone-900" />
+          </button>
+        ))}
+      </div>
 
       {/* Hero Section */}
       <section className="relative h-[500px] overflow-hidden">
@@ -289,15 +303,15 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Categories Row */}
-      <section className="bg-white py-12">
+      <section className="bg-stone-900 py-12 border-b border-stone-800">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center gap-8 flex-wrap">
             {categories.map((cat, idx) => (
               <div key={idx} className="text-center group cursor-pointer">
-                <div className="w-24 h-24 rounded-full overflow-hidden mb-3 mx-auto border-2 border-transparent group-hover:border-amber-500 transition-colors">
+                <div className="w-24 h-24 rounded-full overflow-hidden mb-3 mx-auto border-2 border-stone-700 group-hover:border-amber-500 transition-colors">
                   <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
                 </div>
-                <p className="text-stone-700 text-sm font-medium">{cat.name}</p>
+                <p className="text-stone-300 text-sm font-medium group-hover:text-white transition-colors">{cat.name}</p>
               </div>
             ))}
           </div>
@@ -305,7 +319,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Three Promo Banners */}
-      <section className="py-8 px-4 bg-stone-100">
+      <section className="py-8 px-4 bg-stone-950">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Banner 1 - Lights */}
           <div className="relative h-64 overflow-hidden rounded-lg group">
@@ -359,11 +373,11 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Featured Products */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-stone-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-stone-900">PRODUITS <span style={{ color: accentColor }}>VEDETTES</span></h2>
-            <p className="text-stone-500 mt-2">Trouvez les meilleures pièces du marché</p>
+            <h2 className="text-3xl font-bold text-white">PRODUITS <span style={{ color: accentColor }}>VEDETTES</span></h2>
+            <p className="text-stone-400 mt-2">Trouvez les meilleures pièces du marché</p>
           </div>
 
           {/* Tabs */}
@@ -375,7 +389,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                 className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
                   activeTab === tab.id 
                     ? "text-stone-900" 
-                    : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                    : "bg-stone-800 text-stone-300 hover:bg-stone-700"
                 }`}
                 style={activeTab === tab.id ? { backgroundColor: accentColor } : {}}
               >
@@ -387,8 +401,8 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           {/* Products Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {featuredProducts.map((product, idx) => (
-              <Card key={idx} className="bg-stone-50 border-stone-200 overflow-hidden group">
-                <div className="aspect-square bg-stone-100 p-4 flex items-center justify-center">
+              <Card key={idx} className="bg-stone-800 border-stone-700 overflow-hidden group">
+                <div className="aspect-square bg-stone-700/50 p-4 flex items-center justify-center">
                   <img 
                     src={product.image} 
                     alt={product.name} 
@@ -396,9 +410,9 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                   />
                 </div>
                 <div className="p-4 text-center">
-                  <h4 className="text-stone-800 font-medium text-sm mb-2">{product.name}</h4>
+                  <h4 className="text-stone-200 font-medium text-sm mb-2">{product.name}</h4>
                   <div className="flex items-center justify-center gap-2">
-                    <span className="text-stone-400 line-through text-sm">{product.oldPrice.toFixed(2)} $</span>
+                    <span className="text-stone-500 line-through text-sm">{product.oldPrice.toFixed(2)} $</span>
                     <span className="font-bold" style={{ color: accentColor }}>{product.price.toFixed(2)} $</span>
                   </div>
                 </div>
@@ -409,7 +423,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           <div className="text-center mt-8">
             <Button 
               variant="outline" 
-              className="border-stone-300 text-stone-700 hover:bg-stone-100"
+              className="border-stone-600 text-stone-300 hover:bg-stone-800 hover:text-white"
             >
               Voir tous les produits
             </Button>
@@ -486,26 +500,26 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Latest / Most Viewed / On Sale */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-stone-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Latest Products */}
             <div>
-              <h3 className="text-xl font-bold text-stone-900 mb-6">
+              <h3 className="text-xl font-bold text-white mb-6">
                 DERNIERS <span style={{ color: accentColor }}>PRODUITS</span>
               </h3>
               <div className="space-y-4">
                 {latestProducts.map((product, idx) => (
                   <div key={idx} className="flex items-center gap-4 group cursor-pointer">
-                    <div className="w-20 h-20 bg-stone-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-20 h-20 bg-stone-800 rounded-lg overflow-hidden flex-shrink-0">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <h4 className="text-stone-800 text-sm font-medium group-hover:text-amber-600 transition-colors">
+                      <h4 className="text-stone-300 text-sm font-medium group-hover:text-amber-400 transition-colors">
                         {product.name}
                       </h4>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-stone-400 line-through text-xs">{product.oldPrice.toFixed(2)} $</span>
+                        <span className="text-stone-500 line-through text-xs">{product.oldPrice.toFixed(2)} $</span>
                         <span className="font-bold text-sm" style={{ color: accentColor }}>{product.price.toFixed(2)} $</span>
                       </div>
                     </div>
@@ -516,21 +530,21 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
             {/* Most Viewed */}
             <div>
-              <h3 className="text-xl font-bold text-stone-900 mb-6">
+              <h3 className="text-xl font-bold text-white mb-6">
                 LES PLUS <span style={{ color: accentColor }}>CONSULTÉS</span>
               </h3>
               <div className="space-y-4">
                 {mostViewed.map((product, idx) => (
                   <div key={idx} className="flex items-center gap-4 group cursor-pointer">
-                    <div className="w-20 h-20 bg-stone-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-20 h-20 bg-stone-800 rounded-lg overflow-hidden flex-shrink-0">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <h4 className="text-stone-800 text-sm font-medium group-hover:text-amber-600 transition-colors">
+                      <h4 className="text-stone-300 text-sm font-medium group-hover:text-amber-400 transition-colors">
                         {product.name}
                       </h4>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-stone-400 line-through text-xs">{product.oldPrice.toFixed(2)} $</span>
+                        <span className="text-stone-500 line-through text-xs">{product.oldPrice.toFixed(2)} $</span>
                         <span className="font-bold text-sm" style={{ color: accentColor }}>{product.price.toFixed(2)} $</span>
                       </div>
                     </div>
@@ -541,21 +555,21 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
             {/* On Sale */}
             <div>
-              <h3 className="text-xl font-bold text-stone-900 mb-6">
+              <h3 className="text-xl font-bold text-white mb-6">
                 EN <span style={{ color: accentColor }}>SOLDE</span>
               </h3>
               <div className="space-y-4">
                 {onSaleProducts.map((product, idx) => (
                   <div key={idx} className="flex items-center gap-4 group cursor-pointer">
-                    <div className="w-20 h-20 bg-stone-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-20 h-20 bg-stone-800 rounded-lg overflow-hidden flex-shrink-0">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
-                      <h4 className="text-stone-800 text-sm font-medium group-hover:text-amber-600 transition-colors">
+                      <h4 className="text-stone-300 text-sm font-medium group-hover:text-amber-400 transition-colors">
                         {product.name}
                       </h4>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-stone-400 line-through text-xs">{product.oldPrice.toFixed(2)} $</span>
+                        <span className="text-stone-500 line-through text-xs">{product.oldPrice.toFixed(2)} $</span>
                         <span className="font-bold text-sm" style={{ color: accentColor }}>{product.price.toFixed(2)} $</span>
                       </div>
                     </div>
@@ -568,12 +582,12 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Brands */}
-      <section className="py-12 bg-stone-50 border-y border-stone-200">
+      <section className="py-12 bg-stone-950 border-y border-stone-800">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center items-center gap-12 flex-wrap">
             {brands.map((brand, idx) => (
-              <div key={idx} className="grayscale hover:grayscale-0 transition-all cursor-pointer opacity-60 hover:opacity-100">
-                <img src={brand.logo} alt={brand.name} className="h-12 object-contain" />
+              <div key={idx} className="grayscale hover:grayscale-0 transition-all cursor-pointer opacity-50 hover:opacity-100">
+                <img src={brand.logo} alt={brand.name} className="h-12 object-contain brightness-200" />
               </div>
             ))}
           </div>
@@ -581,18 +595,18 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Latest Blog */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-stone-900">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-stone-900">
+            <h2 className="text-3xl font-bold text-white">
               DERNIER <span style={{ color: accentColor }}>BLOGUE</span>
             </h2>
-            <p className="text-stone-500 mt-2">Nos dernières nouvelles du monde automobile</p>
+            <p className="text-stone-400 mt-2">Nos dernières nouvelles du monde automobile</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogPosts.map((post, idx) => (
-              <Card key={idx} className="bg-white border-stone-200 overflow-hidden group">
+              <Card key={idx} className="bg-stone-800 border-stone-700 overflow-hidden group">
                 <div className="aspect-video overflow-hidden">
                   <img 
                     src={post.image} 
@@ -601,10 +615,10 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                   />
                 </div>
                 <div className="p-6">
-                  <h4 className="text-stone-900 font-semibold mb-2 group-hover:text-amber-600 transition-colors">
+                  <h4 className="text-stone-100 font-semibold mb-2 group-hover:text-amber-400 transition-colors">
                     {post.title}
                   </h4>
-                  <p className="text-stone-500 text-sm mb-4">{post.excerpt}</p>
+                  <p className="text-stone-400 text-sm mb-4">{post.excerpt}</p>
                   <Button 
                     variant="link" 
                     className="p-0 h-auto font-medium"
