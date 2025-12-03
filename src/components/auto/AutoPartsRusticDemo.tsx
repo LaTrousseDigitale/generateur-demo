@@ -425,8 +425,8 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
           <div className="text-center mt-8">
             <Button 
-              variant="outline" 
-              className="border-stone-600 text-stone-300 hover:bg-stone-800 hover:text-white rounded-none"
+              className="border-2 border-white text-white hover:bg-white hover:text-stone-900 rounded-none px-8 py-3 font-semibold transition-colors"
+              variant="outline"
             >
               Voir tous les produits
             </Button>
