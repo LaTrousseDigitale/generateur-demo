@@ -624,7 +624,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Brands */}
-      <section className="py-16 bg-stone-200 sticky top-0 z-[60] shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+      <section className="py-16 bg-stone-200 relative z-[60]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center items-center gap-6 flex-wrap">
             {brands.map((brand, idx) => (
