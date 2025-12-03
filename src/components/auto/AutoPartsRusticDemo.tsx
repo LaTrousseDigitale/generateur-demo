@@ -219,20 +219,23 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
             {/* Navigation */}
             <nav className="hidden lg:flex items-center gap-6">
               {["Accueil", "Fonctionnalités", "Collections", "Boutique", "Pages", "Blog"].map((item, idx) => (
-                <a 
+                <button 
                   key={item} 
-                  href="#" 
-                  className={`transition-colors text-sm font-medium ${
+                  onClick={(e) => e.preventDefault()}
+                  className={`transition-colors text-sm font-medium bg-transparent border-none cursor-pointer ${
                     idx === 0 ? "font-semibold" : "text-stone-700 hover:text-stone-900"
                   }`}
                   style={idx === 0 ? { color: accentColor } : {}}
                 >
                   {item} {idx > 0 && idx < 5 && "▾"}
-                </a>
+                </button>
               ))}
-              <span className="text-stone-900 font-semibold text-sm cursor-pointer hover:opacity-80">
+              <button 
+                onClick={(e) => e.preventDefault()}
+                className="text-stone-900 font-semibold text-sm cursor-pointer hover:opacity-80 bg-transparent border-none"
+              >
                 OFFRES SPÉCIALES
-              </span>
+              </button>
             </nav>
 
             {/* Cart Button */}
