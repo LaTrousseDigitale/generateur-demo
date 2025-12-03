@@ -206,7 +206,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
               ) : (
                 <div className="flex items-center gap-2">
                   <div 
-                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    className="w-10 h-10 flex items-center justify-center"
                     style={{ backgroundColor: accentColor }}
                   >
                     <span className="text-stone-900 font-bold text-lg">A</span>
@@ -273,10 +273,10 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
         <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-950/70 to-transparent" />
         
         {/* Navigation Arrows */}
-        <button className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-stone-800/50 hover:bg-stone-700/50 rounded-full flex items-center justify-center transition-colors">
+        <button className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-stone-800/50 hover:bg-stone-700/50 flex items-center justify-center transition-colors">
           <ChevronLeft className="w-6 h-6 text-white" />
         </button>
-        <button className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-stone-800/50 hover:bg-stone-700/50 rounded-full flex items-center justify-center transition-colors">
+        <button className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-stone-800/50 hover:bg-stone-700/50 flex items-center justify-center transition-colors">
           <ChevronRight className="w-6 h-6 text-white" />
         </button>
 
@@ -293,7 +293,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
             </p>
             <Button 
               size="lg"
-              className="text-stone-900 font-semibold px-8"
+              className="text-stone-900 font-semibold px-8 rounded-none"
               style={{ backgroundColor: accentColor }}
             >
               Magasiner
@@ -308,7 +308,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           <div className="flex justify-center gap-8 flex-wrap">
             {categories.map((cat, idx) => (
               <div key={idx} className="text-center group cursor-pointer">
-                <div className="w-24 h-24 rounded-full overflow-hidden mb-3 mx-auto border-2 border-stone-700 group-hover:border-amber-500 transition-colors">
+                <div className="w-24 h-24 overflow-hidden mb-3 mx-auto border-2 border-stone-700 group-hover:border-amber-500 transition-colors">
                   <img src={cat.image} alt={cat.name} className="w-full h-full object-cover" />
                 </div>
                 <p className="text-stone-300 text-sm font-medium group-hover:text-white transition-colors">{cat.name}</p>
@@ -384,7 +384,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
+                className={`px-6 py-2 text-sm font-medium transition-colors ${
                   activeTab === tab.id 
                     ? "text-stone-900" 
                     : "bg-stone-800 text-stone-300 hover:bg-stone-700"
@@ -399,7 +399,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           {/* Products Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {featuredProducts.map((product, idx) => (
-              <Card key={idx} className="bg-stone-800 border-stone-700 overflow-hidden group">
+              <Card key={idx} className="bg-stone-800 border-stone-700 overflow-hidden group rounded-none">
                 <div className="aspect-square bg-stone-700/50 p-4 flex items-center justify-center">
                   <img 
                     src={product.image} 
@@ -421,7 +421,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
           <div className="text-center mt-8">
             <Button 
               variant="outline" 
-              className="border-stone-600 text-stone-300 hover:bg-stone-800 hover:text-white"
+              className="border-stone-600 text-stone-300 hover:bg-stone-800 hover:text-white rounded-none"
             >
               Voir tous les produits
             </Button>
@@ -448,9 +448,9 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             {/* Product 1 */}
-            <div className="bg-stone-800/50 backdrop-blur-sm rounded-lg p-6 text-center">
+            <div className="bg-stone-800/50 backdrop-blur-sm p-6 text-center">
               <img src={dealProducts[0].image} alt={dealProducts[0].name} className="h-48 mx-auto object-contain mb-4" />
-              <Badge className="mb-2" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
+              <Badge className="mb-2 rounded-none" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
                 {dealProducts[0].discount}
               </Badge>
               <h4 className="text-white font-medium mb-2">{dealProducts[0].name}</h4>
@@ -471,7 +471,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                 ].map((item, idx) => (
                   <div 
                     key={idx} 
-                    className="p-4 rounded-lg"
+                    className="p-4"
                     style={{ backgroundColor: accentColor }}
                   >
                     <div className="text-3xl font-bold text-stone-900">{item.value}</div>
@@ -482,9 +482,9 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
             </div>
 
             {/* Product 2 */}
-            <div className="bg-stone-800/50 backdrop-blur-sm rounded-lg p-6 text-center">
+            <div className="bg-stone-800/50 backdrop-blur-sm p-6 text-center">
               <img src={dealProducts[1].image} alt={dealProducts[1].name} className="h-48 mx-auto object-contain mb-4" />
-              <Badge className="mb-2" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
+              <Badge className="mb-2 rounded-none" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
                 {dealProducts[1].discount}
               </Badge>
               <h4 className="text-white font-medium mb-2">{dealProducts[1].name}</h4>
@@ -509,7 +509,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
               <div className="space-y-4">
                 {latestProducts.map((product, idx) => (
                   <div key={idx} className="flex items-center gap-4 group cursor-pointer">
-                    <div className="w-20 h-20 bg-stone-800 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-20 h-20 bg-stone-800 overflow-hidden flex-shrink-0">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
@@ -534,7 +534,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
               <div className="space-y-4">
                 {mostViewed.map((product, idx) => (
                   <div key={idx} className="flex items-center gap-4 group cursor-pointer">
-                    <div className="w-20 h-20 bg-stone-800 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-20 h-20 bg-stone-800 overflow-hidden flex-shrink-0">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
@@ -559,7 +559,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
               <div className="space-y-4">
                 {onSaleProducts.map((product, idx) => (
                   <div key={idx} className="flex items-center gap-4 group cursor-pointer">
-                    <div className="w-20 h-20 bg-stone-800 rounded-lg overflow-hidden flex-shrink-0">
+                    <div className="w-20 h-20 bg-stone-800 overflow-hidden flex-shrink-0">
                       <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
@@ -604,7 +604,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {blogPosts.map((post, idx) => (
-              <Card key={idx} className="bg-stone-800 border-stone-700 overflow-hidden group">
+              <Card key={idx} className="bg-stone-800 border-stone-700 overflow-hidden group rounded-none">
                 <div className="aspect-video overflow-hidden">
                   <img 
                     src={post.image} 
@@ -728,9 +728,9 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
                 <input 
                   type="email" 
                   placeholder="Votre courriel" 
-                  className="bg-stone-900 border border-stone-700 rounded px-4 py-2 text-sm focus:outline-none focus:border-amber-500"
+                  className="bg-stone-900 border border-stone-700 px-4 py-2 text-sm focus:outline-none focus:border-amber-500"
                 />
-                <Button style={{ backgroundColor: accentColor, color: "#1c1917" }}>
+                <Button className="rounded-none" style={{ backgroundColor: accentColor, color: "#1c1917" }}>
                   S'inscrire
                 </Button>
               </div>
