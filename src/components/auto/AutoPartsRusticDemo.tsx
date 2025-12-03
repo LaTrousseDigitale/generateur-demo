@@ -13,7 +13,8 @@ import {
   Heart,
   Search,
   User,
-  Clock
+  Clock,
+  ArrowLeft
 } from "lucide-react";
 
 // Import des images
@@ -55,9 +56,10 @@ interface AutoPartsRusticDemoProps {
     modules?: string[];
     logoUrl?: string;
   };
+  onBack?: () => void;
 }
 
-const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => {
+const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config, onBack }) => {
   const { companyName, primaryColor, logoUrl } = config;
   const accentColor = config.accentColor || "#F59E0B";
   
@@ -225,6 +227,19 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
 
   return (
     <div className="min-h-screen bg-stone-950 text-stone-100">
+      {/* Floating Back Button */}
+      {onBack && (
+        <Button
+          onClick={onBack}
+          variant="outline"
+          size="sm"
+          className="fixed top-4 left-4 z-[100] bg-white/90 hover:bg-white text-stone-900 border-stone-300 shadow-lg"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Retour à l'éditeur
+        </Button>
+      )}
+      
       {/* Top Bar - Dark */}
       <div className="bg-stone-900 py-2 px-4 text-xs border-b border-stone-800">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
