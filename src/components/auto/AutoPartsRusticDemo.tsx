@@ -374,7 +374,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Categories Row */}
-      <section id="categories" className="bg-stone-950 py-16 border-b border-stone-800">
+      <section id="categories" className="bg-stone-950 py-16 border-b border-stone-800 sticky top-16 z-10">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-center gap-12 flex-wrap">
             {categories.map((cat, idx) => (
@@ -460,7 +460,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Featured Products */}
-      <section id="products" className="py-16 bg-white shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+      <section id="products" className="py-16 bg-white sticky top-16 z-20 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
         <div className="max-w-7xl mx-auto px-4">
           {/* Tabs */}
           <div className="flex justify-center gap-3 mb-12 flex-wrap">
@@ -527,7 +527,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Deal of the Day + Products & Brands Combined Sticky Section */}
-      <div id="deals" className="shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
+      <div id="deals" className="sticky top-16 z-30 shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Deal of the Day */}
         <section className="relative">
           <div className="grid grid-cols-1 md:grid-cols-2 relative">
@@ -707,7 +707,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </div>
 
       {/* Latest Blog */}
-      <section id="blog" className="py-16 bg-stone-900 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
+      <section id="blog" className="py-16 bg-stone-900 sticky top-16 z-40 shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white">
@@ -748,7 +748,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       {/* ========== FONCTIONNALITÉS SECTIONS ========== */}
       
       {/* Recherche avancée */}
-      <section id="feature-search" className="py-20 bg-stone-950">
+      <section id="feature-search" className="py-20 bg-stone-950 sticky top-16 z-[41] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -787,7 +787,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Comparateur */}
-      <section id="feature-compare" className="py-20 bg-stone-900">
+      <section id="feature-compare" className="py-20 bg-stone-900 sticky top-16 z-[42] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -823,7 +823,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Compatibilité */}
-      <section id="feature-compatibility" className="py-20 bg-stone-950">
+      <section id="feature-compatibility" className="py-20 bg-stone-950 sticky top-16 z-[43] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -859,7 +859,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Diagnostics */}
-      <section id="feature-diagnostics" className="py-20 bg-stone-900">
+      <section id="feature-diagnostics" className="py-20 bg-stone-900 sticky top-16 z-[44] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -891,7 +891,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       {/* ========== COLLECTIONS SECTIONS ========== */}
 
       {/* Collection Freins */}
-      <section id="collection-freins" className="py-20 bg-stone-950">
+      <section id="collection-freins" className="py-20 bg-stone-950 sticky top-16 z-[45] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -921,7 +921,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Collection Suspension */}
-      <section id="collection-suspension" className="py-20 bg-stone-900">
+      <section id="collection-suspension" className="py-20 bg-stone-900 sticky top-16 z-[46] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -951,7 +951,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Collection Moteur */}
-      <section id="collection-moteur" className="py-20 bg-stone-950">
+      <section id="collection-moteur" className="py-20 bg-stone-950 sticky top-16 z-[47] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -981,7 +981,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Collection Électrique */}
-      <section id="collection-electrique" className="py-20 bg-stone-900">
+      <section id="collection-electrique" className="py-20 bg-stone-900 sticky top-16 z-[48] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -1011,7 +1011,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Collection Carrosserie */}
-      <section id="collection-carrosserie" className="py-20 bg-stone-950">
+      <section id="collection-carrosserie" className="py-20 bg-stone-950 sticky top-16 z-[49] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -1043,7 +1043,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       {/* ========== PAGES SECTIONS ========== */}
 
       {/* À propos */}
-      <section id="page-about" className="py-20 bg-stone-900">
+      <section id="page-about" className="py-20 bg-stone-900 sticky top-16 z-[50] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
@@ -1082,7 +1082,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Contact */}
-      <section id="page-contact" className="py-20 bg-stone-950">
+      <section id="page-contact" className="py-20 bg-stone-950 sticky top-16 z-[51] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -1128,7 +1128,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* FAQ */}
-      <section id="page-faq" className="py-20 bg-stone-900">
+      <section id="page-faq" className="py-20 bg-stone-900 sticky top-16 z-[52] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -1153,7 +1153,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Politique de retour */}
-      <section id="page-returns" className="py-20 bg-stone-950">
+      <section id="page-returns" className="py-20 bg-stone-950 sticky top-16 z-[53] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]">
         <div className="max-w-4xl mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-white mb-4">
@@ -1195,7 +1195,7 @@ const AutoPartsRusticDemo: React.FC<AutoPartsRusticDemoProps> = ({ config }) => 
       </section>
 
       {/* Service Features + Footer Combined Sticky Section */}
-      <div className="shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
+      <div className="sticky top-16 z-[54] shadow-[0_-10px_30px_rgba(0,0,0,0.4)]">
         {/* Service Features */}
         <section id="services" className="py-8" style={{ backgroundColor: accentColor }}>
           <div className="max-w-7xl mx-auto px-4">
