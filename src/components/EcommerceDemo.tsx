@@ -635,15 +635,6 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           </div>
         </div>
 
-        {/* Wave divider */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <svg viewBox="0 0 1440 120" className="w-full h-auto">
-            <path 
-              className={theme === "moderne" ? "fill-slate-50" : theme === "rustique" ? "fill-stone-900" : "fill-slate-900/50"}
-              d="M0,64L48,69.3C96,75,192,85,288,80C384,75,480,53,576,48C672,43,768,53,864,69.3C960,85,1056,107,1152,101.3C1248,96,1344,64,1392,48L1440,32L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"
-            />
-          </svg>
-        </div>
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
