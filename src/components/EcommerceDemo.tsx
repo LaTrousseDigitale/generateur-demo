@@ -229,6 +229,9 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           inputBg: "bg-slate-100",
           badgeStyle: "bg-slate-100 text-slate-700",
           buttonStyle: "shadow-lg hover:shadow-xl",
+          cardRadius: "rounded-2xl",
+          buttonRadius: "rounded-full",
+          badgeRadius: "rounded-full",
         };
       case "rustique":
         return {
@@ -244,6 +247,9 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           inputBg: "bg-stone-800",
           badgeStyle: "bg-amber-900/30 text-amber-200 border border-amber-800/30",
           buttonStyle: "shadow-lg shadow-amber-900/30",
+          cardRadius: "rounded-xl",
+          buttonRadius: "rounded-full",
+          badgeRadius: "rounded-full",
         };
       case "futuriste":
         return {
@@ -259,6 +265,10 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           inputBg: "bg-white/5",
           badgeStyle: "bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-200 border border-indigo-500/30",
           buttonStyle: "shadow-[0_0_30px_rgba(99,102,241,0.4)]",
+          // Square corners for futuristic theme
+          cardRadius: "rounded-sm",
+          buttonRadius: "rounded-sm",
+          badgeRadius: "rounded-sm",
         };
       default:
         return {
@@ -274,6 +284,9 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           inputBg: "bg-slate-800",
           badgeStyle: "bg-slate-800 text-slate-200",
           buttonStyle: "",
+          cardRadius: "rounded-xl",
+          buttonRadius: "rounded-full",
+          badgeRadius: "rounded-full",
         };
     }
   };
@@ -473,7 +486,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
             <div className="order-2 lg:order-1">
               {/* Badge */}
               <div 
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 animate-fade-in"
+                className={`inline-flex items-center gap-2 px-4 py-2 ${themeConfig.badgeRadius} mb-8 animate-fade-in`}
                 style={{ 
                   background: `linear-gradient(135deg, ${config.primaryColor}20, ${config.accentColor}20)`,
                   border: `1px solid ${config.primaryColor}30`
@@ -508,7 +521,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
                 <Button 
                   size="lg"
-                  className={`rounded-full px-8 py-6 text-lg font-semibold text-white group ${themeConfig.buttonStyle}`}
+                  className={`${themeConfig.buttonRadius} px-8 py-6 text-lg font-semibold text-white group ${themeConfig.buttonStyle}`}
                   style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                 >
                   <ShoppingCart className="w-5 h-5 mr-2" />
@@ -559,7 +572,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
             <div className="order-1 lg:order-2 relative">
               {/* Main product card */}
               <div 
-                className={`relative rounded-3xl overflow-hidden ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-700`}
+                className={`relative ${themeConfig.cardRadius} overflow-hidden ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-700`}
                 style={{ 
                   transform: `translateY(${scrollY * -0.1}px) rotate(2deg)`,
                 }}
@@ -599,7 +612,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
                       </div>
                       <Button 
                         size="lg"
-                        className="rounded-full text-white"
+                        className={`${themeConfig.buttonRadius} text-white`}
                         style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                         onClick={addToCart}
                       >
@@ -612,7 +625,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
               {/* Floating mini cards */}
               <div 
-                className={`absolute -bottom-10 -left-10 w-48 rounded-2xl overflow-hidden shadow-2xl hidden lg:block ${themeConfig.cardBg}`}
+                className={`absolute -bottom-10 -left-10 w-48 ${themeConfig.cardRadius} overflow-hidden shadow-2xl hidden lg:block ${themeConfig.cardBg}`}
                 style={{ transform: `translateY(${scrollY * -0.15}px) rotate(-6deg)` }}
               >
                 <img src={products[1]?.image} alt="" className="w-full h-32 object-cover" />
@@ -622,7 +635,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
                 </div>
               </div>
               <div 
-                className={`absolute -top-5 -right-5 w-40 rounded-2xl overflow-hidden shadow-2xl hidden xl:block ${themeConfig.cardBg}`}
+                className={`absolute -top-5 -right-5 w-40 ${themeConfig.cardRadius} overflow-hidden shadow-2xl hidden xl:block ${themeConfig.cardBg}`}
                 style={{ transform: `translateY(${scrollY * -0.2}px) rotate(8deg)` }}
               >
                 <img src={products[2]?.image} alt="" className="w-full h-28 object-cover" />
@@ -646,10 +659,10 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
             {features.map((feature, i) => (
               <div 
                 key={i}
-                className={`flex items-center gap-4 p-4 rounded-2xl ${themeConfig.cardBg} transition-all duration-500`}
+                className={`flex items-center gap-4 p-4 ${themeConfig.cardRadius} ${themeConfig.cardBg} transition-all duration-500`}
               >
                 <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                  className={`w-12 h-12 ${themeConfig.cardRadius} flex items-center justify-center flex-shrink-0`}
                   style={{ background: `linear-gradient(135deg, ${config.primaryColor}20, ${config.accentColor}20)` }}
                 >
                   <feature.icon className="w-6 h-6" style={{ color: config.primaryColor }} />
@@ -690,6 +703,246 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
       )}
 
       {/* ═══════════════════════════════════════════════════════════════
+          CATEGORIES ROW
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={`py-16 ${themeConfig.sectionBg} border-b ${theme === "futuriste" ? "border-white/10" : theme === "rustique" ? "border-stone-800" : "border-slate-200"}`}>
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center gap-8 md:gap-12 flex-wrap">
+            {["Nouveautés", "Promotions", "Bestsellers", "Premium", "Collections", "Soldes"].map((cat, i) => (
+              <button 
+                key={i} 
+                className={`group flex flex-col items-center gap-3 transition-all duration-300 hover:scale-105`}
+              >
+                <div 
+                  className={`w-16 h-16 ${themeConfig.cardRadius} flex items-center justify-center ${themeConfig.cardBg} group-hover:shadow-lg transition-all`}
+                  style={{ borderColor: `${config.primaryColor}30` }}
+                >
+                  <Package className="w-7 h-7" style={{ color: config.primaryColor }} />
+                </div>
+                <span className={`text-xs font-bold uppercase tracking-wider ${themeConfig.textSecondary} group-hover:text-white transition-colors`}>
+                  {cat}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          THREE PROMO BANNERS
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={themeConfig.pageBg}>
+        <div className="grid grid-cols-1 md:grid-cols-3">
+          {/* Banner 1 */}
+          <div className={`relative h-72 overflow-hidden group cursor-pointer`}>
+            <img src={products[0]?.image} alt="Promo 1" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className={`absolute inset-0 bg-gradient-to-r ${theme === "futuriste" ? "from-slate-950/90 via-slate-900/70" : "from-stone-950/90 via-stone-900/70"} to-transparent transition-opacity duration-300 group-hover:opacity-80`} />
+            <div className="absolute inset-0 p-8 flex flex-col justify-center">
+              <p className="text-sm uppercase tracking-wider font-bold" style={{ color: config.accentColor }}>Offre exclusive</p>
+              <h3 className="text-3xl font-black text-white mt-1">MÉGA VENTE</h3>
+              <p className="text-white/80 text-sm mt-2">Jusqu'à <span style={{ color: config.accentColor }}>45%</span> de rabais</p>
+              <Button 
+                className={`mt-4 w-fit font-semibold ${themeConfig.buttonRadius} px-6 transition-transform duration-300 group-hover:scale-105`}
+                style={{ backgroundColor: config.primaryColor }}
+              >
+                Magasiner
+              </Button>
+            </div>
+          </div>
+
+          {/* Banner 2 - Center */}
+          <div className={`relative h-72 overflow-hidden group cursor-pointer`}>
+            <img src={products[1]?.image} alt="Promo 2" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className={`absolute inset-0 ${theme === "futuriste" ? "bg-slate-900/75" : "bg-stone-900/75"} transition-opacity duration-300 group-hover:opacity-60`} />
+            <div className="absolute inset-0 p-8 flex flex-col justify-center items-center text-center">
+              <h3 className="text-4xl font-black text-white">{config.companyName}</h3>
+              <p className={`mt-2 text-sm uppercase tracking-wider max-w-xs ${themeConfig.textMuted}`}>
+                Des produits de qualité pour vous
+              </p>
+              <Button 
+                className={`mt-4 font-semibold ${themeConfig.buttonRadius} px-6 transition-transform duration-300 group-hover:scale-105 text-white`}
+                style={{ backgroundColor: config.primaryColor }}
+              >
+                Découvrir
+              </Button>
+            </div>
+          </div>
+
+          {/* Banner 3 */}
+          <div className={`relative h-72 overflow-hidden group cursor-pointer`}>
+            <img src={products[2]?.image} alt="Promo 3" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div className={`absolute inset-0 bg-gradient-to-l ${theme === "futuriste" ? "from-slate-950/90 via-slate-900/70" : "from-stone-950/90 via-stone-900/70"} to-transparent transition-opacity duration-300 group-hover:opacity-80`} />
+            <div className="absolute inset-0 p-8 flex flex-col justify-center items-end text-right">
+              <p className="text-sm uppercase tracking-wider font-bold" style={{ color: config.accentColor }}>Nouveautés</p>
+              <h3 className="text-2xl font-black text-white mt-1">COLLECTION<br />EXCLUSIVE</h3>
+              <p className="text-white/80 text-sm mt-2">Un incontournable pour vous</p>
+              <Button 
+                className={`mt-4 font-semibold ${themeConfig.buttonRadius} px-6 transition-transform duration-300 group-hover:scale-105 text-white`}
+                style={{ backgroundColor: config.primaryColor }}
+              >
+                Explorer
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          PARALLAX DIVIDER
+      ═══════════════════════════════════════════════════════════════ */}
+      <div 
+        className="h-64 bg-fixed bg-cover bg-center relative"
+        style={{ backgroundImage: `url(${heroImage})` }}
+      >
+        <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+          <div className="text-center">
+            <h3 className="text-3xl md:text-4xl font-bold text-white mb-2">QUALITÉ GARANTIE</h3>
+            <p className={`text-lg ${themeConfig.textMuted}`}>Des produits certifiés de haute qualité</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          DEAL OF THE DAY
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={`relative ${themeConfig.sectionBg}`}>
+        <div className="grid grid-cols-1 md:grid-cols-2 relative">
+          {/* Left Panel */}
+          <div className="relative h-96 overflow-hidden">
+            <img 
+              src={products[0]?.image} 
+              alt="Deal du jour" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className={`absolute inset-0 ${theme === "futuriste" ? "bg-slate-900/60" : "bg-stone-900/60"}`} />
+            <div className="absolute inset-0 p-8 flex flex-col justify-end">
+              <p className={themeConfig.textMuted}>
+                Jusqu'à <span style={{ color: config.accentColor }}>45%</span> de rabais
+              </p>
+              <h3 className="text-2xl font-bold text-white mt-2">
+                {products[0]?.name || "Produit vedette"}
+              </h3>
+              <p className="mt-3">
+                <span className="uppercase text-xs tracking-wider" style={{ color: themeConfig.textMuted }}>Prix: </span>
+                <span className="text-2xl font-bold" style={{ color: config.accentColor }}>{products[0]?.price}</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Right Panel */}
+          <div className="relative h-96 overflow-hidden">
+            <img 
+              src={products[1]?.image} 
+              alt="Deal du jour 2" 
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className={`absolute inset-0 ${theme === "futuriste" ? "bg-slate-900/60" : "bg-stone-900/60"}`} />
+            <div className="absolute inset-0 p-8 flex flex-col justify-end items-end text-right">
+              <p className={themeConfig.textMuted}>
+                Jusqu'à <span style={{ color: config.accentColor }}>35%</span> de rabais
+              </p>
+              <h3 className="text-2xl font-bold text-white mt-2">
+                {products[1]?.name || "Produit premium"}
+              </h3>
+              <p className="mt-3">
+                <span className="uppercase text-xs tracking-wider" style={{ color: themeConfig.textMuted }}>Prix: </span>
+                <span className="text-2xl font-bold" style={{ color: config.accentColor }}>{products[1]?.price}</span>
+              </p>
+            </div>
+          </div>
+
+          {/* Center Badge */}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+            <div className={`${theme === "futuriste" ? "bg-slate-900/95" : "bg-white/95"} backdrop-blur-sm ${themeConfig.cardRadius} py-6 px-8 flex flex-col items-center gap-2 shadow-2xl border ${theme === "futuriste" ? "border-white/20" : "border-slate-200"}`}>
+              <span className={`text-xs uppercase tracking-wider ${themeConfig.textMuted}`}>Offre du jour</span>
+              <div className="flex gap-3">
+                {[
+                  { value: "02", label: "Jours" },
+                  { value: "14", label: "Heures" },
+                  { value: "35", label: "Mins" },
+                ].map((item, i) => (
+                  <div key={i} className="text-center">
+                    <div 
+                      className={`w-12 h-12 ${themeConfig.cardRadius} flex items-center justify-center text-white font-bold text-lg`}
+                      style={{ backgroundColor: config.primaryColor }}
+                    >
+                      {item.value}
+                    </div>
+                    <span className={`text-[10px] uppercase ${themeConfig.textMuted}`}>{item.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          BRANDS SECTION
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={`py-16 ${theme === "futuriste" ? "bg-slate-800/50" : theme === "rustique" ? "bg-stone-200" : "bg-slate-100"}`}>
+        <div className="container mx-auto px-4">
+          <h3 className={`text-center text-xl font-bold mb-8 ${theme === "futuriste" ? "text-white" : "text-slate-800"}`}>
+            Nos marques partenaires
+          </h3>
+          <div className="flex justify-center items-center gap-8 md:gap-12 flex-wrap">
+            {["Nike", "Apple", "Samsung", "Sony", "LG", "Canon"].map((brand, i) => (
+              <div 
+                key={i} 
+                className={`px-6 py-3 ${themeConfig.cardRadius} ${theme === "futuriste" ? "bg-white/10 text-white" : "bg-white text-slate-600"} font-bold text-lg transition-all hover:scale-105 cursor-pointer`}
+              >
+                {brand}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
+          BLOG SECTION
+      ═══════════════════════════════════════════════════════════════ */}
+      <section className={`py-20 ${themeConfig.sectionBg}`}>
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <Badge className={themeConfig.badgeStyle}>Notre blog</Badge>
+            <h2 className={`text-3xl md:text-4xl font-black mt-4 ${themeConfig.textPrimary}`}>
+              Dernières <span style={{ color: config.primaryColor }}>actualités</span>
+            </h2>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { title: "Guide d'achat complet", desc: "Tout ce que vous devez savoir avant d'acheter", date: "12 Nov 2024" },
+              { title: "Tendances 2024", desc: "Les produits incontournables de cette année", date: "8 Nov 2024" },
+              { title: "Conseils d'experts", desc: "Nos recommandations pour faire le bon choix", date: "5 Nov 2024" },
+            ].map((article, i) => (
+              <div key={i} className={`group ${themeConfig.cardRadius} overflow-hidden ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-300`}>
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={products[i]?.image} 
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                </div>
+                <div className="p-6">
+                  <span className={`text-xs ${themeConfig.textMuted}`}>{article.date}</span>
+                  <h4 className={`text-lg font-bold mt-2 ${themeConfig.textPrimary}`}>{article.title}</h4>
+                  <p className={`text-sm mt-2 ${themeConfig.textSecondary}`}>{article.desc}</p>
+                  <Button 
+                    variant="ghost" 
+                    className={`mt-4 p-0 h-auto font-semibold`}
+                    style={{ color: config.primaryColor }}
+                  >
+                    Lire la suite <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════
           PRODUCTS GRID - Premium cards
       ═══════════════════════════════════════════════════════════════ */}
       <section className={`py-24 ${themeConfig.pageBg}`}>
@@ -723,7 +976,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
             {products.map((product, i) => (
               <div 
                 key={i}
-                className={`group relative rounded-3xl overflow-hidden ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-500`}
+                className={`group relative ${themeConfig.cardRadius} overflow-hidden ${themeConfig.cardBg} ${themeConfig.cardHover} transition-all duration-500`}
                 onMouseEnter={() => setHoveredProduct(i)}
                 onMouseLeave={() => setHoveredProduct(null)}
               >
@@ -746,10 +999,10 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
 
                   {/* Quick actions */}
                   <div className={`absolute top-4 right-4 flex flex-col gap-2 transition-all duration-300 ${hoveredProduct === i ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-4'}`}>
-                    <Button variant="ghost" size="icon" className="bg-white/90 hover:bg-white text-slate-700 rounded-full">
+                    <Button variant="ghost" size="icon" className={`bg-white/90 hover:bg-white text-slate-700 ${themeConfig.buttonRadius}`}>
                       <Heart className="w-4 h-4" />
                     </Button>
-                    <Button variant="ghost" size="icon" className="bg-white/90 hover:bg-white text-slate-700 rounded-full">
+                    <Button variant="ghost" size="icon" className={`bg-white/90 hover:bg-white text-slate-700 ${themeConfig.buttonRadius}`}>
                       <Eye className="w-4 h-4" />
                     </Button>
                   </div>
@@ -757,7 +1010,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
                   {/* Add to cart overlay */}
                   <div className={`absolute bottom-0 left-0 right-0 p-4 transition-all duration-300 ${hoveredProduct === i ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                     <Button 
-                      className="w-full rounded-xl text-white"
+                      className={`w-full ${themeConfig.buttonRadius} text-white`}
                       style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                       onClick={addToCart}
                     >
@@ -798,7 +1051,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           <div className="text-center mt-12">
             <Button 
               size="lg"
-              className={`rounded-full px-10 text-white ${themeConfig.buttonStyle}`}
+              className={`${themeConfig.buttonRadius} px-10 text-white ${themeConfig.buttonStyle}`}
               style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
             >
               Voir tous les produits
@@ -861,7 +1114,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button 
               size="lg"
-              className="rounded-full px-10 py-6 text-lg font-semibold bg-white hover:bg-white/90 shadow-xl"
+              className={`${themeConfig.buttonRadius} px-10 py-6 text-lg font-semibold bg-white hover:bg-white/90 shadow-xl`}
               style={{ color: config.primaryColor }}
             >
               <Zap className="w-5 h-5 mr-2" />
@@ -893,7 +1146,7 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
                   <img src={config.logo} alt="Logo" className="h-10 w-auto object-contain" />
                 ) : (
                   <div 
-                    className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold"
+                    className={`w-10 h-10 ${themeConfig.cardRadius} flex items-center justify-center text-white font-bold`}
                     style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
                   >
                     {config.companyName.charAt(0)}
@@ -941,14 +1194,14 @@ export const EcommerceDemo = ({ config, onBack }: EcommerceDemoProps) => {
         <Button 
           size="icon"
           onClick={handleShare}
-          className="w-12 h-12 rounded-full shadow-lg bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20"
+          className={`w-12 h-12 ${themeConfig.buttonRadius} shadow-lg bg-white/10 backdrop-blur-xl border border-white/20 text-white hover:bg-white/20`}
         >
           <Share2 className="w-5 h-5" />
         </Button>
         <Button 
           size="icon"
           onClick={handleExport}
-          className={`w-12 h-12 rounded-full shadow-lg text-white ${themeConfig.buttonStyle}`}
+          className={`w-12 h-12 ${themeConfig.buttonRadius} shadow-lg text-white ${themeConfig.buttonStyle}`}
           style={{ background: `linear-gradient(135deg, ${config.primaryColor}, ${config.accentColor})` }}
         >
           <Download className="w-5 h-5" />
