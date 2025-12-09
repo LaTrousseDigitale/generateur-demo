@@ -201,46 +201,50 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       {/* ═══════════════════════════════════════════════════════════════
           HERO SECTION
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="relative bg-slate-50 overflow-hidden min-h-[500px]">
-        {/* Decorative circles */}
+      <section id="hero" className="relative bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
+        {/* Decorative large circle - coral/red */}
         <div 
-          className="absolute -left-32 top-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full opacity-80"
-          style={{ backgroundColor: primaryColor }}
+          className="absolute -left-48 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
+          style={{ backgroundColor: primaryColor, opacity: 0.9 }}
         />
+        {/* Decorative small circle */}
         <div 
-          className="absolute left-8 top-1/3 w-20 h-20 rounded-full opacity-60"
-          style={{ backgroundColor: primaryColor }}
+          className="absolute left-4 top-[60%] w-16 h-16 rounded-full"
+          style={{ backgroundColor: primaryColor, opacity: 0.7 }}
         />
 
-        <div className="container mx-auto px-6 py-12 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-6 py-16 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[450px]">
             {/* Search Form */}
-            <div className="bg-white p-8 shadow-xl max-w-md">
-              <h3 className="flex items-center gap-2 font-bold text-lg text-slate-900 mb-6">
-                <MapPin className="w-5 h-5" style={{ color: primaryColor }} />
-                Trouvez votre auto de rêve (recherche rapide)
+            <div className="bg-white p-8 shadow-2xl max-w-md relative z-20">
+              <h3 className="flex items-start gap-2 font-bold text-lg text-slate-900 mb-6">
+                <MapPin className="w-5 h-5 mt-0.5 shrink-0" style={{ color: primaryColor }} />
+                <span>Trouvez votre auto de rêve (recherche rapide)</span>
               </h3>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-200 text-slate-600 text-sm bg-white">
+                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
                     <option>Marque</option>
                     <option>BMW</option>
                     <option>Mercedes</option>
                     <option>Audi</option>
+                    <option>Toyota</option>
+                    <option>Honda</option>
                   </select>
-                  <select className="h-11 px-4 border border-slate-200 text-slate-600 text-sm bg-white">
+                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
                     <option>Modèle</option>
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-200 text-slate-600 text-sm bg-white">
+                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
                     <option>Année / Modèle</option>
                     <option>2024</option>
                     <option>2023</option>
                     <option>2022</option>
+                    <option>2021</option>
                   </select>
-                  <select className="h-11 px-4 border border-slate-200 text-slate-600 text-sm bg-white">
+                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
                     <option>Type de carburant</option>
                     <option>Essence</option>
                     <option>Diesel</option>
@@ -249,7 +253,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-200 text-slate-600 text-sm bg-white">
+                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
                     <option>Type d'auto</option>
                     <option>Berline</option>
                     <option>VUS</option>
@@ -270,7 +274,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 </div>
 
                 <Button 
-                  className="w-full h-11 text-white font-semibold"
+                  className="w-full h-11 text-white font-semibold rounded-none"
                   style={{ backgroundColor: primaryColor }}
                 >
                   <Search className="w-4 h-4 mr-2" />
@@ -278,7 +282,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 </Button>
                 <Button 
                   variant="outline"
-                  className="w-full h-11 font-semibold border-2"
+                  className="w-full h-11 font-semibold border-2 rounded-none bg-white"
                   style={{ borderColor: primaryColor, color: primaryColor }}
                 >
                   <Search className="w-4 h-4 mr-2" />
@@ -287,13 +291,15 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
               </div>
             </div>
 
-            {/* Hero Image */}
-            <div className="relative hidden lg:block">
-              <img 
-                src={heroAuto} 
-                alt="Voiture vedette" 
-                className="w-full max-w-lg ml-auto"
-              />
+            {/* Hero Image - Showroom/Car Display */}
+            <div className="relative hidden lg:flex justify-end items-center">
+              <div className="relative w-full max-w-xl">
+                <img 
+                  src={heroAuto} 
+                  alt="Salle d'exposition automobile" 
+                  className="w-full h-[350px] object-cover shadow-2xl"
+                />
+              </div>
             </div>
           </div>
         </div>
