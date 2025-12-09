@@ -550,21 +550,23 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       {/* ═══════════════════════════════════════════════════════════════
           BRANDS
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-12 bg-slate-900">
+      <section className="py-8 bg-gray-100">
         <div className="container mx-auto px-6">
           <div className="flex items-center gap-8">
-            <div className="shrink-0">
-              <p className="text-white font-bold">Marques</p>
-              <p className="text-white font-bold">populaires</p>
+            <div className="shrink-0 flex items-center gap-3">
+              <div>
+                <p className="text-slate-800 font-bold text-sm">Marques</p>
+                <p className="text-slate-800 font-bold text-sm">populaires</p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-slate-400" />
             </div>
-            <div className="h-12 w-px bg-slate-700" />
-            <div className="flex flex-wrap justify-center items-center gap-12 flex-1">
+            <div className="flex flex-wrap justify-center items-center gap-16 flex-1">
               {brands.map((brand, index) => (
                 <img 
                   key={index}
                   src={brand} 
                   alt={`Brand ${index + 1}`}
-                  className="h-12 w-24 object-contain opacity-80 hover:opacity-100 transition-opacity rounded bg-white/10 p-2"
+                  className="h-16 object-contain opacity-90 hover:opacity-100 transition-opacity"
                 />
               ))}
             </div>
