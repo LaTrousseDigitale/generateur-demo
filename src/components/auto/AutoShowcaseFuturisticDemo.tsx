@@ -17,6 +17,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { useState, useEffect, useRef } from "react";
 import heroAuto from "@/assets/hero-auto.jpg";
+import heroCarSportRed from "@/assets/hero-car-sport-red.png";
 import productAuto1 from "@/assets/product-auto-1.jpg";
 import productAuto2 from "@/assets/product-auto-2.jpg";
 import productAuto3 from "@/assets/product-auto-3.jpg";
@@ -201,21 +202,21 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       {/* ═══════════════════════════════════════════════════════════════
           HERO SECTION
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="relative bg-white overflow-hidden py-8">
+      <section id="hero" className="relative bg-white overflow-hidden py-12">
         {/* Decorative large circle - LEFT (extends off screen) */}
         <div 
-          className="absolute -left-40 top-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full"
-          style={{ backgroundColor: primaryColor, opacity: 0.85 }}
+          className="absolute -left-64 top-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full"
+          style={{ backgroundColor: primaryColor, opacity: 0.9 }}
         />
         {/* Decorative small circle - LEFT BOTTOM */}
         <div 
-          className="absolute left-8 bottom-8 w-28 h-28 rounded-full"
-          style={{ backgroundColor: primaryColor, opacity: 0.75 }}
+          className="absolute left-6 bottom-12 w-36 h-36 rounded-full"
+          style={{ backgroundColor: primaryColor, opacity: 0.8 }}
         />
         {/* Decorative large circle - RIGHT (behind car) */}
         <div 
-          className="absolute -right-24 top-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full"
-          style={{ backgroundColor: primaryColor, opacity: 0.7 }}
+          className="absolute -right-48 top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full"
+          style={{ backgroundColor: primaryColor, opacity: 0.75 }}
         />
 
         <div className="container mx-auto px-6 relative z-10">
@@ -297,11 +298,11 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
             </div>
 
             {/* Hero Image - Sports Car */}
-            <div className="relative hidden lg:flex justify-center items-center">
+            <div className="relative hidden lg:flex justify-end items-center">
               <img 
-                src={heroAuto} 
-                alt="Voiture sport de luxe" 
-                className="w-full max-w-xl object-contain relative z-10 drop-shadow-2xl"
+                src={heroCarSportRed} 
+                alt="Voiture sport rouge de luxe" 
+                className="w-full max-w-2xl object-contain relative z-10 drop-shadow-2xl"
               />
             </div>
           </div>
