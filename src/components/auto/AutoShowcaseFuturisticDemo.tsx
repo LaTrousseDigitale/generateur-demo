@@ -201,30 +201,35 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       {/* ═══════════════════════════════════════════════════════════════
           HERO SECTION
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="relative bg-gradient-to-br from-slate-50 to-slate-100 overflow-hidden">
-        {/* Decorative large circle - coral/red */}
+      <section id="hero" className="relative bg-white overflow-hidden py-8">
+        {/* Decorative large circle - LEFT (extends off screen) */}
         <div 
-          className="absolute -left-48 top-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
-          style={{ backgroundColor: primaryColor, opacity: 0.9 }}
+          className="absolute -left-40 top-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full"
+          style={{ backgroundColor: primaryColor, opacity: 0.85 }}
         />
-        {/* Decorative small circle */}
+        {/* Decorative small circle - LEFT BOTTOM */}
         <div 
-          className="absolute left-4 top-[60%] w-16 h-16 rounded-full"
+          className="absolute left-8 bottom-8 w-28 h-28 rounded-full"
+          style={{ backgroundColor: primaryColor, opacity: 0.75 }}
+        />
+        {/* Decorative large circle - RIGHT (behind car) */}
+        <div 
+          className="absolute -right-24 top-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full"
           style={{ backgroundColor: primaryColor, opacity: 0.7 }}
         />
 
-        <div className="container mx-auto px-6 py-16 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-8 items-center min-h-[450px]">
+        <div className="container mx-auto px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-4 items-center min-h-[400px]">
             {/* Search Form */}
-            <div className="bg-white p-8 shadow-2xl max-w-md relative z-20">
-              <h3 className="flex items-start gap-2 font-bold text-lg text-slate-900 mb-6">
-                <MapPin className="w-5 h-5 mt-0.5 shrink-0" style={{ color: primaryColor }} />
-                <span>Trouvez votre auto de rêve (recherche rapide)</span>
+            <div className="bg-white p-8 shadow-xl max-w-lg mx-auto lg:mx-0 relative z-20">
+              <h3 className="flex items-center gap-2 font-bold text-lg text-slate-900 mb-6">
+                <MapPin className="w-5 h-5" style={{ color: primaryColor }} />
+                Trouvez votre auto de rêve (recherche rapide)
               </h3>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
                     <option>Marque</option>
                     <option>BMW</option>
                     <option>Mercedes</option>
@@ -232,19 +237,19 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                     <option>Toyota</option>
                     <option>Honda</option>
                   </select>
-                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
                     <option>Modèle</option>
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
-                    <option>Année / Modèle</option>
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
+                    <option>Année du modèle</option>
                     <option>2024</option>
                     <option>2023</option>
                     <option>2022</option>
                     <option>2021</option>
                   </select>
-                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
                     <option>Type de carburant</option>
                     <option>Essence</option>
                     <option>Diesel</option>
@@ -252,38 +257,38 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                     <option>Hybride</option>
                   </select>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-200 text-slate-500 text-sm bg-white rounded-none">
-                    <option>Type d'auto</option>
+                <div className="grid grid-cols-2 gap-4 items-end">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
+                    <option>Type de véhicule</option>
                     <option>Berline</option>
                     <option>VUS</option>
                     <option>Camion</option>
                     <option>Coupé</option>
+                    <option>Sport</option>
                   </select>
                   <div>
-                    <label className="text-xs text-slate-500 mb-1 block">Budget max: {priceRange[0].toLocaleString()} $</label>
+                    <label className="text-sm text-slate-600 mb-2 block text-center">Gamme de prix ($)</label>
                     <Slider 
                       value={priceRange}
                       onValueChange={setPriceRange}
                       max={150000}
                       min={10000}
                       step={5000}
-                      className="mt-2"
+                      className="mt-1"
                     />
                   </div>
                 </div>
 
                 <Button 
-                  className="w-full h-11 text-white font-semibold rounded-none"
+                  className="w-full h-12 text-white font-semibold text-base rounded-sm"
                   style={{ backgroundColor: primaryColor }}
                 >
                   <Search className="w-4 h-4 mr-2" />
                   Rechercher un véhicule
                 </Button>
                 <Button 
-                  variant="outline"
-                  className="w-full h-11 font-semibold border-2 rounded-none bg-white"
-                  style={{ borderColor: primaryColor, color: primaryColor }}
+                  className="w-full h-12 font-semibold text-base rounded-sm text-white"
+                  style={{ backgroundColor: primaryColor }}
                 >
                   <Search className="w-4 h-4 mr-2" />
                   Recherche avancée
@@ -291,15 +296,13 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
               </div>
             </div>
 
-            {/* Hero Image - Showroom/Car Display */}
-            <div className="relative hidden lg:flex justify-end items-center">
-              <div className="relative w-full max-w-xl">
-                <img 
-                  src={heroAuto} 
-                  alt="Salle d'exposition automobile" 
-                  className="w-full h-[350px] object-cover shadow-2xl"
-                />
-              </div>
+            {/* Hero Image - Sports Car */}
+            <div className="relative hidden lg:flex justify-center items-center">
+              <img 
+                src={heroAuto} 
+                alt="Voiture sport de luxe" 
+                className="w-full max-w-xl object-contain relative z-10 drop-shadow-2xl"
+              />
             </div>
           </div>
         </div>
