@@ -512,7 +512,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 </p>
                 <Button 
                   variant="outline"
-                  className="border-white text-white hover:bg-white/20"
+                  className="border-white/80 text-slate-900 bg-white hover:bg-white/90"
                 >
                   Explorer
                   <ChevronRight className="w-4 h-4 ml-1" />
