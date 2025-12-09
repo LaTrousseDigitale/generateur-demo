@@ -38,6 +38,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
   const [scrollY, setScrollY] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [priceRange, setPriceRange] = useState([50000]);
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,6 +46,25 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Intersection Observer for fade-in animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleSections((prev) => new Set(prev).add(entry.target.id));
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    const sections = document.querySelectorAll('[data-animate]');
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
   }, []);
 
   const navLinks = [
@@ -88,6 +108,13 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
 
   const primaryColor = config.primaryColor || "#dc2626";
 
+  // Helper for animation classes
+  const getAnimationClass = (sectionId: string) => {
+    return visibleSections.has(sectionId) 
+      ? 'opacity-100 translate-y-0' 
+      : 'opacity-0 translate-y-8';
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* ═══════════════════════════════════════════════════════════════
@@ -107,15 +134,15 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-3">
-              <Facebook className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400" />
-              <Twitter className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400" />
-              <Instagram className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400" />
-              <Youtube className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400" />
-              <Linkedin className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400" />
+              <Facebook className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400 hover:scale-110 transition-transform" />
+              <Twitter className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400 hover:scale-110 transition-transform" />
+              <Instagram className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400 hover:scale-110 transition-transform" />
+              <Youtube className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400 hover:scale-110 transition-transform" />
+              <Linkedin className="w-4 h-4 cursor-pointer hover:opacity-80 text-slate-400 hover:scale-110 transition-transform" />
             </div>
             <Button 
               size="sm"
-              className="text-white text-xs font-semibold px-4 h-8"
+              className="text-white text-xs font-semibold px-4 h-8 hover:scale-105 transition-transform"
               style={{ backgroundColor: primaryColor }}
             >
               Connexion / Inscription
@@ -127,11 +154,11 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       {/* ═══════════════════════════════════════════════════════════════
           MAIN NAVIGATION
       ═══════════════════════════════════════════════════════════════ */}
-      <nav className="bg-slate-800 sticky top-0 z-50">
+      <nav className={`bg-slate-800 sticky top-0 z-50 transition-all duration-300 ${scrollY > 100 ? 'shadow-2xl bg-slate-900/95 backdrop-blur-md' : ''}`}>
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-14">
             {/* Logo */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer">
               {config.logo ? (
                 <img src={config.logo} alt="Logo" className="h-8 w-auto" />
               ) : (
@@ -150,10 +177,11 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 <a 
                   key={link.label}
                   href={link.href}
-                  className="px-4 py-2 text-sm font-medium text-white/90 hover:text-white transition-colors flex items-center gap-1"
+                  className="px-4 py-2 text-sm font-medium text-white/90 hover:text-white transition-all flex items-center gap-1 relative group"
                 >
                   {link.label}
-                  {link.hasDropdown && <ChevronDown className="w-3 h-3" />}
+                  {link.hasDropdown && <ChevronDown className="w-3 h-3 group-hover:rotate-180 transition-transform" />}
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-0.5 group-hover:w-3/4 transition-all duration-300" style={{ backgroundColor: primaryColor }} />
                 </a>
               ))}
             </div>
@@ -172,7 +200,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-slate-800 border-t border-slate-700">
+          <div className="lg:hidden bg-slate-800 border-t border-slate-700 animate-fade-in">
             <div className="container mx-auto px-6 py-4 space-y-2">
               {navLinks.map((link) => (
                 <a 
@@ -193,44 +221,56 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       <Button 
         variant="ghost" 
         onClick={onBack} 
-        className="fixed top-28 left-4 z-40 bg-black/30 backdrop-blur-sm text-white hover:bg-black/50"
+        className="fixed top-28 left-4 z-40 bg-black/30 backdrop-blur-sm text-white hover:bg-black/50 hover:scale-105 transition-transform"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
         Retour
       </Button>
 
       {/* ═══════════════════════════════════════════════════════════════
-          HERO SECTION
+          HERO SECTION - STICKY z-10
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="hero" className="relative bg-white overflow-hidden py-12">
-        {/* Decorative large circle - LEFT (extends off screen) */}
+      <section id="hero" className="relative bg-white overflow-hidden py-12 sticky top-14 z-10">
+        {/* Decorative large circle - LEFT (extends off screen) - with parallax */}
         <div 
-          className="absolute -left-64 top-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full"
-          style={{ backgroundColor: primaryColor, opacity: 0.9 }}
+          className="absolute -left-64 top-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full transition-transform duration-700"
+          style={{ 
+            backgroundColor: primaryColor, 
+            opacity: 0.9,
+            transform: `translate(${scrollY * 0.05}px, -50%)` 
+          }}
         />
-        {/* Decorative small circle - LEFT BOTTOM */}
+        {/* Decorative small circle - LEFT BOTTOM - with parallax */}
         <div 
-          className="absolute left-6 bottom-12 w-36 h-36 rounded-full"
-          style={{ backgroundColor: primaryColor, opacity: 0.8 }}
+          className="absolute left-6 bottom-12 w-36 h-36 rounded-full transition-transform duration-700"
+          style={{ 
+            backgroundColor: primaryColor, 
+            opacity: 0.8,
+            transform: `translateY(${scrollY * -0.08}px)` 
+          }}
         />
-        {/* Decorative large circle - RIGHT (behind car) */}
+        {/* Decorative large circle - RIGHT (behind car) - with parallax */}
         <div 
-          className="absolute -right-48 top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full"
-          style={{ backgroundColor: primaryColor, opacity: 0.75 }}
+          className="absolute -right-48 top-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full transition-transform duration-700"
+          style={{ 
+            backgroundColor: primaryColor, 
+            opacity: 0.75,
+            transform: `translate(${scrollY * -0.03}px, -50%)` 
+          }}
         />
 
         <div className="container mx-auto px-6 relative z-10">
           <div className="grid lg:grid-cols-2 gap-4 items-center min-h-[400px]">
             {/* Search Form */}
-            <div className="bg-white p-8 shadow-xl max-w-lg mx-auto lg:mx-0 relative z-20">
+            <div className="bg-white p-8 shadow-xl max-w-lg mx-auto lg:mx-0 relative z-20 hover:shadow-2xl transition-shadow duration-500">
               <h3 className="flex items-center gap-2 font-bold text-lg text-slate-900 mb-6">
-                <MapPin className="w-5 h-5" style={{ color: primaryColor }} />
+                <MapPin className="w-5 h-5 animate-pulse" style={{ color: primaryColor }} />
                 Trouvez votre auto de rêve (recherche rapide)
               </h3>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm hover:border-slate-400 transition-colors focus:ring-2 focus:ring-offset-0" style={{ '--tw-ring-color': primaryColor } as any}>
                     <option>Marque</option>
                     <option>BMW</option>
                     <option>Mercedes</option>
@@ -238,19 +278,19 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                     <option>Toyota</option>
                     <option>Honda</option>
                   </select>
-                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm hover:border-slate-400 transition-colors">
                     <option>Modèle</option>
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm hover:border-slate-400 transition-colors">
                     <option>Année du modèle</option>
                     <option>2024</option>
                     <option>2023</option>
                     <option>2022</option>
                     <option>2021</option>
                   </select>
-                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm hover:border-slate-400 transition-colors">
                     <option>Type de carburant</option>
                     <option>Essence</option>
                     <option>Diesel</option>
@@ -259,7 +299,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                   </select>
                 </div>
                 <div className="grid grid-cols-2 gap-4 items-end">
-                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm">
+                  <select className="h-11 px-4 border border-slate-300 text-slate-500 text-sm bg-white rounded-sm hover:border-slate-400 transition-colors">
                     <option>Type de véhicule</option>
                     <option>Berline</option>
                     <option>VUS</option>
@@ -281,14 +321,14 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 </div>
 
                 <Button 
-                  className="w-full h-12 text-white font-semibold text-base rounded-sm"
+                  className="w-full h-12 text-white font-semibold text-base rounded-sm hover:scale-[1.02] transition-transform"
                   style={{ backgroundColor: primaryColor }}
                 >
                   <Search className="w-4 h-4 mr-2" />
                   Rechercher un véhicule
                 </Button>
                 <Button 
-                  className="w-full h-12 font-semibold text-base rounded-sm text-white"
+                  className="w-full h-12 font-semibold text-base rounded-sm text-white hover:scale-[1.02] transition-transform"
                   style={{ backgroundColor: primaryColor }}
                 >
                   <Search className="w-4 h-4 mr-2" />
@@ -297,12 +337,13 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
               </div>
             </div>
 
-            {/* Hero Image - Sports Car */}
+            {/* Hero Image - Sports Car with animation */}
             <div className="relative hidden lg:flex justify-end items-center">
               <img 
                 src={heroCarSportRed} 
                 alt="Voiture sport rouge de luxe" 
-                className="w-full max-w-2xl object-contain relative z-10 drop-shadow-2xl"
+                className="w-full max-w-2xl object-contain relative z-10 drop-shadow-2xl hover:scale-105 transition-transform duration-700"
+                style={{ transform: `translateX(${scrollY * 0.1}px)` }}
               />
             </div>
           </div>
@@ -310,9 +351,13 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          HOW IT WORKS
+          HOW IT WORKS - STICKY z-20
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-20 bg-white">
+      <section 
+        id="how-it-works" 
+        data-animate
+        className={`py-20 bg-white sticky top-14 z-20 shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)] transition-all duration-700 ${getAnimationClass('how-it-works')}`}
+      >
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
@@ -327,12 +372,16 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
             {howItWorks.map((step, index) => {
               const IconComponent = step.icon;
               return (
-                <div key={index} className="text-center">
+                <div 
+                  key={index} 
+                  className="text-center group"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
                   <div 
-                    className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full"
+                    className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full group-hover:scale-110 transition-transform duration-300"
                     style={{ backgroundColor: `${primaryColor}15` }}
                   >
-                    <IconComponent className="w-10 h-10" style={{ color: primaryColor }} />
+                    <IconComponent className="w-10 h-10 group-hover:scale-110 transition-transform" style={{ color: primaryColor }} />
                   </div>
                   <h3 className="font-bold text-lg text-slate-900 mb-2">{step.title}</h3>
                   <p className="text-slate-500 text-sm">{step.desc}</p>
@@ -344,17 +393,25 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          WHY CHOOSE US
+          WHY CHOOSE US - STICKY z-30
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-20 bg-slate-50">
+      <section 
+        id="why-choose" 
+        data-animate
+        className={`py-20 bg-slate-50 sticky top-14 z-30 shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)] transition-all duration-700 ${getAnimationClass('why-choose')}`}
+      >
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Image */}
-            <div className="relative">
+            {/* Image with hover effect */}
+            <div className="relative group">
               <img 
                 src={productAuto1} 
                 alt="Pourquoi nous choisir" 
-                className="w-full max-w-md mx-auto"
+                className="w-full max-w-md mx-auto group-hover:scale-105 transition-transform duration-500"
+              />
+              <div 
+                className="absolute -bottom-4 -right-4 w-24 h-24 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"
+                style={{ backgroundColor: primaryColor }}
               />
             </div>
 
@@ -373,7 +430,11 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
 
               <ul className="space-y-3 mb-8">
                 {whyChooseUs.map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
+                  <li 
+                    key={index} 
+                    className="flex items-center gap-3 hover:translate-x-2 transition-transform"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
                     <CheckCircle2 className="w-5 h-5" style={{ color: primaryColor }} />
                     <span className="text-slate-700">{item}</span>
                   </li>
@@ -381,7 +442,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
               </ul>
 
               <Button 
-                className="text-white font-semibold px-6"
+                className="text-white font-semibold px-6 hover:scale-105 transition-transform"
                 style={{ backgroundColor: primaryColor }}
               >
                 Réserver une inspection gratuite
@@ -392,25 +453,31 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          INLINE FEATURES - EARLY
+          INLINE FEATURES - EARLY - STICKY z-40
       ═══════════════════════════════════════════════════════════════ */}
-      <InlineFeatures 
-        config={config} 
-        themeConfig={{
-          textPrimary: "text-slate-900",
-          textSecondary: "text-slate-600",
-          cardBg: "bg-white border border-slate-200",
-          sectionBg: "bg-slate-50",
-          sectionAlt: "bg-white",
-        }}
-        isLightTheme={true}
-        position="early"
-      />
+      <div className="sticky top-14 z-40 shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)]">
+        <InlineFeatures 
+          config={config} 
+          themeConfig={{
+            textPrimary: "text-slate-900",
+            textSecondary: "text-slate-600",
+            cardBg: "bg-white border border-slate-200",
+            sectionBg: "bg-slate-50",
+            sectionAlt: "bg-white",
+          }}
+          isLightTheme={true}
+          position="early"
+        />
+      </div>
 
       {/* ═══════════════════════════════════════════════════════════════
-          VEHICLES LISTING
+          VEHICLES LISTING - STICKY z-50
       ═══════════════════════════════════════════════════════════════ */}
-      <section id="vehicles" className="py-20 bg-white">
+      <section 
+        id="vehicles" 
+        data-animate
+        className={`py-20 bg-white sticky top-14 z-[51] shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)] transition-all duration-700 ${getAnimationClass('vehicles')}`}
+      >
         <div className="container mx-auto px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
@@ -423,12 +490,16 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {vehicles.map((vehicle, index) => (
-              <Card key={index} className="overflow-hidden border border-slate-200 group">
-                <div className="relative">
+              <Card 
+                key={index} 
+                className="overflow-hidden border border-slate-200 group hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                <div className="relative overflow-hidden">
                   <img 
                     src={vehicle.image} 
                     alt={vehicle.title} 
-                    className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <Badge 
                     className={`absolute top-3 left-3 text-white text-xs ${vehicle.badgeColor || ''}`}
@@ -436,9 +507,11 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                   >
                     {vehicle.badge}
                   </Badge>
+                  {/* Overlay on hover */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                 </div>
                 <div className="p-5">
-                  <h3 className="font-bold text-slate-900 mb-2 line-clamp-1">{vehicle.title}</h3>
+                  <h3 className="font-bold text-slate-900 mb-2 line-clamp-1 group-hover:text-red-600 transition-colors">{vehicle.title}</h3>
                   <div className="flex items-center gap-2 mb-4">
                     {vehicle.oldPrice && (
                       <span className="text-slate-400 line-through text-sm">{vehicle.oldPrice}</span>
@@ -467,7 +540,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
           <div className="text-center mt-10">
             <Button 
               size="lg"
-              className="text-white font-semibold px-8"
+              className="text-white font-semibold px-8 hover:scale-105 transition-transform"
               style={{ backgroundColor: primaryColor }}
             >
               Voir tout l'inventaire
@@ -478,30 +551,36 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          INLINE FEATURES - MIDDLE
+          INLINE FEATURES - MIDDLE - STICKY z-52
       ═══════════════════════════════════════════════════════════════ */}
-      <InlineFeatures 
-        config={config} 
-        themeConfig={{
-          textPrimary: "text-slate-900",
-          textSecondary: "text-slate-600",
-          cardBg: "bg-white border border-slate-200",
-          sectionBg: "bg-slate-50",
-          sectionAlt: "bg-white",
-        }}
-        isLightTheme={true}
-        position="middle"
-      />
+      <div className="sticky top-14 z-[52] shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)]">
+        <InlineFeatures 
+          config={config} 
+          themeConfig={{
+            textPrimary: "text-slate-900",
+            textSecondary: "text-slate-600",
+            cardBg: "bg-white border border-slate-200",
+            sectionBg: "bg-slate-50",
+            sectionAlt: "bg-white",
+          }}
+          isLightTheme={true}
+          position="middle"
+        />
+      </div>
 
       {/* ═══════════════════════════════════════════════════════════════
-          DUAL CTA BANNERS
+          DUAL CTA BANNERS - STICKY z-53
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-12 bg-slate-100">
+      <section 
+        id="cta-banners"
+        data-animate
+        className={`py-12 bg-slate-100 sticky top-14 z-[53] shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)] transition-all duration-700 ${getAnimationClass('cta-banners')}`}
+      >
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-6">
             {/* Buy New Car */}
             <div 
-              className="relative p-8 text-white overflow-hidden"
+              className="relative p-8 text-white overflow-hidden group hover:scale-[1.02] transition-transform duration-300"
               style={{ backgroundColor: primaryColor }}
             >
               <div className="relative z-10">
@@ -512,19 +591,19 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 </p>
                 <Button 
                   variant="outline"
-                  className="border-white/80 text-slate-900 bg-white hover:bg-white/90"
+                  className="border-white/80 text-slate-900 bg-white hover:bg-white/90 hover:scale-105 transition-transform"
                 >
                   Explorer
                   <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
-              <div className="absolute right-0 bottom-0 opacity-30">
+              <div className="absolute right-0 bottom-0 opacity-30 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500">
                 <Car className="w-32 h-32" />
               </div>
             </div>
 
             {/* Sell Your Car */}
-            <div className="relative p-8 bg-white border-2 overflow-hidden" style={{ borderColor: primaryColor }}>
+            <div className="relative p-8 bg-white border-2 overflow-hidden group hover:scale-[1.02] transition-transform duration-300" style={{ borderColor: primaryColor }}>
               <div className="relative z-10">
                 <p className="text-sm mb-1 text-slate-500">Vous cherchez à acheter</p>
                 <h3 className="text-2xl font-bold mb-4" style={{ color: primaryColor }}>Une auto usagée?</h3>
@@ -533,13 +612,13 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 </p>
                 <Button 
                   style={{ backgroundColor: primaryColor }}
-                  className="text-white"
+                  className="text-white hover:scale-105 transition-transform"
                 >
                   Explorer
                   <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
-              <div className="absolute right-0 bottom-0 opacity-10">
+              <div className="absolute right-0 bottom-0 opacity-10 group-hover:scale-125 group-hover:rotate-12 transition-transform duration-500">
                 <Car className="w-32 h-32" style={{ color: primaryColor }} />
               </div>
             </div>
@@ -548,9 +627,9 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          BRANDS
+          BRANDS - STICKY z-54
       ═══════════════════════════════════════════════════════════════ */}
-      <section className="py-8 bg-gray-100">
+      <section className="py-8 bg-gray-100 sticky top-14 z-[54] shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)]">
         <div className="container mx-auto px-6">
           <div className="flex items-center gap-8">
             <div className="shrink-0 flex items-center gap-3">
@@ -566,7 +645,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                   key={index}
                   src={brand} 
                   alt={`Brand ${index + 1}`}
-                  className="h-16 object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  className="h-16 object-contain opacity-90 hover:opacity-100 hover:scale-110 transition-all duration-300 cursor-pointer"
                 />
               ))}
             </div>
@@ -575,36 +654,38 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════
-          INLINE FEATURES - LATE
+          INLINE FEATURES - LATE - STICKY z-55
       ═══════════════════════════════════════════════════════════════ */}
-      <InlineFeatures 
-        config={config} 
-        themeConfig={{
-          textPrimary: "text-slate-900",
-          textSecondary: "text-slate-600",
-          cardBg: "bg-white border border-slate-200",
-          sectionBg: "bg-slate-50",
-          sectionAlt: "bg-white",
-        }}
-        isLightTheme={true}
-        position="late"
-      />
+      <div className="sticky top-14 z-[55] shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.15)]">
+        <InlineFeatures 
+          config={config} 
+          themeConfig={{
+            textPrimary: "text-slate-900",
+            textSecondary: "text-slate-600",
+            cardBg: "bg-white border border-slate-200",
+            sectionBg: "bg-slate-50",
+            sectionAlt: "bg-white",
+          }}
+          isLightTheme={true}
+          position="late"
+        />
+      </div>
 
       {/* ═══════════════════════════════════════════════════════════════
-          FOOTER
+          FOOTER - STICKY z-[60] (highest - always on top at end)
       ═══════════════════════════════════════════════════════════════ */}
-      <footer className="bg-slate-900 text-white pt-16 pb-8">
+      <footer className="bg-slate-900 text-white pt-16 pb-8 sticky top-14 z-[60] shadow-[0_-20px_40px_-20px_rgba(0,0,0,0.3)]">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
             {/* Categories */}
             <div>
               <h4 className="font-bold text-sm mb-4 uppercase tracking-wider">Catégories</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Location d'auto</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Prêt auto</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Salles d'exposition</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Mécaniciens</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Vendre votre auto</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Location d'auto</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Prêt auto</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Salles d'exposition</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Mécaniciens</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Vendre votre auto</a></li>
               </ul>
             </div>
 
@@ -612,11 +693,11 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
             <div>
               <h4 className="font-bold text-sm mb-4 uppercase tracking-wider">À propos</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Confidentialité</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Autos hybrides</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Galeries</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Témoignages</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Conditions</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Confidentialité</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Autos hybrides</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Galeries</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Témoignages</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Conditions</a></li>
               </ul>
             </div>
 
@@ -624,11 +705,11 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
             <div>
               <h4 className="font-bold text-sm mb-4 uppercase tracking-wider">Liens utiles</h4>
               <ul className="space-y-2 text-slate-400 text-sm">
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Nos partenaires</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Carrières</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Sitemap</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Investisseurs</a></li>
-                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1"><ChevronRight className="w-3 h-3" /> Recherche & Devis</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Nos partenaires</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Carrières</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Sitemap</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Investisseurs</a></li>
+                <li><a href="#" className="hover:text-white transition-colors flex items-center gap-1 hover:translate-x-1 transition-transform"><ChevronRight className="w-3 h-3" /> Recherche & Devis</a></li>
               </ul>
             </div>
 
@@ -638,7 +719,8 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
               <div className="flex gap-2 mb-4">
                 <Input 
                   placeholder="Votre adresse courriel" 
-                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500"
+                  className="bg-slate-800 border-slate-700 text-white placeholder:text-slate-500 focus:ring-2 transition-all"
+                  style={{ '--tw-ring-color': primaryColor } as any}
                 />
               </div>
               <div className="flex items-start gap-2 mb-4">
@@ -648,7 +730,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                 </span>
               </div>
               <Button 
-                className="text-white font-semibold"
+                className="text-white font-semibold hover:scale-105 transition-transform"
                 style={{ backgroundColor: primaryColor }}
               >
                 S'abonner
@@ -665,16 +747,16 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
             <div className="flex items-center gap-6">
               <span className="text-slate-400 text-sm">Téléchargez notre app:</span>
               <div className="flex gap-3 text-slate-400">
-                <span className="text-xs">App Store</span>
-                <span className="text-xs">Google Play</span>
+                <span className="text-xs hover:text-white cursor-pointer transition-colors">App Store</span>
+                <span className="text-xs hover:text-white cursor-pointer transition-colors">Google Play</span>
               </div>
             </div>
             <div className="flex gap-3">
-              <Facebook className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
-              <Twitter className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
-              <Instagram className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
-              <Youtube className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
-              <Linkedin className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer" />
+              <Facebook className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer hover:scale-125 transition-all" />
+              <Twitter className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer hover:scale-125 transition-all" />
+              <Instagram className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer hover:scale-125 transition-all" />
+              <Youtube className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer hover:scale-125 transition-all" />
+              <Linkedin className="w-4 h-4 text-slate-400 hover:text-white cursor-pointer hover:scale-125 transition-all" />
             </div>
           </div>
         </div>
