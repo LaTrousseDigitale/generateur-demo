@@ -703,10 +703,7 @@ export const AutoShowcaseModernDemo = ({ config, onBack }: AutoShowcaseModernDem
       {/* ═══════════════════════════════════════════════════════════════
           CTA SECTION
       ═══════════════════════════════════════════════════════════════ */}
-      <section 
-        className="py-16 text-white text-center"
-        style={{ backgroundColor: accentColor }}
-      >
+      <section className="py-16 text-white text-center bg-slate-800">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             Une question?
@@ -716,7 +713,7 @@ export const AutoShowcaseModernDemo = ({ config, onBack }: AutoShowcaseModernDem
           </p>
           <Button 
             size="lg"
-            className="text-white font-semibold px-8"
+            className="text-white font-semibold px-8 rounded-full"
             style={{ backgroundColor: primaryColor }}
             onClick={() => toast({ title: "Appel en cours...", description: "Nous vous contacterons sous peu." })}
           >
