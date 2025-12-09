@@ -564,7 +564,7 @@ export const AutoShowcaseFuturisticDemo = ({ config, onBack }: AutoShowcaseFutur
                   key={index}
                   src={brand} 
                   alt={`Brand ${index + 1}`}
-                  className="h-10 object-contain brightness-0 invert opacity-60 hover:opacity-100 transition-opacity"
+                  className="h-12 w-24 object-contain opacity-80 hover:opacity-100 transition-opacity rounded bg-white/10 p-2"
                 />
               ))}
             </div>
