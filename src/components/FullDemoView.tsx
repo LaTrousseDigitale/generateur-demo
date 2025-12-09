@@ -8,6 +8,7 @@ import { ShowcaseWebsiteDemo } from "./ShowcaseWebsiteDemo";
 import { EcommerceDemo } from "./EcommerceDemo";
 import { BookingDemo } from "./BookingDemo";
 import { AutoShowcaseDemo } from "./auto/AutoShowcaseDemo";
+import { AutoShowcaseModernDemo } from "./auto/AutoShowcaseModernDemo";
 import { AutoPartsModernDemo } from "./auto/AutoPartsModernDemo";
 import AutoPartsRusticDemo from "./auto/AutoPartsRusticDemo";
 
@@ -39,8 +40,11 @@ export const FullDemoView = ({ config, onBack, hideBackButton = false }: FullDem
     }
     
     if (config.websiteType === "vitrine") {
-      // Démo vitrine spéciale pour l'automobile
+      // Démo vitrine spéciale pour l'automobile selon le thème
       if (isAutoIndustry) {
+        if (config.theme === "moderne") {
+          return <AutoShowcaseModernDemo config={config} onBack={onBack} />;
+        }
         return <AutoShowcaseDemo config={config} onBack={onBack} />;
       }
       return <ShowcaseWebsiteDemo config={config} onBack={onBack} />;
