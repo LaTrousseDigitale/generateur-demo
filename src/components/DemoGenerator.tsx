@@ -255,7 +255,8 @@ export const DemoGenerator = () => {
       case 9:
         return questionnaireData.paymentMode && questionnaireData.maintenanceLevel && questionnaireData.financing;
       case 10:
-        return questionnaireData.contactMethod;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return questionnaireData.contactMethod && questionnaireData.clientEmail && emailRegex.test(questionnaireData.clientEmail);
       default:
         return true;
     }
@@ -288,8 +289,8 @@ export const DemoGenerator = () => {
           company_name: questionnaireData.companyName,
           industry: questionnaireData.industry,
           contact_name: questionnaireData.companyName,
-          contact_email: questionnaireData.contactMethod,
-          contact_phone: questionnaireData.contactMethod,
+          contact_email: questionnaireData.clientEmail,
+          contact_phone: questionnaireData.clientPhone,
           questionnaire_responses: {
             "Type de solution": questionnaireData.solutionTypes?.join(", "),
             "Industrie": questionnaireData.industry,
@@ -409,6 +410,8 @@ export const DemoGenerator = () => {
       maintenancePaymentFrequency: "monthly",
       otherNeeds: "",
       contactMethod: "",
+      clientEmail: "",
+      clientPhone: "",
       serviceType: null,
       features: [],
       companySize: "",
