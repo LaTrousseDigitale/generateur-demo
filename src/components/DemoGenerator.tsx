@@ -434,22 +434,22 @@ export const DemoGenerator = () => {
   };
   const navLinks = [{
     label: "Accueil",
-    href: "#"
+    href: "https://latroussedigitale.ca"
   }, {
     label: "Services",
-    href: "#"
+    href: "https://latroussedigitale.ca/#services"
   }, {
     label: "Avantages",
-    href: "#"
+    href: "https://latroussedigitale.ca/#avantages"
   }, {
     label: "Tarifs",
-    href: "#"
+    href: "https://latroussedigitale.ca/#tarifs"
   }, {
     label: "FAQ",
-    href: "#"
+    href: "https://latroussedigitale.ca/#faq"
   }, {
     label: "Contact",
-    href: "#"
+    href: "https://latroussedigitale.ca/#contact"
   }];
   return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Navigation Header */}
@@ -462,7 +462,7 @@ export const DemoGenerator = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-              {navLinks.map(link => <a key={link.label} href={link.href} className="text-sm text-gray-600 hover:text-primary transition-colors font-medium">
+              {navLinks.map(link => <a key={link.label} href={link.href} className="text-sm text-gray-600 hover:text-primary transition-colors font-medium relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
                   {link.label}
                 </a>)}
             </nav>
@@ -494,7 +494,7 @@ export const DemoGenerator = () => {
                   <Pencil className="w-4 h-4" />
                 </Button>
               </Link>
-              <Button className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-full px-4 sm:px-6 py-2 text-sm font-medium flex items-center gap-2" onClick={() => setCurrentStep(1)}>
+              <Button className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium flex items-center gap-2" onClick={() => setCurrentStep(1)}>
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 3L14.5 8.5L20.5 9.5L16 14L17 20L12 17L7 20L8 14L3.5 9.5L9.5 8.5L12 3Z" fill="currentColor" />
                 </svg>
