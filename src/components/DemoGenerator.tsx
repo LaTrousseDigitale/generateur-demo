@@ -6,10 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
-import { 
-  Eye, RefreshCw, Building2, Settings, Palette, Globe, 
-  CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles
-} from "lucide-react";
+import { Eye, RefreshCw, Building2, Settings, Palette, Globe, CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles } from "lucide-react";
 import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -27,9 +24,7 @@ import { Section8Finances } from "./questionnaire/Section8Finances";
 import { Section9Summary } from "./questionnaire/Section9Summary";
 import { useQuoteSubmission } from "@/hooks/useQuoteSubmission";
 import type { DemoTheme } from "@/types/demoThemes";
-
 export type ServiceType = "portal" | "website" | "module" | null;
-
 export interface DemoConfig {
   serviceType: ServiceType;
   features: string[];
@@ -78,15 +73,7 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
   } else if ((data.solutionTypes || []).includes("module")) {
     serviceType = "module";
   }
-  const features = [
-    ...(data.websitePages || []), 
-    ...(data.websiteSections || []), 
-    ...(data.ecommerceNeeds || []), 
-    ...(data.portalClientFeatures || []), 
-    ...(data.portalEmployeeFeatures || []), 
-    ...(data.portalHRFeatures || []), 
-    ...(data.selectedModules || [])
-  ];
+  const features = [...(data.websitePages || []), ...(data.websiteSections || []), ...(data.ecommerceNeeds || []), ...(data.portalClientFeatures || []), ...(data.portalEmployeeFeatures || []), ...(data.portalHRFeatures || []), ...(data.selectedModules || [])];
   return {
     serviceType,
     features,
@@ -124,7 +111,6 @@ const convertToDemoConfig = (data: QuestionnaireData): DemoConfig => {
     selectedModules: data.selectedModules
   };
 };
-
 const initialQuestionnaireData: QuestionnaireData = {
   companyName: "",
   industry: "",
@@ -203,13 +189,13 @@ const initialQuestionnaireData: QuestionnaireData = {
   budget: "",
   timeline: ""
 };
-
 export const DemoGenerator = () => {
   const [activeTab, setActiveTab] = useState("general");
   const [showPreview, setShowPreview] = useState(false);
-  const { submitQuote } = useQuoteSubmission();
+  const {
+    submitQuote
+  } = useQuoteSubmission();
   const [showQuoteModal, setShowQuoteModal] = useState(false);
-  
   const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData>(() => {
     const saved = localStorage.getItem("questionnaire-data");
     if (saved) {
@@ -224,9 +210,7 @@ export const DemoGenerator = () => {
   useEffect(() => {
     localStorage.setItem("questionnaire-data", JSON.stringify(questionnaireData));
   }, [questionnaireData]);
-
   const demoConfig = convertToDemoConfig(questionnaireData);
-
   const updateData = (updates: Partial<QuestionnaireData>) => {
     setQuestionnaireData({
       ...questionnaireData,
@@ -236,90 +220,95 @@ export const DemoGenerator = () => {
 
   // Calculate progress for each tab
   const tabProgress = useMemo(() => {
-    const general = [
-      !!questionnaireData.companyName,
-      !!questionnaireData.industry,
-      (questionnaireData.solutionTypes || []).length > 0
-    ];
-    
-    const config = [
-      questionnaireData.websiteType || questionnaireData.portalType,
-      (questionnaireData.websitePages || []).length > 0 || (questionnaireData.portalClientFeatures || []).length > 0
-    ];
-    
-    const modules = [
-      (questionnaireData.selectedModules || []).length > 0 || (questionnaireData.canvaServices || []).length > 0
-    ];
-    
-    const branding = [
-      !!questionnaireData.logo || !!questionnaireData.companyName,
-      questionnaireData.primaryColor !== "#1c61fe"
-    ];
-    
-    const technique = [
-      !!questionnaireData.domainType,
-      !!questionnaireData.hostingPreference
-    ];
-    
-    const finances = [
-      !!questionnaireData.paymentMode,
-      !!questionnaireData.maintenanceLevel
-    ];
-    
-    const contact = [
-      !!questionnaireData.clientEmail,
-      !!questionnaireData.contactMethod
-    ];
-
+    const general = [!!questionnaireData.companyName, !!questionnaireData.industry, (questionnaireData.solutionTypes || []).length > 0];
+    const config = [questionnaireData.websiteType || questionnaireData.portalType, (questionnaireData.websitePages || []).length > 0 || (questionnaireData.portalClientFeatures || []).length > 0];
+    const modules = [(questionnaireData.selectedModules || []).length > 0 || (questionnaireData.canvaServices || []).length > 0];
+    const branding = [!!questionnaireData.logo || !!questionnaireData.companyName, questionnaireData.primaryColor !== "#1c61fe"];
+    const technique = [!!questionnaireData.domainType, !!questionnaireData.hostingPreference];
+    const finances = [!!questionnaireData.paymentMode, !!questionnaireData.maintenanceLevel];
+    const contact = [!!questionnaireData.clientEmail, !!questionnaireData.contactMethod];
     return {
-      general: Math.round((general.filter(Boolean).length / general.length) * 100),
-      config: Math.round((config.filter(Boolean).length / config.length) * 100),
+      general: Math.round(general.filter(Boolean).length / general.length * 100),
+      config: Math.round(config.filter(Boolean).length / config.length * 100),
       modules: modules[0] ? 100 : 0,
-      branding: Math.round((branding.filter(Boolean).length / branding.length) * 100),
-      technique: Math.round((technique.filter(Boolean).length / technique.length) * 100),
-      finances: Math.round((finances.filter(Boolean).length / finances.length) * 100),
-      contact: Math.round((contact.filter(Boolean).length / contact.length) * 100)
+      branding: Math.round(branding.filter(Boolean).length / branding.length * 100),
+      technique: Math.round(technique.filter(Boolean).length / technique.length * 100),
+      finances: Math.round(finances.filter(Boolean).length / finances.length * 100),
+      contact: Math.round(contact.filter(Boolean).length / contact.length * 100)
     };
   }, [questionnaireData]);
-
   const overallProgress = useMemo(() => {
-    const weights = { general: 25, config: 20, modules: 10, branding: 10, technique: 10, finances: 10, contact: 15 };
+    const weights = {
+      general: 25,
+      config: 20,
+      modules: 10,
+      branding: 10,
+      technique: 10,
+      finances: 10,
+      contact: 15
+    };
     const total = Object.entries(tabProgress).reduce((acc, [key, value]) => {
-      return acc + (value * weights[key as keyof typeof weights]) / 100;
+      return acc + value * weights[key as keyof typeof weights] / 100;
     }, 0);
     return Math.round(total);
   }, [tabProgress]);
-
-  const tabs = [
-    { id: "general", label: "Général", icon: Building2, progress: tabProgress.general },
-    { id: "config", label: "Configuration", icon: Settings, progress: tabProgress.config },
-    { id: "modules", label: "Modules", icon: Puzzle, progress: tabProgress.modules },
-    { id: "branding", label: "Branding", icon: Palette, progress: tabProgress.branding },
-    { id: "technique", label: "Technique", icon: Globe, progress: tabProgress.technique },
-    { id: "finances", label: "Finances", icon: CreditCard, progress: tabProgress.finances },
-    { id: "contact", label: "Contact", icon: Mail, progress: tabProgress.contact }
-  ];
-
+  const tabs = [{
+    id: "general",
+    label: "Général",
+    icon: Building2,
+    progress: tabProgress.general
+  }, {
+    id: "config",
+    label: "Configuration",
+    icon: Settings,
+    progress: tabProgress.config
+  }, {
+    id: "modules",
+    label: "Modules",
+    icon: Puzzle,
+    progress: tabProgress.modules
+  }, {
+    id: "branding",
+    label: "Branding",
+    icon: Palette,
+    progress: tabProgress.branding
+  }, {
+    id: "technique",
+    label: "Technique",
+    icon: Globe,
+    progress: tabProgress.technique
+  }, {
+    id: "finances",
+    label: "Finances",
+    icon: CreditCard,
+    progress: tabProgress.finances
+  }, {
+    id: "contact",
+    label: "Contact",
+    icon: Mail,
+    progress: tabProgress.contact
+  }];
   const currentTabIndex = tabs.findIndex(t => t.id === activeTab);
   const goToNextTab = () => {
     if (currentTabIndex < tabs.length - 1) {
       setActiveTab(tabs[currentTabIndex + 1].id);
     }
   };
-
   const calculateEstimatedPrice = (): number => {
     let monthlyPrice = 0;
     // Sites Web
     if ((questionnaireData.solutionTypes || []).includes("website")) {
-      if (questionnaireData.websiteType === "vitrine") monthlyPrice += 80;
-      else if (questionnaireData.websiteType === "ecommerce") monthlyPrice += 120;
-      else if (questionnaireData.websiteType === "organisationnel") monthlyPrice += 120;
-      else monthlyPrice += 80; // default
+      if (questionnaireData.websiteType === "vitrine") monthlyPrice += 80;else if (questionnaireData.websiteType === "ecommerce") monthlyPrice += 120;else if (questionnaireData.websiteType === "organisationnel") monthlyPrice += 120;else monthlyPrice += 80; // default
     }
     // Portails
     if ((questionnaireData.solutionTypes || []).includes("portal")) {
       const portalPrices: Record<string, number> = {
-        client: 90, employes: 70, rh: 90, partenaires: 90, admin: 110, mixte: 100
+        client: 90,
+        employes: 70,
+        rh: 90,
+        partenaires: 90,
+        admin: 110,
+        mixte: 100
       };
       monthlyPrice += portalPrices[questionnaireData.portalType || "client"] || 90;
     }
@@ -327,56 +316,50 @@ export const DemoGenerator = () => {
     monthlyPrice += (questionnaireData.selectedModules?.length || 0) * 50;
     return monthlyPrice;
   };
-
-
   const handleReset = () => {
     localStorage.removeItem("questionnaire-data");
     setQuestionnaireData(initialQuestionnaireData);
     setActiveTab("general");
   };
-
   const canSubmit = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return (
-      questionnaireData.companyName &&
-      questionnaireData.industry &&
-      questionnaireData.solutionTypes?.length > 0 &&
-      questionnaireData.clientEmail &&
-      emailRegex.test(questionnaireData.clientEmail) &&
-      questionnaireData.contactMethod
-    );
+    return questionnaireData.companyName && questionnaireData.industry && questionnaireData.solutionTypes?.length > 0 && questionnaireData.clientEmail && emailRegex.test(questionnaireData.clientEmail) && questionnaireData.contactMethod;
   };
-
   const handleSubmit = async () => {
     await submitQuote(questionnaireData);
     setShowPreview(true);
     setTimeout(() => setShowQuoteModal(true), 1000);
   };
-
-  const navLinks = [
-    { label: "Accueil", href: "https://latroussedigitale.ca" },
-    { label: "Services", href: "https://latroussedigitale.ca/#services" },
-    { label: "Avantages", href: "https://latroussedigitale.ca/#avantages" },
-    { label: "Tarifs", href: "https://latroussedigitale.ca/#tarifs" },
-    { label: "FAQ", href: "https://latroussedigitale.ca/#faq" },
-    { label: "Contact", href: "https://latroussedigitale.ca/#contact" }
-  ];
+  const navLinks = [{
+    label: "Accueil",
+    href: "https://latroussedigitale.ca"
+  }, {
+    label: "Services",
+    href: "https://latroussedigitale.ca/#services"
+  }, {
+    label: "Avantages",
+    href: "https://latroussedigitale.ca/#avantages"
+  }, {
+    label: "Tarifs",
+    href: "https://latroussedigitale.ca/#tarifs"
+  }, {
+    label: "FAQ",
+    href: "https://latroussedigitale.ca/#faq"
+  }, {
+    label: "Contact",
+    href: "https://latroussedigitale.ca/#contact"
+  }];
 
   // Show full demo preview
   if (showPreview) {
-    return (
-      <>
+    return <>
         <FullDemoView config={demoConfig} onBack={() => setShowPreview(false)} />
         <QuoteModal open={showQuoteModal} onOpenChange={setShowQuoteModal} data={questionnaireData} />
-      </>
-    );
+      </>;
   }
-
   const hasWebsite = (questionnaireData.solutionTypes || []).includes("website");
   const hasPortal = (questionnaireData.solutionTypes || []).includes("portal");
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+  return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Navigation Header */}
       <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6">
@@ -387,23 +370,14 @@ export const DemoGenerator = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-              {navLinks.map(link => (
-                <a 
-                  key={link.label} 
-                  href={link.href} 
-                  className="text-sm text-gray-600 hover:text-primary transition-colors font-medium relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
-                >
+              {navLinks.map(link => <a key={link.label} href={link.href} className="text-sm text-gray-600 hover:text-primary transition-colors font-medium relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
                   {link.label}
-                </a>
-              ))}
+                </a>)}
             </nav>
 
             {/* CTA Button */}
             <div className="flex items-center gap-2">
-              <Button 
-                className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium"
-                onClick={() => setActiveTab("general")}
-              >
+              <Button className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium" onClick={() => setActiveTab("general")}>
                 <span className="hidden sm:inline">Générer ma démo</span>
                 <span className="sm:hidden">Démo</span>
               </Button>
@@ -433,48 +407,24 @@ export const DemoGenerator = () => {
         {/* Step Indicator */}
         <div className="hidden md:flex items-center justify-between mb-6 bg-card rounded-xl p-4 border shadow-sm">
           {tabs.map((tab, index) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            const isCompleted = tab.progress === 100;
-            
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex flex-col items-center gap-1.5 px-3 py-2 rounded-lg transition-all ${
-                  isActive 
-                    ? "bg-primary/10 text-primary" 
-                    : isCompleted 
-                      ? "text-green-600" 
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
-              >
+          const Icon = tab.icon;
+          const isActive = activeTab === tab.id;
+          const isCompleted = tab.progress === 100;
+          return <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex flex-col items-center gap-1.5 px-3 py-2 rounded-lg transition-all ${isActive ? "bg-primary/10 text-primary" : isCompleted ? "text-green-600" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
                 <div className="relative">
-                  {isCompleted ? (
-                    <CheckCircle2 className="w-6 h-6 text-green-600" />
-                  ) : (
-                    <Icon className={`w-6 h-6 ${isActive ? "text-primary" : ""}`} />
-                  )}
-                  {tab.progress > 0 && tab.progress < 100 && (
-                    <div 
-                      className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-amber-500 text-white text-[8px] flex items-center justify-center font-bold"
-                    >
+                  {isCompleted ? <CheckCircle2 className="w-6 h-6 text-green-600" /> : <Icon className={`w-6 h-6 ${isActive ? "text-primary" : ""}`} />}
+                  {tab.progress > 0 && tab.progress < 100 && <div className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-amber-500 text-white text-[8px] flex items-center justify-center font-bold">
                       !
-                    </div>
-                  )}
+                    </div>}
                 </div>
                 <span className="text-xs font-medium">{tab.label}</span>
-                {tab.progress > 0 && tab.progress < 100 && (
-                  <div className="w-8 h-1 bg-muted rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-amber-500 transition-all" 
-                      style={{ width: `${tab.progress}%` }} 
-                    />
-                  </div>
-                )}
-              </button>
-            );
-          })}
+                {tab.progress > 0 && tab.progress < 100 && <div className="w-8 h-1 bg-muted rounded-full overflow-hidden">
+                    <div className="h-full bg-amber-500 transition-all" style={{
+                width: `${tab.progress}%`
+              }} />
+                  </div>}
+              </button>;
+        })}
         </div>
 
         {/* Action Buttons */}
@@ -514,16 +464,12 @@ export const DemoGenerator = () => {
                   {/* Mobile TabsList - hidden on desktop since we have step indicator */}
                   <TabsList className="md:hidden flex flex-wrap w-full justify-start gap-1 mb-6 h-auto p-1 bg-muted/50">
                     {tabs.map(tab => {
-                      const Icon = tab.icon;
-                      return (
-                        <TabsTrigger key={tab.id} value={tab.id} className="flex items-center gap-1.5 px-3 py-2 text-xs relative">
+                    const Icon = tab.icon;
+                    return <TabsTrigger key={tab.id} value={tab.id} className="flex items-center gap-1.5 px-3 py-2 text-xs relative">
                           <Icon className="w-3.5 h-3.5" />
-                          {tab.progress === 100 && (
-                            <CheckCircle2 className="w-3 h-3 text-green-600 absolute -top-1 -right-1" />
-                          )}
-                        </TabsTrigger>
-                      );
-                    })}
+                          {tab.progress === 100 && <CheckCircle2 className="w-3 h-3 text-green-600 absolute -top-1 -right-1" />}
+                        </TabsTrigger>;
+                  })}
                   </TabsList>
 
                   {/* General Tab - Company Info + Solution Type */}
@@ -542,29 +488,19 @@ export const DemoGenerator = () => {
 
                   {/* Configuration Tab - Website + Portal */}
                   <TabsContent value="config" className="space-y-6 mt-0">
-                    {hasWebsite && (
-                      <div>
+                    {hasWebsite && <div>
                         <Section3Website data={questionnaireData} onChange={updateData} />
-                      </div>
-                    )}
-                    {hasPortal && (
-                      <div className={hasWebsite ? "border-t pt-6" : ""}>
+                      </div>}
+                    {hasPortal && <div className={hasWebsite ? "border-t pt-6" : ""}>
                         <Section4Portal data={questionnaireData} onChange={updateData} />
-                      </div>
-                    )}
-                    {!hasWebsite && !hasPortal && (
-                      <div className="text-center py-12 text-muted-foreground">
+                      </div>}
+                    {!hasWebsite && !hasPortal && <div className="text-center py-12 text-muted-foreground">
                         <Settings className="w-12 h-12 mx-auto mb-4 opacity-30" />
                         <p>Sélectionnez d'abord un type de solution dans l'onglet "Général"</p>
-                        <Button 
-                          variant="link" 
-                          onClick={() => setActiveTab("general")}
-                          className="mt-2"
-                        >
+                        <Button variant="link" onClick={() => setActiveTab("general")} className="mt-2">
                           Aller à Général →
                         </Button>
-                      </div>
-                    )}
+                      </div>}
                     <div className="flex justify-between pt-4 border-t">
                       <Button variant="outline" onClick={() => setActiveTab("general")}>
                         ← Général
@@ -578,11 +514,7 @@ export const DemoGenerator = () => {
 
                   {/* Modules Tab */}
                   <TabsContent value="modules" className="space-y-6 mt-0">
-                    <Section5Modules 
-                      data={questionnaireData} 
-                      onChange={updateData} 
-                      isModuleSelected={(questionnaireData.solutionTypes || []).includes("module")} 
-                    />
+                    <Section5Modules data={questionnaireData} onChange={updateData} isModuleSelected={(questionnaireData.solutionTypes || []).includes("module")} />
                     <div className="flex justify-between pt-4 border-t">
                       <Button variant="outline" onClick={() => setActiveTab("config")}>
                         ← Configuration
@@ -596,19 +528,13 @@ export const DemoGenerator = () => {
 
                   {/* Branding Tab */}
                   <TabsContent value="branding" className="space-y-6 mt-0">
-                    <LogoUploader 
-                      logo={questionnaireData.logo} 
-                      companyName={questionnaireData.companyName} 
-                      onLogoChange={logo => updateData({ logo })} 
-                      onCompanyNameChange={name => updateData({ companyName: name })} 
-                    />
+                    <LogoUploader logo={questionnaireData.logo} companyName={questionnaireData.companyName} onLogoChange={logo => updateData({
+                    logo
+                  })} onCompanyNameChange={name => updateData({
+                    companyName: name
+                  })} />
                     <div className="border-t pt-6">
-                      <ColorCustomizer 
-                        primaryColor={questionnaireData.primaryColor} 
-                        accentColor={questionnaireData.accentColor} 
-                        secondaryColor={questionnaireData.secondaryColor} 
-                        onColorChange={updateData} 
-                      />
+                      <ColorCustomizer primaryColor={questionnaireData.primaryColor} accentColor={questionnaireData.accentColor} secondaryColor={questionnaireData.secondaryColor} onColorChange={updateData} />
                     </div>
                     <div className="flex justify-between pt-4 border-t">
                       <Button variant="outline" onClick={() => setActiveTab("modules")}>
@@ -674,20 +600,13 @@ export const DemoGenerator = () => {
                           ← Finances
                         </Button>
                       </div>
-                      <Button 
-                        onClick={handleSubmit}
-                        disabled={!canSubmit()}
-                        className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white py-6 text-lg font-semibold"
-                        size="lg"
-                      >
+                      <Button onClick={handleSubmit} disabled={!canSubmit()} className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white py-6 text-lg font-semibold" size="lg">
                         <Send className="w-5 h-5 mr-2" />
                         Voir ma démo personnalisée
                       </Button>
-                      {!canSubmit() && (
-                        <p className="text-xs text-muted-foreground text-center">
+                      {!canSubmit() && <p className="text-xs text-muted-foreground text-center">
                           Veuillez remplir les champs obligatoires (entreprise, industrie, solution, email, méthode de contact)
-                        </p>
-                      )}
+                        </p>}
                     </div>
                   </TabsContent>
                 </Tabs>
@@ -702,11 +621,7 @@ export const DemoGenerator = () => {
                 <CardContent className="p-0">
                   <div className="bg-muted/30 px-4 py-3 border-b flex items-center justify-between">
                     <span className="text-sm font-medium">Aperçu en direct</span>
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => setShowPreview(true)}
-                    >
+                    <Button variant="ghost" size="sm" onClick={() => setShowPreview(true)}>
                       <Eye className="w-4 h-4 mr-1" />
                       Plein écran
                     </Button>
@@ -753,11 +668,10 @@ export const DemoGenerator = () => {
           </p>
           
           {/* Main CTA Button */}
-          <Button 
-            size="lg" 
-            className="bg-white text-[#4285f4] hover:bg-white/90 px-8 py-6 text-lg font-semibold rounded-full mb-8"
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          >
+          <Button size="lg" className="bg-white text-[#4285f4] hover:bg-white/90 px-8 py-6 text-lg font-semibold rounded-full mb-8" onClick={() => window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        })}>
             <Sparkles className="w-5 h-5 mr-2" />
             Générer ma démo gratuite
             <ChevronRight className="w-5 h-5 ml-2" />
@@ -768,12 +682,7 @@ export const DemoGenerator = () => {
           
           {/* Secondary CTA */}
           <p className="text-white/70 text-sm mb-3">Besoin d'un accompagnement personnalisé?</p>
-          <a 
-            href="https://latroussedigitale.ca/contact" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors text-sm"
-          >
+          <a href="https://latroussedigitale.ca/contact" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors text-sm">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
@@ -785,26 +694,16 @@ export const DemoGenerator = () => {
       {/* Footer Header - Orange bar */}
       <div className="bg-[#f97316] py-5">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <img 
-            src={logoTrousseDigitale} 
-            alt="La Trousse Digitale" 
-            className="h-16 brightness-0 invert"
-          />
-          <p className="text-white text-2xl md:text-3xl font-montserrat font-semibold">
+          <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-16 brightness-0 invert" />
+          <p className="text-white text-2xl font-montserrat font-semibold md:text-4xl">
             Le numérique, simplement.
           </p>
           <div className="flex gap-3">
-            <a 
-              href="mailto:info@latroussedigitale.ca" 
-              className="inline-flex items-center gap-2 bg-[#1a1a2e] text-white px-5 py-2.5 rounded-full hover:bg-[#1a1a2e]/90 transition-colors text-sm font-medium"
-            >
+            <a href="mailto:info@latroussedigitale.ca" className="inline-flex items-center gap-2 bg-[#1a1a2e] text-white px-5 py-2.5 rounded-full hover:bg-[#1a1a2e]/90 transition-colors text-sm font-medium">
               <Mail className="w-4 h-4" />
               Écrivez-nous
             </a>
-            <a 
-              href="tel:4188087849" 
-              className="inline-flex items-center gap-2 bg-white text-[#1a1a2e] px-5 py-2.5 rounded-full hover:bg-white/90 transition-colors text-sm font-medium"
-            >
+            <a href="tel:4188087849" className="inline-flex items-center gap-2 bg-white text-[#1a1a2e] px-5 py-2.5 rounded-full hover:bg-white/90 transition-colors text-sm font-medium">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
@@ -824,10 +723,7 @@ export const DemoGenerator = () => {
               <p className="text-white/70 text-sm mb-6">
                 La Trousse Digitale est votre partenaire pour simplifier la gestion de votre entreprise. Sites Web, portails d'affaires et modules personnalisés pour automatiser votre quotidien.
               </p>
-              <a 
-                href="sms:4188087849" 
-                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] text-white px-4 py-3 rounded-lg hover:opacity-90 transition-opacity"
-              >
+              <a href="sms:4188087849" className="inline-flex items-center gap-3 bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] text-white px-4 py-3 rounded-lg hover:opacity-90 transition-opacity">
                 <div className="w-10 h-10 bg-[#f97316] rounded-full flex items-center justify-center">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -860,11 +756,7 @@ export const DemoGenerator = () => {
                 Recevez nos conseils et les dernières tendances en matière de solutions numériques!
               </p>
               <div className="space-y-3">
-                <input 
-                  type="email" 
-                  placeholder="votre@courriel.com" 
-                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-[#f97316]"
-                />
+                <input type="email" placeholder="votre@courriel.com" className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-[#f97316]" />
                 <Button className="w-full bg-[#f97316] hover:bg-[#f97316]/90 text-white rounded-lg">
                   S'abonner
                   <Send className="w-4 h-4 ml-2" />
@@ -879,24 +771,14 @@ export const DemoGenerator = () => {
                 Rejoignez notre communauté pour des astuces exclusives et des nouvelles de l'industrie.
               </p>
               <div className="flex gap-3">
-                <a 
-                  href="https://facebook.com/latroussedigitale" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                >
+                <a href="https://facebook.com/latroussedigitale" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
                   </svg>
                 </a>
-                <a 
-                  href="https://linkedin.com/company/latroussedigitale" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                >
+                <a href="https://linkedin.com/company/latroussedigitale" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                   </svg>
                 </a>
               </div>
@@ -924,6 +806,5 @@ export const DemoGenerator = () => {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>;
 };
