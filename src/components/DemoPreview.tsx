@@ -4,9 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DemoConfig } from "./DemoGenerator";
 import { 
-  Rocket, Calendar, ChevronLeft, ChevronRight, Play, Pause,
+  Rocket, Calendar, Play, Pause,
   LayoutDashboard, Users, FileText, ShoppingCart, CalendarDays,
-  BarChart3, Settings, Bell, Search, Plus, Check, Star
+  BarChart3, Search, Plus, Check, Star
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -170,19 +170,6 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
             {renderSlideContent()}
           </div>
 
-          {/* Navigation Arrows */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow-lg flex items-center justify-center hover:bg-white transition-all hover:scale-110"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={nextSlide}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/90 shadow-lg flex items-center justify-center hover:bg-white transition-all hover:scale-110"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
 
         {/* Slide Indicators */}
