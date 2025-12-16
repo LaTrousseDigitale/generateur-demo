@@ -538,7 +538,7 @@ export const DemoGenerator = () => {
           </Button>
         </div>
 
-        <div className="grid lg:grid-cols-5 gap-6">
+        <div className="grid lg:grid-cols-2 gap-6">
           {/* Left: Configuration Tabs */}
           <div className="lg:col-span-2">
             <Card>
@@ -718,7 +718,7 @@ export const DemoGenerator = () => {
           </div>
 
           {/* Right: Live Preview */}
-          <div className="hidden lg:block lg:col-span-3">
+          <div className="hidden lg:block">
             <div className="sticky top-24">
               <Card className="overflow-hidden">
                 <CardContent className="p-0">
