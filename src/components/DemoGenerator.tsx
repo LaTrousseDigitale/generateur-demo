@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
-import { Eye, RefreshCw, Building2, Settings, Palette, Globe, CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles } from "lucide-react";
+import { Eye, RefreshCw, Building2, Settings, Palette, Globe, CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles, Phone } from "lucide-react";
 import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -691,8 +691,8 @@ export const DemoGenerator = () => {
         </div>
       </section>
 
-      {/* Footer Header - Orange bar */}
-      <div className="bg-[#f97316] py-5">
+      {/* Footer Header - Brand red-orange bar */}
+      <div className="bg-accent py-5">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
           <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-32 brightness-0 invert" />
           <p className="text-white text-2xl font-montserrat font-semibold md:text-4xl">
@@ -703,10 +703,8 @@ export const DemoGenerator = () => {
               <Mail className="w-4 h-4" />
               Écrivez-nous
             </a>
-            <a href="tel:4188087849" className="inline-flex items-center gap-2 bg-white text-[#1a1a2e] px-5 py-2.5 rounded-full hover:bg-white/90 transition-colors text-sm font-medium">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-              </svg>
+            <a href="tel:4188087849" className="inline-flex items-center gap-2 border-2 border-white text-white px-5 py-2.5 rounded-full hover:bg-white/10 transition-colors text-sm font-medium">
+              <Phone className="w-4 h-4" />
               (418) 808-7849
             </a>
           </div>
