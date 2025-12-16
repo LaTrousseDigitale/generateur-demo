@@ -451,13 +451,12 @@ export const DemoGenerator = () => {
       {/* Navigation Header */}
       <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-16 sm:h-20">
-            {/* Logo */}
+          <div className="flex items-center justify-between h-20 sm:h-24">
             <div className="flex items-center">
               <img 
                 src={logoTrousseDigitale} 
                 alt="La Trousse Digitale" 
-                className="h-10 sm:h-14 w-auto"
+                className="h-[70px] sm:h-[86px] w-auto"
               />
             </div>
 
