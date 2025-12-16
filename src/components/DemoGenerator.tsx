@@ -318,48 +318,6 @@ export const DemoGenerator = () => {
     return basePrice;
   };
 
-  const handleSubmitDemo = async () => {
-    try {
-      const calculatedPrice = calculateEstimatedPrice();
-      const response = await fetch('https://ohbrtlbdabiojwohdoxj.supabase.co/functions/v1/receive-demo-request', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          company_name: questionnaireData.companyName,
-          industry: questionnaireData.industry,
-          contact_name: questionnaireData.companyName,
-          contact_email: questionnaireData.clientEmail,
-          contact_phone: questionnaireData.clientPhone,
-          questionnaire_responses: {
-            "Type de solution": questionnaireData.solutionTypes?.join(", "),
-            "Industrie": questionnaireData.industry,
-            "Objectifs principaux": questionnaireData.mainObjectives?.join(", "),
-            "Date de début": questionnaireData.startDate,
-            "Financement": questionnaireData.financing,
-            "Type de site web": questionnaireData.websiteType,
-            "Type de portail": questionnaireData.portalType,
-            "Modules sélectionnés": questionnaireData.selectedModules?.join(", "),
-            "Services Canva": questionnaireData.canvaServices?.join(", "),
-            "Type de domaine": questionnaireData.domainType,
-            "Mode de paiement": questionnaireData.paymentMode,
-            "Niveau de maintenance": questionnaireData.maintenanceLevel,
-            "Budget mensuel": questionnaireData.monthlyBudget,
-            "Autres besoins": questionnaireData.otherNeeds
-          },
-          estimated_amount: calculatedPrice,
-          demo_description: `Démo personnalisée pour ${questionnaireData.companyName} - ${questionnaireData.industry}`
-        })
-      });
-      const result = await response.json();
-      if (result.success && result.signup_url) {
-        window.location.href = result.signup_url;
-      }
-    } catch (error) {
-      console.error('Erreur lors de l\'envoi au portail:', error);
-    }
-  };
 
   const handleReset = () => {
     localStorage.removeItem("questionnaire-data");
@@ -381,7 +339,6 @@ export const DemoGenerator = () => {
 
   const handleSubmit = async () => {
     await submitQuote(questionnaireData);
-    await handleSubmitDemo();
     setShowPreview(true);
     setTimeout(() => setShowQuoteModal(true), 1000);
   };
