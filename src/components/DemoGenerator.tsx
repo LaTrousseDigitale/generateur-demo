@@ -717,15 +717,13 @@ export const DemoGenerator = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             {/* Column 1 - Solutions */}
             <div>
-              <h4 className="font-bold text-[#f97316] mb-4">Solutions digitales pour PME</h4>
+              <h4 className="font-bold text-accent mb-4">Solutions digitales pour PME</h4>
               <p className="text-white/70 text-sm mb-6">
                 La Trousse Digitale est votre partenaire pour simplifier la gestion de votre entreprise. Sites Web, portails d'affaires et modules personnalisés pour automatiser votre quotidien.
               </p>
               <a href="sms:4188087849" className="inline-flex items-center gap-3 bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] text-white px-4 py-3 rounded-lg hover:opacity-90 transition-opacity">
-                <div className="w-10 h-10 bg-[#f97316] rounded-full flex items-center justify-center">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
+                <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                  <Phone className="w-5 h-5" />
                 </div>
                 <div>
                   <div className="text-xs text-white/60">Envoyez-nous un SMS</div>
@@ -754,8 +752,8 @@ export const DemoGenerator = () => {
                 Recevez nos conseils et les dernières tendances en matière de solutions numériques!
               </p>
               <div className="space-y-3">
-                <input type="email" placeholder="votre@courriel.com" className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-[#f97316]" />
-                <Button className="w-full bg-[#f97316] hover:bg-[#f97316]/90 text-white rounded-lg">
+                <input type="email" placeholder="votre@courriel.com" className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-accent" />
+                <Button className="w-full bg-accent hover:bg-accent/90 text-white rounded-lg">
                   S'abonner
                   <Send className="w-4 h-4 ml-2" />
                 </Button>
@@ -786,7 +784,7 @@ export const DemoGenerator = () => {
           {/* Bottom Bar */}
           <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-white/60">
-              © {new Date().getFullYear()} <span className="text-[#f97316]">La Trousse Digitale</span>. Tous droits réservés.
+              © {new Date().getFullYear()} <span className="text-accent">La Trousse Digitale</span>. Tous droits réservés.
             </p>
             <div className="flex gap-4 text-sm text-white/60">
               <a href="https://latroussedigitale.ca/confidentialite" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
