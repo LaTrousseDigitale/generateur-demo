@@ -98,9 +98,6 @@ export interface QuestionnaireData {
   // Section 10: Résumé
   otherNeeds: string;
   contactMethod: string;
-  contactEmail: string;
-  contactPhone: string;
-  contactName: string;
 
   // Legacy fields for compatibility
   serviceType: ServiceType;

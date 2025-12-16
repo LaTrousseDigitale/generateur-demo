@@ -13,10 +13,6 @@ export default {
       },
     },
     extend: {
-      fontFamily: {
-        'montserrat': ['Montserrat', 'sans-serif'],
-        'glory': ['"Give You Glory"', 'cursive'],
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -51,10 +47,6 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
-        },
-        hub: {
-          dark: "hsl(var(--hub-dark))",
-          card: "hsl(var(--hub-card))",
         },
       },
       backgroundImage: {
