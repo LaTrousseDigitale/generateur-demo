@@ -365,7 +365,7 @@ export const DemoGenerator = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <div className="flex items-center">
-              <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-12 sm:h-16 w-auto" />
+              <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-24 sm:h-28 w-auto" />
             </div>
 
             {/* Desktop Navigation */}
@@ -694,7 +694,7 @@ export const DemoGenerator = () => {
       {/* Footer Header - Orange bar */}
       <div className="bg-[#f97316] py-5">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-16 brightness-0 invert" />
+          <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-28 brightness-0 invert" />
           <p className="text-white text-2xl font-montserrat font-semibold md:text-4xl">
             Le numérique, simplement.
           </p>
