@@ -136,7 +136,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
           </div>
           <div className="flex-1 bg-white/80 rounded-full px-3 py-1.5 text-xs text-muted-foreground flex items-center gap-2 min-w-0">
             <Search className="w-3 h-3 flex-shrink-0" />
-            <span className="truncate">{config.companyName.toLowerCase().replace(/\s/g, '') || 'demo'}.ltd.ca</span>
+            <span className="truncate">demos.latroussedigitale.ca</span>
           </div>
         </div>
 
