@@ -57,11 +57,11 @@ export const QuoteModal = ({
           included: true
         });
       } else if (data.websiteType === "ecommerce") {
-        monthlyTotal += 150;
+        monthlyTotal += 120;
         items.push({
           name: "Site E-commerce",
           description: "Boutique en ligne complète",
-          price: 150,
+          price: 120,
           included: true
         });
 
@@ -77,11 +77,11 @@ export const QuoteModal = ({
           });
         }
       } else if (data.websiteType === "organisationnel") {
-        monthlyTotal += 100;
+        monthlyTotal += 120;
         items.push({
           name: "Site Organisationnel",
           description: "Plateforme web sur mesure",
-          price: 100,
+          price: 120,
           included: true
         });
       }
@@ -89,12 +89,12 @@ export const QuoteModal = ({
       // Fonctionnalités additionnelles - E-commerce
       (data.ecommerceNeeds || []).forEach(need => {
         const needPrices: Record<string, number> = {
-          "payment": 20,
-          "inventory": 25,
-          "shipping": 15,
-          "reviews": 10,
-          "wishlist": 8,
-          "loyalty": 15
+          "payment": 40, // Paiements en ligne
+          "inventory": 50, // Gestion de documents
+          "shipping": 40, // Notifications automatiques
+          "reviews": 30,
+          "wishlist": 30,
+          "loyalty": 50 // Suivi client
         };
         if (needPrices[need]) {
           monthlyTotal += needPrices[need];
@@ -109,20 +109,20 @@ export const QuoteModal = ({
 
       // Fonctionnalités spécifiques par industrie
       if (data.industry === "auto" && (data.autoCompatibility || []).length > 0) {
-        monthlyTotal += 20;
+        monthlyTotal += 40;
         items.push({
           name: "Compatibilité véhicules",
           description: "Base de données de compatibilité auto",
-          price: 20,
+          price: 40,
           included: true
         });
       }
       if (data.industry === "restauration") {
         (data.restaurantFeatures || []).forEach(feature => {
           const prices: Record<string, number> = {
-            "menu": 15,
-            "reservations": 25,
-            "delivery": 30
+            "menu": 40,
+            "reservations": 50, // Gestionnaire de rendez-vous
+            "delivery": 40 // Notifications automatiques
           };
           if (prices[feature]) {
             monthlyTotal += prices[feature];
@@ -137,11 +137,11 @@ export const QuoteModal = ({
       }
       if (data.industry === "sante") {
         (data.healthCompliance || []).forEach(feature => {
-          monthlyTotal += 30;
+          monthlyTotal += 50;
           items.push({
             name: "Conformité santé",
             description: feature,
-            price: 30,
+            price: 50,
             included: true
           });
         });
@@ -150,11 +150,22 @@ export const QuoteModal = ({
 
     // === SECTION 2: Solutions Portal ===
     if ((data.solutionTypes || []).includes("portal")) {
-      monthlyTotal += 120;
+      // Prix selon le type de portail
+      const portalPrices: Record<string, { name: string; price: number }> = {
+        "client": { name: "Portail Clients", price: 90 },
+        "employes": { name: "Portail Employés", price: 70 },
+        "rh": { name: "Portail RH", price: 90 },
+        "partenaires": { name: "Portail Partenaires", price: 90 },
+        "admin": { name: "Portail Administrateur", price: 110 },
+        "mixte": { name: "Portail Mixte", price: 100 },
+      };
+      
+      const portalInfo = portalPrices[data.portalType || "client"] || portalPrices.client;
+      monthlyTotal += portalInfo.price;
       items.push({
-        name: "Portail d'entreprise",
+        name: portalInfo.name,
         description: "Plateforme complète avec 3 utilisateurs inclus",
-        price: 120,
+        price: portalInfo.price,
         included: true
       });
 
@@ -178,33 +189,33 @@ export const QuoteModal = ({
 
       // Fonctionnalités portail client
       (data.portalClientFeatures || []).forEach(feature => {
-        monthlyTotal += 15;
+        monthlyTotal += 30;
         items.push({
           name: `Portail client - ${feature}`,
           description: "Fonctionnalité portail",
-          price: 15,
+          price: 30,
           included: true
         });
       });
 
       // Fonctionnalités portail employés
       (data.portalEmployeeFeatures || []).forEach(feature => {
-        monthlyTotal += 15;
+        monthlyTotal += 30;
         items.push({
           name: `Portail employés - ${feature}`,
           description: "Fonctionnalité portail",
-          price: 15,
+          price: 30,
           included: true
         });
       });
 
       // Fonctionnalités portail RH
       (data.portalHRFeatures || []).forEach(feature => {
-        monthlyTotal += 20;
+        monthlyTotal += 40;
         items.push({
           name: `Module RH - ${feature}`,
           description: "Fonctionnalité ressources humaines",
-          price: 20,
+          price: 40,
           included: true
         });
       });
@@ -215,50 +226,53 @@ export const QuoteModal = ({
       name: string;
       price: number;
     }> = {
-      "calculateur-pdf": {
-        name: "Calculateur PDF",
-        price: 25
-      },
-      "rendez-vous": {
-        name: "Système de rendez-vous",
-        price: 30
-      },
-      "tickets": {
-        name: "Gestion de tickets",
-        price: 20
-      },
-      "crm-lite": {
-        name: "CRM Lite",
-        price: 35
-      },
-      "projets-lite": {
-        name: "Gestion de projets Lite",
-        price: 30
-      },
-      "rh-lite": {
-        name: "RH Lite",
-        price: 35
-      },
-      "base-connaissances": {
-        name: "Base de connaissances",
-        price: 25
-      },
-      "chat-interne": {
-        name: "Chat interne",
-        price: 20
-      },
-      "onboarding": {
-        name: "Onboarding automatisé",
-        price: 25
-      },
-      "signatures": {
-        name: "Signatures électroniques",
-        price: 30
-      },
-      "kpi-dashboard": {
-        name: "KPI & Tableaux de bord",
-        price: 40
-      }
+      // Relation client & ventes
+      "crm-lite": { name: "CRM", price: 70 },
+      "calculateur-pdf": { name: "Calculateur en ligne + Devis PDF", price: 110 },
+      "facturation": { name: "Facturation", price: 60 },
+      "paiements": { name: "Paiements en ligne", price: 40 },
+      "suivi-client": { name: "Suivi client", price: 50 },
+      
+      // Planification & opérations
+      "projets-lite": { name: "Gestion de projets", price: 80 },
+      "taches": { name: "Tâches & échéanciers", price: 50 },
+      "calendrier": { name: "Calendrier partagé", price: 40 },
+      "rendez-vous": { name: "Gestionnaire de rendez-vous", price: 50 },
+      "pointage": { name: "Pointage de temps", price: 60 },
+      "productivite": { name: "Suivi de productivité", price: 60 },
+      
+      // Contenu & organisation
+      "documents": { name: "Gestion de documents", price: 50 },
+      "base-connaissances": { name: "Base de connaissances", price: 60 },
+      "procedures": { name: "Procédures internes", price: 50 },
+      
+      // Support & communication
+      "tickets": { name: "Tickets de support", price: 60 },
+      "chat-interne": { name: "Messagerie interne", price: 40 },
+      "notifications": { name: "Notifications automatiques", price: 40 },
+      
+      // Ressources humaines
+      "rh-lite": { name: "Gestion des employés", price: 60 },
+      "conges": { name: "Congés & absences", price: 40 },
+      "documents-rh": { name: "Documents RH", price: 40 },
+      "suivi-rh": { name: "Suivi RH", price: 50 },
+      
+      // Sécurité & accès
+      "roles-permissions": { name: "Rôles & permissions", price: 50 },
+      "journal-activite": { name: "Journal d'activité", price: 0 },
+      
+      // Automatisation & IA
+      "automatisations": { name: "Automatisations", price: 70 },
+      "ia-conversationnelle": { name: "IA conversationnelle", price: 80 },
+      
+      // Intégrations
+      "courriels-calendriers": { name: "Courriels & calendriers", price: 40 },
+      "api-webhooks": { name: "API / Webhooks", price: 60 },
+      
+      // Legacy mappings
+      "onboarding": { name: "Onboarding automatisé", price: 50 },
+      "signatures": { name: "Signatures électroniques", price: 50 },
+      "kpi-dashboard": { name: "KPI & Tableaux de bord", price: 60 },
     };
     (data.selectedModules || []).forEach(moduleId => {
       const module = modulePrices[moduleId];
