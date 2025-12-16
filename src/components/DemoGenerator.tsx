@@ -718,6 +718,81 @@ export const DemoGenerator = () => {
           </div>
         </div>
       </div>
+
+      {/* CTA Section */}
+      <section className="py-16 bg-gradient-to-r from-primary/10 via-accent/5 to-secondary/10">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            Vous avez d'autres questions?
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
+            Notre équipe est là pour vous aider et répondre à toutes vos interrogations
+          </p>
+          <a 
+            href="https://latroussedigitale.ca/contact" 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+              Contactez-nous
+            </Button>
+          </a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-foreground text-background py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            {/* Logo & Description */}
+            <div className="md:col-span-2">
+              <img 
+                src={logoTrousseDigitale} 
+                alt="La Trousse Digitale" 
+                className="h-10 mb-4 brightness-0 invert"
+              />
+              <p className="text-background/70 text-sm max-w-md">
+                Solutions numériques personnalisées pour propulser votre entreprise vers le succès.
+              </p>
+            </div>
+            
+            {/* Navigation */}
+            <div>
+              <h4 className="font-semibold mb-4">Navigation</h4>
+              <ul className="space-y-2 text-sm text-background/70">
+                <li><a href="https://latroussedigitale.ca/" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Accueil</a></li>
+                <li><a href="https://latroussedigitale.ca/#services" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Services</a></li>
+                <li><a href="https://latroussedigitale.ca/#avantages" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Avantages</a></li>
+                <li><a href="https://latroussedigitale.ca/#tarifs" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Tarifs</a></li>
+              </ul>
+            </div>
+            
+            {/* Contact */}
+            <div>
+              <h4 className="font-semibold mb-4">Contact</h4>
+              <ul className="space-y-2 text-sm text-background/70">
+                <li><a href="https://latroussedigitale.ca/contact" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Nous contacter</a></li>
+                <li><a href="https://latroussedigitale.ca/#faq" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">FAQ</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          {/* Bottom Bar */}
+          <div className="border-t border-background/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-background/60">
+              © {new Date().getFullYear()} La Trousse Digitale. Tous droits réservés.
+            </p>
+            <div className="flex gap-6 text-sm text-background/60">
+              <a href="https://latroussedigitale.ca/politique-confidentialite" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">
+                Politique de confidentialité
+              </a>
+              <a href="https://latroussedigitale.ca/conditions-utilisation" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">
+                Conditions d'utilisation
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
