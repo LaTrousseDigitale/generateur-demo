@@ -467,33 +467,8 @@ export const DemoGenerator = () => {
                 </a>)}
             </nav>
 
-            {/* CTA Button & Actions */}
+            {/* CTA Button */}
             <div className="flex items-center gap-2">
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="ghost" size="icon" className="hidden sm:flex" title="Réinitialiser le questionnaire">
-                    <RotateCcw className="w-4 h-4" />
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Cette action effacera toutes vos réponses et vous ramènera au début du questionnaire. 
-                      Cette action est irréversible.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Annuler</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleReset}>Réinitialiser</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
-              <Link to="/editor" className="hidden sm:block">
-                <Button variant="ghost" size="icon" title="Éditeur rapide">
-                  <Pencil className="w-4 h-4" />
-                </Button>
-              </Link>
               <Button className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium flex items-center gap-2" onClick={() => setCurrentStep(1)}>
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 3L14.5 8.5L20.5 9.5L16 14L17 20L12 17L7 20L8 14L3.5 9.5L9.5 8.5L12 3Z" fill="currentColor" />
@@ -528,7 +503,35 @@ export const DemoGenerator = () => {
                 {getSectionTitle()}
               </span>
             </div>
-            <span className="text-xs font-medium text-muted-foreground">{Math.round(progress)}%</span>
+            <div className="flex items-center gap-2">
+              <Link to="/editor">
+                <Button variant="outline" size="sm" className="text-xs gap-1" title="Éditeur rapide">
+                  <Pencil className="w-3 h-3" />
+                  <span className="hidden sm:inline">Éditeur</span>
+                </Button>
+              </Link>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" size="sm" className="text-xs gap-1" title="Réinitialiser le questionnaire">
+                    <RotateCcw className="w-3 h-3" />
+                    <span className="hidden sm:inline">Réinitialiser</span>
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Cette action effacera toutes vos réponses et vous ramènera au début du questionnaire. 
+                      Cette action est irréversible.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Annuler</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleReset}>Réinitialiser</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </div>
           <div className="relative">
             <Progress value={progress} className="h-1.5" />
