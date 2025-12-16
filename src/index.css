@@ -132,3 +132,23 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+/* Scrollbar hide utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Interactive card hover effects */
+.interactive-card {
+  @apply transition-all duration-300 cursor-pointer;
+}
+.interactive-card:hover {
+  @apply scale-[1.02] shadow-lg;
+}
+.interactive-card:active {
+  @apply scale-[0.98];
+}
