@@ -6,6 +6,7 @@ import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
 import { ArrowRight, ArrowLeft, RotateCcw, Pencil } from "lucide-react";
+import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { QuestionnaireData } from "@/types/questionnaire";
@@ -452,16 +453,12 @@ export const DemoGenerator = () => {
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-16 sm:h-20">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <div className="flex items-center">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-primary flex items-center justify-center">
-                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-primary rounded-full"></div>
-                </div>
-              </div>
-              <div className="flex flex-col leading-none">
-                <span className="text-xs sm:text-sm text-muted-foreground font-light italic">La Trousse</span>
-                <span className="text-lg sm:text-xl font-bold text-primary tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>Digitale</span>
-              </div>
+            <div className="flex items-center">
+              <img 
+                src={logoTrousseDigitale} 
+                alt="La Trousse Digitale" 
+                className="h-10 sm:h-14 w-auto"
+              />
             </div>
 
             {/* Desktop Navigation */}
