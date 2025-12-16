@@ -10,12 +10,24 @@ interface DemoFeaturesDisplayProps {
   config: DemoConfig;
 }
 
-// Prix alignés avec le questionnaire (Section8Finances et DemoGenerator)
+// Prix mensuels alignés avec la liste de prix officielle
 const PRICING = {
-  website: 2000,
-  portal: 5000,
-  module: 1500,
-  additionalModule: 500,
+  website: {
+    vitrine: 80,
+    ecommerce: 120,
+    organisationnel: 120,
+    landing: 60,
+  },
+  portal: {
+    client: 90,
+    employes: 70,
+    rh: 90,
+    partenaires: 90,
+    admin: 110,
+    mixte: 100,
+  },
+  module: 50, // Prix moyen d'un module
+  additionalModule: 50,
   canvaService: 50,
   // Maintenance mensuelle selon les niveaux
   maintenance: {
@@ -26,19 +38,23 @@ const PRICING = {
   },
 };
 
-// Calcul du prix estimé en CAD - aligné avec calculateEstimatedPrice du questionnaire
+// Calcul du prix mensuel estimé en CAD
 const calculatePricing = (config: DemoConfig) => {
   let basePrice = 0;
   const items: { label: string; price: number }[] = [];
 
-  // Prix de base par type de service (même logique que DemoGenerator)
+  // Prix de base par type de service
   if (config.serviceType === "website") {
-    basePrice += PRICING.website;
-    items.push({ label: "Site web professionnel", price: PRICING.website });
+    const websiteType = config.websiteType || "vitrine";
+    const price = PRICING.website[websiteType as keyof typeof PRICING.website] || PRICING.website.vitrine;
+    basePrice += price;
+    items.push({ label: "Site web professionnel", price });
   }
   if (config.serviceType === "portal") {
-    basePrice += PRICING.portal;
-    items.push({ label: "Portail client/employé", price: PRICING.portal });
+    const portalType = config.portalType || "client";
+    const price = PRICING.portal[portalType as keyof typeof PRICING.portal] || PRICING.portal.client;
+    basePrice += price;
+    items.push({ label: "Portail d'entreprise", price });
   }
   if (config.serviceType === "module") {
     basePrice += PRICING.module;
@@ -181,8 +197,8 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
                 <DollarSign className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-bold text-xl">Estimation du projet</h3>
-                <p className="text-sm text-muted-foreground">Prix en dollars canadiens (CAD)</p>
+                <h3 className="font-bold text-xl">Estimation mensuelle</h3>
+                <p className="text-sm text-muted-foreground">Prix en dollars canadiens (CAD) / mois</p>
               </div>
             </div>
 
@@ -194,7 +210,7 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
                   className="flex justify-between items-center py-2 border-b border-dashed last:border-0"
                 >
                   <span className="text-muted-foreground">{item.label}</span>
-                  <span className="font-semibold">{item.price.toLocaleString("fr-CA")} $</span>
+                  <span className="font-semibold">{item.price.toLocaleString("fr-CA")} $/mois</span>
                 </div>
               ))}
             </div>
@@ -207,18 +223,18 @@ export const DemoFeaturesDisplay = ({ config }: DemoFeaturesDisplayProps) => {
               <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent" />
               <div className="relative">
                 <div className="flex justify-between items-end mb-2">
-                  <span className="text-white/80">Investissement total</span>
+                  <span className="text-white/80">Abonnement mensuel</span>
                   <div className="text-right">
                     <span className="text-3xl font-bold">
                       {pricing.basePrice.toLocaleString("fr-CA")} $
                     </span>
-                    <span className="text-white/80 text-sm ml-1">CAD</span>
+                    <span className="text-white/80 text-sm ml-1">CAD/mois</span>
                   </div>
                 </div>
                 <div className="flex justify-between items-center text-sm text-white/70">
-                  <span>ou à partir de</span>
+                  <span>Économisez avec l'abonnement annuel</span>
                   <span className="font-medium">
-                    {Math.round(pricing.basePrice / 12).toLocaleString("fr-CA")} $/mois × 12 mois
+                    {Math.round(pricing.basePrice * 11).toLocaleString("fr-CA")} $/an (1 mois gratuit)
                   </span>
                 </div>
               </div>

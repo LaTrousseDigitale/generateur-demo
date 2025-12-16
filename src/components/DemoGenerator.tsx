@@ -308,14 +308,24 @@ export const DemoGenerator = () => {
   };
 
   const calculateEstimatedPrice = (): number => {
-    let basePrice = 0;
-    if ((questionnaireData.solutionTypes || []).includes("website")) basePrice += 2000;
-    if ((questionnaireData.solutionTypes || []).includes("portal")) basePrice += 5000;
-    if ((questionnaireData.solutionTypes || []).includes("module")) basePrice += 1500;
-    basePrice += (questionnaireData.selectedModules?.length || 0) * 500;
-    const canvaCount = parseInt(questionnaireData.canvaQuantity || "0") || 0;
-    basePrice += canvaCount * 50;
-    return basePrice;
+    let monthlyPrice = 0;
+    // Sites Web
+    if ((questionnaireData.solutionTypes || []).includes("website")) {
+      if (questionnaireData.websiteType === "vitrine") monthlyPrice += 80;
+      else if (questionnaireData.websiteType === "ecommerce") monthlyPrice += 120;
+      else if (questionnaireData.websiteType === "organisationnel") monthlyPrice += 120;
+      else monthlyPrice += 80; // default
+    }
+    // Portails
+    if ((questionnaireData.solutionTypes || []).includes("portal")) {
+      const portalPrices: Record<string, number> = {
+        client: 90, employes: 70, rh: 90, partenaires: 90, admin: 110, mixte: 100
+      };
+      monthlyPrice += portalPrices[questionnaireData.portalType || "client"] || 90;
+    }
+    // Modules (prix moyen de 50$/mois par module)
+    monthlyPrice += (questionnaireData.selectedModules?.length || 0) * 50;
+    return monthlyPrice;
   };
 
 
