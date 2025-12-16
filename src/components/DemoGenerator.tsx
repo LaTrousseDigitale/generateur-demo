@@ -195,6 +195,9 @@ export const DemoGenerator = () => {
       maintenancePaymentFrequency: "monthly",
       otherNeeds: "",
       contactMethod: "",
+      contactEmail: "",
+      contactPhone: "",
+      contactName: "",
       serviceType: null,
       features: [],
       companySize: "",
@@ -263,7 +266,9 @@ export const DemoGenerator = () => {
       case 9:
         return questionnaireData.paymentMode && questionnaireData.maintenanceLevel;
       case 10:
-        return questionnaireData.contactMethod;
+        // Require name, email, and contact method
+        const hasEmail = questionnaireData.contactEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(questionnaireData.contactEmail);
+        return questionnaireData.contactName && hasEmail && questionnaireData.contactMethod;
       default:
         return true;
     }
@@ -295,9 +300,9 @@ export const DemoGenerator = () => {
         body: JSON.stringify({
           company_name: questionnaireData.companyName,
           industry: questionnaireData.industry,
-          contact_name: questionnaireData.companyName,
-          contact_email: questionnaireData.contactMethod,
-          contact_phone: questionnaireData.contactMethod,
+          contact_name: questionnaireData.contactName || questionnaireData.companyName,
+          contact_email: questionnaireData.contactEmail,
+          contact_phone: questionnaireData.contactPhone || "",
           questionnaire_responses: {
             "Type de solution": questionnaireData.solutionTypes?.join(", "),
             "Industrie": questionnaireData.industry,
@@ -417,6 +422,9 @@ export const DemoGenerator = () => {
       maintenancePaymentFrequency: "monthly",
       otherNeeds: "",
       contactMethod: "",
+      contactEmail: "",
+      contactPhone: "",
+      contactName: "",
       serviceType: null,
       features: [],
       companySize: "",
