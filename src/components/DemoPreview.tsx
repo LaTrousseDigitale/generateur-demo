@@ -161,7 +161,7 @@ export const DemoPreview = ({ config }: DemoPreviewProps) => {
         </div>
 
         {/* Slide Content */}
-        <div className="relative min-h-[280px] p-3 overflow-hidden">
+        <div className="relative min-h-[320px] p-4 overflow-hidden">
           <div 
             className={`transition-all duration-300 ${
               isTransitioning ? "opacity-0 scale-95" : "opacity-100 scale-100"
