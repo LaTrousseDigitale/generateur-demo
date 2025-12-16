@@ -699,11 +699,11 @@ export const DemoGenerator = () => {
             Le numérique, simplement.
           </p>
           <div className="flex gap-3">
-            <a href="mailto:info@latroussedigitale.ca" className="inline-flex items-center gap-2 bg-[#1a1a2e] text-white px-5 py-2.5 rounded-full hover:bg-[#1a1a2e]/90 transition-colors text-sm font-medium">
+            <a href="mailto:info@latroussedigitale.ca" className="inline-flex items-center gap-2 bg-[#1a1a2e] text-white px-5 py-2.5 rounded-lg hover:bg-[#1a1a2e]/90 transition-colors text-sm font-medium">
               <Mail className="w-4 h-4" />
               Écrivez-nous
             </a>
-            <a href="tel:4188087849" className="inline-flex items-center gap-2 border-2 border-white text-white px-5 py-2.5 rounded-full hover:bg-white/10 transition-colors text-sm font-medium">
+            <a href="tel:4188087849" className="inline-flex items-center gap-2 border-2 border-white/60 text-white px-5 py-2.5 rounded-lg hover:bg-white/10 transition-colors text-sm font-medium">
               <Phone className="w-4 h-4" />
               (418) 808-7849
             </a>
