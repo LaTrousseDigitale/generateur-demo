@@ -540,7 +540,7 @@ export const DemoGenerator = () => {
 
         <div className="grid lg:grid-cols-2 gap-6">
           {/* Left: Configuration Tabs */}
-          <div className="lg:col-span-2">
+          <div>
             <Card>
               <CardContent className="p-4 sm:p-6">
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
