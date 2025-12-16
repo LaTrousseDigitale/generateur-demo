@@ -25,8 +25,8 @@ export const useQuoteSubmission = () => {
       const validatedData = validationResult.data;
 
       const quoteData: QuoteInsert = {
-        client_email: validatedData.contactMethod || null,
-        client_name: validatedData.companyName || null,
+        client_email: validatedData.contactEmail || null,
+        client_name: validatedData.contactName || validatedData.companyName || null,
         company_name: validatedData.companyName || null,
         solution_types: validatedData.solutionTypes.length > 0 ? validatedData.solutionTypes : null,
         industry: validatedData.industry || null,
