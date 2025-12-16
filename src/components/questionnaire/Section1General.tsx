@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { INDUSTRIES } from "@/types/questionnaire";
-import { Building2, Lightbulb, Calendar, Wallet, Check, Sparkles } from "lucide-react";
+import { Building2, Lightbulb, Calendar, Check, Sparkles } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 
 interface Section1Props {
@@ -38,11 +38,6 @@ const START_DATES = [
   { value: "plus-tard", label: "Plus tard", icon: "⏳", description: "Pas pressé" },
 ];
 
-const FINANCING_OPTIONS = [
-  { value: "oui", label: "Oui", icon: "✅", color: "bg-green-500/10 border-green-500/30 hover:border-green-500" },
-  { value: "non", label: "Non", icon: "❌", color: "bg-red-500/10 border-red-500/30 hover:border-red-500" },
-  { value: "peut-etre", label: "Peut-être", icon: "🤔", color: "bg-yellow-500/10 border-yellow-500/30 hover:border-yellow-500" },
-];
 
 export const Section1General = ({ data, onChange }: Section1Props) => {
   const objectives = data.industry && INDUSTRY_OBJECTIVES[data.industry] 
@@ -211,35 +206,6 @@ export const Section1General = ({ data, onChange }: Section1Props) => {
         </div>
       </div>
 
-      {/* Financing - Pill Selection */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <Wallet className="w-4 h-4 text-primary" />
-          <Label className="font-semibold text-sm">
-            Avez-vous un financement en place ? <span className="text-destructive">*</span>
-          </Label>
-        </div>
-        <div className="flex gap-2">
-          {FINANCING_OPTIONS.map((option) => {
-            const isSelected = data.financing === option.value;
-            return (
-              <button
-                key={option.value}
-                type="button"
-                onClick={() => onChange({ financing: option.value })}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-full font-medium text-sm transition-all duration-300 border-2 ${
-                  isSelected 
-                    ? "bg-primary text-white border-primary shadow-lg scale-105" 
-                    : option.color
-                }`}
-              >
-                <span>{option.icon}</span>
-                <span>{option.label}</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
     </div>
   );
 };
