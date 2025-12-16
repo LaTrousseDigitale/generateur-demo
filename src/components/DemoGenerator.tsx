@@ -246,15 +246,7 @@ export const DemoGenerator = () => {
         if (!(questionnaireData.solutionTypes || []).includes("portal")) return true;
         return questionnaireData.portalType && questionnaireData.portalUsers && questionnaireData.portalRoles;
       case 6:
-        const hasCanvaServices = questionnaireData.canvaServices && questionnaireData.canvaServices.length > 0;
-        const hasQuantity = questionnaireData.canvaQuantity;
-        const hasFrequency = questionnaireData.canvaFrequency;
-        if (!hasCanvaServices || !hasQuantity || !hasFrequency) return false;
-
-        // Si forfait sur mesure (20+), vérifier les champs additionnels
-        if (questionnaireData.canvaQuantity === "20+") {
-          return questionnaireData.canvaCustomQuantity && questionnaireData.canvaCustomDesignTypes && questionnaireData.canvaCustomDeadline;
-        }
+        // Section Services graphiques est entièrement optionnelle
         return true;
       case 7:
         return questionnaireData.companyName;
