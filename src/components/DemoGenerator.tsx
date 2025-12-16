@@ -8,7 +8,7 @@ import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
 import { 
   Eye, RefreshCw, Building2, Settings, Palette, Globe, 
-  CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight
+  CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles
 } from "lucide-react";
 import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
@@ -616,9 +616,6 @@ export const DemoGenerator = () => {
                       onChange={updateData} 
                       isModuleSelected={(questionnaireData.solutionTypes || []).includes("module")} 
                     />
-                    <div className="border-t pt-6">
-                      <Section6Canva data={questionnaireData} onChange={updateData} />
-                    </div>
                     <div className="flex justify-between pt-4 border-t">
                       <Button variant="outline" onClick={() => setActiveTab("config")}>
                         ← Configuration
@@ -688,6 +685,20 @@ export const DemoGenerator = () => {
                   {/* Contact Tab */}
                   <TabsContent value="contact" className="space-y-6 mt-0">
                     <Section9Summary data={questionnaireData} onChange={updateData} />
+                    
+                    {/* Upsell - Services graphiques */}
+                    <div className="border-t pt-6">
+                      <div className="bg-gradient-to-r from-primary/5 to-accent/5 rounded-lg p-4 border border-primary/10">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Sparkles className="w-5 h-5 text-primary" />
+                          <h3 className="font-semibold text-base">Vous aimeriez peut-être...</h3>
+                        </div>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Ajoutez des services de design graphique pour compléter votre solution digitale.
+                        </p>
+                        <Section6Canva data={questionnaireData} onChange={updateData} />
+                      </div>
+                    </div>
                     
                     {/* Submit Button */}
                     <div className="border-t pt-6 space-y-4">
