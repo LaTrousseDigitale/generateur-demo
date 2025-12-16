@@ -694,7 +694,7 @@ export const DemoGenerator = () => {
       {/* Footer Header - Orange bar */}
       <div className="bg-[#f97316] py-5">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
-          <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-28 brightness-0 invert" />
+          <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-32 brightness-0 invert" />
           <p className="text-white text-2xl font-montserrat font-semibold md:text-4xl">
             Le numérique, simplement.
           </p>
