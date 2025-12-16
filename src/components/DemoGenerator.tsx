@@ -727,7 +727,7 @@ export const DemoGenerator = () => {
                 </div>
                 <div>
                   <div className="text-xs text-white/60 font-light">Envoyez-nous un SMS</div>
-                  <div className="font-montserrat font-semibold text-lg">(418) 808-7849</div>
+                  <div className="font-montserrat font-semibold">(418) 808-7849</div>
                 </div>
               </a>
             </div>
