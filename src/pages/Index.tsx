@@ -1,7 +1,7 @@
-import { GeneratorLanding } from "@/components/GeneratorLanding";
+import { DemoGenerator } from "@/components/DemoGenerator";
 
 const Index = () => {
-  return <GeneratorLanding />;
+  return <DemoGenerator />;
 };
 
 export default Index;
