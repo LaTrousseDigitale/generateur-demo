@@ -721,13 +721,13 @@ export const DemoGenerator = () => {
               <p className="text-white/70 text-sm mb-6">
                 La Trousse Digitale est votre partenaire pour simplifier la gestion de votre entreprise. Sites Web, portails d'affaires et modules personnalisés pour automatiser votre quotidien.
               </p>
-              <a href="sms:4188087849" className="inline-flex items-center gap-3 bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] text-white px-4 py-3 rounded-lg hover:opacity-90 transition-opacity">
-                <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center">
-                  <Phone className="w-5 h-5" />
+              <a href="sms:4188087849" className="inline-flex items-center gap-3 bg-[#4a3f3a] text-white px-5 py-3 rounded-xl hover:opacity-90 transition-opacity">
+                <div className="w-11 h-11 bg-[#ff6b3d] rounded-full flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <div className="text-xs text-white/60">Envoyez-nous un SMS</div>
-                  <div className="font-semibold">(418) 808-7849</div>
+                  <div className="text-xs text-white/70">Envoyez-nous un SMS</div>
+                  <div className="font-semibold text-lg">(418) 808-7849</div>
                 </div>
               </a>
             </div>
