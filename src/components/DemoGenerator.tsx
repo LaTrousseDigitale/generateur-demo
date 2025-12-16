@@ -236,7 +236,7 @@ export const DemoGenerator = () => {
   const canProceed = () => {
     switch (currentStep) {
       case 1:
-        return questionnaireData.companyName && questionnaireData.industry && questionnaireData.startDate && questionnaireData.financing;
+        return questionnaireData.companyName && questionnaireData.industry && questionnaireData.startDate;
       case 2:
         return questionnaireData.solutionTypes && questionnaireData.solutionTypes.length > 0;
       case 3:
@@ -261,7 +261,7 @@ export const DemoGenerator = () => {
       case 8:
         return questionnaireData.domainType && questionnaireData.hostingPreference;
       case 9:
-        return questionnaireData.paymentMode && questionnaireData.maintenanceLevel;
+        return questionnaireData.paymentMode && questionnaireData.maintenanceLevel && questionnaireData.financing;
       case 10:
         return questionnaireData.contactMethod;
       default:
