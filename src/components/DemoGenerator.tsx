@@ -788,7 +788,7 @@ export const DemoGenerator = () => {
           <img 
             src={logoTrousseDigitale} 
             alt="La Trousse Digitale" 
-            className="h-12 brightness-0 invert"
+            className="h-16 brightness-0 invert"
           />
           <p className="text-white text-2xl md:text-3xl font-playfair italic">
             Le numérique, simplement.
