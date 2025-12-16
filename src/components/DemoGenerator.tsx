@@ -790,7 +790,7 @@ export const DemoGenerator = () => {
             alt="La Trousse Digitale" 
             className="h-16 brightness-0 invert"
           />
-          <p className="text-white text-2xl md:text-3xl font-montserrat italic font-light">
+          <p className="text-white text-2xl md:text-3xl font-montserrat font-semibold">
             Le numérique, simplement.
           </p>
           <div className="flex gap-3">
