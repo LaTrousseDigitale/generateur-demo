@@ -2,12 +2,18 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
-import { DollarSign } from "lucide-react";
+import { DollarSign, Wallet } from "lucide-react";
 
 interface Section8Props {
   data: any;
   onChange: (updates: any) => void;
 }
+
+const FINANCING_OPTIONS = [
+  { value: "oui", label: "Oui", icon: "✅", color: "bg-green-500/10 border-green-500/30 hover:border-green-500" },
+  { value: "non", label: "Non", icon: "❌", color: "bg-red-500/10 border-red-500/30 hover:border-red-500" },
+  { value: "peut-etre", label: "Peut-être", icon: "🤔", color: "bg-yellow-500/10 border-yellow-500/30 hover:border-yellow-500" },
+];
 
 export const Section8Finances = ({ data, onChange }: Section8Props) => {
   return (
@@ -18,6 +24,36 @@ export const Section8Finances = ({ data, onChange }: Section8Props) => {
           Options financières
         </h3>
         <p className="text-sm text-muted-foreground">Choisissez le mode de paiement qui vous convient</p>
+      </div>
+
+      {/* Financing Already in Place - Pill Selection */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-2">
+          <Wallet className="w-4 h-4 text-primary" />
+          <Label className="font-semibold text-sm">
+            Avez-vous un financement en place ? <span className="text-destructive">*</span>
+          </Label>
+        </div>
+        <div className="flex gap-2">
+          {FINANCING_OPTIONS.map((option) => {
+            const isSelected = data.financing === option.value;
+            return (
+              <button
+                key={option.value}
+                type="button"
+                onClick={() => onChange({ financing: option.value })}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-full font-medium text-sm transition-all duration-300 border-2 ${
+                  isSelected 
+                    ? "bg-primary text-white border-primary shadow-lg scale-105" 
+                    : option.color
+                }`}
+              >
+                <span>{option.icon}</span>
+                <span>{option.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Mode de paiement */}
