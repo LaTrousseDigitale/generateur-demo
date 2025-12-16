@@ -40,14 +40,21 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
 
+    /* Hub specific */
+    --hub-dark: 222 47% 8%;
+    --hub-card: 222 47% 12%;
+
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(218 99% 55%), hsl(218 99% 65%));
     --gradient-accent: linear-gradient(135deg, hsl(16 100% 61%), hsl(44 96% 66%));
     --gradient-hero: linear-gradient(135deg, hsl(218 99% 55%), hsl(16 100% 61%), hsl(44 96% 66%));
+    --gradient-hub: linear-gradient(135deg, hsl(222 47% 6%), hsl(222 47% 12%));
 
     /* Shadows */
     --shadow-elegant: 0 10px 30px -10px hsl(218 99% 55% / 0.3);
     --shadow-glow: 0 0 40px hsl(218 99% 65% / 0.4);
+    --shadow-glow-orange: 0 0 60px hsl(16 100% 61% / 0.3);
+    --shadow-glow-yellow: 0 0 60px hsl(44 96% 66% / 0.3);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
