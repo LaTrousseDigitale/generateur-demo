@@ -515,22 +515,44 @@ export const DemoGenerator = () => {
         </div>
       </header>
 
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        {/* Progress Bar */}
-        <div className="max-w-2xl mx-auto mb-4 sm:mb-8 px-2">
+      <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-10">
+        {/* Page Title */}
+        <div className="text-center mb-6 sm:mb-10 animate-fade-in">
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-3">
+            Créez votre solution digitale
+          </h1>
+          <p className="text-muted-foreground text-sm sm:text-base lg:text-lg max-w-2xl mx-auto">
+            Répondez à quelques questions simples et découvrez une démo personnalisée en temps réel
+          </p>
+        </div>
+
+        {/* Progress Bar - More compact */}
+        <div className="max-w-xl mx-auto mb-6 sm:mb-10 px-2">
           <div className="flex items-center justify-between mb-2 gap-2">
-            <span className="text-xs sm:text-sm font-medium text-foreground truncate">
-              {getSectionTitle()} - {currentStep}/{TOTAL_STEPS}
-            </span>
-            <span className="text-xs sm:text-sm text-muted-foreground flex-shrink-0">{Math.round(progress)}%</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-full">
+                {currentStep}/{TOTAL_STEPS}
+              </span>
+              <span className="text-xs sm:text-sm font-medium text-foreground">
+                {getSectionTitle()}
+              </span>
+            </div>
+            <span className="text-xs font-medium text-muted-foreground">{Math.round(progress)}%</span>
           </div>
-          <Progress value={progress} className="h-2" />
+          <div className="relative">
+            <Progress value={progress} className="h-1.5" />
+            <div 
+              className="absolute top-0 left-0 h-1.5 bg-gradient-to-r from-primary via-accent to-secondary rounded-full transition-all duration-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-4 sm:gap-8 max-w-7xl mx-auto">
-          {/* Left Panel - Questionnaire */}
-          <Card className="p-3 sm:p-6 shadow-elegant animate-slide-up">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-10 max-w-7xl mx-auto">
+          {/* Left Panel - Questionnaire with Glow */}
+          <div className="glow-card">
+            <Card className="p-4 sm:p-8 shadow-xl bg-card/95 backdrop-blur-sm border-0 transition-all duration-300 hover:shadow-2xl">
             <div className="space-y-6">
               {currentStep === 1 && <Section1General data={questionnaireData} onChange={updateData} />}
               {currentStep === 2 && <Section2SolutionType data={questionnaireData} onChange={updateData} />}
@@ -549,34 +571,51 @@ export const DemoGenerator = () => {
               {currentStep === 8 && <Section7Domain data={questionnaireData} onChange={updateData} />}
               {currentStep === 9 && <Section8Finances data={questionnaireData} onChange={updateData} />}
               {currentStep === 10 && <Section9Summary data={questionnaireData} onChange={updateData} />}
-              {currentStep === 11 && <div className="text-center py-12 space-y-4">
-                  <h3 className="text-2xl font-bold text-primary">🎉 Prêt à découvrir votre démo !</h3>
-                  <p className="text-muted-foreground text-lg">
+              {currentStep === 11 && <div className="text-center py-8 space-y-4">
+                  <div className="text-5xl mb-4">🎉</div>
+                  <h3 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                    Prêt à découvrir votre démo !
+                  </h3>
+                  <p className="text-muted-foreground text-sm sm:text-base">
                     Cliquez sur "Voir ma démo" pour visualiser votre solution personnalisée
                   </p>
                 </div>}
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between gap-2 mt-4 sm:mt-8 pt-4 sm:pt-6 border-t">
-              <Button variant="outline" onClick={handleBack} disabled={currentStep === 1} className="flex-1 sm:flex-initial" size="sm">
-                <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 sm:mr-2" />
-                <span className="hidden sm:inline">Précédent</span>
+            <div className="flex justify-between gap-3 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-border/50">
+              <Button 
+                variant="outline" 
+                onClick={handleBack} 
+                disabled={currentStep === 1} 
+                className="flex-1 sm:flex-initial group transition-all duration-300 hover:border-primary/50"
+                size="default"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
+                <span>Précédent</span>
               </Button>
 
-              <Button onClick={handleNext} disabled={!canProceed()} className="flex-1 sm:flex-initial" size="sm">
-                <span className="text-xs sm:text-sm">
+              <Button 
+                onClick={handleNext} 
+                disabled={!canProceed()} 
+                className="flex-1 sm:flex-initial bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all duration-300 group"
+                size="default"
+              >
+                <span>
                   {currentStep === TOTAL_STEPS ? "Voir ma démo" : "Suivant"}
                 </span>
-                {currentStep < TOTAL_STEPS && <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 sm:ml-2" />}
+                {currentStep < TOTAL_STEPS && <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />}
               </Button>
             </div>
           </Card>
+          </div>
 
           {/* Right Panel - Live Preview */}
           <div className="relative hidden lg:block">
-            <div className="sticky top-8">
-              <DemoPreview config={demoConfig} />
+            <div className="sticky top-28 glow-card">
+              <div className="bg-card/95 backdrop-blur-sm rounded-xl overflow-hidden shadow-xl">
+                <DemoPreview config={demoConfig} />
+              </div>
             </div>
           </div>
         </div>
