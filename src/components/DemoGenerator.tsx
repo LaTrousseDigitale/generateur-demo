@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Progress } from "@/components/ui/progress";
 import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
 import { 
   Eye, RefreshCw, Building2, Settings, Palette, Globe, 
-  CreditCard, Mail, Puzzle, Send
+  CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight
 } from "lucide-react";
 import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
@@ -233,6 +234,79 @@ export const DemoGenerator = () => {
     });
   };
 
+  // Calculate progress for each tab
+  const tabProgress = useMemo(() => {
+    const general = [
+      !!questionnaireData.companyName,
+      !!questionnaireData.industry,
+      (questionnaireData.solutionTypes || []).length > 0
+    ];
+    
+    const config = [
+      questionnaireData.websiteType || questionnaireData.portalType,
+      (questionnaireData.websitePages || []).length > 0 || (questionnaireData.portalClientFeatures || []).length > 0
+    ];
+    
+    const modules = [
+      (questionnaireData.selectedModules || []).length > 0 || (questionnaireData.canvaServices || []).length > 0
+    ];
+    
+    const branding = [
+      !!questionnaireData.logo || !!questionnaireData.companyName,
+      questionnaireData.primaryColor !== "#1c61fe"
+    ];
+    
+    const technique = [
+      !!questionnaireData.domainType,
+      !!questionnaireData.hostingPreference
+    ];
+    
+    const finances = [
+      !!questionnaireData.paymentMode,
+      !!questionnaireData.maintenanceLevel
+    ];
+    
+    const contact = [
+      !!questionnaireData.clientEmail,
+      !!questionnaireData.contactMethod
+    ];
+
+    return {
+      general: Math.round((general.filter(Boolean).length / general.length) * 100),
+      config: Math.round((config.filter(Boolean).length / config.length) * 100),
+      modules: modules[0] ? 100 : 0,
+      branding: Math.round((branding.filter(Boolean).length / branding.length) * 100),
+      technique: Math.round((technique.filter(Boolean).length / technique.length) * 100),
+      finances: Math.round((finances.filter(Boolean).length / finances.length) * 100),
+      contact: Math.round((contact.filter(Boolean).length / contact.length) * 100)
+    };
+  }, [questionnaireData]);
+
+  const overallProgress = useMemo(() => {
+    const weights = { general: 25, config: 20, modules: 10, branding: 10, technique: 10, finances: 10, contact: 15 };
+    const total = Object.entries(tabProgress).reduce((acc, [key, value]) => {
+      return acc + (value * weights[key as keyof typeof weights]) / 100;
+    }, 0);
+    return Math.round(total);
+  }, [tabProgress]);
+
+  const tabs = [
+    { id: "general", label: "Général", icon: Building2, progress: tabProgress.general },
+    { id: "config", label: "Configuration", icon: Settings, progress: tabProgress.config },
+    { id: "modules", label: "Modules", icon: Puzzle, progress: tabProgress.modules },
+    { id: "branding", label: "Branding", icon: Palette, progress: tabProgress.branding },
+    { id: "technique", label: "Technique", icon: Globe, progress: tabProgress.technique },
+    { id: "finances", label: "Finances", icon: CreditCard, progress: tabProgress.finances },
+    { id: "contact", label: "Contact", icon: Mail, progress: tabProgress.contact }
+  ];
+
+  const currentTabIndex = tabs.findIndex(t => t.id === activeTab);
+  const goToNextTab = () => {
+    if (currentTabIndex < tabs.length - 1) {
+      setActiveTab(tabs[currentTabIndex + 1].id);
+    }
+  };
+
   const calculateEstimatedPrice = (): number => {
     let basePrice = 0;
     if ((questionnaireData.solutionTypes || []).includes("website")) basePrice += 2000;
@@ -372,42 +446,96 @@ export const DemoGenerator = () => {
       </header>
 
       <div className="container mx-auto px-4 py-6 sm:py-8">
-        {/* Page Title */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-          <div>
+        {/* Global Progress Bar */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-2">
             <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
               Configurez votre solution
             </h1>
-            <p className="text-muted-foreground text-sm mt-1">
-              Personnalisez chaque aspect de votre projet digital
-            </p>
+            <span className="text-lg font-semibold text-primary">{overallProgress}%</span>
           </div>
-          <div className="flex gap-2">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Réinitialiser
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Cette action effacera toutes vos réponses. Cette action est irréversible.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Annuler</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleReset}>Réinitialiser</AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            <Button onClick={() => setShowPreview(true)} variant="outline" size="sm">
-              <Eye className="w-4 h-4 mr-2" />
-              Aperçu
-            </Button>
-          </div>
+          <Progress value={overallProgress} className="h-3 bg-muted" />
+          <p className="text-muted-foreground text-sm mt-2">
+            {overallProgress < 30 && "Commencez par remplir les informations générales"}
+            {overallProgress >= 30 && overallProgress < 60 && "Continuez à personnaliser votre solution"}
+            {overallProgress >= 60 && overallProgress < 90 && "Presque terminé ! Complétez les derniers détails"}
+            {overallProgress >= 90 && "Excellent ! Vous pouvez maintenant générer votre démo"}
+          </p>
+        </div>
+
+        {/* Step Indicator */}
+        <div className="hidden md:flex items-center justify-between mb-6 bg-card rounded-xl p-4 border shadow-sm">
+          {tabs.map((tab, index) => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
+            const isCompleted = tab.progress === 100;
+            
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex flex-col items-center gap-1.5 px-3 py-2 rounded-lg transition-all ${
+                  isActive 
+                    ? "bg-primary/10 text-primary" 
+                    : isCompleted 
+                      ? "text-green-600" 
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                }`}
+              >
+                <div className="relative">
+                  {isCompleted ? (
+                    <CheckCircle2 className="w-6 h-6 text-green-600" />
+                  ) : (
+                    <Icon className={`w-6 h-6 ${isActive ? "text-primary" : ""}`} />
+                  )}
+                  {tab.progress > 0 && tab.progress < 100 && (
+                    <div 
+                      className="absolute -bottom-1 -right-1 w-3 h-3 rounded-full bg-amber-500 text-white text-[8px] flex items-center justify-center font-bold"
+                    >
+                      !
+                    </div>
+                  )}
+                </div>
+                <span className="text-xs font-medium">{tab.label}</span>
+                {tab.progress > 0 && tab.progress < 100 && (
+                  <div className="w-8 h-1 bg-muted rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-amber-500 transition-all" 
+                      style={{ width: `${tab.progress}%` }} 
+                    />
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex justify-end gap-2 mb-6">
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="outline" size="sm">
+                <RefreshCw className="w-4 h-4 mr-2" />
+                Réinitialiser
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  Cette action effacera toutes vos réponses. Cette action est irréversible.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                <AlertDialogAction onClick={handleReset}>Réinitialiser</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <Button onClick={() => setShowPreview(true)} variant="outline" size="sm">
+            <Eye className="w-4 h-4 mr-2" />
+            Aperçu
+          </Button>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
@@ -416,35 +544,19 @@ export const DemoGenerator = () => {
             <Card>
               <CardContent className="p-4 sm:p-6">
                 <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsList className="flex flex-wrap w-full justify-start gap-1 mb-6 h-auto p-1 bg-muted/50">
-                    <TabsTrigger value="general" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm">
-                      <Building2 className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Général</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="config" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm">
-                      <Settings className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Configuration</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="modules" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm">
-                      <Puzzle className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Modules</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="branding" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm">
-                      <Palette className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Branding</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="technique" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm">
-                      <Globe className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Technique</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="finances" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm">
-                      <CreditCard className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Finances</span>
-                    </TabsTrigger>
-                    <TabsTrigger value="contact" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm">
-                      <Mail className="w-3.5 h-3.5" />
-                      <span className="hidden sm:inline">Contact</span>
-                    </TabsTrigger>
+                  {/* Mobile TabsList - hidden on desktop since we have step indicator */}
+                  <TabsList className="md:hidden flex flex-wrap w-full justify-start gap-1 mb-6 h-auto p-1 bg-muted/50">
+                    {tabs.map(tab => {
+                      const Icon = tab.icon;
+                      return (
+                        <TabsTrigger key={tab.id} value={tab.id} className="flex items-center gap-1.5 px-3 py-2 text-xs relative">
+                          <Icon className="w-3.5 h-3.5" />
+                          {tab.progress === 100 && (
+                            <CheckCircle2 className="w-3 h-3 text-green-600 absolute -top-1 -right-1" />
+                          )}
+                        </TabsTrigger>
+                      );
+                    })}
                   </TabsList>
 
                   {/* General Tab - Company Info + Solution Type */}
@@ -452,6 +564,12 @@ export const DemoGenerator = () => {
                     <Section1General data={questionnaireData} onChange={updateData} />
                     <div className="border-t pt-6">
                       <Section2SolutionType data={questionnaireData} onChange={updateData} />
+                    </div>
+                    <div className="flex justify-end pt-4 border-t">
+                      <Button onClick={() => setActiveTab("config")} className="gap-2">
+                        Suivant : Configuration
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
                     </div>
                   </TabsContent>
 
@@ -480,6 +598,15 @@ export const DemoGenerator = () => {
                         </Button>
                       </div>
                     )}
+                    <div className="flex justify-between pt-4 border-t">
+                      <Button variant="outline" onClick={() => setActiveTab("general")}>
+                        ← Général
+                      </Button>
+                      <Button onClick={() => setActiveTab("modules")} className="gap-2">
+                        Suivant : Modules
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TabsContent>
 
                   {/* Modules Tab */}
@@ -491,6 +618,15 @@ export const DemoGenerator = () => {
                     />
                     <div className="border-t pt-6">
                       <Section6Canva data={questionnaireData} onChange={updateData} />
+                    </div>
+                    <div className="flex justify-between pt-4 border-t">
+                      <Button variant="outline" onClick={() => setActiveTab("config")}>
+                        ← Configuration
+                      </Button>
+                      <Button onClick={() => setActiveTab("branding")} className="gap-2">
+                        Suivant : Branding
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
                     </div>
                   </TabsContent>
 
@@ -510,16 +646,43 @@ export const DemoGenerator = () => {
                         onColorChange={updateData} 
                       />
                     </div>
+                    <div className="flex justify-between pt-4 border-t">
+                      <Button variant="outline" onClick={() => setActiveTab("modules")}>
+                        ← Modules
+                      </Button>
+                      <Button onClick={() => setActiveTab("technique")} className="gap-2">
+                        Suivant : Technique
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TabsContent>
 
                   {/* Technique Tab - Domain & Hosting */}
                   <TabsContent value="technique" className="space-y-6 mt-0">
                     <Section7Domain data={questionnaireData} onChange={updateData} />
+                    <div className="flex justify-between pt-4 border-t">
+                      <Button variant="outline" onClick={() => setActiveTab("branding")}>
+                        ← Branding
+                      </Button>
+                      <Button onClick={() => setActiveTab("finances")} className="gap-2">
+                        Suivant : Finances
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TabsContent>
 
                   {/* Finances Tab */}
                   <TabsContent value="finances" className="space-y-6 mt-0">
                     <Section8Finances data={questionnaireData} onChange={updateData} />
+                    <div className="flex justify-between pt-4 border-t">
+                      <Button variant="outline" onClick={() => setActiveTab("technique")}>
+                        ← Technique
+                      </Button>
+                      <Button onClick={() => setActiveTab("contact")} className="gap-2">
+                        Suivant : Contact
+                        <ChevronRight className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </TabsContent>
 
                   {/* Contact Tab */}
@@ -527,7 +690,12 @@ export const DemoGenerator = () => {
                     <Section9Summary data={questionnaireData} onChange={updateData} />
                     
                     {/* Submit Button */}
-                    <div className="border-t pt-6">
+                    <div className="border-t pt-6 space-y-4">
+                      <div className="flex justify-start">
+                        <Button variant="outline" onClick={() => setActiveTab("finances")}>
+                          ← Finances
+                        </Button>
+                      </div>
                       <Button 
                         onClick={handleSubmit}
                         disabled={!canSubmit()}
@@ -538,7 +706,7 @@ export const DemoGenerator = () => {
                         Voir ma démo personnalisée
                       </Button>
                       {!canSubmit() && (
-                        <p className="text-xs text-muted-foreground text-center mt-2">
+                        <p className="text-xs text-muted-foreground text-center">
                           Veuillez remplir les champs obligatoires (entreprise, industrie, solution, email, méthode de contact)
                         </p>
                       )}
