@@ -186,7 +186,9 @@ export const questionnaireSchema = z.object({
 
   // Section 10: Résumé
   otherNeeds: optionalSanitizedString(MAX_LONG_TEXT),
-  contactMethod: emailSchema.default(""),
+  contactMethod: optionalSanitizedString(MAX_SHORT_TEXT),
+  clientEmail: emailSchema.default(""),
+  clientPhone: optionalSanitizedString(MAX_SHORT_TEXT),
 
   // Legacy fields
   serviceType: z.enum(["portal", "website", "module"]).nullable().default(null),

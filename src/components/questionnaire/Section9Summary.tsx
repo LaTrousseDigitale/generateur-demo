@@ -33,6 +33,30 @@ export const Section9Summary = ({
       })} placeholder="Y a-t-il d'autres fonctionnalités ou exigences spécifiques que vous aimeriez mentionner ?" rows={4} />
       </div>
 
+      {/* Courriel */}
+      <div className="space-y-2">
+        <Label htmlFor="client-email">Adresse courriel *</Label>
+        <Input 
+          id="client-email" 
+          type="email"
+          value={data.clientEmail || ""} 
+          onChange={e => onChange({ clientEmail: e.target.value })} 
+          placeholder="votre@courriel.com" 
+        />
+      </div>
+
+      {/* Téléphone */}
+      <div className="space-y-2">
+        <Label htmlFor="client-phone">Numéro de téléphone</Label>
+        <Input 
+          id="client-phone" 
+          type="tel"
+          value={data.clientPhone || ""} 
+          onChange={e => onChange({ clientPhone: e.target.value })} 
+          placeholder="(514) 123-4567" 
+        />
+      </div>
+
       {/* Méthode de contact préférée */}
       <div className="space-y-3">
         <Label>Comment préférez-vous être contacté ? *</Label>
