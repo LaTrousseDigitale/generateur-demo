@@ -416,7 +416,7 @@ export const DemoGenerator = () => {
         {/* Global Progress Bar */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent leading-relaxed pb-1">
               Configurez votre solution
             </h1>
             <span className="text-lg font-semibold text-primary">{overallProgress}%</span>
