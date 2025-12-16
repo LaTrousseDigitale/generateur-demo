@@ -5,7 +5,7 @@ import { Progress } from "@/components/ui/progress";
 import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
-import { ArrowRight, ArrowLeft, Layout, RotateCcw, Pencil } from "lucide-react";
+import { ArrowRight, ArrowLeft, RotateCcw, Pencil } from "lucide-react";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { QuestionnaireData } from "@/types/questionnaire";
@@ -437,48 +437,89 @@ export const DemoGenerator = () => {
     const titles = ["Informations générales", "Type de solution", "Configuration site web", "Configuration portail", "Modules additionnels", "Services graphiques", "Identité de marque", "Domaine et hébergement", "Options financières", "Résumé et contact", "Aperçu final"];
     return titles[currentStep - 1];
   };
+  const navLinks = [
+    { label: "Accueil", href: "#" },
+    { label: "Services", href: "#" },
+    { label: "Avantages", href: "#" },
+    { label: "Tarifs", href: "#" },
+    { label: "FAQ", href: "#" },
+    { label: "Contact", href: "#" },
+  ];
+
   return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
-      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
-        {/* Header */}
-        <div className="text-center mb-4 sm:mb-8 animate-fade-in">
-          <div className="flex items-center justify-center gap-2 mb-2 sm:mb-4 relative">
-            <Layout className="w-6 h-6 sm:w-8 sm:h-8 text-primary flex-shrink-0" />
-            <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold bg-gradient-primary bg-clip-text text-transparent">Générateur de démo</h1>
-            <div className="absolute right-2 sm:right-4 flex gap-1">
-              <Link to="/editor">
+      {/* Navigation Header */}
+      <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between h-16 sm:h-20">
+            {/* Logo */}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-primary flex items-center justify-center">
+                  <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-primary rounded-full"></div>
+                </div>
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-xs sm:text-sm text-muted-foreground font-light italic">La Trousse</span>
+                <span className="text-lg sm:text-xl font-bold text-primary tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>Digitale</span>
+              </div>
+            </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center gap-6 lg:gap-8">
+              {navLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="text-sm text-gray-600 hover:text-primary transition-colors font-medium"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </nav>
+
+            {/* CTA Button & Actions */}
+            <div className="flex items-center gap-2">
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="ghost" size="icon" className="hidden sm:flex" title="Réinitialiser le questionnaire">
+                    <RotateCcw className="w-4 h-4" />
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Cette action effacera toutes vos réponses et vous ramènera au début du questionnaire. 
+                      Cette action est irréversible.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Annuler</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleReset}>Réinitialiser</AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+              <Link to="/editor" className="hidden sm:block">
                 <Button variant="ghost" size="icon" title="Éditeur rapide">
                   <Pencil className="w-4 h-4" />
                 </Button>
               </Link>
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="ghost" size="icon" title="Réinitialiser le questionnaire">
-                    <RotateCcw className="w-4 h-4" />
-                  </Button>
-                </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Réinitialiser le questionnaire ?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Cette action effacera toutes vos réponses et vous ramènera au début du questionnaire. 
-                    Cette action est irréversible.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Annuler</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleReset}>
-                    Réinitialiser
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-              </AlertDialog>
+              <Button 
+                className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-full px-4 sm:px-6 py-2 text-sm font-medium flex items-center gap-2"
+                onClick={() => setCurrentStep(1)}
+              >
+                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3L14.5 8.5L20.5 9.5L16 14L17 20L12 17L7 20L8 14L3.5 9.5L9.5 8.5L12 3Z" fill="currentColor"/>
+                </svg>
+                <span className="hidden sm:inline">Générer ma démo</span>
+                <span className="sm:hidden">Démo</span>
+              </Button>
             </div>
           </div>
-          <p className="text-muted-foreground text-sm sm:text-base lg:text-lg px-2">
-            Créez votre démo en répondant à quelques questions
-          </p>
         </div>
+      </header>
 
+      <div className="container mx-auto px-2 sm:px-4 py-4 sm:py-8">
         {/* Progress Bar */}
         <div className="max-w-2xl mx-auto mb-4 sm:mb-8 px-2">
           <div className="flex items-center justify-between mb-2 gap-2">
