@@ -719,75 +719,206 @@ export const DemoGenerator = () => {
         </div>
       </div>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-primary/10 via-accent/5 to-secondary/10">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4">
-            Vous avez d'autres questions?
+      {/* CTA Section - Blue with floating icons */}
+      <section className="relative py-20 bg-[#4285f4] overflow-hidden">
+        {/* Floating decorative icons */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-16 left-16 text-white/20 text-4xl">&lt;/&gt;</div>
+          <div className="absolute top-32 left-20 text-white/20 text-3xl">◐</div>
+          <div className="absolute top-48 left-16 text-white/20 text-3xl">☰</div>
+          <div className="absolute bottom-32 left-36 text-white/20 text-3xl">⚙</div>
+          <div className="absolute bottom-16 left-48 text-white/20 text-3xl">🖥</div>
+          <div className="absolute top-16 right-16 text-white/20 text-3xl">▢</div>
+          <div className="absolute top-32 right-20 text-white/20 text-3xl">⊕</div>
+          <div className="absolute top-48 right-16 text-white/20 text-3xl">☰</div>
+          <div className="absolute bottom-32 right-36 text-white/20 text-3xl">✦</div>
+          <div className="absolute bottom-16 right-48 text-white/20 text-3xl">☰</div>
+        </div>
+        
+        <div className="container mx-auto px-4 text-center relative z-10">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-white/20 text-white px-4 py-2 rounded-full text-sm mb-6">
+            <Sparkles className="w-4 h-4" />
+            Prêt à commencer?
+          </div>
+          
+          {/* Title */}
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Votre solution vous<br />attend
           </h2>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Notre équipe est là pour vous aider et répondre à toutes vos interrogations
+          
+          {/* Subtitle */}
+          <p className="text-white/80 mb-8 max-w-xl mx-auto">
+            En 5 minutes, visualisez exactement ce que vous obtiendrez. Gratuit, sans engagement, 100% en ligne.
           </p>
+          
+          {/* Main CTA Button */}
+          <Button 
+            size="lg" 
+            className="bg-white text-[#4285f4] hover:bg-white/90 px-8 py-6 text-lg font-semibold rounded-full mb-8"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          >
+            <Sparkles className="w-5 h-5 mr-2" />
+            Générer ma démo gratuite
+            <ChevronRight className="w-5 h-5 ml-2" />
+          </Button>
+          
+          {/* Separator */}
+          <div className="w-32 h-px bg-white/30 mx-auto mb-6" />
+          
+          {/* Secondary CTA */}
+          <p className="text-white/70 text-sm mb-3">Besoin d'un accompagnement personnalisé?</p>
           <a 
             href="https://latroussedigitale.ca/contact" 
             target="_blank" 
             rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-white hover:text-white/80 transition-colors text-sm"
           >
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
-              Contactez-nous
-            </Button>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            Réserver un appel découverte
           </a>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="bg-foreground text-background py-12">
+      {/* Footer Header - Orange bar */}
+      <div className="bg-[#f97316] py-6">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          <img 
+            src={logoTrousseDigitale} 
+            alt="La Trousse Digitale" 
+            className="h-10"
+          />
+          <p className="text-white text-xl md:text-2xl font-light italic">
+            Le numérique, simplement.
+          </p>
+          <div className="flex gap-3">
+            <a 
+              href="mailto:info@latroussedigitale.ca" 
+              className="inline-flex items-center gap-2 bg-transparent border border-white text-white px-4 py-2 rounded-full hover:bg-white/10 transition-colors text-sm"
+            >
+              <Mail className="w-4 h-4" />
+              Écrivez-nous
+            </a>
+            <a 
+              href="tel:4188087849" 
+              className="inline-flex items-center gap-2 bg-transparent border border-white text-white px-4 py-2 rounded-full hover:bg-white/10 transition-colors text-sm"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+              (418) 808-7849
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Footer */}
+      <footer className="bg-[#1a1a2e] text-white py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            {/* Logo & Description */}
-            <div className="md:col-span-2">
-              <img 
-                src={logoTrousseDigitale} 
-                alt="La Trousse Digitale" 
-                className="h-10 mb-4 brightness-0 invert"
-              />
-              <p className="text-background/70 text-sm max-w-md">
-                Solutions numériques personnalisées pour propulser votre entreprise vers le succès.
+            {/* Column 1 - Solutions */}
+            <div>
+              <h4 className="font-bold text-[#f97316] mb-4">Solutions digitales pour PME</h4>
+              <p className="text-white/70 text-sm mb-6">
+                La Trousse Digitale est votre partenaire pour simplifier la gestion de votre entreprise. Sites Web, portails d'affaires et modules personnalisés pour automatiser votre quotidien.
               </p>
+              <a 
+                href="sms:4188087849" 
+                className="inline-flex items-center gap-3 bg-gradient-to-r from-[#3d3d3d] to-[#2d2d2d] text-white px-4 py-3 rounded-lg hover:opacity-90 transition-opacity"
+              >
+                <div className="w-10 h-10 bg-[#f97316] rounded-full flex items-center justify-center">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs text-white/60">Envoyez-nous un SMS</div>
+                  <div className="font-semibold">(418) 808-7849</div>
+                </div>
+              </a>
             </div>
             
-            {/* Navigation */}
+            {/* Column 2 - Liens rapides */}
             <div>
-              <h4 className="font-semibold mb-4">Navigation</h4>
-              <ul className="space-y-2 text-sm text-background/70">
-                <li><a href="https://latroussedigitale.ca/" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Accueil</a></li>
-                <li><a href="https://latroussedigitale.ca/#services" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Services</a></li>
-                <li><a href="https://latroussedigitale.ca/#avantages" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Avantages</a></li>
-                <li><a href="https://latroussedigitale.ca/#tarifs" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Tarifs</a></li>
+              <h4 className="font-bold text-white mb-4">Liens rapides</h4>
+              <ul className="space-y-2 text-sm text-white/70">
+                <li><a href="https://latroussedigitale.ca/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2"><ChevronRight className="w-3 h-3" />Accueil</a></li>
+                <li><a href="https://latroussedigitale.ca/#services" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2"><ChevronRight className="w-3 h-3" />Services</a></li>
+                <li><a href="/" className="hover:text-white transition-colors flex items-center gap-2"><ChevronRight className="w-3 h-3" />Générateur de démos</a></li>
+                <li><a href="https://latroussedigitale.ca/#tarifs" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2"><ChevronRight className="w-3 h-3" />Tarifs</a></li>
+                <li><a href="https://latroussedigitale.ca/#apropos" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2"><ChevronRight className="w-3 h-3" />À propos</a></li>
+                <li><a href="https://latroussedigitale.ca/#faq" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center gap-2"><ChevronRight className="w-3 h-3" />FAQ</a></li>
               </ul>
             </div>
             
-            {/* Contact */}
+            {/* Column 3 - Liste de diffusion */}
             <div>
-              <h4 className="font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2 text-sm text-background/70">
-                <li><a href="https://latroussedigitale.ca/contact" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">Nous contacter</a></li>
-                <li><a href="https://latroussedigitale.ca/#faq" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">FAQ</a></li>
-              </ul>
+              <h4 className="font-bold text-white mb-4">Liste de diffusion</h4>
+              <p className="text-white/70 text-sm mb-4">
+                Recevez nos conseils et les dernières tendances en matière de solutions numériques!
+              </p>
+              <div className="space-y-3">
+                <input 
+                  type="email" 
+                  placeholder="votre@courriel.com" 
+                  className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-sm text-white placeholder:text-white/50 focus:outline-none focus:border-[#f97316]"
+                />
+                <Button className="w-full bg-[#f97316] hover:bg-[#f97316]/90 text-white rounded-lg">
+                  S'abonner
+                  <Send className="w-4 h-4 ml-2" />
+                </Button>
+              </div>
+            </div>
+            
+            {/* Column 4 - Suivez-nous */}
+            <div>
+              <h4 className="font-bold text-white mb-4">Suivez-nous</h4>
+              <p className="text-white/70 text-sm mb-4">
+                Rejoignez notre communauté pour des astuces exclusives et des nouvelles de l'industrie.
+              </p>
+              <div className="flex gap-3">
+                <a 
+                  href="https://facebook.com/latroussedigitale" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                </a>
+                <a 
+                  href="https://linkedin.com/company/latroussedigitale" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
           
           {/* Bottom Bar */}
-          <div className="border-t border-background/20 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-background/60">
-              © {new Date().getFullYear()} La Trousse Digitale. Tous droits réservés.
+          <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-sm text-white/60">
+              © {new Date().getFullYear()} <span className="text-[#f97316]">La Trousse Digitale</span>. Tous droits réservés.
             </p>
-            <div className="flex gap-6 text-sm text-background/60">
-              <a href="https://latroussedigitale.ca/politique-confidentialite" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">
-                Politique de confidentialité
+            <div className="flex gap-4 text-sm text-white/60">
+              <a href="https://latroussedigitale.ca/confidentialite" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                Confidentialité
               </a>
-              <a href="https://latroussedigitale.ca/conditions-utilisation" target="_blank" rel="noopener noreferrer" className="hover:text-background transition-colors">
-                Conditions d'utilisation
+              <span>|</span>
+              <a href="https://latroussedigitale.ca/conditions" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                Conditions
+              </a>
+              <span>|</span>
+              <a href="https://latroussedigitale.ca/cookies" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+                Cookies
               </a>
             </div>
           </div>
