@@ -23,7 +23,6 @@ import { Section8Finances } from "./questionnaire/Section8Finances";
 import { Section9Summary } from "./questionnaire/Section9Summary";
 import { useQuoteSubmission } from "@/hooks/useQuoteSubmission";
 import type { DemoTheme } from "@/types/demoThemes";
-
 export type ServiceType = "portal" | "website" | "module" | null;
 export interface DemoConfig {
   serviceType: ServiceType;
@@ -438,39 +437,39 @@ export const DemoGenerator = () => {
     const titles = ["Informations générales", "Type de solution", "Configuration site web", "Configuration portail", "Modules additionnels", "Services graphiques", "Identité de marque", "Domaine et hébergement", "Options financières", "Résumé et contact", "Aperçu final"];
     return titles[currentStep - 1];
   };
-  const navLinks = [
-    { label: "Accueil", href: "#" },
-    { label: "Services", href: "#" },
-    { label: "Avantages", href: "#" },
-    { label: "Tarifs", href: "#" },
-    { label: "FAQ", href: "#" },
-    { label: "Contact", href: "#" },
-  ];
-
+  const navLinks = [{
+    label: "Accueil",
+    href: "#"
+  }, {
+    label: "Services",
+    href: "#"
+  }, {
+    label: "Avantages",
+    href: "#"
+  }, {
+    label: "Tarifs",
+    href: "#"
+  }, {
+    label: "FAQ",
+    href: "#"
+  }, {
+    label: "Contact",
+    href: "#"
+  }];
   return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Navigation Header */}
       <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between h-20 sm:h-24">
             <div className="flex items-center">
-              <img 
-                src={logoTrousseDigitale} 
-                alt="La Trousse Digitale" 
-                className="h-[70px] sm:h-[86px] w-auto"
-              />
+              <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-[70px] sm:h-[86px] w-auto" />
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-              {navLinks.map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="text-sm text-gray-600 hover:text-primary transition-colors font-medium"
-                >
+              {navLinks.map(link => <a key={link.label} href={link.href} className="text-sm text-gray-600 hover:text-primary transition-colors font-medium">
                   {link.label}
-                </a>
-              ))}
+                </a>)}
             </nav>
 
             {/* CTA Button & Actions */}
@@ -500,12 +499,9 @@ export const DemoGenerator = () => {
                   <Pencil className="w-4 h-4" />
                 </Button>
               </Link>
-              <Button 
-                className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-full px-4 sm:px-6 py-2 text-sm font-medium flex items-center gap-2"
-                onClick={() => setCurrentStep(1)}
-              >
+              <Button className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-full px-4 sm:px-6 py-2 text-sm font-medium flex items-center gap-2" onClick={() => setCurrentStep(1)}>
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 3L14.5 8.5L20.5 9.5L16 14L17 20L12 17L7 20L8 14L3.5 9.5L9.5 8.5L12 3Z" fill="currentColor"/>
+                  <path d="M12 3L14.5 8.5L20.5 9.5L16 14L17 20L12 17L7 20L8 14L3.5 9.5L9.5 8.5L12 3Z" fill="currentColor" />
                 </svg>
                 <span className="hidden sm:inline">Générer ma démo</span>
                 <span className="sm:hidden">Démo</span>
@@ -518,7 +514,7 @@ export const DemoGenerator = () => {
       <div className="container mx-auto px-2 sm:px-4 py-6 sm:py-10">
         {/* Page Title */}
         <div className="text-center mb-6 sm:mb-10 animate-fade-in">
-          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-3">
+          <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent mb-3 lg:text-3xl">
             Créez votre solution digitale
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base lg:text-lg max-w-2xl mx-auto">
@@ -541,10 +537,9 @@ export const DemoGenerator = () => {
           </div>
           <div className="relative">
             <Progress value={progress} className="h-1.5" />
-            <div 
-              className="absolute top-0 left-0 h-1.5 bg-gradient-to-r from-primary via-accent to-secondary rounded-full transition-all duration-500"
-              style={{ width: `${progress}%` }}
-            />
+            <div className="absolute top-0 left-0 h-1.5 bg-gradient-to-r from-primary via-accent to-secondary rounded-full transition-all duration-500" style={{
+            width: `${progress}%`
+          }} />
           </div>
         </div>
 
@@ -562,10 +557,10 @@ export const DemoGenerator = () => {
               {currentStep === 6 && <Section6Canva data={questionnaireData} onChange={updateData} />}
               {currentStep === 7 && <div className="space-y-6">
                   <LogoUploader logo={questionnaireData.logo} companyName={questionnaireData.companyName} onLogoChange={logo => updateData({
-                logo
-              })} onCompanyNameChange={name => updateData({
-                companyName: name
-              })} />
+                  logo
+                })} onCompanyNameChange={name => updateData({
+                  companyName: name
+                })} />
                   <ColorCustomizer primaryColor={questionnaireData.primaryColor} accentColor={questionnaireData.accentColor} secondaryColor={questionnaireData.secondaryColor} onColorChange={updateData} />
                 </div>}
               {currentStep === 8 && <Section7Domain data={questionnaireData} onChange={updateData} />}
@@ -584,23 +579,12 @@ export const DemoGenerator = () => {
 
             {/* Navigation Buttons */}
             <div className="flex justify-between gap-3 mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-border/50">
-              <Button 
-                variant="outline" 
-                onClick={handleBack} 
-                disabled={currentStep === 1} 
-                className="flex-1 sm:flex-initial group transition-all duration-300 hover:border-primary/50"
-                size="default"
-              >
+              <Button variant="outline" onClick={handleBack} disabled={currentStep === 1} className="flex-1 sm:flex-initial group transition-all duration-300 hover:border-primary/50" size="default">
                 <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
                 <span>Précédent</span>
               </Button>
 
-              <Button 
-                onClick={handleNext} 
-                disabled={!canProceed()} 
-                className="flex-1 sm:flex-initial bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all duration-300 group"
-                size="default"
-              >
+              <Button onClick={handleNext} disabled={!canProceed()} className="flex-1 sm:flex-initial bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-all duration-300 group" size="default">
                 <span>
                   {currentStep === TOTAL_STEPS ? "Voir ma démo" : "Suivant"}
                 </span>
