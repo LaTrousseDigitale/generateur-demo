@@ -1,1 +1,7 @@
 project_id = "iuvwtzwxkgyxzcxmgrmp"
+
+[functions.cart-sync]
+verify_jwt = false
+
+[functions.get-quotes]
+verify_jwt = false

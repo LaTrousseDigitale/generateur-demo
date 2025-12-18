@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      carts: {
+        Row: {
+          created_at: string
+          id: string
+          items: Json
+          session_id: string | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          items?: Json
+          session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          items?: Json
+          session_id?: string | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       quotes: {
         Row: {
           canva_services: string[] | null
