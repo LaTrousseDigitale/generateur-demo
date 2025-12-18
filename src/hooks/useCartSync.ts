@@ -36,7 +36,7 @@ export const useCartSync = () => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState<string | null>(null);
-  const sessionId = getSessionId();
+  const [sessionId] = useState(() => getSessionId());
 
   // Fetch cart from API
   const fetchCart = useCallback(async () => {
@@ -245,6 +245,7 @@ export const useCartSync = () => {
     itemCount,
     total,
     loading,
+    sessionId,
     addItem,
     removeItem,
     updateQuantity,
