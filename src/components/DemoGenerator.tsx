@@ -196,7 +196,7 @@ export const DemoGenerator = () => {
   const {
     submitQuote
   } = useQuoteSubmission();
-  const { itemCount: cartItemCount } = useCartSync();
+  const { itemCount: cartItemCount, sessionId: cartSessionId } = useCartSync();
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData>(() => {
     const saved = localStorage.getItem("questionnaire-data");
@@ -379,7 +379,7 @@ export const DemoGenerator = () => {
 
             {/* Cart Icon & CTA Button */}
             <div className="flex items-center gap-4">
-              <a href="https://latroussedigitale.ca/panier" className="relative text-gray-600 hover:text-primary transition-colors">
+              <a href={`https://latroussedigitale.ca/panier?session_id=${cartSessionId}`} className="relative text-gray-600 hover:text-primary transition-colors">
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-[#ff6b3d] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
