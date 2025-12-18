@@ -6,7 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { DemoPreview } from "./DemoPreview";
 import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
-import { Eye, RefreshCw, Building2, Settings, Palette, Globe, CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles, Phone } from "lucide-react";
+import { Eye, RefreshCw, Building2, Settings, Palette, Globe, CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles, Phone, ShoppingCart } from "lucide-react";
 import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -375,8 +375,11 @@ export const DemoGenerator = () => {
                 </a>)}
             </nav>
 
-            {/* CTA Button */}
-            <div className="flex items-center gap-2">
+            {/* Cart Icon & CTA Button */}
+            <div className="flex items-center gap-4">
+              <a href="https://latroussedigitale.ca/panier" className="text-gray-600 hover:text-primary transition-colors">
+                <ShoppingCart className="h-5 w-5" />
+              </a>
               <Button className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium" onClick={() => setActiveTab("general")}>
                 <span className="hidden sm:inline">Générer ma démo</span>
                 <span className="sm:hidden">Démo</span>
