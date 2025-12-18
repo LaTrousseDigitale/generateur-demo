@@ -334,17 +334,17 @@ export const DemoGenerator = () => {
     label: "Accueil",
     href: "https://latroussedigitale.ca"
   }, {
-    label: "Services",
-    href: "https://latroussedigitale.ca/#services"
+    label: "Applications",
+    href: "https://latroussedigitale.ca/#applications"
+  }, {
+    label: "Démos",
+    href: "https://latroussedigitale.ca/#demos"
   }, {
     label: "Avantages",
     href: "https://latroussedigitale.ca/#avantages"
   }, {
     label: "Tarifs",
     href: "https://latroussedigitale.ca/#tarifs"
-  }, {
-    label: "FAQ",
-    href: "https://latroussedigitale.ca/#faq"
   }, {
     label: "Contact",
     href: "https://latroussedigitale.ca/#contact"
