@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 const CART_SESSION_KEY = 'cart_session_id';
+const CART_COOKIE_NAME = 'ltd_cart_session';
 const CART_API_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/cart-sync`;
 
 export interface CartItem {
@@ -22,13 +23,62 @@ interface Cart {
   updated_at: string;
 }
 
+// Cookie utilities for cross-subdomain sharing
+const getCookie = (name: string): string | null => {
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  return match ? decodeURIComponent(match[2]) : null;
+};
+
+const setCookie = (name: string, value: string, days: number = 365): void => {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  // Set cookie on parent domain .latroussedigitale.ca for cross-subdomain access
+  const domain = window.location.hostname.includes('latroussedigitale.ca') 
+    ? '.latroussedigitale.ca' 
+    : window.location.hostname;
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; domain=${domain}; SameSite=Lax`;
+};
+
 // Generate or retrieve session ID for anonymous users
+// Priority: 1. URL param, 2. Shared cookie, 3. localStorage, 4. Generate new
 const getSessionId = (): string => {
-  let sessionId = localStorage.getItem(CART_SESSION_KEY);
-  if (!sessionId) {
-    sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    localStorage.setItem(CART_SESSION_KEY, sessionId);
+  // 1. Check URL parameter first (for cross-site navigation)
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlSessionId = urlParams.get('session_id');
+  
+  if (urlSessionId) {
+    // Store in both cookie and localStorage
+    setCookie(CART_COOKIE_NAME, urlSessionId);
+    localStorage.setItem(CART_SESSION_KEY, urlSessionId);
+    // Clean URL
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.delete('session_id');
+    window.history.replaceState({}, '', newUrl.toString());
+    console.log('[Cart] Using session_id from URL:', urlSessionId);
+    return urlSessionId;
   }
+  
+  // 2. Check shared cookie (for subdomain sync)
+  const cookieSessionId = getCookie(CART_COOKIE_NAME);
+  if (cookieSessionId) {
+    localStorage.setItem(CART_SESSION_KEY, cookieSessionId);
+    console.log('[Cart] Using session_id from cookie:', cookieSessionId);
+    return cookieSessionId;
+  }
+  
+  // 3. Check localStorage
+  let sessionId = localStorage.getItem(CART_SESSION_KEY);
+  if (sessionId) {
+    // Also set cookie for future cross-subdomain access
+    setCookie(CART_COOKIE_NAME, sessionId);
+    console.log('[Cart] Using session_id from localStorage:', sessionId);
+    return sessionId;
+  }
+  
+  // 4. Generate new session ID
+  sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  localStorage.setItem(CART_SESSION_KEY, sessionId);
+  setCookie(CART_COOKIE_NAME, sessionId);
+  console.log('[Cart] Generated new session_id:', sessionId);
   return sessionId;
 };
 
