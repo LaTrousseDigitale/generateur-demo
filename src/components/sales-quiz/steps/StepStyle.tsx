@@ -143,7 +143,7 @@ export const StepStyle = () => {
                 <button
                   key={theme.id}
                   type="button"
-                  onClick={() => updateData({ theme: theme.id })}
+                  onClick={() => updateData({ theme: selectedTheme === theme.id ? "" : theme.id })}
                   className={cn(
                     "group relative rounded-2xl overflow-hidden transition-all duration-300 animate-fade-in",
                     "border-2",
@@ -252,7 +252,7 @@ export const StepStyle = () => {
                   <button
                     key={style.id}
                     type="button"
-                    onClick={() => updateData({ portalStyle: style.id })}
+                    onClick={() => updateData({ portalStyle: selectedPortalStyle === style.id ? "" : style.id })}
                     className={cn(
                       "group relative rounded-2xl overflow-hidden transition-all duration-300 animate-fade-in",
                       "border-2",
