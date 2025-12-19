@@ -270,8 +270,14 @@ export const useCartSync = () => {
     fetchCart();
   }, [fetchCart]);
 
-  // Subscribe to realtime updates
+  // Subscribe to realtime updates - only for authenticated users
+  // Anonymous carts use polling via edge function (RLS blocks direct access)
   useEffect(() => {
+    if (!userId) {
+      // Skip realtime for anonymous users - they use edge function polling
+      return;
+    }
+
     const channel = supabase
       .channel('cart-changes')
       .on(
@@ -280,12 +286,9 @@ export const useCartSync = () => {
           event: '*',
           schema: 'public',
           table: 'carts',
-          filter: userId 
-            ? `user_id=eq.${userId}` 
-            : `session_id=eq.${sessionId}`,
+          filter: `user_id=eq.${userId}`,
         },
         (payload) => {
-          console.log('Cart realtime update:', payload);
           if (payload.new && 'items' in payload.new) {
             setItems((payload.new as Cart).items || []);
           }
@@ -296,7 +299,7 @@ export const useCartSync = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [userId, sessionId]);
+  }, [userId]);
 
   return {
     items,
