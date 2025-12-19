@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   Sparkles, Target, Building2, Layers, Check, 
-  ArrowRight, Lightbulb, Star, TrendingUp, Puzzle 
+  ArrowRight, Lightbulb, Star, TrendingUp, Puzzle, Palette 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { INDUSTRIES } from "@/types/questionnaire";
@@ -225,6 +225,33 @@ export const QuizSummaryPanel = () => {
                     ))}
                   </div>
                 )}
+              </div>
+            </>
+          )}
+
+          {/* Style sélectionné */}
+          {(data.theme || data.portalStyle) && (
+            <>
+              <Separator />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                  <Palette className="w-4 h-4" />
+                  <span>Style visuel</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {data.theme && (
+                    <Badge variant="outline" className="text-xs">
+                      {data.theme === "moderne" ? "☀️ Moderne" : 
+                       data.theme === "rustique" ? "🌙 Sombre" : "⚡ Futuriste"}
+                    </Badge>
+                  )}
+                  {data.portalStyle && (
+                    <Badge variant="outline" className="text-xs">
+                      {data.portalStyle === "light" ? "☀️ Mode clair" : 
+                       data.portalStyle === "dark" ? "🌙 Mode sombre" : "🔄 Auto"}
+                    </Badge>
+                  )}
+                </div>
               </div>
             </>
           )}
