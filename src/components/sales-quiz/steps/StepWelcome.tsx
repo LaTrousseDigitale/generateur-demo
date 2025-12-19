@@ -11,25 +11,19 @@ import heroConstruction from "@/assets/hero-construction.jpg";
 import heroArchitecture from "@/assets/hero-architecture.jpg";
 import bookingAutoService from "@/assets/booking-auto-service.jpg";
 
-const DEMO_PREVIEWS = [
-  { image: heroAuto, label: "Pièces Auto" },
-  { image: heroHealth, label: "Clinique Santé" },
-  { image: heroRestaurant, label: "Restaurant" },
-];
-
 const BENEFITS = [
   { icon: "⚡", text: "Prêt en 2 minutes" },
   { icon: "🎨", text: "100% personnalisé" },
   { icon: "💰", text: "Gratuit et sans engagement" },
 ];
 
-// Floating industry images configuration
+// Floating industry images configuration - LARGER sizes
 const FLOATING_IMAGES = [
   { 
     image: heroAuto, 
     label: "Vente auto", 
-    position: "top-[8%] left-[3%]",
-    size: "w-20 h-14 md:w-28 md:h-20",
+    position: "top-[5%] left-[2%]",
+    size: "w-32 h-24 md:w-44 md:h-32 lg:w-52 lg:h-36",
     rotation: "-rotate-6",
     delay: "0s",
     duration: "6s"
@@ -37,8 +31,8 @@ const FLOATING_IMAGES = [
   { 
     image: bookingAutoService, 
     label: "Garage", 
-    position: "top-[18%] right-[5%]",
-    size: "w-18 h-12 md:w-24 md:h-16",
+    position: "top-[12%] right-[3%]",
+    size: "w-28 h-20 md:w-40 md:h-28 lg:w-48 lg:h-32",
     rotation: "rotate-6",
     delay: "1s",
     duration: "7s"
@@ -46,8 +40,8 @@ const FLOATING_IMAGES = [
   { 
     image: heroRestaurant, 
     label: "Spectacles", 
-    position: "top-[40%] left-[2%]",
-    size: "w-16 h-12 md:w-22 md:h-16",
+    position: "top-[45%] left-[1%]",
+    size: "w-28 h-20 md:w-36 md:h-26 lg:w-44 lg:h-30",
     rotation: "-rotate-3",
     delay: "0.5s",
     duration: "8s"
@@ -55,8 +49,8 @@ const FLOATING_IMAGES = [
   { 
     image: heroConstruction, 
     label: "Déménagement", 
-    position: "top-[35%] right-[3%]",
-    size: "w-18 h-14 md:w-26 md:h-18",
+    position: "top-[40%] right-[2%]",
+    size: "w-30 h-22 md:w-42 md:h-30 lg:w-50 lg:h-34",
     rotation: "rotate-3",
     delay: "1.5s",
     duration: "6.5s"
@@ -64,8 +58,8 @@ const FLOATING_IMAGES = [
   { 
     image: heroArchitecture, 
     label: "Immobilier", 
-    position: "bottom-[25%] left-[4%]",
-    size: "w-20 h-14 md:w-28 md:h-20",
+    position: "bottom-[15%] left-[3%]",
+    size: "w-32 h-24 md:w-44 md:h-32 lg:w-52 lg:h-36",
     rotation: "rotate-6",
     delay: "2s",
     duration: "7.5s"
@@ -73,8 +67,8 @@ const FLOATING_IMAGES = [
   { 
     image: heroHealth, 
     label: "Finances", 
-    position: "bottom-[20%] right-[4%]",
-    size: "w-16 h-12 md:w-24 md:h-16",
+    position: "bottom-[10%] right-[3%]",
+    size: "w-28 h-20 md:w-40 md:h-28 lg:w-48 lg:h-32",
     rotation: "-rotate-6",
     delay: "0.8s",
     duration: "6.8s"
@@ -182,37 +176,6 @@ export const StepWelcome = () => {
             <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Button>
         </div>
-
-        {/* Demo Previews */}
-        <div className="pt-8 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-          <p className="text-sm text-muted-foreground mb-6">
-            Exemples de démos générées
-          </p>
-          <div className="flex items-center justify-center gap-6">
-            {DEMO_PREVIEWS.map((demo, index) => (
-              <div
-                key={index}
-                className={cn(
-                  "relative w-40 h-28 md:w-56 md:h-36 lg:w-72 lg:h-44 rounded-2xl overflow-hidden",
-                  "border-2 border-border/50 shadow-xl",
-                  "hover:scale-105 hover:border-primary/50 transition-all duration-300",
-                  "glow-card"
-                )}
-              >
-                <img
-                  src={demo.image}
-                  alt={demo.label}
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent" />
-                <span className="absolute bottom-2 left-3 text-sm text-white font-semibold">
-                  {demo.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Trust Badge */}
         <div className="flex items-center justify-center gap-6 pt-6 animate-fade-in" style={{ animationDelay: "0.6s" }}>
           <div className="flex items-center gap-1">
