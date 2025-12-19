@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   Sparkles, Target, Building2, Layers, Check, 
-  ArrowRight, Lightbulb, Star, TrendingUp 
+  ArrowRight, Lightbulb, Star, TrendingUp, Puzzle 
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { INDUSTRIES } from "@/types/questionnaire";
@@ -195,7 +195,40 @@ export const QuizSummaryPanel = () => {
             </>
           )}
 
-          {/* Indicateur de progression */}
+          {/* Fonctionnalités sélectionnées */}
+          {((data.features && data.features.length > 0) || (data.selectedModules && data.selectedModules.length > 0)) && (
+            <>
+              <Separator />
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+                  <Puzzle className="w-4 h-4" />
+                  <span>Fonctionnalités</span>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {data.features?.slice(0, 6).map((feature) => (
+                    <Badge key={feature} variant="outline" className="text-xs">
+                      {feature}
+                    </Badge>
+                  ))}
+                  {data.features && data.features.length > 6 && (
+                    <Badge variant="secondary" className="text-xs">
+                      +{data.features.length - 6}
+                    </Badge>
+                  )}
+                </div>
+                {data.selectedModules && data.selectedModules.length > 0 && (
+                  <div className="flex flex-wrap gap-1 pt-1">
+                    {data.selectedModules.map((module) => (
+                      <Badge key={module} className="text-xs bg-accent/20 text-accent-foreground">
+                        {module}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
           <div className="pt-4">
             <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
               <TrendingUp className="w-3 h-3" />

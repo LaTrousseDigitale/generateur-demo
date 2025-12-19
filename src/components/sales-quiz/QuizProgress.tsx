@@ -8,6 +8,7 @@ const STEP_LABELS = [
   "Objectifs",
   "Solutions",
   "Détails",
+  "Fonctionnalités",
   "Branding",
   "Contact",
   "Résumé",
