@@ -1,7 +1,7 @@
-import { DemoGenerator } from "@/components/DemoGenerator";
+import { SalesQuizGenerator } from "@/components/sales-quiz/SalesQuizGenerator";
 
 const Index = () => {
-  return <DemoGenerator />;
+  return <SalesQuizGenerator />;
 };
 
 export default Index;
