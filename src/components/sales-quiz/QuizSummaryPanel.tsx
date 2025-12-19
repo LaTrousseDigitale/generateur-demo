@@ -6,19 +6,29 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   Sparkles, Target, Building2, Layers, Check, 
-  ArrowRight, Lightbulb, Star, TrendingUp, Puzzle, Palette 
+  ArrowRight, Lightbulb, Star, TrendingUp, Puzzle, Palette,
+  Eye, Clock, Wand2, Gem, Rocket, Globe, Lock, Settings, Package,
+  Sun, Moon, RefreshCw, Zap
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { INDUSTRIES } from "@/types/questionnaire";
+import { LucideIcon } from "lucide-react";
 
-// Mapping des priorités vers labels
-const PRIORITY_LABELS: Record<string, { label: string; icon: string }> = {
-  revenue: { label: "Augmenter les ventes", icon: "📈" },
-  visibility: { label: "Améliorer ma visibilité", icon: "👁️" },
-  efficiency: { label: "Gagner du temps", icon: "⏱️" },
-  image: { label: "Moderniser mon image", icon: "✨" },
-  loyalty: { label: "Fidéliser mes clients", icon: "💎" },
-  expansion: { label: "Nouveaux marchés", icon: "🚀" },
+// Mapping des priorités vers labels avec icônes Lucide
+const PRIORITY_LABELS: Record<string, { label: string; Icon: LucideIcon }> = {
+  revenue: { label: "Augmenter les ventes", Icon: TrendingUp },
+  visibility: { label: "Améliorer ma visibilité", Icon: Eye },
+  efficiency: { label: "Gagner du temps", Icon: Clock },
+  image: { label: "Moderniser mon image", Icon: Wand2 },
+  loyalty: { label: "Fidéliser mes clients", Icon: Gem },
+  expansion: { label: "Nouveaux marchés", Icon: Rocket },
+};
+
+// Mapping des icônes de solutions
+const SOLUTION_ICONS: Record<string, LucideIcon> = {
+  website: Globe,
+  portal: Lock,
+  module: Settings,
 };
 
 export const QuizSummaryPanel = () => {
@@ -85,13 +95,14 @@ export const QuizSummaryPanel = () => {
               <div className="flex flex-wrap gap-2">
                 {data.mainObjectives.map((id) => {
                   const priority = PRIORITY_LABELS[id];
+                  const PriorityIcon = priority?.Icon;
                   return (
                     <Badge 
                       key={id} 
                       variant="secondary"
                       className="flex items-center gap-1.5 py-1.5"
                     >
-                      <span>{priority?.icon}</span>
+                      {PriorityIcon && <PriorityIcon className="w-3.5 h-3.5" />}
                       <span>{priority?.label || id}</span>
                     </Badge>
                   );
@@ -133,7 +144,10 @@ export const QuizSummaryPanel = () => {
                         >
                           <div className="flex items-start justify-between mb-1">
                             <div className="flex items-center gap-2">
-                              <span className="text-lg">{solution?.icon}</span>
+                              {(() => {
+                                const SolutionIcon = SOLUTION_ICONS[rec.solutionId] || Package;
+                                return <SolutionIcon className="w-5 h-5 text-primary" />;
+                              })()}
                               <span className="font-medium">{solution?.title}</span>
                             </div>
                             <div className="flex items-center gap-1.5">
@@ -179,7 +193,10 @@ export const QuizSummaryPanel = () => {
                         className="flex items-center gap-3 p-2 rounded-lg bg-primary/5"
                       >
                         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                          <span>{solution?.icon || "📦"}</span>
+                          {(() => {
+                            const SolutionIcon = SOLUTION_ICONS[id] || Package;
+                            return <SolutionIcon className="w-4 h-4 text-primary" />;
+                          })()}
                         </div>
                         <div>
                           <span className="font-medium text-sm">{solution?.title || id}</span>
@@ -240,15 +257,19 @@ export const QuizSummaryPanel = () => {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {data.theme && (
-                    <Badge variant="outline" className="text-xs">
-                      {data.theme === "moderne" ? "☀️ Moderne" : 
-                       data.theme === "rustique" ? "🌙 Sombre" : "⚡ Futuriste"}
+                    <Badge variant="outline" className="text-xs flex items-center gap-1">
+                      {data.theme === "moderne" ? <Sun className="w-3 h-3" /> : 
+                       data.theme === "rustique" ? <Moon className="w-3 h-3" /> : <Zap className="w-3 h-3" />}
+                      {data.theme === "moderne" ? "Moderne" : 
+                       data.theme === "rustique" ? "Sombre" : "Futuriste"}
                     </Badge>
                   )}
                   {data.portalStyle && (
-                    <Badge variant="outline" className="text-xs">
-                      {data.portalStyle === "light" ? "☀️ Mode clair" : 
-                       data.portalStyle === "dark" ? "🌙 Mode sombre" : "🔄 Auto"}
+                    <Badge variant="outline" className="text-xs flex items-center gap-1">
+                      {data.portalStyle === "light" ? <Sun className="w-3 h-3" /> : 
+                       data.portalStyle === "dark" ? <Moon className="w-3 h-3" /> : <RefreshCw className="w-3 h-3" />}
+                      {data.portalStyle === "light" ? "Mode clair" : 
+                       data.portalStyle === "dark" ? "Mode sombre" : "Auto"}
                     </Badge>
                   )}
                 </div>

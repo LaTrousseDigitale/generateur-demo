@@ -2,7 +2,7 @@ import { useQuiz } from "../QuizContext";
 import { QuizNavigation } from "../QuizNavigation";
 import { 
   Palette, Check, Sun, Moon, Zap, Smartphone, Monitor,
-  Sparkles, Info
+  Sparkles, Info, Star
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
@@ -157,8 +157,9 @@ export const StepStyle = () => {
                 >
                   {/* Suggested Badge */}
                   {isSuggested && !isSelected && (
-                    <div className="absolute top-0 left-0 right-0 bg-accent text-white text-xs font-medium py-1 px-3 text-center z-10">
-                      ⭐ Suggéré pour votre industrie
+                    <div className="absolute top-0 left-0 right-0 bg-accent text-white text-xs font-medium py-1 px-3 text-center z-10 flex items-center justify-center gap-1">
+                      <Star className="w-3 h-3" />
+                      Suggéré pour votre industrie
                     </div>
                   )}
 
