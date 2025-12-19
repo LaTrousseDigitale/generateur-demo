@@ -112,10 +112,11 @@ export const IndustryCard = ({
     <button
       onClick={onSelect}
       className={cn(
-        "group relative w-full text-left p-4 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg",
+        "group relative w-full text-left p-4 rounded-2xl border-2 transition-all duration-300",
+        "shadow-[0_0_30px_-5px_hsl(var(--primary)/0.3)] hover:shadow-[0_0_40px_-5px_hsl(var(--primary)/0.5)]",
         "bg-card hover:bg-accent/5",
         isSelected
-          ? "border-primary shadow-lg ring-2 ring-primary/20"
+          ? "border-primary shadow-[0_0_50px_-5px_hsl(var(--primary)/0.6)] ring-2 ring-primary/20"
           : "border-border hover:border-primary/40"
       )}
       style={{
