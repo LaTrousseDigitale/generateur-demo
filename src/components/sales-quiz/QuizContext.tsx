@@ -32,6 +32,10 @@ const initialData: Partial<QuestionnaireData> = {
   logo: null,
   clientEmail: "",
   contactMethod: "",
+  theme: "",
+  portalStyle: "",
+  mobileOptions: [],
+  features: [],
 };
 
 const QuizContext = createContext<QuizContextType | null>(null);

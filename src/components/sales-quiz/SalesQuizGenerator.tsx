@@ -7,6 +7,7 @@ import { StepObjectives } from "./steps/StepObjectives";
 import { StepSolutions } from "./steps/StepSolutions";
 import { StepDetails } from "./steps/StepDetails";
 import { StepFeatures } from "./steps/StepFeatures";
+import { StepStyle } from "./steps/StepStyle";
 import { StepBranding } from "./steps/StepBranding";
 import { StepContact } from "./steps/StepContact";
 import { StepSummary } from "./steps/StepSummary";
@@ -19,14 +20,15 @@ const STEPS = [
   StepObjectives,
   StepSolutions,
   StepDetails,
-  StepFeatures, // Nouvelle étape fonctionnalités
+  StepFeatures,
+  StepStyle, // Nouvelle étape style
   StepBranding,
   StepContact,
   StepSummary,
 ];
 
 // Étapes où on affiche le panneau de résumé (pas sur welcome ni summary)
-const STEPS_WITH_PANEL = [1, 2, 3, 4, 5, 6, 7];
+const STEPS_WITH_PANEL = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const QuizContent = () => {
   const { state } = useQuiz();

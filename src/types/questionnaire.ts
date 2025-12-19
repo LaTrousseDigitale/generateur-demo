@@ -74,12 +74,15 @@ export interface QuestionnaireData {
   canvaCustomDesignTypes: string;
   canvaCustomDeadline: string;
 
-  // Section 7: Branding
+  // Section 7: Branding & Style
   logo: string | null;
   primaryColor: string;
   accentColor: string;
   secondaryColor: string;
   typography: string;
+  theme: string; // moderne, rustique, futuriste (pour sites web)
+  portalStyle: string; // light, dark, auto (pour portails/modules)
+  mobileOptions: string[]; // responsive, pwa, native-look
 
   // Section 8: Domaine & hébergement
   domainType: string;
