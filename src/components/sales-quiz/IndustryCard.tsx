@@ -10,405 +10,730 @@ interface IndustryCardProps {
   index: number;
 }
 
-// Animated illustration components for each industry
-const AutoIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Car body */}
-    <div 
-      className="absolute bottom-6 left-1/2 -translate-x-1/2 w-20 h-8 bg-gradient-to-r from-primary to-blue-600 rounded-t-xl rounded-b-lg shadow-lg"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Windows */}
-      <div className="absolute top-1 left-3 w-5 h-3 bg-blue-200/60 rounded-sm" />
-      <div className="absolute top-1 right-3 w-5 h-3 bg-blue-200/60 rounded-sm" />
-      {/* Wheels */}
-      <div className="absolute -bottom-2 left-2 w-4 h-4 bg-gray-800 rounded-full border-2 border-gray-400 animate-spin" style={{ animationDuration: "2s" }} />
-      <div className="absolute -bottom-2 right-2 w-4 h-4 bg-gray-800 rounded-full border-2 border-gray-400 animate-spin" style={{ animationDuration: "2s" }} />
-    </div>
-    {/* Floating parts */}
-    <div className="absolute top-4 right-4 w-6 h-6 bg-gray-300 rounded-full shadow animate-bounce" style={{ animationDuration: "2s", animationDelay: "0.2s" }} />
-    <div className="absolute top-8 left-4 w-4 h-8 bg-accent/80 rounded shadow animate-bounce" style={{ animationDuration: "2.5s" }} />
-    <div className="absolute top-3 left-1/2 w-3 h-3 bg-secondary rounded-full animate-ping" style={{ animationDuration: "3s" }} />
-  </div>
-);
-
-const RestaurantIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Plate */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-16 h-16 bg-white rounded-full shadow-lg border-4 border-gray-100"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Food */}
-      <div className="absolute top-3 left-3 w-4 h-4 bg-accent rounded-full" />
-      <div className="absolute top-4 right-3 w-3 h-3 bg-green-500 rounded-full" />
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 w-5 h-3 bg-amber-600 rounded" />
-    </div>
-    {/* Steam */}
-    <div className="absolute top-2 left-1/2 -translate-x-1/2 flex gap-1">
-      <div className="w-1 h-4 bg-gray-300/60 rounded-full animate-pulse" />
-      <div className="w-1 h-6 bg-gray-300/60 rounded-full animate-pulse" style={{ animationDelay: "0.3s" }} />
-      <div className="w-1 h-5 bg-gray-300/60 rounded-full animate-pulse" style={{ animationDelay: "0.6s" }} />
-    </div>
-    {/* Utensils */}
-    <div className="absolute bottom-6 left-3 w-1.5 h-10 bg-gray-400 rounded-full rotate-[-20deg] animate-bounce" style={{ animationDuration: "3s" }} />
-    <div className="absolute bottom-6 right-3 w-1.5 h-10 bg-gray-400 rounded-full rotate-[20deg] animate-bounce" style={{ animationDuration: "3s", animationDelay: "0.5s" }} />
-  </div>
-);
-
-const HealthIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Heart with pulse */}
-    <div 
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-      style={{ animation: "heartbeat 1.5s ease-in-out infinite" }}
-    >
-      <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-rose-600 rounded-tl-full rounded-tr-full rotate-45 shadow-lg">
-        <div className="absolute -top-[24px] -left-[12px] w-12 h-12 bg-gradient-to-br from-red-400 to-rose-600 rounded-full" />
-        <div className="absolute -top-[12px] -right-[24px] w-12 h-12 bg-gradient-to-br from-red-400 to-rose-600 rounded-full" />
+// Composant fenêtre d'application réutilisable
+const AppWindow = ({ children, url }: { children: React.ReactNode; url?: string }) => (
+  <div className="w-full h-full bg-white rounded-xl shadow-lg overflow-hidden border border-gray-200">
+    {/* Barre de titre */}
+    <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 border-b border-gray-200">
+      <div className="flex gap-1.5">
+        <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+        <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+        <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
       </div>
-    </div>
-    {/* Pulse line */}
-    <svg className="absolute bottom-4 left-2 w-20 h-8" viewBox="0 0 80 30">
-      <path 
-        d="M0,15 L15,15 L20,5 L25,25 L30,10 L35,20 L40,15 L80,15" 
-        fill="none" 
-        stroke="hsl(var(--primary))" 
-        strokeWidth="2"
-        className="animate-pulse"
-        strokeDasharray="80"
-        strokeDashoffset="0"
-      />
-    </svg>
-    {/* Floating cross */}
-    <div className="absolute top-3 right-3 w-6 h-6 animate-bounce" style={{ animationDuration: "2s" }}>
-      <div className="absolute top-0 left-2 w-2 h-6 bg-emerald-500 rounded" />
-      <div className="absolute top-2 left-0 w-6 h-2 bg-emerald-500 rounded" />
-    </div>
-  </div>
-);
-
-const ConstructionIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Building blocks */}
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-0.5">
-      <div className="w-8 h-4 bg-secondary rounded shadow animate-fade-in" style={{ animationDelay: "0.6s" }} />
-      <div className="w-12 h-4 bg-amber-500 rounded shadow animate-fade-in" style={{ animationDelay: "0.4s" }} />
-      <div className="w-16 h-4 bg-amber-600 rounded shadow animate-fade-in" style={{ animationDelay: "0.2s" }} />
-      <div className="w-20 h-4 bg-amber-700 rounded shadow" />
-    </div>
-    {/* Crane */}
-    <div className="absolute top-2 right-2">
-      <div className="w-1 h-16 bg-gray-600" />
-      <div className="absolute top-0 left-0 w-10 h-1 bg-gray-600" />
-      <div 
-        className="absolute top-0 right-0 w-0.5 h-6 bg-gray-400 origin-top"
-        style={{ animation: "swing 2s ease-in-out infinite" }}
-      >
-        <div className="absolute bottom-0 w-3 h-3 bg-secondary rounded shadow-lg -translate-x-1" />
-      </div>
-    </div>
-    {/* Hard hat */}
-    <div className="absolute top-4 left-3 w-8 h-4 bg-secondary rounded-t-full shadow animate-bounce" style={{ animationDuration: "3s" }} />
-  </div>
-);
-
-const CommerceIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Shopping bag */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-14 h-16 bg-gradient-to-b from-purple-400 to-purple-600 rounded-b-lg shadow-lg"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Handle */}
-      <div className="absolute -top-3 left-2 w-10 h-4 border-4 border-purple-700 rounded-t-full bg-transparent" />
-      {/* Shine */}
-      <div className="absolute top-2 left-2 w-2 h-8 bg-white/30 rounded" />
-    </div>
-    {/* Floating items */}
-    <div className="absolute top-2 right-2 w-4 h-4 bg-accent rounded shadow animate-bounce" style={{ animationDelay: "0.2s" }} />
-    <div className="absolute top-6 left-3 w-3 h-3 bg-secondary rounded-full shadow animate-bounce" style={{ animationDelay: "0.4s" }} />
-    <div className="absolute top-3 left-1/2 w-2 h-2 bg-primary rounded shadow animate-ping" style={{ animationDuration: "2s" }} />
-  </div>
-);
-
-const TechIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Laptop */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Screen */}
-      <div className="w-16 h-10 bg-gradient-to-br from-violet-500 to-purple-600 rounded-t-lg shadow-lg border-2 border-gray-700">
-        {/* Code lines */}
-        <div className="p-1 space-y-1">
-          <div className="w-8 h-1 bg-green-400 rounded" />
-          <div className="w-6 h-1 bg-blue-400 rounded ml-2" />
-          <div className="w-10 h-1 bg-pink-400 rounded" />
-          <div className="w-4 h-1 bg-yellow-400 rounded ml-1" />
+      {url && (
+        <div className="flex-1 text-center">
+          <span className="text-[8px] text-gray-400 bg-gray-100 px-2 py-0.5 rounded">{url}</span>
         </div>
-      </div>
-      {/* Base */}
-      <div className="w-18 h-1.5 bg-gray-600 rounded-b mx-auto" style={{ width: "72px" }} />
+      )}
     </div>
-    {/* Floating elements */}
-    <div className="absolute top-2 right-2 text-lg animate-bounce">⚡</div>
-    <div className="absolute top-4 left-3 w-4 h-4 border-2 border-primary rounded animate-spin" style={{ animationDuration: "3s" }} />
-    <div className="absolute top-2 left-1/2 w-2 h-2 bg-accent rounded-full animate-ping" style={{ animationDuration: "2s" }} />
-  </div>
-);
-
-const EducationIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Books stack */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col gap-0.5"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      <div className="w-14 h-3 bg-primary rounded shadow" />
-      <div className="w-12 h-3 bg-accent rounded shadow ml-1" />
-      <div className="w-14 h-3 bg-secondary rounded shadow" />
-      <div className="w-13 h-3 bg-emerald-500 rounded shadow ml-0.5" />
-    </div>
-    {/* Graduation cap */}
-    <div className="absolute top-4 right-3 animate-bounce" style={{ animationDuration: "2s" }}>
-      <div className="w-8 h-2 bg-gray-800 rotate-[-10deg]" />
-      <div className="w-6 h-4 bg-gray-800 rounded-b mx-auto -mt-1" />
-      <div className="absolute -top-1 left-1/2 w-0.5 h-4 bg-gray-600">
-        <div className="absolute top-0 w-2 h-2 bg-secondary rounded-full -translate-x-1" />
-      </div>
-    </div>
-    {/* Floating elements */}
-    <div className="absolute top-6 left-3 text-sm animate-pulse">💡</div>
-  </div>
-);
-
-const ServicesIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Briefcase */}
-    <div 
-      className="absolute bottom-6 left-1/2 -translate-x-1/2 w-16 h-12 bg-gradient-to-b from-cyan-400 to-cyan-600 rounded-lg shadow-lg"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Handle */}
-      <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-6 h-3 border-3 border-cyan-700 rounded-t-lg bg-transparent" />
-      {/* Lock */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-2 bg-yellow-400 rounded" />
-    </div>
-    {/* Floating icons */}
-    <div className="absolute top-3 right-3 w-5 h-5 bg-primary rounded shadow animate-bounce" style={{ animationDelay: "0.3s" }}>
-      <div className="w-3 h-0.5 bg-white rounded mx-auto mt-1.5" />
-      <div className="w-3 h-0.5 bg-white rounded mx-auto mt-0.5" />
-    </div>
-    <div className="absolute top-5 left-4 w-4 h-4 bg-secondary rounded-full shadow animate-bounce" style={{ animationDelay: "0.6s" }} />
-    <div className="absolute top-2 left-1/2 w-2 h-2 bg-accent rounded animate-ping" style={{ animationDuration: "2s" }} />
-  </div>
-);
-
-const ArchitectureIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Blueprint */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-18 h-14 bg-blue-100 rounded shadow-lg border border-blue-300"
-      style={{ animation: "float-gentle 3s ease-in-out infinite", width: "72px" }}
-    >
-      {/* Grid lines */}
-      <div className="absolute inset-2 border border-blue-400 opacity-50" />
-      {/* Building outline */}
-      <svg className="absolute inset-2 w-14 h-10" viewBox="0 0 50 35">
-        <path d="M5,30 L5,15 L25,5 L45,15 L45,30 Z" fill="none" stroke="hsl(var(--primary))" strokeWidth="1.5" />
-        <rect x="20" y="20" width="10" height="10" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" />
-      </svg>
-    </div>
-    {/* Floating tools */}
-    <div className="absolute top-3 right-2 w-8 h-1 bg-gray-500 rotate-45 animate-bounce" style={{ animationDuration: "2s" }}>
-      <div className="absolute right-0 w-2 h-3 bg-gray-600 -translate-y-1" />
-    </div>
-    <div className="absolute top-6 left-3 w-4 h-4 border-2 border-primary rounded-full animate-spin" style={{ animationDuration: "4s" }} />
-  </div>
-);
-
-const TransportIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Truck */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 flex"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Cab */}
-      <div className="w-6 h-8 bg-amber-500 rounded-t-lg rounded-bl-lg shadow-lg">
-        <div className="absolute top-1 left-1 w-4 h-3 bg-blue-200/60 rounded-sm" />
-      </div>
-      {/* Trailer */}
-      <div className="w-14 h-10 bg-amber-600 rounded-tr-lg -ml-1 -mt-2 shadow-lg" />
-      {/* Wheels */}
-      <div className="absolute -bottom-2 left-1 w-3 h-3 bg-gray-800 rounded-full border border-gray-400 animate-spin" style={{ animationDuration: "1s" }} />
-      <div className="absolute -bottom-2 right-2 w-3 h-3 bg-gray-800 rounded-full border border-gray-400 animate-spin" style={{ animationDuration: "1s" }} />
-      <div className="absolute -bottom-2 right-6 w-3 h-3 bg-gray-800 rounded-full border border-gray-400 animate-spin" style={{ animationDuration: "1s" }} />
-    </div>
-    {/* Road lines */}
-    <div className="absolute bottom-2 left-2 right-2 flex gap-2">
-      <div className="w-4 h-1 bg-gray-400 rounded animate-pulse" />
-      <div className="w-4 h-1 bg-gray-400 rounded animate-pulse" style={{ animationDelay: "0.3s" }} />
-      <div className="w-4 h-1 bg-gray-400 rounded animate-pulse" style={{ animationDelay: "0.6s" }} />
+    {/* Contenu */}
+    <div className="p-2 h-[calc(100%-28px)]">
+      {children}
     </div>
   </div>
 );
 
-const ArtsIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Stage curtains */}
-    <div className="absolute top-0 left-0 w-4 h-full bg-gradient-to-b from-rose-500 to-rose-700 rounded-br-xl" style={{ animation: "curtain-left 4s ease-in-out infinite" }} />
-    <div className="absolute top-0 right-0 w-4 h-full bg-gradient-to-b from-rose-500 to-rose-700 rounded-bl-xl" style={{ animation: "curtain-right 4s ease-in-out infinite" }} />
-    {/* Spotlight */}
-    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-yellow-300 rounded-full shadow-lg animate-pulse" />
-    <div className="absolute top-4 left-1/2 -translate-x-1/2 w-8 h-16 bg-gradient-to-b from-yellow-300/40 to-transparent" style={{ clipPath: "polygon(30% 0, 70% 0, 100% 100%, 0 100%)" }} />
-    {/* Masks */}
-    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-1">
-      <div className="w-6 h-6 bg-yellow-400 rounded-full shadow animate-bounce" style={{ animationDuration: "2s" }}>
-        <div className="w-1 h-1 bg-gray-800 rounded-full absolute top-1.5 left-1" />
-        <div className="w-1 h-1 bg-gray-800 rounded-full absolute top-1.5 right-1" />
-        <div className="w-2 h-1 bg-gray-800 rounded-t-full absolute bottom-1.5 left-2" />
-      </div>
-      <div className="w-6 h-6 bg-blue-400 rounded-full shadow animate-bounce" style={{ animationDuration: "2s", animationDelay: "0.3s" }}>
-        <div className="w-1 h-1 bg-gray-800 rounded-full absolute top-1.5 left-1" />
-        <div className="w-1 h-1 bg-gray-800 rounded-full absolute top-1.5 right-1" />
-        <div className="w-2 h-1 bg-gray-800 rounded-b-full absolute bottom-1.5 left-2" />
-      </div>
-    </div>
+// Avatar réutilisable
+const Avatar = ({ initials, color }: { initials: string; color: string }) => (
+  <div className={cn("w-6 h-6 rounded-full flex items-center justify-center text-white text-[8px] font-semibold", color)}>
+    {initials}
   </div>
 );
 
-const MovingIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Boxes stack */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      <div className="w-6 h-6 bg-amber-400 rounded shadow animate-bounce" style={{ animationDelay: "0.4s", animationDuration: "2s" }} />
-      <div className="w-10 h-8 bg-amber-500 rounded shadow" />
-      <div className="w-12 h-8 bg-amber-600 rounded shadow" />
-    </div>
-    {/* Floating items */}
-    <div className="absolute top-4 right-3 w-4 h-6 bg-primary rounded shadow animate-bounce" style={{ animationDuration: "2.5s" }} />
-    <div className="absolute top-6 left-4 w-5 h-5 bg-secondary rounded-full shadow animate-bounce" style={{ animationDuration: "3s", animationDelay: "0.3s" }} />
-    {/* Arrow */}
-    <div className="absolute top-2 left-1/2 -translate-x-1/2 text-accent animate-pulse">→</div>
-  </div>
-);
-
-const RealEstateIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* House */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Roof */}
-      <div className="w-0 h-0 border-l-[24px] border-r-[24px] border-b-[16px] border-transparent border-b-teal-600 mx-auto" />
-      {/* Body */}
-      <div className="w-12 h-10 bg-teal-500 rounded-b shadow-lg mx-auto -mt-1">
-        {/* Door */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-6 bg-teal-800 rounded-t" />
-        {/* Windows */}
-        <div className="absolute top-2 left-1 w-3 h-3 bg-blue-200 rounded-sm" />
-        <div className="absolute top-2 right-1 w-3 h-3 bg-blue-200 rounded-sm" />
-      </div>
-    </div>
-    {/* Key */}
-    <div className="absolute top-4 right-3 animate-bounce" style={{ animationDuration: "2s" }}>
-      <div className="w-4 h-4 border-2 border-secondary rounded-full" />
-      <div className="w-1 h-4 bg-secondary ml-1.5 -mt-1" />
-    </div>
-    {/* Sparkles */}
-    <div className="absolute top-3 left-4 text-secondary animate-pulse">✨</div>
-  </div>
-);
-
-const FinanceIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Chart */}
-    <div 
-      className="absolute bottom-4 left-1/2 -translate-x-1/2 w-16 h-12 bg-white rounded shadow-lg border border-gray-200 p-1"
-      style={{ animation: "float-gentle 3s ease-in-out infinite" }}
-    >
-      {/* Bars */}
-      <div className="flex items-end gap-1 h-full">
-        <div className="w-2 bg-green-400 rounded-t animate-pulse" style={{ height: "40%", animationDelay: "0s" }} />
-        <div className="w-2 bg-green-500 rounded-t animate-pulse" style={{ height: "60%", animationDelay: "0.2s" }} />
-        <div className="w-2 bg-green-400 rounded-t animate-pulse" style={{ height: "45%", animationDelay: "0.4s" }} />
-        <div className="w-2 bg-green-600 rounded-t animate-pulse" style={{ height: "80%", animationDelay: "0.6s" }} />
-        <div className="w-2 bg-green-500 rounded-t animate-pulse" style={{ height: "70%", animationDelay: "0.8s" }} />
-      </div>
-    </div>
-    {/* Coins */}
-    <div className="absolute top-3 right-2 w-5 h-5 bg-yellow-400 rounded-full shadow border-2 border-yellow-500 animate-bounce" style={{ animationDuration: "2s" }}>
-      <span className="text-yellow-700 text-xs font-bold absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">$</span>
-    </div>
-    <div className="absolute top-6 left-3 w-4 h-4 bg-yellow-400 rounded-full shadow border-2 border-yellow-500 animate-bounce" style={{ animationDuration: "2.5s", animationDelay: "0.3s" }} />
-    {/* Arrow up */}
-    <div className="absolute top-2 left-1/2 text-green-500 animate-pulse font-bold">↑</div>
-  </div>
-);
-
-const OBNLIllustration = () => (
-  <div className="relative w-full h-full">
-    {/* Heart hands */}
-    <div 
-      className="absolute bottom-6 left-1/2 -translate-x-1/2"
-      style={{ animation: "heartbeat 2s ease-in-out infinite" }}
-    >
-      <div className="w-10 h-10 bg-gradient-to-br from-pink-400 to-rose-500 rounded-tl-full rounded-tr-full rotate-45 shadow-lg">
-        <div className="absolute -top-[20px] -left-[10px] w-10 h-10 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full" />
-        <div className="absolute -top-[10px] -right-[20px] w-10 h-10 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full" />
-      </div>
-    </div>
-    {/* Floating hands */}
-    <div className="absolute top-4 left-3 text-2xl animate-bounce" style={{ animationDuration: "2s" }}>🤝</div>
-    <div className="absolute top-3 right-3 w-4 h-4 bg-primary rounded-full shadow animate-ping" style={{ animationDuration: "3s" }} />
-    {/* Sparkles */}
-    <div className="absolute top-6 right-6 text-secondary animate-pulse">✨</div>
-  </div>
-);
-
-// Map industry values to illustrations
-const INDUSTRY_ILLUSTRATIONS: Record<string, React.FC> = {
-  auto: AutoIllustration,
-  restauration: RestaurantIllustration,
-  sante: HealthIllustration,
-  construction: ConstructionIllustration,
-  architecture: ArchitectureIllustration,
-  commerce: CommerceIllustration,
-  education: EducationIllustration,
-  obnl: OBNLIllustration,
-  services: ServicesIllustration,
-  tech: TechIllustration,
-  transport: TransportIllustration,
-  "arts-scene": ArtsIllustration,
-  demenagement: MovingIllustration,
-  immobilier: RealEstateIllustration,
-  finances: FinanceIllustration,
+// Badge de statut
+const StatusBadge = ({ text, variant }: { text: string; variant: "success" | "warning" | "info" | "new" }) => {
+  const colors = {
+    success: "bg-green-100 text-green-600",
+    warning: "bg-orange-100 text-orange-600",
+    info: "bg-blue-100 text-blue-600",
+    new: "bg-primary/10 text-primary"
+  };
+  return (
+    <span className={cn("text-[7px] px-1.5 py-0.5 rounded-full", colors[variant])}>{text}</span>
+  );
 };
 
-// Gradient colors for each industry
-const INDUSTRY_COLORS: Record<string, { bg: string; border: string }> = {
-  auto: { bg: "from-blue-50 to-blue-100", border: "border-blue-200 hover:border-blue-400" },
-  restauration: { bg: "from-orange-50 to-amber-100", border: "border-orange-200 hover:border-orange-400" },
-  sante: { bg: "from-emerald-50 to-teal-100", border: "border-emerald-200 hover:border-emerald-400" },
-  construction: { bg: "from-amber-50 to-yellow-100", border: "border-amber-200 hover:border-amber-400" },
-  architecture: { bg: "from-slate-50 to-gray-100", border: "border-slate-200 hover:border-slate-400" },
-  commerce: { bg: "from-purple-50 to-violet-100", border: "border-purple-200 hover:border-purple-400" },
-  education: { bg: "from-blue-50 to-indigo-100", border: "border-blue-200 hover:border-blue-400" },
-  obnl: { bg: "from-pink-50 to-rose-100", border: "border-pink-200 hover:border-pink-400" },
-  services: { bg: "from-cyan-50 to-sky-100", border: "border-cyan-200 hover:border-cyan-400" },
-  tech: { bg: "from-violet-50 to-purple-100", border: "border-violet-200 hover:border-violet-400" },
-  transport: { bg: "from-amber-50 to-orange-100", border: "border-amber-200 hover:border-amber-400" },
-  "arts-scene": { bg: "from-fuchsia-50 to-pink-100", border: "border-fuchsia-200 hover:border-fuchsia-400" },
-  demenagement: { bg: "from-yellow-50 to-amber-100", border: "border-yellow-200 hover:border-yellow-400" },
-  immobilier: { bg: "from-teal-50 to-emerald-100", border: "border-teal-200 hover:border-teal-400" },
-  finances: { bg: "from-green-50 to-emerald-100", border: "border-green-200 hover:border-green-400" },
+// Mockup CRM pour Auto
+const AutoMockup = () => (
+  <AppWindow url="auto-expert.app/crm">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">🚗 Véhicules en service</span>
+        <span className="text-[7px] bg-green-100 text-green-600 px-1.5 rounded-full animate-pulse">+8 cette semaine</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="ML" color="bg-blue-500" />
+            <div>
+              <p className="text-[8px] font-medium">Marc Leblanc</p>
+              <p className="text-[6px] text-gray-400">Honda Civic 2022</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-[8px] font-bold text-primary">450$</p>
+            <StatusBadge text="En cours" variant="info" />
+          </div>
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="ST" color="bg-accent" />
+            <div>
+              <p className="text-[8px] font-medium">Sophie Tremblay</p>
+              <p className="text-[6px] text-gray-400">Toyota RAV4 2021</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-[8px] font-bold text-primary">680$</p>
+            <StatusBadge text="Terminé" variant="success" />
+          </div>
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-primary">24</p>
+          <p className="text-[6px] text-gray-400">RDV</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">12k$</p>
+          <p className="text-[6px] text-gray-400">CA/mois</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-accent">96%</p>
+          <p className="text-[6px] text-gray-400">Satisf.</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup réservations pour Restaurant
+const RestaurantMockup = () => (
+  <AppWindow url="mon-resto.app/reservations">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">🍽️ Réservations du soir</span>
+        <span className="text-[7px] bg-accent/20 text-accent px-1.5 rounded-full">14 tables</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded-full bg-amber-100 flex items-center justify-center text-[10px]">🕖</div>
+            <div>
+              <p className="text-[8px] font-medium">19h00 - Famille Roy</p>
+              <p className="text-[6px] text-gray-400">Table 5 • 4 pers.</p>
+            </div>
+          </div>
+          <StatusBadge text="Confirmé" variant="success" />
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center text-[10px]">🕗</div>
+            <div>
+              <p className="text-[8px] font-medium">20h00 - M. Bergeron</p>
+              <p className="text-[6px] text-gray-400">Table 12 • 2 pers.</p>
+            </div>
+          </div>
+          <StatusBadge text="Nouveau" variant="new" />
+        </div>
+      </div>
+      
+      <div className="grid grid-cols-4 gap-1 pt-1 border-t border-gray-100">
+        {["🟢", "🟢", "🟡", "🔴"].map((dot, i) => (
+          <div key={i} className="h-4 bg-gray-100 rounded flex items-center justify-center text-[8px]">{dot}</div>
+        ))}
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup dossiers patients pour Santé
+const HealthMockup = () => (
+  <AppWindow url="clinique.app/patients">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">❤️ Patients du jour</span>
+        <span className="text-[7px] bg-emerald-100 text-emerald-600 px-1.5 rounded-full">12 RDV</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-emerald-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="JD" color="bg-emerald-500" />
+            <div>
+              <p className="text-[8px] font-medium">Jean Dupont</p>
+              <p className="text-[6px] text-gray-400">Suivi annuel</p>
+            </div>
+          </div>
+          <div className="text-[7px] text-emerald-600">09h30</div>
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-blue-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="MC" color="bg-blue-500" />
+            <div>
+              <p className="text-[8px] font-medium">Marie Côté</p>
+              <p className="text-[6px] text-gray-400">Consultation</p>
+            </div>
+          </div>
+          <div className="text-[7px] text-blue-600">10h15</div>
+        </div>
+      </div>
+      
+      {/* Mini ECG animation */}
+      <svg className="w-full h-4" viewBox="0 0 100 15">
+        <path 
+          d="M0,8 L20,8 L25,2 L30,14 L35,6 L40,10 L45,8 L100,8" 
+          fill="none" 
+          stroke="hsl(var(--primary))" 
+          strokeWidth="1.5"
+          className="animate-pulse"
+        />
+      </svg>
+    </div>
+  </AppWindow>
+);
+
+// Mockup projets pour Construction
+const ConstructionMockup = () => (
+  <AppWindow url="chantier-pro.app/projets">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">🏗️ Chantiers actifs</span>
+        <span className="text-[7px] bg-amber-100 text-amber-600 px-1.5 rounded-full">3 projets</span>
+      </div>
+      
+      <div className="space-y-1.5">
+        <div className="p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex justify-between items-center mb-1">
+            <p className="text-[8px] font-medium">Résidence Bellevue</p>
+            <p className="text-[7px] text-amber-600 font-bold">78%</p>
+          </div>
+          <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full animate-pulse" style={{ width: "78%" }} />
+          </div>
+        </div>
+        
+        <div className="p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex justify-between items-center mb-1">
+            <p className="text-[8px] font-medium">Tour Horizon</p>
+            <p className="text-[7px] text-green-600 font-bold">45%</p>
+          </div>
+          <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-green-400 to-green-500 rounded-full" style={{ width: "45%" }} />
+          </div>
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-amber-500">2.4M$</p>
+          <p className="text-[6px] text-gray-400">Budget</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-primary">18</p>
+          <p className="text-[6px] text-gray-400">Équipe</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup boutique pour Commerce
+const CommerceMockup = () => (
+  <AppWindow url="ma-boutique.app/commandes">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">🛍️ Commandes récentes</span>
+        <span className="text-[7px] bg-purple-100 text-purple-600 px-1.5 rounded-full animate-pulse">+5 nouvelles</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-purple-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded bg-purple-200 flex items-center justify-center text-[10px]">📦</div>
+            <div>
+              <p className="text-[8px] font-medium">#2847 - 3 articles</p>
+              <p className="text-[6px] text-gray-400">Il y a 5 min</p>
+            </div>
+          </div>
+          <p className="text-[8px] font-bold text-purple-600">89$</p>
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded bg-green-200 flex items-center justify-center text-[10px]">✓</div>
+            <div>
+              <p className="text-[8px] font-medium">#2846 - Expédié</p>
+              <p className="text-[6px] text-gray-400">Il y a 1h</p>
+            </div>
+          </div>
+          <p className="text-[8px] font-bold text-green-600">156$</p>
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-purple-500">847</p>
+          <p className="text-[6px] text-gray-400">Ventes</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">32k$</p>
+          <p className="text-[6px] text-gray-400">CA</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-accent">4.8⭐</p>
+          <p className="text-[6px] text-gray-400">Avis</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup dashboard pour Tech
+const TechMockup = () => (
+  <AppWindow url="startup.app/dashboard">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">⚡ Analytics</span>
+        <span className="text-[7px] bg-violet-100 text-violet-600 px-1.5 rounded-full">Live</span>
+      </div>
+      
+      {/* Mini graph */}
+      <div className="h-10 flex items-end gap-0.5 bg-gray-50 rounded-lg p-1">
+        {[40, 65, 45, 80, 55, 90, 70, 85].map((h, i) => (
+          <div 
+            key={i}
+            className="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t animate-fade-in"
+            style={{ height: `${h}%`, animationDelay: `${i * 0.1}s` }}
+          />
+        ))}
+      </div>
+      
+      <div className="grid grid-cols-3 gap-1">
+        <div className="bg-violet-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-violet-600">2.4k</p>
+          <p className="text-[6px] text-gray-400">Users</p>
+        </div>
+        <div className="bg-green-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-green-600">+23%</p>
+          <p className="text-[6px] text-gray-400">Growth</p>
+        </div>
+        <div className="bg-blue-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-blue-600">99.9%</p>
+          <p className="text-[6px] text-gray-400">Uptime</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup cours pour Éducation
+const EducationMockup = () => (
+  <AppWindow url="ecole.app/cours">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">📚 Mes cours</span>
+        <span className="text-[7px] bg-indigo-100 text-indigo-600 px-1.5 rounded-full">Semaine 12</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center gap-1.5 p-1.5 bg-indigo-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="w-6 h-6 rounded bg-indigo-200 flex items-center justify-center text-[10px]">🎓</div>
+          <div className="flex-1">
+            <p className="text-[8px] font-medium">Marketing Digital</p>
+            <div className="h-1 bg-gray-200 rounded-full mt-0.5">
+              <div className="h-full bg-indigo-500 rounded-full" style={{ width: "85%" }} />
+            </div>
+          </div>
+          <span className="text-[7px] text-indigo-600">85%</span>
+        </div>
+        
+        <div className="flex items-center gap-1.5 p-1.5 bg-emerald-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="w-6 h-6 rounded bg-emerald-200 flex items-center justify-center text-[10px]">💡</div>
+          <div className="flex-1">
+            <p className="text-[8px] font-medium">Entrepreneuriat</p>
+            <div className="h-1 bg-gray-200 rounded-full mt-0.5">
+              <div className="h-full bg-emerald-500 rounded-full" style={{ width: "62%" }} />
+            </div>
+          </div>
+          <span className="text-[7px] text-emerald-600">62%</span>
+        </div>
+      </div>
+      
+      <div className="flex justify-center gap-2 pt-1">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-indigo-500">12</p>
+          <p className="text-[6px] text-gray-400">Cours</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">A+</p>
+          <p className="text-[6px] text-gray-400">Moyenne</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup clients pour Services
+const ServicesMockup = () => (
+  <AppWindow url="mon-service.app/clients">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">💼 Clients actifs</span>
+        <span className="text-[7px] bg-cyan-100 text-cyan-600 px-1.5 rounded-full">+3 ce mois</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="AB" color="bg-cyan-500" />
+            <div>
+              <p className="text-[8px] font-medium">Agence Bloom</p>
+              <p className="text-[6px] text-gray-400">Contrat annuel</p>
+            </div>
+          </div>
+          <p className="text-[8px] font-bold text-cyan-600">1,200$/m</p>
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="TL" color="bg-primary" />
+            <div>
+              <p className="text-[8px] font-medium">Tech Labs</p>
+              <p className="text-[6px] text-gray-400">Projet en cours</p>
+            </div>
+          </div>
+          <p className="text-[8px] font-bold text-primary">850$/m</p>
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-cyan-500">18</p>
+          <p className="text-[6px] text-gray-400">Clients</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">24k$</p>
+          <p className="text-[6px] text-gray-400">MRR</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup projets pour Architecture
+const ArchitectureMockup = () => (
+  <AppWindow url="archi-studio.app/projets">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">📐 Projets design</span>
+        <span className="text-[7px] bg-sky-100 text-sky-600 px-1.5 rounded-full">4 actifs</span>
+      </div>
+      
+      {/* Mini blueprint */}
+      <div className="h-12 bg-sky-50 rounded-lg p-1 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20">
+          <div className="grid grid-cols-8 grid-rows-4 h-full gap-px">
+            {Array(32).fill(0).map((_, i) => (
+              <div key={i} className="border border-sky-300" />
+            ))}
+          </div>
+        </div>
+        <svg className="w-full h-full" viewBox="0 0 80 35">
+          <rect x="10" y="10" width="25" height="20" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" className="animate-fade-in" />
+          <rect x="45" y="5" width="30" height="25" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" className="animate-fade-in" style={{ animationDelay: "0.2s" }} />
+          <line x1="35" y1="20" x2="45" y2="17" stroke="hsl(var(--primary))" strokeWidth="1" strokeDasharray="2" />
+        </svg>
+      </div>
+      
+      <div className="flex justify-between">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-sky-500">12</p>
+          <p className="text-[6px] text-gray-400">Plans</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-primary">3</p>
+          <p className="text-[6px] text-gray-400">En révision</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">8</p>
+          <p className="text-[6px] text-gray-400">Approuvés</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup livraisons pour Transport
+const TransportMockup = () => (
+  <AppWindow url="livraison.app/trajets">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">🚚 Livraisons</span>
+        <span className="text-[7px] bg-amber-100 text-amber-600 px-1.5 rounded-full animate-pulse">En route</span>
+      </div>
+      
+      {/* Mini map */}
+      <div className="h-10 bg-gradient-to-b from-green-100 to-green-50 rounded-lg relative overflow-hidden">
+        <div className="absolute inset-0 flex items-center px-2">
+          <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+          <div className="flex-1 h-0.5 bg-gray-300 mx-1 relative">
+            <div className="absolute left-1/2 -translate-x-1/2 -top-1.5 text-[10px] animate-bounce">🚛</div>
+          </div>
+          <div className="w-2 h-2 rounded-full bg-red-500" />
+        </div>
+        <div className="absolute bottom-1 left-2 text-[6px] text-gray-500">A: Entrepôt</div>
+        <div className="absolute bottom-1 right-2 text-[6px] text-gray-500">B: Client</div>
+      </div>
+      
+      <div className="grid grid-cols-3 gap-1">
+        <div className="bg-amber-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-amber-600">24</p>
+          <p className="text-[6px] text-gray-400">Livré</p>
+        </div>
+        <div className="bg-blue-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-blue-600">8</p>
+          <p className="text-[6px] text-gray-400">En cours</p>
+        </div>
+        <div className="bg-green-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-green-600">98%</p>
+          <p className="text-[6px] text-gray-400">À temps</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup événements pour Arts
+const ArtsMockup = () => (
+  <AppWindow url="spectacle.app/evenements">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">🎭 Événements</span>
+        <span className="text-[7px] bg-rose-100 text-rose-600 px-1.5 rounded-full">Ce soir</span>
+      </div>
+      
+      <div className="p-1.5 bg-gradient-to-r from-rose-50 to-purple-50 rounded-lg animate-fade-in">
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-[8px] font-bold text-rose-600">Concert Jazz</p>
+            <p className="text-[6px] text-gray-400">20h00 - Salle A</p>
+          </div>
+          <div className="text-right">
+            <p className="text-[8px] font-bold text-purple-600">248/300</p>
+            <p className="text-[6px] text-gray-400">places</p>
+          </div>
+        </div>
+        <div className="h-1.5 bg-gray-200 rounded-full mt-1 overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-rose-400 to-purple-400 rounded-full animate-pulse" style={{ width: "83%" }} />
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-rose-500">12</p>
+          <p className="text-[6px] text-gray-400">Events</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-purple-500">2.4k</p>
+          <p className="text-[6px] text-gray-400">Billets</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">48k$</p>
+          <p className="text-[6px] text-gray-400">Ventes</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup planning pour Déménagement
+const MovingMockup = () => (
+  <AppWindow url="demenagement.app/planning">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">📦 Planning déménagements</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-orange-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded bg-orange-200 flex items-center justify-center text-[10px]">🏠</div>
+            <div>
+              <p className="text-[8px] font-medium">Fam. Gagnon</p>
+              <p className="text-[6px] text-gray-400">3½ → 5½</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-[7px] font-bold text-orange-600">Demain</p>
+            <p className="text-[6px] text-gray-400">8h00</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-gray-50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <div className="w-6 h-6 rounded bg-blue-200 flex items-center justify-center text-[10px]">🏢</div>
+            <div>
+              <p className="text-[8px] font-medium">Bureau Tech Inc.</p>
+              <p className="text-[6px] text-gray-400">Commercial</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-[7px] font-bold text-blue-600">Samedi</p>
+            <p className="text-[6px] text-gray-400">7h00</p>
+          </div>
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-orange-500">8</p>
+          <p className="text-[6px] text-gray-400">Cette sem.</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">100%</p>
+          <p className="text-[6px] text-gray-400">Confirmés</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup propriétés pour Immobilier
+const RealEstateMockup = () => (
+  <AppWindow url="immo-pro.app/proprietes">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">🏡 Propriétés</span>
+        <span className="text-[7px] bg-teal-100 text-teal-600 px-1.5 rounded-full">12 actives</span>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-1">
+        <div className="p-1.5 bg-gradient-to-br from-teal-50 to-teal-100 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <p className="text-[10px] font-bold text-teal-600">450k$</p>
+          <p className="text-[6px] text-gray-500">Condo Centre-ville</p>
+          <StatusBadge text="Nouveau" variant="new" />
+        </div>
+        <div className="p-1.5 bg-gradient-to-br from-amber-50 to-amber-100 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <p className="text-[10px] font-bold text-amber-600">680k$</p>
+          <p className="text-[6px] text-gray-500">Maison Outremont</p>
+          <StatusBadge text="Offre" variant="warning" />
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-teal-500">4.2M$</p>
+          <p className="text-[6px] text-gray-400">Listings</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-green-500">3</p>
+          <p className="text-[6px] text-gray-400">Vendus/mois</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup finances
+const FinanceMockup = () => (
+  <AppWindow url="finance.app/portefeuille">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">📊 Portefeuille</span>
+        <span className="text-[7px] bg-green-100 text-green-600 px-1.5 rounded-full animate-pulse">+2.4%</span>
+      </div>
+      
+      {/* Mini chart */}
+      <div className="h-10 flex items-end gap-0.5 bg-gray-50 rounded-lg p-1">
+        {[30, 45, 35, 60, 50, 75, 65, 80, 70, 85].map((h, i) => (
+          <div 
+            key={i}
+            className="flex-1 bg-gradient-to-t from-green-500 to-green-300 rounded-t animate-fade-in"
+            style={{ height: `${h}%`, animationDelay: `${i * 0.05}s` }}
+          />
+        ))}
+      </div>
+      
+      <div className="grid grid-cols-3 gap-1">
+        <div className="bg-green-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-green-600">125k$</p>
+          <p className="text-[6px] text-gray-400">Total</p>
+        </div>
+        <div className="bg-blue-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-blue-600">+8.5%</p>
+          <p className="text-[6px] text-gray-400">YTD</p>
+        </div>
+        <div className="bg-purple-50 rounded p-1 text-center">
+          <p className="text-[10px] font-bold text-purple-600">12</p>
+          <p className="text-[6px] text-gray-400">Actifs</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup OBNL
+const OBNLMockup = () => (
+  <AppWindow url="asbl.app/dons">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-gray-700">💚 Campagne dons</span>
+        <span className="text-[7px] bg-emerald-100 text-emerald-600 px-1.5 rounded-full">Active</span>
+      </div>
+      
+      <div className="p-1.5 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg">
+        <div className="flex justify-between items-center mb-1">
+          <p className="text-[8px] font-medium">Objectif: 50,000$</p>
+          <p className="text-[7px] text-emerald-600 font-bold">72%</p>
+        </div>
+        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+          <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full animate-pulse" style={{ width: "72%" }} />
+        </div>
+        <p className="text-[6px] text-gray-400 mt-0.5">36,000$ collectés • 245 donateurs</p>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-gray-100">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-emerald-500">1.2k</p>
+          <p className="text-[6px] text-gray-400">Membres</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-teal-500">8</p>
+          <p className="text-[6px] text-gray-400">Projets</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mapping des mockups par industrie
+const getMockupByIndustry = (value: string) => {
+  const mockups: Record<string, React.ReactNode> = {
+    auto: <AutoMockup />,
+    restaurant: <RestaurantMockup />,
+    sante: <HealthMockup />,
+    construction: <ConstructionMockup />,
+    commerce: <CommerceMockup />,
+    tech: <TechMockup />,
+    education: <EducationMockup />,
+    services: <ServicesMockup />,
+    architecture: <ArchitectureMockup />,
+    transport: <TransportMockup />,
+    arts: <ArtsMockup />,
+    demenagement: <MovingMockup />,
+    immobilier: <RealEstateMockup />,
+    finance: <FinanceMockup />,
+    obnl: <OBNLMockup />,
+  };
+  
+  return mockups[value] || <TechMockup />;
 };
 
 export const IndustryCard = ({
@@ -419,65 +744,42 @@ export const IndustryCard = ({
   onSelect,
   index,
 }: IndustryCardProps) => {
-  const Illustration = INDUSTRY_ILLUSTRATIONS[value] || ServicesIllustration;
-  const colors = INDUSTRY_COLORS[value] || INDUSTRY_COLORS.services;
-
   return (
     <button
-      type="button"
       onClick={onSelect}
       className={cn(
-        "group relative overflow-hidden rounded-2xl transition-all duration-500",
-        "w-full aspect-[4/3] text-left border-2",
-        "animate-fade-in",
-        `bg-gradient-to-br ${colors.bg}`,
-        isSelected 
-          ? "border-primary ring-4 ring-primary/20 shadow-2xl scale-[1.02]" 
-          : `${colors.border} hover:shadow-xl hover:scale-[1.02]`
+        "group relative w-full text-left p-4 rounded-2xl border-2 transition-all duration-300 hover:shadow-lg",
+        "bg-card hover:bg-accent/5",
+        isSelected
+          ? "border-primary shadow-lg ring-2 ring-primary/20"
+          : "border-border hover:border-primary/40"
       )}
-      style={{ animationDelay: `${index * 0.05}s`, animationFillMode: "both" }}
+      style={{
+        animationDelay: `${index * 50}ms`,
+      }}
     >
-      {/* Animated Illustration Area */}
-      <div className="absolute inset-0 p-2">
-        <div className="relative w-full h-[60%]">
-          <Illustration />
-        </div>
-      </div>
-
-      {/* Selected Glow */}
+      {/* Checkmark */}
       {isSelected && (
-        <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-r from-primary via-accent to-secondary opacity-30 blur-sm -z-10" />
-      )}
-
-      {/* Text Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-white/90 via-white/70 to-transparent">
-        <h3 
-          className={cn(
-            "text-sm md:text-base font-bold transition-colors duration-300",
-            isSelected ? "text-primary" : "text-foreground"
-          )}
-        >
-          {label}
-        </h3>
-        <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
-          {description}
-        </p>
-      </div>
-
-      {/* Selected Checkmark */}
-      {isSelected && (
-        <div className="absolute top-2 right-2 w-7 h-7 rounded-full bg-primary flex items-center justify-center animate-scale-in shadow-lg">
-          <Check className="w-4 h-4 text-white" strokeWidth={3} />
+        <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-md z-10">
+          <Check className="w-4 h-4 text-primary-foreground" />
         </div>
       )}
 
-      {/* Hover shimmer */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none overflow-hidden">
-        <div 
-          className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"
-          style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)" }}
-        />
+      {/* Mockup UI animé */}
+      <div className="h-32 mb-3 rounded-xl overflow-hidden">
+        {getMockupByIndustry(value)}
       </div>
+
+      {/* Texte */}
+      <h3 className={cn(
+        "font-semibold text-base mb-1 transition-colors",
+        isSelected ? "text-primary" : "text-foreground group-hover:text-primary"
+      )}>
+        {label}
+      </h3>
+      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+        {description}
+      </p>
     </button>
   );
 };
