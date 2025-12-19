@@ -22,6 +22,7 @@ const INDUSTRY_DESCRIPTIONS: Record<string, string> = {
   demenagement: "Déménageurs, entreposage",
   immobilier: "Agents, courtiers, gestion immobilière",
   finances: "Comptables, conseillers, assurances",
+  beaute: "Salons de coiffure, spas, esthéticiennes",
 };
 
 export const StepIndustry = () => {
