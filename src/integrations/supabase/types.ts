@@ -41,6 +41,51 @@ export type Database = {
         }
         Relationships: []
       }
+      header_config: {
+        Row: {
+          cart_url: string | null
+          created_at: string
+          cta_color: string | null
+          cta_icon: string | null
+          cta_text: string | null
+          cta_url: string | null
+          id: string
+          logo_url: string | null
+          nav_links: Json
+          show_cart: boolean | null
+          site_key: string
+          updated_at: string
+        }
+        Insert: {
+          cart_url?: string | null
+          created_at?: string
+          cta_color?: string | null
+          cta_icon?: string | null
+          cta_text?: string | null
+          cta_url?: string | null
+          id?: string
+          logo_url?: string | null
+          nav_links?: Json
+          show_cart?: boolean | null
+          site_key?: string
+          updated_at?: string
+        }
+        Update: {
+          cart_url?: string | null
+          created_at?: string
+          cta_color?: string | null
+          cta_icon?: string | null
+          cta_text?: string | null
+          cta_url?: string | null
+          id?: string
+          logo_url?: string | null
+          nav_links?: Json
+          show_cart?: boolean | null
+          site_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       quotes: {
         Row: {
           canva_services: string[] | null
