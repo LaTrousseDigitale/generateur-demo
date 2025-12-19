@@ -155,6 +155,36 @@ export type Database = {
         }
         Relationships: []
       }
+      saved_quizzes: {
+        Row: {
+          created_at: string
+          current_step: number
+          expires_at: string
+          id: string
+          quiz_data: Json
+          share_code: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          current_step?: number
+          expires_at?: string
+          id?: string
+          quiz_data?: Json
+          share_code?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          current_step?: number
+          expires_at?: string
+          id?: string
+          quiz_data?: Json
+          share_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
