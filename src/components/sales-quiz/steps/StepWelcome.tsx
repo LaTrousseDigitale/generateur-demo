@@ -127,9 +127,36 @@ export const StepWelcome = () => {
       {/* Content */}
       <div className="relative z-10 max-w-3xl mx-auto space-y-8">
         {/* Badge */}
-        <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium animate-fade-in">
-          <Sparkles className="w-4 h-4" />
-          Générateur de démo intelligent
+        <div 
+          className={cn(
+            "inline-flex items-center gap-2 px-4 py-2 rounded-lg animate-fade-in group",
+            "bg-transparent border-2",
+            "border-transparent bg-clip-padding",
+            "relative overflow-hidden",
+            "before:absolute before:inset-0 before:rounded-lg before:p-[2px] before:-z-10",
+            "before:bg-gradient-to-r before:from-primary before:via-secondary before:to-accent",
+            "before:content-['']",
+            "after:absolute after:inset-[2px] after:rounded-[6px] after:bg-background after:-z-10",
+            "after:content-['']"
+          )}
+        >
+          {/* SVG Gradient for Badge Icon */}
+          <svg width="0" height="0" className="absolute">
+            <defs>
+              <linearGradient id="badgeIconGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="hsl(218, 99%, 55%)" />
+                <stop offset="50%" stopColor="hsl(44, 96%, 66%)" />
+                <stop offset="100%" stopColor="hsl(16, 100%, 61%)" />
+              </linearGradient>
+            </defs>
+          </svg>
+          <Sparkles 
+            className="w-4 h-4" 
+            style={{ stroke: "url(#badgeIconGradient)" }}
+          />
+          <span className="font-body bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent text-sm font-medium">
+            Générateur de démo intelligent
+          </span>
         </div>
 
         {/* Main Title */}
