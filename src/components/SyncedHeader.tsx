@@ -79,7 +79,7 @@ const FallbackHeader = ({
 
             {/* CTA Button */}
             <Button 
-              className="hidden sm:flex !bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-full px-5 py-2.5 text-[14px] font-medium items-center gap-2"
+              className="hidden sm:flex !bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-lg px-5 py-2.5 text-[14px] font-medium items-center gap-2"
               onClick={onCtaClick}
             >
               <Sparkles className="h-4 w-4" />
@@ -102,7 +102,7 @@ const FallbackHeader = ({
                 </a>
               ))}
               <Button 
-                className="!bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-full px-5 py-2.5 text-[14px] font-medium flex items-center gap-2 mt-2"
+                className="!bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-lg px-5 py-2.5 text-[14px] font-medium flex items-center gap-2 mt-2"
                 onClick={onCtaClick}
               >
                 <Sparkles className="h-4 w-4" />
