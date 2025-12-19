@@ -8,6 +8,7 @@ import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
 import { Eye, RefreshCw, Building2, Settings, Palette, Globe, CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles, Phone, ShoppingCart } from "lucide-react";
 import { useCartSync } from "@/hooks/useCartSync";
+import { useHeaderConfig } from "@/hooks/useHeaderConfig";
 import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -197,6 +198,7 @@ export const DemoGenerator = () => {
     submitQuote
   } = useQuoteSubmission();
   const { itemCount: cartItemCount, sessionId: cartSessionId } = useCartSync();
+  const { config: headerConfig, loading: headerLoading } = useHeaderConfig('main');
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const [questionnaireData, setQuestionnaireData] = useState<QuestionnaireData>(() => {
     const saved = localStorage.getItem("questionnaire-data");
@@ -332,25 +334,6 @@ export const DemoGenerator = () => {
     setShowPreview(true);
     setTimeout(() => setShowQuoteModal(true), 1000);
   };
-  const navLinks = [{
-    label: "Accueil",
-    href: "https://latroussedigitale.ca"
-  }, {
-    label: "Applications",
-    href: "https://latroussedigitale.ca/#applications"
-  }, {
-    label: "Démos",
-    href: "https://latroussedigitale.ca/#demos"
-  }, {
-    label: "Avantages",
-    href: "https://latroussedigitale.ca/#avantages"
-  }, {
-    label: "Tarifs",
-    href: "https://latroussedigitale.ca/#tarifs"
-  }, {
-    label: "Contact",
-    href: "https://latroussedigitale.ca/#contact"
-  }];
 
   // Show full demo preview
   if (showPreview) {
@@ -361,37 +344,75 @@ export const DemoGenerator = () => {
   }
   const hasWebsite = (questionnaireData.solutionTypes || []).includes("website");
   const hasPortal = (questionnaireData.solutionTypes || []).includes("portal");
+
+  // Determine if on demos subdomain - CTA should scroll to form, not link away
+  const isOnDemosSite = window.location.hostname.includes('demos.');
+  const cartUrl = `${headerConfig.cart_url}?session_id=${cartSessionId}`;
+
   return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
-      {/* Navigation Header */}
+      {/* Navigation Header - Synchronized from database */}
       <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <div className="flex items-center">
-              <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-24 sm:h-28 w-auto" />
+              <a href="https://latroussedigitale.ca">
+                <img 
+                  src={headerConfig.logo_url || logoTrousseDigitale} 
+                  alt="La Trousse Digitale" 
+                  className="h-24 sm:h-28 w-auto" 
+                />
+              </a>
             </div>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - From synced config */}
             <nav className="hidden md:flex items-center gap-6 lg:gap-8">
-              {navLinks.map(link => <a key={link.label} href={link.href} className="text-sm text-gray-600 hover:text-primary transition-colors font-medium relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left">
+              {headerConfig.nav_links.map(link => (
+                <a 
+                  key={link.label} 
+                  href={link.href} 
+                  className="text-sm text-gray-600 hover:text-primary transition-colors font-medium relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-[-4px] after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                >
                   {link.label}
-                </a>)}
+                </a>
+              ))}
             </nav>
 
             {/* Cart Icon & CTA Button */}
             <div className="flex items-center gap-4">
-              <a href={`https://latroussedigitale.ca/panier?session_id=${cartSessionId}`} className="relative text-gray-500 hover:text-gray-700 transition-colors">
-                <ShoppingCart className="h-5 w-5" />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-[#ff6b3d] text-white text-[10px] font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-                    {cartItemCount > 99 ? '99+' : cartItemCount}
-                  </span>
-                )}
-              </a>
-              <Button className="!bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2" onClick={() => setActiveTab("general")}>
-                <Sparkles className="h-4 w-4" />
-                <span className="hidden sm:inline">Générer ma démo</span>
-                <span className="sm:hidden">Démo</span>
-              </Button>
+              {headerConfig.show_cart && (
+                <a href={cartUrl} className="relative text-gray-500 hover:text-gray-700 transition-colors">
+                  <ShoppingCart className="h-5 w-5" />
+                  {cartItemCount > 0 && (
+                    <span 
+                      className="absolute -top-1.5 -right-2 text-white text-[10px] font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1"
+                      style={{ backgroundColor: headerConfig.cta_color }}
+                    >
+                      {cartItemCount > 99 ? '99+' : cartItemCount}
+                    </span>
+                  )}
+                </a>
+              )}
+              {isOnDemosSite ? (
+                <Button 
+                  className="text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2" 
+                  style={{ backgroundColor: headerConfig.cta_color }}
+                  onClick={() => setActiveTab("general")}
+                >
+                  <Sparkles className="h-4 w-4" />
+                  <span className="hidden sm:inline">{headerConfig.cta_text}</span>
+                  <span className="sm:hidden">Démo</span>
+                </Button>
+              ) : (
+                <a 
+                  href={headerConfig.cta_url}
+                  className="text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2 hover:opacity-90 transition-opacity"
+                  style={{ backgroundColor: headerConfig.cta_color }}
+                >
+                  <Sparkles className="h-4 w-4" />
+                  <span className="hidden sm:inline">{headerConfig.cta_text}</span>
+                  <span className="sm:hidden">Démo</span>
+                </a>
+              )}
             </div>
           </div>
         </div>
