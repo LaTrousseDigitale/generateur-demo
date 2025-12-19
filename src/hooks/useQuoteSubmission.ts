@@ -1,15 +1,13 @@
-import { supabase } from "@/integrations/supabase/client";
 import { QuestionnaireData } from "@/types/questionnaire";
 import { toast } from "sonner";
-import type { Database } from "@/integrations/supabase/types";
 import { safeValidateQuestionnaireData } from "@/lib/validations/quoteSchema";
 
-type QuoteInsert = Database['public']['Tables']['quotes']['Insert'];
+const SUBMIT_QUOTE_URL = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/submit-quote`;
 
 export const useQuoteSubmission = () => {
   const submitQuote = async (data: QuestionnaireData) => {
     try {
-      // Validate and sanitize input data
+      // Validate and sanitize input data client-side first
       const validationResult = safeValidateQuestionnaireData(data);
       
       if (!validationResult.success) {
@@ -24,33 +22,20 @@ export const useQuoteSubmission = () => {
 
       const validatedData = validationResult.data;
 
-      const quoteData: QuoteInsert = {
-        client_email: validatedData.contactMethod || null,
-        client_name: validatedData.companyName || null,
-        company_name: validatedData.companyName || null,
-        solution_types: validatedData.solutionTypes.length > 0 ? validatedData.solutionTypes : null,
-        industry: validatedData.industry || null,
-        website_type: validatedData.websiteType,
-        portal_type: validatedData.portalType,
-        modules: validatedData.selectedModules.length > 0 ? validatedData.selectedModules : null,
-        custom_module: validatedData.customModule || null,
-        canva_services: validatedData.canvaServices.length > 0 ? validatedData.canvaServices : null,
-        domain_type: validatedData.domainType || null,
-        hosting_preference: validatedData.hostingPreference || null,
-        payment_mode: validatedData.paymentMode,
-        maintenance_level: validatedData.maintenanceLevel || null,
-        monthly_budget: validatedData.monthlyBudget || null,
-        questionnaire_data: validatedData as any,
-        status: 'pending'
-      };
+      // Submit via secure edge function with server-side validation
+      const response = await fetch(SUBMIT_QUOTE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(validatedData),
+      });
 
-      const { error } = await supabase
-        .from('quotes')
-        .insert(quoteData);
+      const result = await response.json();
 
-      if (error) {
-        console.error('Error submitting quote:', error);
-        toast.error("Erreur lors de la sauvegarde du devis");
+      if (!response.ok) {
+        console.error('Error submitting quote:', result.error);
+        toast.error(result.error || "Erreur lors de la sauvegarde du devis");
         return false;
       }
 
