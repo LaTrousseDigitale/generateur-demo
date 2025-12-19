@@ -2,12 +2,14 @@ import { Sparkles, ChevronRight, Play, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useQuiz } from "../QuizContext";
 import { cn } from "@/lib/utils";
-import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 
 // Import sample demo images
 import heroAuto from "@/assets/hero-auto.jpg";
 import heroHealth from "@/assets/hero-health.jpg";
 import heroRestaurant from "@/assets/hero-restaurant.jpg";
+import heroConstruction from "@/assets/hero-construction.jpg";
+import heroArchitecture from "@/assets/hero-architecture.jpg";
+import bookingAutoService from "@/assets/booking-auto-service.jpg";
 
 const DEMO_PREVIEWS = [
   { image: heroAuto, label: "Pièces Auto" },
@@ -21,16 +23,111 @@ const BENEFITS = [
   { icon: "💰", text: "Gratuit et sans engagement" },
 ];
 
+// Floating industry images configuration
+const FLOATING_IMAGES = [
+  { 
+    image: heroAuto, 
+    label: "Vente auto", 
+    position: "top-[8%] left-[3%]",
+    size: "w-20 h-14 md:w-28 md:h-20",
+    rotation: "-rotate-6",
+    delay: "0s",
+    duration: "6s"
+  },
+  { 
+    image: bookingAutoService, 
+    label: "Garage", 
+    position: "top-[18%] right-[5%]",
+    size: "w-18 h-12 md:w-24 md:h-16",
+    rotation: "rotate-6",
+    delay: "1s",
+    duration: "7s"
+  },
+  { 
+    image: heroRestaurant, 
+    label: "Spectacles", 
+    position: "top-[40%] left-[2%]",
+    size: "w-16 h-12 md:w-22 md:h-16",
+    rotation: "-rotate-3",
+    delay: "0.5s",
+    duration: "8s"
+  },
+  { 
+    image: heroConstruction, 
+    label: "Déménagement", 
+    position: "top-[35%] right-[3%]",
+    size: "w-18 h-14 md:w-26 md:h-18",
+    rotation: "rotate-3",
+    delay: "1.5s",
+    duration: "6.5s"
+  },
+  { 
+    image: heroArchitecture, 
+    label: "Immobilier", 
+    position: "bottom-[25%] left-[4%]",
+    size: "w-20 h-14 md:w-28 md:h-20",
+    rotation: "rotate-6",
+    delay: "2s",
+    duration: "7.5s"
+  },
+  { 
+    image: heroHealth, 
+    label: "Finances", 
+    position: "bottom-[20%] right-[4%]",
+    size: "w-16 h-12 md:w-24 md:h-16",
+    rotation: "-rotate-6",
+    delay: "0.8s",
+    duration: "6.8s"
+  },
+];
+
 export const StepWelcome = () => {
   const { nextStep } = useQuiz();
 
   return (
-    <div className="relative min-h-[70vh] flex flex-col items-center justify-center text-center px-4 py-12">
+    <div className="relative min-h-[70vh] flex flex-col items-center justify-center text-center px-4 py-12 overflow-hidden">
       {/* Floating Glow Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
         <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-secondary/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+      </div>
+
+      {/* Floating Industry Images */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none hidden md:block">
+        {FLOATING_IMAGES.map((item, index) => (
+          <div
+            key={index}
+            className={cn(
+              "absolute rounded-xl overflow-hidden shadow-2xl border-2 border-white/20",
+              "opacity-80 hover:opacity-100 transition-opacity duration-300",
+              item.position,
+              item.size,
+              item.rotation
+            )}
+            style={{
+              animation: `float ${item.duration} ease-in-out infinite`,
+              animationDelay: item.delay,
+            }}
+          >
+            <img
+              src={item.image}
+              alt={item.label}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
+            <span className="absolute bottom-1 left-1.5 text-[10px] text-white font-medium">
+              {item.label}
+            </span>
+            {/* Glow effect behind image */}
+            <div 
+              className="absolute -inset-2 -z-10 rounded-xl blur-lg opacity-50"
+              style={{
+                background: `linear-gradient(135deg, hsl(var(--primary) / 0.4), hsl(var(--accent) / 0.3), hsl(var(--secondary) / 0.4))`,
+              }}
+            />
+          </div>
+        ))}
       </div>
 
       {/* Content */}
@@ -128,6 +225,18 @@ export const StepWelcome = () => {
           <span className="text-sm text-muted-foreground">+500 démos générées</span>
         </div>
       </div>
+
+      {/* Float Animation Keyframes */}
+      <style>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(var(--tw-rotate, 0deg));
+          }
+          50% {
+            transform: translateY(-15px) rotate(var(--tw-rotate, 0deg));
+          }
+        }
+      `}</style>
     </div>
   );
 };
