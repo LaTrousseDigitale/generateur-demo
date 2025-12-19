@@ -10,833 +10,656 @@ interface IndustryCardProps {
   index: number;
 }
 
-// Composant fenêtre d'application réutilisable avec couleurs branding
-const AppWindow = ({ children, url }: { children: React.ReactNode; url?: string }) => (
-  <div className="w-full h-full bg-card rounded-xl shadow-lg overflow-hidden border border-border">
-    {/* Barre de titre - couleurs branding */}
-    <div className="flex items-center gap-2 px-3 py-2 bg-muted/50 border-b border-border">
-      <div className="flex gap-1.5">
-        <div className="w-2.5 h-2.5 rounded-full bg-accent" />
-        <div className="w-2.5 h-2.5 rounded-full bg-secondary" />
-        <div className="w-2.5 h-2.5 rounded-full bg-primary" />
-      </div>
-      {url && (
-        <div className="flex-1 text-center">
-          <span className="text-[8px] text-muted-foreground bg-muted px-2 py-0.5 rounded">{url}</span>
-        </div>
-      )}
-    </div>
-    {/* Contenu */}
-    <div className="p-2 h-[calc(100%-28px)]">
-      {children}
-    </div>
+// Illustration Auto - Voiture avec outils
+const AutoIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Route */}
+      <rect x="0" y="55" width="120" height="25" fill="hsl(var(--muted))" />
+      <line x1="0" y1="67" x2="120" y2="67" stroke="hsl(var(--accent))" strokeWidth="2" strokeDasharray="8 6" className="animate-pulse" />
+      
+      {/* Voiture */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        {/* Corps */}
+        <path d="M25 45 L35 30 L75 30 L85 45 L90 45 L90 55 L20 55 L20 45 Z" fill="hsl(var(--primary))" />
+        {/* Vitres */}
+        <path d="M38 32 L42 38 L68 38 L72 32 Z" fill="hsl(var(--primary-foreground))" opacity="0.9" />
+        {/* Roues */}
+        <circle cx="35" cy="55" r="8" fill="hsl(var(--foreground))" />
+        <circle cx="35" cy="55" r="4" fill="hsl(var(--muted))" />
+        <circle cx="75" cy="55" r="8" fill="hsl(var(--foreground))" />
+        <circle cx="75" cy="55" r="4" fill="hsl(var(--muted))" />
+        {/* Phares */}
+        <rect x="86" y="46" width="4" height="4" rx="1" fill="hsl(var(--accent))" className="animate-pulse" />
+      </g>
+      
+      {/* Clé à molette */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <rect x="100" y="15" width="4" height="20" rx="1" fill="hsl(var(--secondary))" transform="rotate(45 102 25)" />
+        <circle cx="105" cy="12" r="5" fill="none" stroke="hsl(var(--secondary))" strokeWidth="3" />
+      </g>
+    </svg>
   </div>
 );
 
-// Avatar réutilisable avec couleurs branding
-const Avatar = ({ initials, variant = "primary" }: { initials: string; variant?: "primary" | "secondary" | "accent" }) => {
-  const colors = {
-    primary: "bg-primary text-primary-foreground",
-    secondary: "bg-secondary text-secondary-foreground",
-    accent: "bg-accent text-accent-foreground"
-  };
-  return (
-    <div className={cn("w-6 h-6 rounded-full flex items-center justify-center text-[8px] font-semibold", colors[variant])}>
-      {initials}
-    </div>
-  );
-};
-
-// Badge de statut avec couleurs branding
-const StatusBadge = ({ text, variant }: { text: string; variant: "success" | "warning" | "info" | "new" }) => {
-  const colors = {
-    success: "bg-primary/10 text-primary",
-    warning: "bg-accent/10 text-accent",
-    info: "bg-primary/10 text-primary",
-    new: "bg-secondary/20 text-secondary-foreground"
-  };
-  return (
-    <span className={cn("text-[7px] px-1.5 py-0.5 rounded-full font-medium", colors[variant])}>{text}</span>
-  );
-};
-
-// Mockup CRM pour Auto
-const AutoMockup = () => (
-  <AppWindow url="auto-expert.app/crm">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🚗 Véhicules en service</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full animate-pulse">+8 cette semaine</span>
-      </div>
+// Illustration Restaurant - Assiette et couverts
+const RestaurantIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-accent/5 to-accent/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Table */}
+      <rect x="10" y="60" width="100" height="8" rx="2" fill="hsl(var(--secondary))" />
       
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="ML" variant="primary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Marc Leblanc</p>
-              <p className="text-[6px] text-muted-foreground">Honda Civic 2022</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[8px] font-bold text-primary">450$</p>
-            <StatusBadge text="En cours" variant="info" />
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="ST" variant="accent" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Sophie Tremblay</p>
-              <p className="text-[6px] text-muted-foreground">Toyota RAV4 2021</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[8px] font-bold text-primary">680$</p>
-            <StatusBadge text="Terminé" variant="success" />
-          </div>
-        </div>
-      </div>
+      {/* Assiette */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <ellipse cx="60" cy="45" rx="28" ry="8" fill="hsl(var(--muted))" />
+        <ellipse cx="60" cy="42" rx="28" ry="8" fill="hsl(var(--card))" stroke="hsl(var(--border))" strokeWidth="1" />
+        <ellipse cx="60" cy="42" rx="20" ry="5" fill="hsl(var(--muted))" opacity="0.3" />
+      </g>
       
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">24</p>
-          <p className="text-[6px] text-muted-foreground">RDV</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary">12k$</p>
-          <p className="text-[6px] text-muted-foreground">CA/mois</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">96%</p>
-          <p className="text-[6px] text-muted-foreground">Satisf.</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
+      {/* Nourriture sur l'assiette */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <ellipse cx="55" cy="40" rx="8" ry="4" fill="hsl(var(--accent))" />
+        <ellipse cx="65" cy="41" rx="6" ry="3" fill="hsl(var(--primary))" />
+        <circle cx="60" cy="38" r="3" fill="hsl(var(--secondary))" />
+      </g>
+      
+      {/* Fourchette */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <rect x="22" y="25" width="2" height="25" fill="hsl(var(--muted-foreground))" />
+        <rect x="18" y="25" width="1.5" height="8" fill="hsl(var(--muted-foreground))" />
+        <rect x="21" y="25" width="1.5" height="8" fill="hsl(var(--muted-foreground))" />
+        <rect x="24" y="25" width="1.5" height="8" fill="hsl(var(--muted-foreground))" />
+      </g>
+      
+      {/* Couteau */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+        <rect x="96" y="25" width="3" height="25" fill="hsl(var(--muted-foreground))" />
+        <path d="M96 25 L99 25 L99 35 L96 32 Z" fill="hsl(var(--muted-foreground))" />
+      </g>
+      
+      {/* Vapeur */}
+      <g className="animate-pulse" style={{ animationDelay: "0.2s" }}>
+        <path d="M55 30 Q53 25 55 20" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" opacity="0.4" />
+        <path d="M60 28 Q58 22 60 16" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" opacity="0.4" />
+        <path d="M65 30 Q67 25 65 20" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" opacity="0.4" />
+      </g>
+    </svg>
+  </div>
 );
 
-// Mockup réservations pour Restaurant - Menu & Commandes
-const RestaurantMockup = () => (
-  <AppWindow url="mon-resto.app/menu">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🍽️ Menu du jour</span>
-        <span className="text-[7px] bg-accent text-accent-foreground px-1.5 rounded-full">12 plats</span>
-      </div>
+// Illustration Santé - Coeur et stéthoscope
+const HealthIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Croix médicale en arrière-plan */}
+      <g opacity="0.1">
+        <rect x="52" y="5" width="16" height="45" fill="hsl(var(--primary))" />
+        <rect x="37" y="18" width="46" height="16" fill="hsl(var(--primary))" />
+      </g>
       
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-accent/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded bg-accent flex items-center justify-center text-[10px]">🍝</div>
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Pâtes Carbonara</p>
-              <p className="text-[6px] text-muted-foreground">Spécialité chef</p>
-            </div>
-          </div>
-          <p className="text-[8px] font-bold text-accent">24$</p>
-        </div>
-        
-        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded bg-secondary flex items-center justify-center text-[10px]">🥗</div>
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Salade César</p>
-              <p className="text-[6px] text-muted-foreground">Entrée populaire</p>
-            </div>
-          </div>
-          <p className="text-[8px] font-bold text-secondary-foreground">16$</p>
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">42</p>
-          <p className="text-[6px] text-muted-foreground">Couverts</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">1.8k$</p>
-          <p className="text-[6px] text-muted-foreground">Ventes</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">4.9⭐</p>
-          <p className="text-[6px] text-muted-foreground">Note</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mockup dossiers patients pour Santé
-const HealthMockup = () => (
-  <AppWindow url="clinique.app/patients">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">❤️ Patients du jour</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full">12 RDV</span>
-      </div>
-      
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-primary/10 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="JD" variant="primary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Jean Dupont</p>
-              <p className="text-[6px] text-muted-foreground">Suivi annuel</p>
-            </div>
-          </div>
-          <div className="text-[7px] text-primary font-medium">09h30</div>
-        </div>
-        
-        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="MC" variant="secondary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Marie Côté</p>
-              <p className="text-[6px] text-muted-foreground">Consultation</p>
-            </div>
-          </div>
-          <div className="text-[7px] text-secondary-foreground font-medium">10h15</div>
-        </div>
-      </div>
-      
-      {/* Mini ECG animation */}
-      <svg className="w-full h-4" viewBox="0 0 100 15">
+      {/* Coeur */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
         <path 
-          d="M0,8 L20,8 L25,2 L30,14 L35,6 L40,10 L45,8 L100,8" 
-          fill="none" 
-          stroke="hsl(var(--accent))" 
-          strokeWidth="1.5"
+          d="M60 65 C45 50 30 40 30 28 C30 18 38 12 48 12 C54 12 58 16 60 20 C62 16 66 12 72 12 C82 12 90 18 90 28 C90 40 75 50 60 65 Z" 
+          fill="hsl(var(--accent))" 
           className="animate-pulse"
         />
-      </svg>
-    </div>
-  </AppWindow>
+      </g>
+      
+      {/* Stéthoscope */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <path d="M20 15 Q20 35 35 45" fill="none" stroke="hsl(var(--primary))" strokeWidth="3" />
+        <path d="M28 15 Q28 30 40 42" fill="none" stroke="hsl(var(--primary))" strokeWidth="3" />
+        <circle cx="24" cy="12" r="4" fill="hsl(var(--secondary))" />
+        <circle cx="37" cy="48" r="6" fill="hsl(var(--primary))" />
+        <circle cx="37" cy="48" r="3" fill="hsl(var(--muted))" />
+      </g>
+      
+      {/* ECG */}
+      <path 
+        d="M5 70 L25 70 L30 60 L35 78 L40 65 L45 72 L50 70 L115 70" 
+        fill="none" 
+        stroke="hsl(var(--primary))" 
+        strokeWidth="2"
+        className="animate-pulse"
+        opacity="0.6"
+      />
+    </svg>
+  </div>
 );
 
-// Mockup projets pour Construction
-const ConstructionMockup = () => (
-  <AppWindow url="chantier-pro.app/projets">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🏗️ Chantiers actifs</span>
-        <span className="text-[7px] bg-secondary/20 text-secondary-foreground px-1.5 rounded-full">3 projets</span>
-      </div>
+// Illustration Construction - Grue et bâtiment
+const ConstructionIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-secondary/5 to-secondary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Sol */}
+      <rect x="0" y="70" width="120" height="10" fill="hsl(var(--muted))" />
       
-      <div className="space-y-1.5">
-        <div className="p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex justify-between items-center mb-1">
-            <p className="text-[8px] font-medium text-foreground">Résidence Bellevue</p>
-            <p className="text-[7px] text-secondary-foreground font-bold">78%</p>
-          </div>
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-secondary to-accent rounded-full animate-pulse" style={{ width: "78%" }} />
-          </div>
-        </div>
+      {/* Bâtiment en construction */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="60" y="35" width="35" height="35" fill="hsl(var(--card))" stroke="hsl(var(--border))" strokeWidth="1" />
+        <rect x="65" y="40" width="8" height="10" fill="hsl(var(--primary))" opacity="0.3" />
+        <rect x="78" y="40" width="8" height="10" fill="hsl(var(--primary))" opacity="0.3" />
+        <rect x="65" y="55" width="8" height="10" fill="hsl(var(--primary))" opacity="0.3" />
+        <rect x="78" y="55" width="8" height="10" fill="hsl(var(--primary))" opacity="0.3" />
+      </g>
+      
+      {/* Grue */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        {/* Mât */}
+        <rect x="18" y="15" width="6" height="55" fill="hsl(var(--accent))" />
+        {/* Flèche */}
+        <rect x="18" y="12" width="50" height="5" fill="hsl(var(--accent))" />
+        {/* Contrepoids */}
+        <rect x="8" y="12" width="12" height="8" fill="hsl(var(--secondary))" />
+        {/* Câble */}
+        <line x1="55" y1="17" x2="55" y2="40" stroke="hsl(var(--foreground))" strokeWidth="1" />
+        {/* Crochet */}
+        <path d="M52 40 L58 40 L58 48 Q55 52 52 48 Z" fill="hsl(var(--foreground))" className="animate-pulse" />
+      </g>
+      
+      {/* Casque */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+        <ellipse cx="105" cy="62" rx="10" ry="5" fill="hsl(var(--accent))" />
+        <path d="M95 62 Q95 52 105 52 Q115 52 115 62" fill="hsl(var(--accent))" />
+      </g>
+    </svg>
+  </div>
+);
+
+// Illustration Commerce - Panier et sacs
+const CommerceIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-accent/5 to-accent/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Sac de shopping 1 */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="15" y="30" width="30" height="35" rx="2" fill="hsl(var(--primary))" />
+        <path d="M22 30 Q22 20 30 20 Q38 20 38 30" fill="none" stroke="hsl(var(--primary))" strokeWidth="3" />
+        <rect x="20" y="38" width="20" height="2" fill="hsl(var(--primary-foreground))" opacity="0.3" />
+      </g>
+      
+      {/* Sac de shopping 2 */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <rect x="50" y="25" width="35" height="40" rx="2" fill="hsl(var(--accent))" />
+        <path d="M58 25 Q58 12 67 12 Q76 12 76 25" fill="none" stroke="hsl(var(--accent))" strokeWidth="3" />
+        <circle cx="67" cy="40" r="8" fill="hsl(var(--accent-foreground))" opacity="0.2" />
+      </g>
+      
+      {/* Étiquette prix */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <rect x="85" y="35" width="25" height="15" rx="2" fill="hsl(var(--secondary))" />
+        <text x="97" y="46" textAnchor="middle" fill="hsl(var(--secondary-foreground))" fontSize="8" fontWeight="bold">$</text>
+      </g>
+      
+      {/* Étoiles satisfaction */}
+      <g className="animate-pulse" style={{ animationDelay: "0.4s" }}>
+        <text x="30" y="75" fontSize="10">⭐</text>
+        <text x="45" y="75" fontSize="10">⭐</text>
+        <text x="60" y="75" fontSize="10">⭐</text>
+        <text x="75" y="75" fontSize="10">⭐</text>
+        <text x="90" y="75" fontSize="10">⭐</text>
+      </g>
+    </svg>
+  </div>
+);
+
+// Illustration Tech - Code et écrans
+const TechIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Écran principal */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="25" y="10" width="70" height="45" rx="3" fill="hsl(var(--card))" stroke="hsl(var(--border))" strokeWidth="2" />
+        <rect x="28" y="13" width="64" height="36" fill="hsl(var(--foreground))" />
+        {/* Code lignes */}
+        <rect x="32" y="18" width="25" height="3" rx="1" fill="hsl(var(--primary))" className="animate-pulse" />
+        <rect x="32" y="24" width="40" height="3" rx="1" fill="hsl(var(--accent))" />
+        <rect x="38" y="30" width="30" height="3" rx="1" fill="hsl(var(--secondary))" />
+        <rect x="38" y="36" width="35" height="3" rx="1" fill="hsl(var(--primary))" />
+        <rect x="32" y="42" width="20" height="3" rx="1" fill="hsl(var(--accent))" />
+        {/* Pied écran */}
+        <rect x="55" y="55" width="10" height="8" fill="hsl(var(--muted-foreground))" />
+        <rect x="45" y="62" width="30" height="4" rx="1" fill="hsl(var(--muted-foreground))" />
+      </g>
+      
+      {/* Symboles flottants */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <text x="10" y="25" fill="hsl(var(--primary))" fontSize="12" className="animate-pulse">{"<>"}</text>
+        <text x="100" y="35" fill="hsl(var(--accent))" fontSize="10">{"/>"}</text>
+        <text x="8" y="50" fill="hsl(var(--secondary))" fontSize="8">{"{ }"}</text>
+      </g>
+      
+      {/* Curseur clignotant */}
+      <rect x="72" y="18" width="2" height="8" fill="hsl(var(--primary-foreground))" className="animate-pulse" />
+    </svg>
+  </div>
+);
+
+// Illustration Éducation - Livres et diplôme
+const EducationIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Pile de livres */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="15" y="50" width="40" height="8" rx="1" fill="hsl(var(--primary))" />
+        <rect x="18" y="42" width="35" height="8" rx="1" fill="hsl(var(--accent))" />
+        <rect x="20" y="34" width="30" height="8" rx="1" fill="hsl(var(--secondary))" />
+      </g>
+      
+      {/* Chapeau de diplômé */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <polygon points="80,15 60,25 80,35 100,25" fill="hsl(var(--foreground))" />
+        <rect x="77" y="25" width="6" height="15" fill="hsl(var(--foreground))" />
+        <line x1="100" y1="25" x2="105" y2="40" stroke="hsl(var(--accent))" strokeWidth="2" />
+        <circle cx="105" cy="42" r="4" fill="hsl(var(--accent))" className="animate-pulse" />
+      </g>
+      
+      {/* Crayon */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <rect x="70" y="55" width="35" height="6" fill="hsl(var(--accent))" transform="rotate(-15 87 58)" />
+        <polygon points="105,52 112,55 105,58" fill="hsl(var(--muted-foreground))" transform="rotate(-15 108 55)" />
+      </g>
+      
+      {/* Ampoule idée */}
+      <g className="animate-pulse" style={{ animationDelay: "0.4s" }}>
+        <ellipse cx="35" cy="18" rx="10" ry="12" fill="hsl(var(--accent))" opacity="0.8" />
+        <rect x="32" y="28" width="6" height="4" fill="hsl(var(--muted-foreground))" />
+        <line x1="35" y1="5" x2="35" y2="2" stroke="hsl(var(--accent))" strokeWidth="2" />
+        <line x1="25" y1="10" x2="22" y2="8" stroke="hsl(var(--accent))" strokeWidth="2" />
+        <line x1="45" y1="10" x2="48" y2="8" stroke="hsl(var(--accent))" strokeWidth="2" />
+      </g>
+    </svg>
+  </div>
+);
+
+// Illustration Services - Poignée de main et mallette
+const ServicesIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Mallette */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="35" y="40" width="50" height="30" rx="3" fill="hsl(var(--primary))" />
+        <rect x="50" y="35" width="20" height="8" rx="2" fill="hsl(var(--primary))" />
+        <rect x="55" y="50" width="10" height="8" rx="1" fill="hsl(var(--accent))" />
+        <line x1="60" y1="52" x2="60" y2="56" stroke="hsl(var(--accent-foreground))" strokeWidth="2" />
+      </g>
+      
+      {/* Poignée de main stylisée */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <path d="M30 25 Q40 20 50 25 L55 30 Q45 35 35 30 Z" fill="hsl(var(--secondary))" />
+        <path d="M90 25 Q80 20 70 25 L65 30 Q75 35 85 30 Z" fill="hsl(var(--accent))" />
+        <ellipse cx="60" cy="27" rx="8" ry="5" fill="hsl(var(--muted))" className="animate-pulse" />
+      </g>
+      
+      {/* Graphique croissance */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <line x1="95" y1="70" x2="95" y2="45" stroke="hsl(var(--muted-foreground))" strokeWidth="1" />
+        <line x1="95" y1="70" x2="115" y2="70" stroke="hsl(var(--muted-foreground))" strokeWidth="1" />
+        <polyline points="97,65 102,58 107,62 112,50" fill="none" stroke="hsl(var(--accent))" strokeWidth="2" />
+        <circle cx="112" cy="50" r="2" fill="hsl(var(--accent))" className="animate-pulse" />
+      </g>
+      
+      {/* Check mark */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+        <circle cx="15" cy="55" r="10" fill="hsl(var(--primary))" opacity="0.2" />
+        <path d="M10 55 L14 59 L21 50" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" />
+      </g>
+    </svg>
+  </div>
+);
+
+// Illustration Architecture - Plan et bâtiment
+const ArchitectureIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Grille blueprint */}
+      <g opacity="0.1">
+        {[...Array(12)].map((_, i) => (
+          <line key={`v${i}`} x1={i * 10} y1="0" x2={i * 10} y2="80" stroke="hsl(var(--primary))" strokeWidth="0.5" />
+        ))}
+        {[...Array(8)].map((_, i) => (
+          <line key={`h${i}`} x1="0" y1={i * 10} x2="120" y2={i * 10} stroke="hsl(var(--primary))" strokeWidth="0.5" />
+        ))}
+      </g>
+      
+      {/* Bâtiment moderne */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="60" y="20" width="40" height="50" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" />
+        <rect x="65" y="25" width="10" height="12" fill="none" stroke="hsl(var(--accent))" strokeWidth="1" />
+        <rect x="80" y="25" width="10" height="12" fill="none" stroke="hsl(var(--accent))" strokeWidth="1" />
+        <rect x="65" y="42" width="10" height="12" fill="none" stroke="hsl(var(--accent))" strokeWidth="1" />
+        <rect x="80" y="42" width="10" height="12" fill="none" stroke="hsl(var(--accent))" strokeWidth="1" />
+        <rect x="73" y="58" width="14" height="12" fill="hsl(var(--secondary))" />
+      </g>
+      
+      {/* Équerre */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <path d="M15 65 L15 35 L45 65 Z" fill="none" stroke="hsl(var(--accent))" strokeWidth="2" />
+        <line x1="15" y1="45" x2="22" y2="45" stroke="hsl(var(--accent))" strokeWidth="1" />
+        <line x1="22" y1="45" x2="22" y2="52" stroke="hsl(var(--accent))" strokeWidth="1" />
+      </g>
+      
+      {/* Compas */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <circle cx="35" cy="20" r="12" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" strokeDasharray="3 2" className="animate-pulse" />
+        <line x1="35" y1="20" x2="35" y2="8" stroke="hsl(var(--muted-foreground))" strokeWidth="2" />
+        <line x1="35" y1="20" x2="45" y2="28" stroke="hsl(var(--muted-foreground))" strokeWidth="2" />
+        <circle cx="35" cy="20" r="2" fill="hsl(var(--foreground))" />
+      </g>
+    </svg>
+  </div>
+);
+
+// Illustration Transport - Camion et route
+const TransportIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-accent/5 to-accent/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Ciel avec nuages */}
+      <g opacity="0.3">
+        <ellipse cx="20" cy="15" rx="12" ry="6" fill="hsl(var(--muted-foreground))" />
+        <ellipse cx="90" cy="12" rx="15" ry="7" fill="hsl(var(--muted-foreground))" />
+      </g>
+      
+      {/* Route */}
+      <rect x="0" y="55" width="120" height="25" fill="hsl(var(--muted))" />
+      <line x1="0" y1="67" x2="120" y2="67" stroke="hsl(var(--accent))" strokeWidth="2" strokeDasharray="10 8" />
+      
+      {/* Camion */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        {/* Remorque */}
+        <rect x="15" y="35" width="45" height="25" rx="2" fill="hsl(var(--primary))" />
+        <rect x="20" y="38" width="35" height="8" fill="hsl(var(--primary-foreground))" opacity="0.2" />
+        {/* Cabine */}
+        <rect x="60" y="40" width="25" height="20" rx="2" fill="hsl(var(--accent))" />
+        <rect x="70" y="43" width="12" height="8" rx="1" fill="hsl(var(--muted))" opacity="0.7" />
+        {/* Roues */}
+        <circle cx="30" cy="60" r="7" fill="hsl(var(--foreground))" />
+        <circle cx="30" cy="60" r="3" fill="hsl(var(--muted))" />
+        <circle cx="50" cy="60" r="7" fill="hsl(var(--foreground))" />
+        <circle cx="50" cy="60" r="3" fill="hsl(var(--muted))" />
+        <circle cx="75" cy="60" r="7" fill="hsl(var(--foreground))" />
+        <circle cx="75" cy="60" r="3" fill="hsl(var(--muted))" />
+      </g>
+      
+      {/* Marqueur localisation */}
+      <g className="animate-pulse" style={{ animationDelay: "0.3s" }}>
+        <path d="M100 25 C100 18 105 12 110 12 C115 12 120 18 120 25 C120 32 110 42 110 42 C110 42 100 32 100 25 Z" fill="hsl(var(--accent))" />
+        <circle cx="110" cy="24" r="4" fill="hsl(var(--accent-foreground))" />
+      </g>
+    </svg>
+  </div>
+);
+
+// Illustration Arts - Scène et projecteurs
+const ArtsIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-accent/5 to-accent/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Rideaux */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <path d="M0 5 Q10 10 10 70 L0 70 Z" fill="hsl(var(--accent))" />
+        <path d="M120 5 Q110 10 110 70 L120 70 Z" fill="hsl(var(--accent))" />
+        <rect x="0" y="0" width="120" height="8" fill="hsl(var(--accent))" />
+      </g>
+      
+      {/* Scène */}
+      <rect x="10" y="60" width="100" height="15" fill="hsl(var(--secondary))" className="animate-fade-in" style={{ animationDelay: "0.15s" }} />
+      
+      {/* Projecteurs */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <rect x="20" y="10" width="8" height="6" rx="1" fill="hsl(var(--muted-foreground))" />
+        <polygon points="24,16 18,45 30,45" fill="hsl(var(--accent))" opacity="0.3" className="animate-pulse" />
         
-        <div className="p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex justify-between items-center mb-1">
-            <p className="text-[8px] font-medium text-foreground">Tour Horizon</p>
-            <p className="text-[7px] text-primary font-bold">45%</p>
-          </div>
-          <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-primary to-secondary rounded-full" style={{ width: "45%" }} />
-          </div>
-        </div>
-      </div>
+        <rect x="92" y="10" width="8" height="6" rx="1" fill="hsl(var(--muted-foreground))" />
+        <polygon points="96,16 90,45 102,45" fill="hsl(var(--primary))" opacity="0.3" className="animate-pulse" style={{ animationDelay: "0.5s" }} />
+      </g>
       
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary">2.4M$</p>
-          <p className="text-[6px] text-muted-foreground">Budget</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">18</p>
-          <p className="text-[6px] text-muted-foreground">Équipe</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
+      {/* Artiste sur scène */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <circle cx="60" cy="40" r="8" fill="hsl(var(--primary))" />
+        <rect x="56" y="48" width="8" height="12" rx="2" fill="hsl(var(--primary))" />
+        <line x1="56" y1="52" x2="50" y2="58" stroke="hsl(var(--primary))" strokeWidth="3" />
+        <line x1="64" y1="52" x2="70" y2="48" stroke="hsl(var(--primary))" strokeWidth="3" />
+      </g>
+      
+      {/* Notes de musique */}
+      <g className="animate-pulse">
+        <text x="35" y="35" fill="hsl(var(--accent))" fontSize="12">♪</text>
+        <text x="78" y="30" fill="hsl(var(--primary))" fontSize="10">♫</text>
+        <text x="45" y="25" fill="hsl(var(--secondary))" fontSize="8">♪</text>
+      </g>
+    </svg>
+  </div>
 );
 
-// Mockup boutique pour Commerce
-const CommerceMockup = () => (
-  <AppWindow url="ma-boutique.app/commandes">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🛍️ Commandes récentes</span>
-        <span className="text-[7px] bg-accent/20 text-accent px-1.5 rounded-full animate-pulse">+5 nouvelles</span>
-      </div>
+// Illustration Déménagement - Boîtes et camion
+const MovingIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-accent/5 to-accent/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Sol */}
+      <rect x="0" y="65" width="120" height="15" fill="hsl(var(--muted))" />
       
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-accent/10 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded bg-accent/20 flex items-center justify-center text-[10px]">📦</div>
-            <div>
-              <p className="text-[8px] font-medium text-foreground">#2847 - 3 articles</p>
-              <p className="text-[6px] text-muted-foreground">Il y a 5 min</p>
-            </div>
-          </div>
-          <p className="text-[8px] font-bold text-accent">89$</p>
-        </div>
+      {/* Pile de boîtes */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="15" y="45" width="25" height="20" fill="hsl(var(--secondary))" stroke="hsl(var(--secondary-foreground))" strokeWidth="1" />
+        <line x1="27" y1="48" x2="27" y2="62" stroke="hsl(var(--secondary-foreground))" strokeWidth="1" opacity="0.5" />
+        <line x1="20" y1="55" x2="35" y2="55" stroke="hsl(var(--secondary-foreground))" strokeWidth="1" opacity="0.5" />
         
-        <div className="flex items-center justify-between p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-[10px]">✓</div>
-            <div>
-              <p className="text-[8px] font-medium text-foreground">#2846 - Expédié</p>
-              <p className="text-[6px] text-muted-foreground">Il y a 1h</p>
-            </div>
-          </div>
-          <p className="text-[8px] font-bold text-primary">156$</p>
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">847</p>
-          <p className="text-[6px] text-muted-foreground">Ventes</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary">32k$</p>
-          <p className="text-[6px] text-muted-foreground">CA</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">4.8⭐</p>
-          <p className="text-[6px] text-muted-foreground">Avis</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mockup dashboard pour Tech - Code & Déploiement
-const TechMockup = () => (
-  <AppWindow url="devops.app/pipeline">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">💻 Pipeline CI/CD</span>
-        <span className="text-[7px] bg-primary text-primary-foreground px-1.5 rounded-full animate-pulse">Deploying</span>
-      </div>
-      
-      {/* Pipeline steps */}
-      <div className="space-y-1">
-        <div className="flex items-center gap-1 p-1 bg-primary/20 rounded animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center text-[8px] text-primary-foreground">✓</div>
-          <p className="text-[7px] text-foreground flex-1">Build</p>
-          <span className="text-[6px] text-muted-foreground">2m 14s</span>
-        </div>
-        <div className="flex items-center gap-1 p-1 bg-secondary/20 rounded animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="w-4 h-4 rounded-full bg-secondary flex items-center justify-center text-[8px] text-secondary-foreground">✓</div>
-          <p className="text-[7px] text-foreground flex-1">Tests</p>
-          <span className="text-[6px] text-muted-foreground">48/48</span>
-        </div>
-        <div className="flex items-center gap-1 p-1 bg-accent/20 rounded animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <div className="w-4 h-4 rounded-full bg-accent flex items-center justify-center text-[6px] animate-spin">⟳</div>
-          <p className="text-[7px] text-foreground flex-1">Deploy</p>
-          <span className="text-[6px] text-accent">En cours...</span>
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">v2.4.1</p>
-          <p className="text-[6px] text-muted-foreground">Release</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">156</p>
-          <p className="text-[6px] text-muted-foreground">Commits</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mockup cours pour Éducation
-const EducationMockup = () => (
-  <AppWindow url="ecole.app/cours">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">📚 Mes cours</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full">Semaine 12</span>
-      </div>
-      
-      <div className="space-y-1">
-        <div className="flex items-center gap-1.5 p-1.5 bg-primary/10 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-[10px]">🎓</div>
-          <div className="flex-1">
-            <p className="text-[8px] font-medium text-foreground">Marketing Digital</p>
-            <div className="h-1 bg-muted rounded-full mt-0.5">
-              <div className="h-full bg-primary rounded-full" style={{ width: "85%" }} />
-            </div>
-          </div>
-          <span className="text-[7px] text-primary font-medium">85%</span>
-        </div>
+        <rect x="20" y="28" width="20" height="17" fill="hsl(var(--accent))" stroke="hsl(var(--accent-foreground))" strokeWidth="1" />
+        <text x="26" y="40" fill="hsl(var(--accent-foreground))" fontSize="8" opacity="0.7">FRAGILE</text>
         
-        <div className="flex items-center gap-1.5 p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="w-6 h-6 rounded bg-secondary/30 flex items-center justify-center text-[10px]">💡</div>
-          <div className="flex-1">
-            <p className="text-[8px] font-medium text-foreground">Entrepreneuriat</p>
-            <div className="h-1 bg-muted rounded-full mt-0.5">
-              <div className="h-full bg-secondary rounded-full" style={{ width: "62%" }} />
-            </div>
-          </div>
-          <span className="text-[7px] text-secondary-foreground font-medium">62%</span>
-        </div>
-      </div>
+        <rect x="42" y="50" width="18" height="15" fill="hsl(var(--primary))" stroke="hsl(var(--primary-foreground))" strokeWidth="1" />
+      </g>
       
-      <div className="flex justify-center gap-2 pt-1">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">12</p>
-          <p className="text-[6px] text-muted-foreground">Cours</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">A+</p>
-          <p className="text-[6px] text-muted-foreground">Moyenne</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
+      {/* Maison */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <rect x="75" y="40" width="35" height="25" fill="hsl(var(--card))" stroke="hsl(var(--border))" strokeWidth="1" />
+        <polygon points="75,40 92,22 110,40" fill="hsl(var(--primary))" />
+        <rect x="85" y="50" width="12" height="15" fill="hsl(var(--secondary))" />
+        <circle cx="94" cy="57" r="1.5" fill="hsl(var(--accent))" />
+        <rect x="100" y="45" width="6" height="8" fill="hsl(var(--muted))" />
+      </g>
+      
+      {/* Flèche de déménagement */}
+      <g className="animate-pulse" style={{ animationDelay: "0.3s" }}>
+        <path d="M50 15 L65 15 L65 10 L75 18 L65 26 L65 21 L50 21 Z" fill="hsl(var(--accent))" />
+      </g>
+    </svg>
+  </div>
 );
 
-// Mockup clients pour Services
-const ServicesMockup = () => (
-  <AppWindow url="mon-service.app/clients">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">💼 Clients actifs</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full">+3 ce mois</span>
-      </div>
+// Illustration Immobilier - Maison et clé
+const RealEstateIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Maison principale */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="30" y="35" width="50" height="35" fill="hsl(var(--card))" stroke="hsl(var(--border))" strokeWidth="2" />
+        <polygon points="30,35 55,12 80,35" fill="hsl(var(--primary))" />
+        {/* Fenêtres */}
+        <rect x="38" y="42" width="12" height="10" fill="hsl(var(--muted))" stroke="hsl(var(--border))" strokeWidth="1" />
+        <line x1="44" y1="42" x2="44" y2="52" stroke="hsl(var(--border))" strokeWidth="1" />
+        <line x1="38" y1="47" x2="50" y2="47" stroke="hsl(var(--border))" strokeWidth="1" />
+        <rect x="60" y="42" width="12" height="10" fill="hsl(var(--muted))" stroke="hsl(var(--border))" strokeWidth="1" />
+        {/* Porte */}
+        <rect x="48" y="55" width="14" height="15" fill="hsl(var(--secondary))" />
+        <circle cx="58" cy="63" r="2" fill="hsl(var(--accent))" />
+        {/* Cheminée */}
+        <rect x="65" y="18" width="8" height="12" fill="hsl(var(--muted-foreground))" />
+      </g>
       
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="AB" variant="secondary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Agence Bloom</p>
-              <p className="text-[6px] text-muted-foreground">Contrat annuel</p>
-            </div>
-          </div>
-          <p className="text-[8px] font-bold text-secondary-foreground">1,200$/m</p>
-        </div>
-        
-        <div className="flex items-center justify-between p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="TL" variant="primary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Tech Labs</p>
-              <p className="text-[6px] text-muted-foreground">Projet en cours</p>
-            </div>
-          </div>
-          <p className="text-[8px] font-bold text-primary">850$/m</p>
-        </div>
-      </div>
+      {/* Clé */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <circle cx="100" cy="30" r="10" fill="none" stroke="hsl(var(--accent))" strokeWidth="3" />
+        <circle cx="100" cy="30" r="4" fill="none" stroke="hsl(var(--accent))" strokeWidth="2" />
+        <rect x="98" y="38" width="4" height="20" fill="hsl(var(--accent))" />
+        <rect x="95" y="50" width="5" height="3" fill="hsl(var(--accent))" />
+        <rect x="95" y="55" width="7" height="3" fill="hsl(var(--accent))" />
+      </g>
       
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">18</p>
-          <p className="text-[6px] text-muted-foreground">Clients</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary">24k$</p>
-          <p className="text-[6px] text-muted-foreground">MRR</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
+      {/* Badge "À vendre" */}
+      <g className="animate-pulse" style={{ animationDelay: "0.3s" }}>
+        <rect x="5" y="50" width="22" height="20" rx="2" fill="hsl(var(--primary))" />
+        <text x="16" y="62" textAnchor="middle" fill="hsl(var(--primary-foreground))" fontSize="5" fontWeight="bold">À</text>
+        <text x="16" y="68" textAnchor="middle" fill="hsl(var(--primary-foreground))" fontSize="5" fontWeight="bold">VENDRE</text>
+      </g>
+    </svg>
+  </div>
 );
 
-// Mockup projets pour Architecture
-const ArchitectureMockup = () => (
-  <AppWindow url="archi-studio.app/projets">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">📐 Projets design</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full">4 actifs</span>
-      </div>
+// Illustration Finance - Graphiques et calculatrice
+const FinanceIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Graphique à barres */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <rect x="15" y="50" width="10" height="20" fill="hsl(var(--primary))" />
+        <rect x="28" y="40" width="10" height="30" fill="hsl(var(--accent))" />
+        <rect x="41" y="35" width="10" height="35" fill="hsl(var(--secondary))" />
+        <rect x="54" y="25" width="10" height="45" fill="hsl(var(--primary))" className="animate-pulse" />
+        <line x1="10" y1="70" x2="70" y2="70" stroke="hsl(var(--muted-foreground))" strokeWidth="1" />
+        <line x1="10" y1="70" x2="10" y2="20" stroke="hsl(var(--muted-foreground))" strokeWidth="1" />
+      </g>
       
-      {/* Mini blueprint */}
-      <div className="h-12 bg-primary/5 rounded-lg p-1 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="grid grid-cols-8 grid-rows-4 h-full gap-px">
-            {Array(32).fill(0).map((_, i) => (
-              <div key={i} className="border border-primary/30" />
-            ))}
-          </div>
-        </div>
-        <svg className="w-full h-full" viewBox="0 0 80 35">
-          <rect x="10" y="10" width="25" height="20" fill="none" stroke="hsl(var(--primary))" strokeWidth="1" className="animate-fade-in" />
-          <rect x="45" y="5" width="30" height="25" fill="none" stroke="hsl(var(--accent))" strokeWidth="1" className="animate-fade-in" style={{ animationDelay: "0.2s" }} />
-          <line x1="35" y1="20" x2="45" y2="17" stroke="hsl(var(--secondary))" strokeWidth="1" strokeDasharray="2" />
-        </svg>
-      </div>
+      {/* Calculatrice */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <rect x="75" y="25" width="35" height="45" rx="3" fill="hsl(var(--card))" stroke="hsl(var(--border))" strokeWidth="1" />
+        <rect x="80" y="30" width="25" height="10" fill="hsl(var(--muted))" />
+        <text x="100" y="38" textAnchor="end" fill="hsl(var(--foreground))" fontSize="7">12,450$</text>
+        {/* Boutons */}
+        {[0, 1, 2].map((row) =>
+          [0, 1, 2].map((col) => (
+            <rect
+              key={`${row}-${col}`}
+              x={80 + col * 9}
+              y={44 + row * 8}
+              width="7"
+              height="6"
+              rx="1"
+              fill={col === 2 && row === 2 ? "hsl(var(--primary))" : "hsl(var(--muted))"}
+            />
+          ))
+        )}
+      </g>
       
-      <div className="flex justify-between">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">12</p>
-          <p className="text-[6px] text-muted-foreground">Plans</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">3</p>
-          <p className="text-[6px] text-muted-foreground">En révision</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary">8</p>
-          <p className="text-[6px] text-muted-foreground">Approuvés</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
+      {/* Symbole dollar */}
+      <g className="animate-pulse" style={{ animationDelay: "0.3s" }}>
+        <circle cx="92" cy="12" r="10" fill="hsl(var(--accent))" />
+        <text x="92" y="16" textAnchor="middle" fill="hsl(var(--accent-foreground))" fontSize="12" fontWeight="bold">$</text>
+      </g>
+      
+      {/* Flèche croissance */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
+        <path d="M20 15 L35 8 L32 12 L45 12 L45 18 L32 18 L35 22 Z" fill="hsl(var(--primary))" opacity="0.7" />
+      </g>
+    </svg>
+  </div>
 );
 
-// Mockup livraisons pour Transport
-const TransportMockup = () => (
-  <AppWindow url="livraison.app/trajets">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🚚 Livraisons</span>
-        <span className="text-[7px] bg-accent/20 text-accent px-1.5 rounded-full animate-pulse">En route</span>
-      </div>
+// Illustration OBNL - Coeur et mains
+const OBNLIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-primary/5 to-primary/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Mains qui tiennent */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <path d="M25 55 Q15 50 15 40 Q15 35 20 35 L30 35 Q35 35 35 40 L35 55 Q30 60 25 55" fill="hsl(var(--secondary))" />
+        <path d="M95 55 Q105 50 105 40 Q105 35 100 35 L90 35 Q85 35 85 40 L85 55 Q90 60 95 55" fill="hsl(var(--secondary))" />
+      </g>
       
-      {/* Mini map */}
-      <div className="h-10 bg-gradient-to-b from-secondary/20 to-secondary/10 rounded-lg relative overflow-hidden">
-        <div className="absolute inset-0 flex items-center px-2">
-          <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-          <div className="flex-1 h-0.5 bg-muted mx-1 relative">
-            <div className="absolute left-1/2 -translate-x-1/2 -top-1.5 text-[10px] animate-bounce">🚛</div>
-          </div>
-          <div className="w-2 h-2 rounded-full bg-accent" />
-        </div>
-        <div className="absolute bottom-1 left-2 text-[6px] text-muted-foreground">A: Entrepôt</div>
-        <div className="absolute bottom-1 right-2 text-[6px] text-muted-foreground">B: Client</div>
-      </div>
+      {/* Coeur central */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <path 
+          d="M60 60 C45 45 30 38 30 26 C30 16 40 10 50 10 C56 10 58 14 60 18 C62 14 64 10 70 10 C80 10 90 16 90 26 C90 38 75 45 60 60 Z" 
+          fill="hsl(var(--accent))" 
+          className="animate-pulse"
+        />
+      </g>
       
-      <div className="grid grid-cols-3 gap-1">
-        <div className="bg-secondary/20 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">24</p>
-          <p className="text-[6px] text-muted-foreground">Livré</p>
-        </div>
-        <div className="bg-primary/10 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-primary">8</p>
-          <p className="text-[6px] text-muted-foreground">En cours</p>
-        </div>
-        <div className="bg-accent/10 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-accent">98%</p>
-          <p className="text-[6px] text-muted-foreground">À temps</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
+      {/* Personnes stylisées */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <circle cx="45" cy="68" r="5" fill="hsl(var(--primary))" />
+        <circle cx="60" cy="66" r="5" fill="hsl(var(--primary))" />
+        <circle cx="75" cy="68" r="5" fill="hsl(var(--primary))" />
+      </g>
+      
+      {/* Étoiles de solidarité */}
+      <g className="animate-pulse" style={{ animationDelay: "0.4s" }}>
+        <text x="20" y="20" fill="hsl(var(--accent))" fontSize="10">✦</text>
+        <text x="100" y="18" fill="hsl(var(--primary))" fontSize="8">✦</text>
+        <text x="55" y="8" fill="hsl(var(--secondary))" fontSize="6">✦</text>
+      </g>
+    </svg>
+  </div>
 );
 
-// Mockup événements pour Arts - Billetterie
-const ArtsMockup = () => (
-  <AppWindow url="theatre.app/billetterie">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🎭 Prochains spectacles</span>
-        <span className="text-[7px] bg-accent text-accent-foreground px-1.5 rounded-full">3 ce soir</span>
-      </div>
+// Illustration Beauté - Miroir et produits
+const BeautyIllustration = () => (
+  <div className="w-full h-full bg-gradient-to-b from-accent/5 to-accent/10 rounded-xl overflow-hidden relative p-3">
+    <svg viewBox="0 0 120 80" className="w-full h-full">
+      {/* Miroir ovale */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <ellipse cx="60" cy="35" rx="25" ry="28" fill="hsl(var(--card))" stroke="hsl(var(--accent))" strokeWidth="3" />
+        <ellipse cx="60" cy="35" rx="20" ry="23" fill="hsl(var(--muted))" opacity="0.3" />
+        <ellipse cx="52" cy="30" rx="5" ry="8" fill="hsl(var(--card))" opacity="0.5" />
+        <rect x="55" y="60" width="10" height="12" fill="hsl(var(--accent))" />
+        <ellipse cx="60" cy="72" rx="15" ry="4" fill="hsl(var(--muted))" />
+      </g>
       
-      <div className="space-y-1">
-        <div className="p-1.5 bg-accent/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded bg-accent flex items-center justify-center text-[10px]">🎵</div>
-              <div>
-                <p className="text-[8px] font-bold text-foreground">Concert Symphonique</p>
-                <p className="text-[6px] text-muted-foreground">20h00 - Grande salle</p>
-              </div>
-            </div>
-            <StatusBadge text="Complet" variant="warning" />
-          </div>
-        </div>
-        
-        <div className="p-1.5 bg-primary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded bg-primary flex items-center justify-center text-[10px]">🎪</div>
-              <div>
-                <p className="text-[8px] font-bold text-foreground">Cirque Étoiles</p>
-                <p className="text-[6px] text-muted-foreground">19h30 - Chapiteau</p>
-              </div>
-            </div>
-            <p className="text-[7px] text-primary font-bold">45 places</p>
-          </div>
-        </div>
-      </div>
+      {/* Rouge à lèvres */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <rect x="15" y="45" width="8" height="25" rx="2" fill="hsl(var(--foreground))" />
+        <rect x="15" y="40" width="8" height="8" rx="1" fill="hsl(var(--accent))" />
+        <path d="M15 40 L19 35 L23 40 Z" fill="hsl(var(--accent))" />
+      </g>
       
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">8</p>
-          <p className="text-[6px] text-muted-foreground">Shows</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">1.2k</p>
-          <p className="text-[6px] text-muted-foreground">Billets</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">32k$</p>
-          <p className="text-[6px] text-muted-foreground">Recettes</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
+      {/* Brosse */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <ellipse cx="100" cy="50" rx="10" ry="15" fill="hsl(var(--primary))" />
+        <rect x="95" y="62" width="10" height="12" rx="2" fill="hsl(var(--secondary))" />
+        {/* Poils de la brosse */}
+        {[...Array(5)].map((_, i) => (
+          <line key={i} x1={93 + i * 3} y1="38" x2={93 + i * 3} y2="48" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" />
+        ))}
+      </g>
+      
+      {/* Parfum */}
+      <g className="animate-fade-in" style={{ animationDelay: "0.35s" }}>
+        <rect x="30" y="55" width="12" height="18" rx="2" fill="hsl(var(--secondary))" />
+        <rect x="33" y="50" width="6" height="6" fill="hsl(var(--muted-foreground))" />
+        <circle cx="36" cy="48" r="3" fill="hsl(var(--accent))" />
+      </g>
+      
+      {/* Étoiles brillantes */}
+      <g className="animate-pulse">
+        <text x="42" y="25" fill="hsl(var(--accent))" fontSize="8">✨</text>
+        <text x="72" y="20" fill="hsl(var(--primary))" fontSize="6">✨</text>
+        <text x="85" y="35" fill="hsl(var(--secondary))" fontSize="7">✨</text>
+      </g>
+    </svg>
+  </div>
 );
 
-// Mockup planning pour Déménagement
-const MovingMockup = () => (
-  <AppWindow url="demenagement.app/planning">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">📦 Planning déménagements</span>
-      </div>
-      
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-accent/10 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded bg-accent/20 flex items-center justify-center text-[10px]">🏠</div>
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Fam. Gagnon</p>
-              <p className="text-[6px] text-muted-foreground">3½ → 5½</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[7px] font-bold text-accent">Demain</p>
-            <p className="text-[6px] text-muted-foreground">8h00</p>
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded bg-primary/20 flex items-center justify-center text-[10px]">🏢</div>
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Bureau Tech Inc.</p>
-              <p className="text-[6px] text-muted-foreground">Commercial</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[7px] font-bold text-primary">Samedi</p>
-            <p className="text-[6px] text-muted-foreground">7h00</p>
-          </div>
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">8</p>
-          <p className="text-[6px] text-muted-foreground">Cette sem.</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">100%</p>
-          <p className="text-[6px] text-muted-foreground">Confirmés</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mockup propriétés pour Immobilier
-const RealEstateMockup = () => (
-  <AppWindow url="immo-pro.app/proprietes">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🏡 Propriétés</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full">12 actives</span>
-      </div>
-      
-      <div className="grid grid-cols-2 gap-1">
-        <div className="p-1.5 bg-gradient-to-br from-primary/10 to-primary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <p className="text-[10px] font-bold text-primary">450k$</p>
-          <p className="text-[6px] text-muted-foreground">Condo Centre-ville</p>
-          <StatusBadge text="Nouveau" variant="new" />
-        </div>
-        <div className="p-1.5 bg-gradient-to-br from-secondary/20 to-secondary/30 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <p className="text-[10px] font-bold text-secondary-foreground">680k$</p>
-          <p className="text-[6px] text-muted-foreground">Maison Outremont</p>
-          <StatusBadge text="Offre" variant="warning" />
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">4.2M$</p>
-          <p className="text-[6px] text-muted-foreground">Listings</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">3</p>
-          <p className="text-[6px] text-muted-foreground">Vendus/mois</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mockup finances - Comptabilité
-const FinanceMockup = () => (
-  <AppWindow url="compta.app/clients">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">📊 Dossiers clients</span>
-        <span className="text-[7px] bg-primary text-primary-foreground px-1.5 rounded-full">48 actifs</span>
-      </div>
-      
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-primary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="EI" variant="primary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Entreprise Inc.</p>
-              <p className="text-[6px] text-muted-foreground">Déclaration T2</p>
-            </div>
-          </div>
-          <StatusBadge text="En cours" variant="info" />
-        </div>
-        
-        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="ML" variant="secondary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">M. Lavoie</p>
-              <p className="text-[6px] text-muted-foreground">Impôts personnels</p>
-            </div>
-          </div>
-          <StatusBadge text="Terminé" variant="success" />
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">48</p>
-          <p className="text-[6px] text-muted-foreground">Clients</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">12</p>
-          <p className="text-[6px] text-muted-foreground">En attente</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">85k$</p>
-          <p className="text-[6px] text-muted-foreground">Honoraires</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mockup OBNL
-const OBNLMockup = () => (
-  <AppWindow url="asbl.app/dons">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">💚 Campagne dons</span>
-        <span className="text-[7px] bg-primary text-primary-foreground px-1.5 rounded-full">Active</span>
-      </div>
-      
-      <div className="p-1.5 bg-primary/20 rounded-lg">
-        <div className="flex justify-between items-center mb-1">
-          <p className="text-[8px] font-medium text-foreground">Objectif: 50,000$</p>
-          <p className="text-[7px] text-primary font-bold">72%</p>
-        </div>
-        <div className="h-2 bg-muted rounded-full overflow-hidden">
-          <div className="h-full bg-primary rounded-full animate-pulse" style={{ width: "72%" }} />
-        </div>
-        <p className="text-[6px] text-muted-foreground mt-0.5">36,000$ collectés • 245 donateurs</p>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">1.2k</p>
-          <p className="text-[6px] text-muted-foreground">Membres</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">8</p>
-          <p className="text-[6px] text-muted-foreground">Projets</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mockup Beauté et esthétique
-const BeautyMockup = () => (
-  <AppWindow url="beaute.app/rdv">
-    <div className="space-y-1.5">
-      <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">💅 Rendez-vous</span>
-        <span className="text-[7px] bg-accent text-accent-foreground px-1.5 rounded-full">8 aujourd'hui</span>
-      </div>
-      
-      <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-accent/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="SL" variant="accent" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Sophie Lavoie</p>
-              <p className="text-[6px] text-muted-foreground">Manucure gel</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[7px] font-bold text-accent">10h30</p>
-            <p className="text-[6px] text-muted-foreground">1h</p>
-          </div>
-        </div>
-        
-        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
-          <div className="flex items-center gap-1.5">
-            <Avatar initials="MB" variant="secondary" />
-            <div>
-              <p className="text-[8px] font-medium text-foreground">Marie Bouchard</p>
-              <p className="text-[6px] text-muted-foreground">Coupe & couleur</p>
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-[7px] font-bold text-secondary-foreground">14h00</p>
-            <p className="text-[6px] text-muted-foreground">2h</p>
-          </div>
-        </div>
-      </div>
-      
-      <div className="flex justify-between pt-1 border-t border-border">
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">32</p>
-          <p className="text-[6px] text-muted-foreground">Cette sem.</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">2.4k$</p>
-          <p className="text-[6px] text-muted-foreground">Recettes</p>
-        </div>
-        <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">4.9⭐</p>
-          <p className="text-[6px] text-muted-foreground">Avis</p>
-        </div>
-      </div>
-    </div>
-  </AppWindow>
-);
-
-// Mapping des mockups par industrie
-const getMockupByIndustry = (value: string) => {
-  const mockups: Record<string, React.ReactNode> = {
-    auto: <AutoMockup />,
-    restauration: <RestaurantMockup />,
-    sante: <HealthMockup />,
-    construction: <ConstructionMockup />,
-    commerce: <CommerceMockup />,
-    tech: <TechMockup />,
-    education: <EducationMockup />,
-    services: <ServicesMockup />,
-    architecture: <ArchitectureMockup />,
-    transport: <TransportMockup />,
-    "arts-scene": <ArtsMockup />,
-    demenagement: <MovingMockup />,
-    immobilier: <RealEstateMockup />,
-    finances: <FinanceMockup />,
-    obnl: <OBNLMockup />,
-    beaute: <BeautyMockup />,
+// Mapping des illustrations par industrie
+const getIllustrationByIndustry = (value: string) => {
+  const illustrations: Record<string, React.ReactNode> = {
+    auto: <AutoIllustration />,
+    restauration: <RestaurantIllustration />,
+    sante: <HealthIllustration />,
+    construction: <ConstructionIllustration />,
+    commerce: <CommerceIllustration />,
+    tech: <TechIllustration />,
+    education: <EducationIllustration />,
+    services: <ServicesIllustration />,
+    architecture: <ArchitectureIllustration />,
+    transport: <TransportIllustration />,
+    "arts-scene": <ArtsIllustration />,
+    demenagement: <MovingIllustration />,
+    immobilier: <RealEstateIllustration />,
+    finances: <FinanceIllustration />,
+    obnl: <OBNLIllustration />,
+    beaute: <BeautyIllustration />,
   };
   
-  return mockups[value] || <ServicesMockup />;
+  return illustrations[value] || <ServicesIllustration />;
 };
 
 export const IndustryCard = ({
@@ -868,9 +691,9 @@ export const IndustryCard = ({
         </div>
       )}
 
-      {/* Mockup UI animé */}
+      {/* Illustration animée */}
       <div className="h-32 mb-3 rounded-xl overflow-hidden">
-        {getMockupByIndustry(value)}
+        {getIllustrationByIndustry(value)}
       </div>
 
       {/* Texte */}
