@@ -169,7 +169,6 @@ export const StepWelcome = () => {
               "gap-3 px-10 py-7 text-lg font-bold rounded-lg",
               "bg-transparent border-2",
               "border-transparent bg-clip-padding",
-              "text-primary hover:text-white",
               "relative overflow-hidden transition-all duration-300",
               "group",
               "before:absolute before:inset-0 before:rounded-lg before:p-[2px] before:-z-10",
@@ -181,9 +180,27 @@ export const StepWelcome = () => {
               "hover:shadow-glow"
             )}
           >
-            <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
-            Commencer maintenant
-            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Play className="w-5 h-5 group-hover:scale-110 transition-transform text-primary group-hover:text-white" 
+              style={{ 
+                background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent"
+              }}
+            />
+            <span 
+              className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:text-white group-hover:bg-none transition-all duration-300"
+            >
+              Commencer maintenant
+            </span>
+            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform"
+              style={{ 
+                background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent"
+              }}
+            />
           </Button>
         </div>
         {/* Trust Badge */}
