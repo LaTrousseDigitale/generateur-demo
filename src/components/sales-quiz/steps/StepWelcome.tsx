@@ -180,26 +180,28 @@ export const StepWelcome = () => {
               "hover:shadow-glow"
             )}
           >
-            <Play className="w-5 h-5 group-hover:scale-110 transition-transform text-primary group-hover:text-white" 
-              style={{ 
-                background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent"
-              }}
+            {/* SVG Gradient Definition */}
+            <svg width="0" height="0" className="absolute">
+              <defs>
+                <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="hsl(218, 99%, 55%)" />
+                  <stop offset="50%" stopColor="hsl(44, 96%, 66%)" />
+                  <stop offset="100%" stopColor="hsl(16, 100%, 61%)" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <Play 
+              className="w-5 h-5 group-hover:scale-110 transition-transform group-hover:stroke-white" 
+              style={{ stroke: "url(#iconGradient)" }}
             />
             <span 
               className="bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent group-hover:text-white group-hover:bg-none transition-all duration-300"
             >
               Commencer maintenant
             </span>
-            <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform"
-              style={{ 
-                background: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--secondary)), hsl(var(--accent)))",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent"
-              }}
+            <ChevronRight 
+              className="w-5 h-5 group-hover:translate-x-1 transition-transform group-hover:stroke-white"
+              style={{ stroke: "url(#iconGradient)" }}
             />
           </Button>
         </div>
