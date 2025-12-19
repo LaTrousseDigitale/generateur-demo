@@ -180,3 +180,58 @@ All colors MUST be HSL.
     transform: scale(1.05);
   }
 }
+
+/* Gentle floating animation for industry cards */
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0) translateX(-50%);
+  }
+  50% {
+    transform: translateY(-6px) translateX(-50%);
+  }
+}
+
+/* Heartbeat animation */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  15% {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  45% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+/* Swing animation for crane */
+@keyframes swing {
+  0%, 100% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+/* Curtain animations */
+@keyframes curtain-left {
+  0%, 100% {
+    width: 16px;
+  }
+  50% {
+    width: 12px;
+  }
+}
+
+@keyframes curtain-right {
+  0%, 100% {
+    width: 16px;
+  }
+  50% {
+    width: 12px;
+  }
+}
