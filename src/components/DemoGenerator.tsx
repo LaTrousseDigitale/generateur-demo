@@ -8,6 +8,7 @@ import { FullDemoView } from "./FullDemoView";
 import { QuoteModal } from "./QuoteModal";
 import { Eye, RefreshCw, Building2, Settings, Palette, Globe, CreditCard, Mail, Puzzle, Send, CheckCircle2, Circle, ChevronRight, Sparkles, Phone, ShoppingCart } from "lucide-react";
 import { useCartSync } from "@/hooks/useCartSync";
+import { SyncedHeader } from "@/components/SyncedHeader";
 import logoTrousseDigitale from "@/assets/logo-trousse-digitale.png";
 import { Link } from "react-router-dom";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
@@ -343,67 +344,10 @@ export const DemoGenerator = () => {
   const hasWebsite = (questionnaireData.solutionTypes || []).includes("website");
   const hasPortal = (questionnaireData.solutionTypes || []).includes("portal");
 
-  // Navigation links - same as latroussedigitale.ca
-  const navLinks = [
-    { label: "Accueil", href: "https://latroussedigitale.ca/" },
-    { label: "Applications", href: "https://latroussedigitale.ca/#applications" },
-    { label: "Démos", href: "https://latroussedigitale.ca/#demos" },
-    { label: "Avantages", href: "https://latroussedigitale.ca/#avantages" },
-    { label: "Tarifs", href: "https://latroussedigitale.ca/#tarifs" },
-    { label: "Contact", href: "https://latroussedigitale.ca/#contact" }
-  ];
-
-  const cartUrl = `https://latroussedigitale.ca/panier?session_id=${cartSessionId}`;
 
   return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
-      {/* Navigation Header - Matches latroussedigitale.ca exactly */}
-      <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div className="w-full max-w-[1400px] mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-[72px]">
-            {/* Logo - Same size and position as main site */}
-            <a href="https://latroussedigitale.ca" className="flex-shrink-0">
-              <img 
-                src={logoTrousseDigitale} 
-                alt="La Trousse Digitale" 
-                className="h-12 w-auto" 
-              />
-            </a>
-
-            {/* Desktop Navigation - Centered like main site */}
-            <nav className="hidden md:flex items-center gap-8">
-              {navLinks.map(link => (
-                <a 
-                  key={link.label} 
-                  href={link.href} 
-                  className="text-[15px] text-gray-600 hover:text-gray-900 transition-colors font-medium"
-                >
-                  {link.label}
-                </a>
-              ))}
-            </nav>
-
-            {/* CTA Button - Same style as main site */}
-            <div className="flex items-center gap-4">
-              <a href={cartUrl} className="relative text-gray-500 hover:text-gray-700 transition-colors">
-                <ShoppingCart className="h-5 w-5" />
-                {cartItemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-[#ff6b3d] text-white text-[10px] font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
-                    {cartItemCount > 99 ? '99+' : cartItemCount}
-                  </span>
-                )}
-              </a>
-              <Button 
-                className="!bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-full px-5 py-2.5 text-[14px] font-medium flex items-center gap-2"
-                onClick={() => setActiveTab("general")}
-              >
-                <Sparkles className="h-4 w-4" />
-                <span className="hidden sm:inline">Générer ma démo</span>
-                <span className="sm:hidden">Démo</span>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      {/* Synced Header - Will use iframe once latroussedigitale.ca implements /header-embed */}
+      <SyncedHeader onCtaClick={() => setActiveTab("general")} />
 
       <div className="container mx-auto px-4 py-6 sm:py-8">
         {/* Global Progress Bar */}
