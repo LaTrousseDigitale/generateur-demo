@@ -38,6 +38,13 @@ const setCookie = (name: string, value: string, days: number = 365): void => {
   document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; domain=${domain}; SameSite=Lax`;
 };
 
+// Generate cryptographically secure session ID
+const generateSecureSessionId = (): string => {
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+};
+
 // Generate or retrieve session ID for anonymous users
 // Priority: 1. URL param, 2. Shared cookie, 3. localStorage, 4. Generate new
 const getSessionId = (): string => {
@@ -45,7 +52,7 @@ const getSessionId = (): string => {
   const urlParams = new URLSearchParams(window.location.search);
   const urlSessionId = urlParams.get('session_id');
   
-  if (urlSessionId) {
+  if (urlSessionId && isValidSecureSessionId(urlSessionId)) {
     // Store in both cookie and localStorage
     setCookie(CART_COOKIE_NAME, urlSessionId);
     localStorage.setItem(CART_SESSION_KEY, urlSessionId);
@@ -53,33 +60,34 @@ const getSessionId = (): string => {
     const newUrl = new URL(window.location.href);
     newUrl.searchParams.delete('session_id');
     window.history.replaceState({}, '', newUrl.toString());
-    console.log('[Cart] Using session_id from URL:', urlSessionId);
     return urlSessionId;
   }
   
   // 2. Check shared cookie (for subdomain sync)
   const cookieSessionId = getCookie(CART_COOKIE_NAME);
-  if (cookieSessionId) {
+  if (cookieSessionId && isValidSecureSessionId(cookieSessionId)) {
     localStorage.setItem(CART_SESSION_KEY, cookieSessionId);
-    console.log('[Cart] Using session_id from cookie:', cookieSessionId);
     return cookieSessionId;
   }
   
   // 3. Check localStorage
   let sessionId = localStorage.getItem(CART_SESSION_KEY);
-  if (sessionId) {
+  if (sessionId && isValidSecureSessionId(sessionId)) {
     // Also set cookie for future cross-subdomain access
     setCookie(CART_COOKIE_NAME, sessionId);
-    console.log('[Cart] Using session_id from localStorage:', sessionId);
     return sessionId;
   }
   
-  // 4. Generate new session ID
-  sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+  // 4. Generate new cryptographically secure session ID
+  sessionId = generateSecureSessionId();
   localStorage.setItem(CART_SESSION_KEY, sessionId);
   setCookie(CART_COOKIE_NAME, sessionId);
-  console.log('[Cart] Generated new session_id:', sessionId);
   return sessionId;
+};
+
+// Validate session ID format (64 hex chars = 256 bits of entropy)
+const isValidSecureSessionId = (id: string): boolean => {
+  return /^[a-f0-9]{64}$/i.test(id);
 };
 
 export const useCartSync = () => {
