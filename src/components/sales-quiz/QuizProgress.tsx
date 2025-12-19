@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useQuiz } from "./QuizContext";
-import { Check } from "lucide-react";
+import { Check, AlertCircle } from "lucide-react";
 
 const STEP_LABELS = [
   "Bienvenue",
@@ -15,9 +15,37 @@ const STEP_LABELS = [
   "Résumé",
 ];
 
+// Define what makes each step "complete"
+const getStepCompletionStatus = (stepIndex: number, data: any): boolean => {
+  switch (stepIndex) {
+    case 0: // Bienvenue - toujours complet
+      return true;
+    case 1: // Industrie - essentiel
+      return !!data.industry;
+    case 2: // Objectifs
+      return (data.mainObjectives?.length || 0) > 0;
+    case 3: // Solutions
+      return (data.solutionTypes?.length || 0) > 0;
+    case 4: // Détails
+      return !!data.websiteType || !!data.portalType || (data.selectedModules?.length || 0) > 0;
+    case 5: // Fonctionnalités
+      return (data.features?.length || 0) > 0;
+    case 6: // Style - essentiel
+      return !!data.theme || !!data.portalStyle;
+    case 7: // Branding
+      return !!data.primaryColor;
+    case 8: // Contact - essentiel
+      return !!data.clientEmail && !!data.companyName;
+    case 9: // Résumé
+      return true;
+    default:
+      return false;
+  }
+};
+
 export const QuizProgress = () => {
   const { state, goToStep } = useQuiz();
-  const { step, totalSteps } = state;
+  const { step, totalSteps, data } = state;
 
   const progressPercent = ((step + 1) / totalSteps) * 100;
 
@@ -40,39 +68,45 @@ export const QuizProgress = () => {
       <div className="hidden md:flex items-center justify-between">
         {STEP_LABELS.slice(0, totalSteps).map((label, index) => {
           const isActive = index === step;
-          const isCompleted = index < step;
-          const isClickable = index <= step;
+          const isComplete = getStepCompletionStatus(index, data);
+          const isVisited = index <= step;
 
           return (
             <button
               key={index}
-              onClick={() => isClickable && goToStep(index)}
-              disabled={!isClickable}
-              className={cn(
-                "flex flex-col items-center gap-1.5 transition-all duration-300",
-                isClickable ? "cursor-pointer" : "cursor-not-allowed opacity-50"
-              )}
+              onClick={() => goToStep(index)}
+              className="flex flex-col items-center gap-1.5 transition-all duration-300 cursor-pointer group"
             >
-              <div
-                className={cn(
-                  "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300",
-                  isActive && "bg-primary text-primary-foreground shadow-glow scale-110",
-                  isCompleted && "bg-green-500 text-white",
-                  !isActive && !isCompleted && "bg-muted text-muted-foreground"
-                )}
-              >
-                {isCompleted ? (
-                  <Check className="w-4 h-4" />
-                ) : (
-                  index + 1
+              <div className="relative">
+                <div
+                  className={cn(
+                    "w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-300",
+                    isActive && "bg-primary text-primary-foreground shadow-glow scale-110",
+                    !isActive && isComplete && "bg-green-500 text-white",
+                    !isActive && !isComplete && isVisited && "bg-amber-500 text-white",
+                    !isActive && !isComplete && !isVisited && "bg-muted text-muted-foreground group-hover:bg-muted/80"
+                  )}
+                >
+                  {isComplete && !isActive ? (
+                    <Check className="w-4 h-4" />
+                  ) : (
+                    index + 1
+                  )}
+                </div>
+                {/* Incomplete indicator */}
+                {!isComplete && !isActive && isVisited && (
+                  <div className="absolute -top-1 -right-1 w-3 h-3 bg-amber-500 rounded-full flex items-center justify-center">
+                    <AlertCircle className="w-2 h-2 text-white" />
+                  </div>
                 )}
               </div>
               <span
                 className={cn(
                   "text-xs font-medium transition-colors duration-300",
                   isActive && "text-primary",
-                  isCompleted && "text-green-600",
-                  !isActive && !isCompleted && "text-muted-foreground"
+                  !isActive && isComplete && "text-green-600",
+                  !isActive && !isComplete && isVisited && "text-amber-600",
+                  !isActive && !isComplete && !isVisited && "text-muted-foreground group-hover:text-foreground"
                 )}
               >
                 {label}
