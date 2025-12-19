@@ -164,11 +164,21 @@ export const StepWelcome = () => {
           <Button
             onClick={nextStep}
             size="lg"
+            variant="outline"
             className={cn(
-              "gap-3 px-10 py-7 text-lg font-bold rounded-full",
-              "bg-gradient-to-r from-primary to-accent hover:opacity-90",
-              "shadow-glow hover:shadow-elegant transition-all duration-300",
-              "group"
+              "gap-3 px-10 py-7 text-lg font-bold rounded-lg",
+              "bg-transparent border-2",
+              "border-transparent bg-clip-padding",
+              "text-primary hover:text-white",
+              "relative overflow-hidden transition-all duration-300",
+              "group",
+              "before:absolute before:inset-0 before:rounded-lg before:p-[2px] before:-z-10",
+              "before:bg-gradient-to-r before:from-primary before:via-secondary before:to-accent",
+              "before:content-['']",
+              "after:absolute after:inset-[2px] after:rounded-[6px] after:bg-background after:-z-10",
+              "after:content-[''] after:transition-opacity after:duration-300",
+              "hover:after:opacity-0",
+              "hover:shadow-glow"
             )}
           >
             <Play className="w-5 h-5 group-hover:scale-110 transition-transform" />
