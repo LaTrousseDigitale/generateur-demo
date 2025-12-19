@@ -387,7 +387,7 @@ export const DemoGenerator = () => {
                   </span>
                 )}
               </a>
-              <Button className="bg-[#ff6b3d] hover:bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium" onClick={() => setActiveTab("general")}>
+              <Button className="!bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium" onClick={() => setActiveTab("general")}>
                 <span className="hidden sm:inline">Générer ma démo</span>
                 <span className="sm:hidden">Démo</span>
               </Button>
