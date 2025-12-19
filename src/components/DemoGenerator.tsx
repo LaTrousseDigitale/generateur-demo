@@ -379,15 +379,16 @@ export const DemoGenerator = () => {
 
             {/* Cart Icon & CTA Button */}
             <div className="flex items-center gap-4">
-              <a href={`https://latroussedigitale.ca/panier?session_id=${cartSessionId}`} className="relative text-gray-600 hover:text-primary transition-colors">
+              <a href={`https://latroussedigitale.ca/panier?session_id=${cartSessionId}`} className="relative text-gray-500 hover:text-gray-700 transition-colors">
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2 bg-[#ff6b3d] text-white text-[10px] font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-sm">
+                  <span className="absolute -top-1.5 -right-2 bg-[#ff6b3d] text-white text-[10px] font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
                     {cartItemCount > 99 ? '99+' : cartItemCount}
                   </span>
                 )}
               </a>
-              <Button className="!bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-md px-4 sm:px-6 py-2 text-sm font-medium" onClick={() => setActiveTab("general")}>
+              <Button className="!bg-[#ff6b3d] hover:!bg-[#e55a2d] text-white rounded-full px-5 py-2.5 text-sm font-medium flex items-center gap-2" onClick={() => setActiveTab("general")}>
+                <Sparkles className="h-4 w-4" />
                 <span className="hidden sm:inline">Générer ma démo</span>
                 <span className="sm:hidden">Démo</span>
               </Button>
