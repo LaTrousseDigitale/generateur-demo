@@ -40,9 +40,14 @@ export const StepIndustry = () => {
   );
 
   const handleSelect = (value: string) => {
-    updateData({ industry: value, mainObjectives: [] });
-    // Auto-advance after selection with a small delay for visual feedback
-    setTimeout(() => nextStep(), 400);
+    // Toggle selection - allow deselection
+    if (selectedIndustry === value) {
+      updateData({ industry: "" });
+    } else {
+      updateData({ industry: value, mainObjectives: [] });
+      // Auto-advance after selection with a small delay for visual feedback
+      setTimeout(() => nextStep(), 400);
+    }
   };
 
   return (
