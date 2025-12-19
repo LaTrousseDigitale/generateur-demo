@@ -50,7 +50,7 @@ const FallbackHeader = ({
               <a 
                 key={link.label} 
                 href={link.href} 
-                className="text-[15px] text-gray-600 hover:text-gray-900 transition-colors font-medium"
+                className="relative text-[15px] text-gray-600 hover:text-gray-900 transition-colors font-medium py-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-[#4A90D9] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
               >
                 {link.label}
               </a>
@@ -96,7 +96,7 @@ const FallbackHeader = ({
                 <a 
                   key={link.label} 
                   href={link.href} 
-                  className="text-[15px] text-gray-600 hover:text-gray-900 transition-colors font-medium py-2"
+                  className="relative text-[15px] text-gray-600 hover:text-gray-900 transition-colors font-medium py-2 w-fit after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-[#4A90D9] after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300 after:origin-center"
                 >
                   {link.label}
                 </a>
