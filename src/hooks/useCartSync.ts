@@ -32,10 +32,21 @@ const getCookie = (name: string): string | null => {
 const setCookie = (name: string, value: string, days: number = 365): void => {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
   // Set cookie on parent domain .latroussedigitale.ca for cross-subdomain access
-  const domain = window.location.hostname.includes('latroussedigitale.ca') 
-    ? '.latroussedigitale.ca' 
-    : window.location.hostname;
-  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; domain=${domain}; SameSite=Lax`;
+  // Use SameSite=None with Secure for cross-site cookie sharing
+  const hostname = window.location.hostname;
+  const isLatrousse = hostname.includes('latroussedigitale.ca');
+  const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
+  
+  if (isLatrousse) {
+    // Cross-subdomain cookie for latroussedigitale.ca
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; domain=.latroussedigitale.ca; SameSite=None; Secure`;
+  } else if (isLocalhost) {
+    // Local development - no domain restriction
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+  } else {
+    // Other domains (lovableproject.com, etc.) - allow cross-site access
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=None; Secure`;
+  }
 };
 
 // Generate cryptographically secure session ID
