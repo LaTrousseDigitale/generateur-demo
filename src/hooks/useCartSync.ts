@@ -63,7 +63,7 @@ const getSessionId = (): string => {
   const urlParams = new URLSearchParams(window.location.search);
   const urlSessionId = urlParams.get('session_id');
   
-  if (urlSessionId && isValidSecureSessionId(urlSessionId)) {
+  if (urlSessionId && isValidSessionIdFormat(urlSessionId)) {
     // Store in both cookie and localStorage
     setCookie(CART_COOKIE_NAME, urlSessionId);
     localStorage.setItem(CART_SESSION_KEY, urlSessionId);
@@ -76,14 +76,14 @@ const getSessionId = (): string => {
   
   // 2. Check shared cookie (for subdomain sync)
   const cookieSessionId = getCookie(CART_COOKIE_NAME);
-  if (cookieSessionId && isValidSecureSessionId(cookieSessionId)) {
+  if (cookieSessionId && isValidSessionIdFormat(cookieSessionId)) {
     localStorage.setItem(CART_SESSION_KEY, cookieSessionId);
     return cookieSessionId;
   }
   
   // 3. Check localStorage
   let sessionId = localStorage.getItem(CART_SESSION_KEY);
-  if (sessionId && isValidSecureSessionId(sessionId)) {
+  if (sessionId && isValidSessionIdFormat(sessionId)) {
     // Also set cookie for future cross-subdomain access
     setCookie(CART_COOKIE_NAME, sessionId);
     return sessionId;
@@ -96,9 +96,15 @@ const getSessionId = (): string => {
   return sessionId;
 };
 
-// Validate session ID format (64 hex chars = 256 bits of entropy)
-const isValidSecureSessionId = (id: string): boolean => {
-  return /^[a-f0-9]{64}$/i.test(id);
+// Validate session ID format: accept both secure (64 hex) and legacy formats
+const isValidSessionIdFormat = (id: string): boolean => {
+  // Secure format: 64 hex characters (256 bits of entropy)
+  if (/^[a-f0-9]{64}$/i.test(id)) return true;
+  // Legacy format from latroussedigitale.ca: session_<timestamp> or similar
+  if (/^session_[0-9]{10,15}$/.test(id)) return true;
+  // Also accept shorter hex strings (at least 16 chars) for compatibility
+  if (/^[a-f0-9]{16,}$/i.test(id)) return true;
+  return false;
 };
 
 export const useCartSync = () => {

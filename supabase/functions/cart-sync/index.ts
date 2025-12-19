@@ -12,12 +12,15 @@ const ALLOWED_ORIGINS = [
 
 function getCorsHeaders(req: Request) {
   const origin = req.headers.get('origin') || ''
-  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]
+  // Allow lovableproject.com subdomains dynamically
+  const isLovable = /^https:\/\/[a-z0-9-]+\.lovableproject\.com$/.test(origin)
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) || isLovable ? origin : ALLOWED_ORIGINS[0]
   
   return {
     'Access-Control-Allow-Origin': allowedOrigin,
     'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'Access-Control-Allow-Credentials': 'true',
   }
 }
 
@@ -31,9 +34,15 @@ const CartItemSchema = z.object({
 
 const CartSchema = z.array(CartItemSchema).max(100)
 
-// Validate session ID format: must be 64 hex chars (256 bits of entropy)
-const isValidSecureSessionId = (id: string): boolean => {
-  return /^[a-f0-9]{64}$/i.test(id)
+// Validate session ID format: accept both secure (64 hex) and legacy formats
+const isValidSessionId = (id: string): boolean => {
+  // Secure format: 64 hex characters (256 bits of entropy)
+  if (/^[a-f0-9]{64}$/i.test(id)) return true
+  // Legacy format from latroussedigitale.ca: session_<timestamp> or similar
+  if (/^session_[0-9]{10,15}$/.test(id)) return true
+  // Also accept shorter hex strings (at least 16 chars) for compatibility
+  if (/^[a-f0-9]{16,}$/i.test(id)) return true
+  return false
 }
 
 // Validate user ID format: must be valid UUID
@@ -58,8 +67,8 @@ Deno.serve(async (req) => {
     const sessionId = url.searchParams.get('session_id')
     const userId = url.searchParams.get('user_id')
 
-    // Validate session ID format - reject predictable/weak session IDs
-    if (sessionId && !isValidSecureSessionId(sessionId)) {
+    // Validate session ID format - reject invalid session IDs
+    if (sessionId && !isValidSessionId(sessionId)) {
       console.error('[cart-sync] Invalid session_id format rejected:', sessionId?.substring(0, 20))
       return new Response(
         JSON.stringify({ error: 'Invalid session format' }),
@@ -232,7 +241,7 @@ Deno.serve(async (req) => {
       }
 
       // Validate formats for merge operation
-      if (!isValidSecureSessionId(mergeSessionId)) {
+      if (!isValidSessionId(mergeSessionId)) {
         return new Response(
           JSON.stringify({ error: 'Invalid session format for merge' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
