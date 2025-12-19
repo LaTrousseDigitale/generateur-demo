@@ -26,19 +26,19 @@ const QuizContent = () => {
   const CurrentStep = STEPS[state.step];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
+    <div className="min-h-screen w-full bg-gradient-to-br from-background via-muted/20 to-background">
       <SyncedHeader />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="w-full px-4 md:px-8 py-8">
         {/* Progress - hide on welcome step */}
         {state.step > 0 && (
-          <div className="mb-8 max-w-4xl mx-auto">
+          <div className="mb-8 w-full max-w-6xl mx-auto">
             <QuizProgress />
           </div>
         )}
 
         {/* Step Content */}
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full">
           <CurrentStep />
         </div>
       </div>
