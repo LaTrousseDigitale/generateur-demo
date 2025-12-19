@@ -1,13 +1,22 @@
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Import industry images
-import heroAuto from "@/assets/hero-auto.jpg";
-import bookingRestaurant from "@/assets/booking-restaurant-interior.jpg";
-import heroHealth from "@/assets/hero-health.jpg";
-import heroConstruction from "@/assets/hero-construction.jpg";
-import heroArchitecture from "@/assets/hero-architecture.jpg";
-import heroDefault from "@/assets/hero-default.jpg";
+// Import modern SaaS industry images
+import industryAuto from "@/assets/industry-auto.jpg";
+import industryRestaurant from "@/assets/industry-restaurant.jpg";
+import industryHealth from "@/assets/industry-health.jpg";
+import industryConstruction from "@/assets/industry-construction.jpg";
+import industryArchitecture from "@/assets/industry-architecture.jpg";
+import industryCommerce from "@/assets/industry-commerce.jpg";
+import industryEducation from "@/assets/industry-education.jpg";
+import industryObnl from "@/assets/industry-obnl.jpg";
+import industryServices from "@/assets/industry-services.jpg";
+import industryTech from "@/assets/industry-tech.jpg";
+import industryTransport from "@/assets/industry-transport.jpg";
+import industryArts from "@/assets/industry-arts.jpg";
+import industryMoving from "@/assets/industry-moving.jpg";
+import industryRealestate from "@/assets/industry-realestate.jpg";
+import industryFinance from "@/assets/industry-finance.jpg";
 
 interface IndustryCardProps {
   value: string;
@@ -19,21 +28,21 @@ interface IndustryCardProps {
 }
 
 const INDUSTRY_IMAGES: Record<string, string> = {
-  auto: heroAuto,
-  restauration: bookingRestaurant,
-  sante: heroHealth,
-  construction: heroConstruction,
-  architecture: heroArchitecture,
-  commerce: heroDefault,
-  education: heroDefault,
-  obnl: heroDefault,
-  services: heroDefault,
-  tech: heroDefault,
-  transport: heroDefault,
-  "arts-scene": heroDefault,
-  demenagement: heroDefault,
-  immobilier: heroDefault,
-  finances: heroDefault,
+  auto: industryAuto,
+  restauration: industryRestaurant,
+  sante: industryHealth,
+  construction: industryConstruction,
+  architecture: industryArchitecture,
+  commerce: industryCommerce,
+  education: industryEducation,
+  obnl: industryObnl,
+  services: industryServices,
+  tech: industryTech,
+  transport: industryTransport,
+  "arts-scene": industryArts,
+  demenagement: industryMoving,
+  immobilier: industryRealestate,
+  finances: industryFinance,
 };
 
 const INDUSTRY_ICONS: Record<string, string> = {
@@ -62,7 +71,7 @@ export const IndustryCard = ({
   onSelect,
   index,
 }: IndustryCardProps) => {
-  const image = INDUSTRY_IMAGES[value] || heroDefault;
+  const image = INDUSTRY_IMAGES[value] || industryServices;
   const icon = INDUSTRY_ICONS[value] || "🏢";
 
   return (
