@@ -33,7 +33,7 @@ const FallbackHeader = ({
 
   return (
     <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
-      <div className="w-full max-w-[1400px] mx-auto px-6 lg:px-8">
+      <div className="w-full px-6 lg:px-12">
         <div className="flex items-center justify-between h-[72px]">
           {/* Logo */}
           <a href="https://latroussedigitale.ca" className="flex-shrink-0">
