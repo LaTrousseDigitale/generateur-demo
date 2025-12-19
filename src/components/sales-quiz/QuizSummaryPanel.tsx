@@ -43,16 +43,82 @@ export const QuizSummaryPanel = () => {
 
   if (!hasSelections) {
     return (
-      <Card className="h-full border-dashed bg-muted/30">
-        <CardContent className="h-full flex flex-col items-center justify-center p-6 text-center">
-          <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-            <Sparkles className="w-8 h-8 text-muted-foreground" />
+      <Card className="h-full border-dashed bg-gradient-to-b from-background to-muted/30 overflow-hidden relative">
+        {/* Animated background glow */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-24 h-24 bg-accent/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+        </div>
+        
+        <CardContent className="h-full flex flex-col items-center justify-center p-6 text-center relative z-10">
+          {/* Animated preview mockup */}
+          <div className="w-full max-w-[200px] mb-6 relative">
+            {/* Browser window mockup */}
+            <div className="rounded-lg border border-border/50 bg-card/80 backdrop-blur-sm shadow-lg overflow-hidden">
+              {/* Browser header */}
+              <div className="h-6 bg-muted/50 border-b border-border/30 flex items-center px-2 gap-1.5">
+                <div className="w-2 h-2 rounded-full bg-destructive/50" />
+                <div className="w-2 h-2 rounded-full bg-yellow-500/50" />
+                <div className="w-2 h-2 rounded-full bg-green-500/50" />
+                <div className="flex-1 mx-2 h-3 bg-muted rounded-sm" />
+              </div>
+              
+              {/* Content area with skeleton loading */}
+              <div className="p-3 space-y-2">
+                {/* Header skeleton */}
+                <div className="h-4 w-16 bg-primary/20 rounded animate-pulse" />
+                
+                {/* Nav skeleton */}
+                <div className="flex gap-1">
+                  <div className="h-2 w-8 bg-muted-foreground/20 rounded animate-pulse" style={{ animationDelay: "0.1s" }} />
+                  <div className="h-2 w-10 bg-muted-foreground/20 rounded animate-pulse" style={{ animationDelay: "0.2s" }} />
+                  <div className="h-2 w-6 bg-muted-foreground/20 rounded animate-pulse" style={{ animationDelay: "0.3s" }} />
+                </div>
+                
+                {/* Hero section skeleton */}
+                <div className="aspect-[16/9] bg-gradient-to-br from-primary/10 to-accent/10 rounded-md flex items-center justify-center relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer" />
+                  <Sparkles className="w-6 h-6 text-primary/40 animate-pulse" />
+                </div>
+                
+                {/* Content blocks skeleton */}
+                <div className="space-y-1.5 pt-1">
+                  <div className="h-2 w-full bg-muted-foreground/15 rounded animate-pulse" style={{ animationDelay: "0.4s" }} />
+                  <div className="h-2 w-4/5 bg-muted-foreground/15 rounded animate-pulse" style={{ animationDelay: "0.5s" }} />
+                  <div className="h-2 w-3/5 bg-muted-foreground/15 rounded animate-pulse" style={{ animationDelay: "0.6s" }} />
+                </div>
+                
+                {/* Cards skeleton */}
+                <div className="flex gap-1 pt-1">
+                  <div className="flex-1 h-8 bg-muted/50 rounded animate-pulse border border-border/30" style={{ animationDelay: "0.7s" }} />
+                  <div className="flex-1 h-8 bg-muted/50 rounded animate-pulse border border-border/30" style={{ animationDelay: "0.8s" }} />
+                  <div className="flex-1 h-8 bg-muted/50 rounded animate-pulse border border-border/30" style={{ animationDelay: "0.9s" }} />
+                </div>
+              </div>
+            </div>
+            
+            {/* Floating badge */}
+            <div className="absolute -top-2 -right-2 bg-accent text-accent-foreground text-[10px] font-medium px-2 py-0.5 rounded-full shadow-md animate-bounce" style={{ animationDuration: "2s" }}>
+              En développement
+            </div>
           </div>
+          
           <h3 className="font-semibold text-lg mb-2">Votre solution personnalisée</h3>
           <p className="text-sm text-muted-foreground">
             Vos choix et nos recommandations apparaîtront ici au fur et à mesure.
           </p>
         </CardContent>
+        
+        {/* Shimmer animation */}
+        <style>{`
+          @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+          .animate-shimmer {
+            animation: shimmer 2s infinite;
+          }
+        `}</style>
       </Card>
     );
   }
