@@ -382,7 +382,7 @@ export const DemoGenerator = () => {
               <a href={`https://latroussedigitale.ca/panier?session_id=${cartSessionId}`} className="relative text-gray-600 hover:text-primary transition-colors">
                 <ShoppingCart className="h-5 w-5" />
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-[#ff6b3d] text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                  <span className="absolute -top-1.5 -right-2 bg-[#ff6b3d] text-white text-[10px] font-medium rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-sm">
                     {cartItemCount > 99 ? '99+' : cartItemCount}
                   </span>
                 )}
