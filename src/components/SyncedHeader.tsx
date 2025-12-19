@@ -40,7 +40,7 @@ const FallbackHeader = ({
             <img 
               src={logoTrousseDigitale} 
               alt="La Trousse Digitale" 
-              className="h-12 w-auto" 
+              className="h-[98px] w-auto" 
             />
           </a>
 
