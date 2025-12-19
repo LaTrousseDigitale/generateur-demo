@@ -117,43 +117,52 @@ const AutoMockup = () => (
   </AppWindow>
 );
 
-// Mockup réservations pour Restaurant
+// Mockup réservations pour Restaurant - Menu & Commandes
 const RestaurantMockup = () => (
-  <AppWindow url="mon-resto.app/reservations">
+  <AppWindow url="mon-resto.app/menu">
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🍽️ Réservations du soir</span>
-        <span className="text-[7px] bg-accent/20 text-accent px-1.5 rounded-full">14 tables</span>
+        <span className="text-[8px] font-semibold text-foreground">🍽️ Menu du jour</span>
+        <span className="text-[7px] bg-accent text-accent-foreground px-1.5 rounded-full">12 plats</span>
       </div>
       
       <div className="space-y-1">
-        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <div className="flex items-center justify-between p-1.5 bg-accent/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
           <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded-full bg-secondary/30 flex items-center justify-center text-[10px]">🕖</div>
+            <div className="w-6 h-6 rounded bg-accent flex items-center justify-center text-[10px]">🍝</div>
             <div>
-              <p className="text-[8px] font-medium text-foreground">19h00 - Famille Roy</p>
-              <p className="text-[6px] text-muted-foreground">Table 5 • 4 pers.</p>
+              <p className="text-[8px] font-medium text-foreground">Pâtes Carbonara</p>
+              <p className="text-[6px] text-muted-foreground">Spécialité chef</p>
             </div>
           </div>
-          <StatusBadge text="Confirmé" variant="success" />
+          <p className="text-[8px] font-bold text-accent">24$</p>
         </div>
         
-        <div className="flex items-center justify-between p-1.5 bg-muted/50 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
           <div className="flex items-center gap-1.5">
-            <div className="w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center text-[10px]">🕗</div>
+            <div className="w-6 h-6 rounded bg-secondary flex items-center justify-center text-[10px]">🥗</div>
             <div>
-              <p className="text-[8px] font-medium text-foreground">20h00 - M. Bergeron</p>
-              <p className="text-[6px] text-muted-foreground">Table 12 • 2 pers.</p>
+              <p className="text-[8px] font-medium text-foreground">Salade César</p>
+              <p className="text-[6px] text-muted-foreground">Entrée populaire</p>
             </div>
           </div>
-          <StatusBadge text="Nouveau" variant="new" />
+          <p className="text-[8px] font-bold text-secondary-foreground">16$</p>
         </div>
       </div>
       
-      <div className="grid grid-cols-4 gap-1 pt-1 border-t border-border">
-        {[<span key="1" className="text-primary">●</span>, <span key="2" className="text-primary">●</span>, <span key="3" className="text-secondary">●</span>, <span key="4" className="text-accent">●</span>].map((dot, i) => (
-          <div key={i} className="h-4 bg-muted/50 rounded flex items-center justify-center text-[8px]">{dot}</div>
-        ))}
+      <div className="flex justify-between pt-1 border-t border-border">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-accent">42</p>
+          <p className="text-[6px] text-muted-foreground">Couverts</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-primary">1.8k$</p>
+          <p className="text-[6px] text-muted-foreground">Ventes</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-secondary-foreground">4.9⭐</p>
+          <p className="text-[6px] text-muted-foreground">Note</p>
+        </div>
       </div>
     </div>
   </AppWindow>
@@ -302,38 +311,42 @@ const CommerceMockup = () => (
   </AppWindow>
 );
 
-// Mockup dashboard pour Tech
+// Mockup dashboard pour Tech - Code & Déploiement
 const TechMockup = () => (
-  <AppWindow url="startup.app/dashboard">
+  <AppWindow url="devops.app/pipeline">
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">⚡ Analytics</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full">Live</span>
+        <span className="text-[8px] font-semibold text-foreground">💻 Pipeline CI/CD</span>
+        <span className="text-[7px] bg-primary text-primary-foreground px-1.5 rounded-full animate-pulse">Deploying</span>
       </div>
       
-      {/* Mini graph avec couleurs branding */}
-      <div className="h-10 flex items-end gap-0.5 bg-muted/50 rounded-lg p-1">
-        {[40, 65, 45, 80, 55, 90, 70, 85].map((h, i) => (
-          <div 
-            key={i}
-            className="flex-1 bg-gradient-to-t from-primary to-secondary rounded-t animate-fade-in"
-            style={{ height: `${h}%`, animationDelay: `${i * 0.1}s` }}
-          />
-        ))}
+      {/* Pipeline steps */}
+      <div className="space-y-1">
+        <div className="flex items-center gap-1 p-1 bg-primary/20 rounded animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center text-[8px] text-primary-foreground">✓</div>
+          <p className="text-[7px] text-foreground flex-1">Build</p>
+          <span className="text-[6px] text-muted-foreground">2m 14s</span>
+        </div>
+        <div className="flex items-center gap-1 p-1 bg-secondary/20 rounded animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="w-4 h-4 rounded-full bg-secondary flex items-center justify-center text-[8px] text-secondary-foreground">✓</div>
+          <p className="text-[7px] text-foreground flex-1">Tests</p>
+          <span className="text-[6px] text-muted-foreground">48/48</span>
+        </div>
+        <div className="flex items-center gap-1 p-1 bg-accent/20 rounded animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          <div className="w-4 h-4 rounded-full bg-accent flex items-center justify-center text-[6px] animate-spin">⟳</div>
+          <p className="text-[7px] text-foreground flex-1">Deploy</p>
+          <span className="text-[6px] text-accent">En cours...</span>
+        </div>
       </div>
       
-      <div className="grid grid-cols-3 gap-1">
-        <div className="bg-primary/10 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-primary">2.4k</p>
-          <p className="text-[6px] text-muted-foreground">Users</p>
+      <div className="flex justify-between pt-1 border-t border-border">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-primary">v2.4.1</p>
+          <p className="text-[6px] text-muted-foreground">Release</p>
         </div>
-        <div className="bg-secondary/20 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">+23%</p>
-          <p className="text-[6px] text-muted-foreground">Growth</p>
-        </div>
-        <div className="bg-accent/10 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-accent">99.9%</p>
-          <p className="text-[6px] text-muted-foreground">Uptime</p>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-secondary-foreground">156</p>
+          <p className="text-[6px] text-muted-foreground">Commits</p>
         </div>
       </div>
     </div>
@@ -517,43 +530,55 @@ const TransportMockup = () => (
   </AppWindow>
 );
 
-// Mockup événements pour Arts
+// Mockup événements pour Arts - Billetterie
 const ArtsMockup = () => (
-  <AppWindow url="spectacle.app/evenements">
+  <AppWindow url="theatre.app/billetterie">
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">🎭 Événements</span>
-        <span className="text-[7px] bg-accent/20 text-accent px-1.5 rounded-full">Ce soir</span>
+        <span className="text-[8px] font-semibold text-foreground">🎭 Prochains spectacles</span>
+        <span className="text-[7px] bg-accent text-accent-foreground px-1.5 rounded-full">3 ce soir</span>
       </div>
       
-      <div className="p-1.5 bg-gradient-to-r from-accent/10 to-primary/10 rounded-lg animate-fade-in">
-        <div className="flex justify-between items-center">
-          <div>
-            <p className="text-[8px] font-bold text-accent">Concert Jazz</p>
-            <p className="text-[6px] text-muted-foreground">20h00 - Salle A</p>
-          </div>
-          <div className="text-right">
-            <p className="text-[8px] font-bold text-primary">248/300</p>
-            <p className="text-[6px] text-muted-foreground">places</p>
+      <div className="space-y-1">
+        <div className="p-1.5 bg-accent/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-1.5">
+              <div className="w-6 h-6 rounded bg-accent flex items-center justify-center text-[10px]">🎵</div>
+              <div>
+                <p className="text-[8px] font-bold text-foreground">Concert Symphonique</p>
+                <p className="text-[6px] text-muted-foreground">20h00 - Grande salle</p>
+              </div>
+            </div>
+            <StatusBadge text="Complet" variant="warning" />
           </div>
         </div>
-        <div className="h-1.5 bg-muted rounded-full mt-1 overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-accent to-primary rounded-full animate-pulse" style={{ width: "83%" }} />
+        
+        <div className="p-1.5 bg-primary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-1.5">
+              <div className="w-6 h-6 rounded bg-primary flex items-center justify-center text-[10px]">🎪</div>
+              <div>
+                <p className="text-[8px] font-bold text-foreground">Cirque Étoiles</p>
+                <p className="text-[6px] text-muted-foreground">19h30 - Chapiteau</p>
+              </div>
+            </div>
+            <p className="text-[7px] text-primary font-bold">45 places</p>
+          </div>
         </div>
       </div>
       
-      <div className="flex justify-between pt-1">
+      <div className="flex justify-between pt-1 border-t border-border">
         <div className="text-center">
-          <p className="text-[10px] font-bold text-accent">12</p>
-          <p className="text-[6px] text-muted-foreground">Events</p>
+          <p className="text-[10px] font-bold text-accent">8</p>
+          <p className="text-[6px] text-muted-foreground">Shows</p>
         </div>
         <div className="text-center">
-          <p className="text-[10px] font-bold text-primary">2.4k</p>
+          <p className="text-[10px] font-bold text-primary">1.2k</p>
           <p className="text-[6px] text-muted-foreground">Billets</p>
         </div>
         <div className="text-center">
-          <p className="text-[10px] font-bold text-secondary">48k$</p>
-          <p className="text-[6px] text-muted-foreground">Ventes</p>
+          <p className="text-[10px] font-bold text-secondary-foreground">32k$</p>
+          <p className="text-[6px] text-muted-foreground">Recettes</p>
         </div>
       </div>
     </div>
@@ -648,38 +673,51 @@ const RealEstateMockup = () => (
   </AppWindow>
 );
 
-// Mockup finances
+// Mockup finances - Comptabilité
 const FinanceMockup = () => (
-  <AppWindow url="finance.app/portefeuille">
+  <AppWindow url="compta.app/clients">
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-foreground">📊 Portefeuille</span>
-        <span className="text-[7px] bg-primary/10 text-primary px-1.5 rounded-full animate-pulse">+2.4%</span>
+        <span className="text-[8px] font-semibold text-foreground">📊 Dossiers clients</span>
+        <span className="text-[7px] bg-primary text-primary-foreground px-1.5 rounded-full">48 actifs</span>
       </div>
       
-      {/* Mini chart */}
-      <div className="h-10 flex items-end gap-0.5 bg-muted/50 rounded-lg p-1">
-        {[30, 45, 35, 60, 50, 75, 65, 80, 70, 85].map((h, i) => (
-          <div 
-            key={i}
-            className="flex-1 bg-gradient-to-t from-primary to-secondary rounded-t animate-fade-in"
-            style={{ height: `${h}%`, animationDelay: `${i * 0.05}s` }}
-          />
-        ))}
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-primary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="EI" variant="primary" />
+            <div>
+              <p className="text-[8px] font-medium text-foreground">Entreprise Inc.</p>
+              <p className="text-[6px] text-muted-foreground">Déclaration T2</p>
+            </div>
+          </div>
+          <StatusBadge text="En cours" variant="info" />
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="ML" variant="secondary" />
+            <div>
+              <p className="text-[8px] font-medium text-foreground">M. Lavoie</p>
+              <p className="text-[6px] text-muted-foreground">Impôts personnels</p>
+            </div>
+          </div>
+          <StatusBadge text="Terminé" variant="success" />
+        </div>
       </div>
       
-      <div className="grid grid-cols-3 gap-1">
-        <div className="bg-primary/10 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-primary">125k$</p>
-          <p className="text-[6px] text-muted-foreground">Total</p>
+      <div className="flex justify-between pt-1 border-t border-border">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-primary">48</p>
+          <p className="text-[6px] text-muted-foreground">Clients</p>
         </div>
-        <div className="bg-secondary/20 rounded p-1 text-center">
-          <p className="text-[10px] font-bold text-secondary-foreground">+8.5%</p>
-          <p className="text-[6px] text-muted-foreground">YTD</p>
-        </div>
-        <div className="bg-accent/10 rounded p-1 text-center">
+        <div className="text-center">
           <p className="text-[10px] font-bold text-accent">12</p>
-          <p className="text-[6px] text-muted-foreground">Actifs</p>
+          <p className="text-[6px] text-muted-foreground">En attente</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-secondary-foreground">85k$</p>
+          <p className="text-[6px] text-muted-foreground">Honoraires</p>
         </div>
       </div>
     </div>
@@ -691,29 +729,86 @@ const OBNLMockup = () => (
   <AppWindow url="asbl.app/dons">
     <div className="space-y-1.5">
       <div className="flex items-center justify-between">
-        <span className="text-[8px] font-semibold text-gray-700">💚 Campagne dons</span>
-        <span className="text-[7px] bg-emerald-100 text-emerald-600 px-1.5 rounded-full">Active</span>
+        <span className="text-[8px] font-semibold text-foreground">💚 Campagne dons</span>
+        <span className="text-[7px] bg-primary text-primary-foreground px-1.5 rounded-full">Active</span>
       </div>
       
-      <div className="p-1.5 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-lg">
+      <div className="p-1.5 bg-primary/20 rounded-lg">
         <div className="flex justify-between items-center mb-1">
-          <p className="text-[8px] font-medium">Objectif: 50,000$</p>
-          <p className="text-[7px] text-emerald-600 font-bold">72%</p>
+          <p className="text-[8px] font-medium text-foreground">Objectif: 50,000$</p>
+          <p className="text-[7px] text-primary font-bold">72%</p>
         </div>
-        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full animate-pulse" style={{ width: "72%" }} />
+        <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="h-full bg-primary rounded-full animate-pulse" style={{ width: "72%" }} />
         </div>
-        <p className="text-[6px] text-gray-400 mt-0.5">36,000$ collectés • 245 donateurs</p>
+        <p className="text-[6px] text-muted-foreground mt-0.5">36,000$ collectés • 245 donateurs</p>
       </div>
       
-      <div className="flex justify-between pt-1 border-t border-gray-100">
+      <div className="flex justify-between pt-1 border-t border-border">
         <div className="text-center">
-          <p className="text-[10px] font-bold text-emerald-500">1.2k</p>
-          <p className="text-[6px] text-gray-400">Membres</p>
+          <p className="text-[10px] font-bold text-primary">1.2k</p>
+          <p className="text-[6px] text-muted-foreground">Membres</p>
         </div>
         <div className="text-center">
-          <p className="text-[10px] font-bold text-teal-500">8</p>
-          <p className="text-[6px] text-gray-400">Projets</p>
+          <p className="text-[10px] font-bold text-accent">8</p>
+          <p className="text-[6px] text-muted-foreground">Projets</p>
+        </div>
+      </div>
+    </div>
+  </AppWindow>
+);
+
+// Mockup Beauté et esthétique
+const BeautyMockup = () => (
+  <AppWindow url="beaute.app/rdv">
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-[8px] font-semibold text-foreground">💅 Rendez-vous</span>
+        <span className="text-[7px] bg-accent text-accent-foreground px-1.5 rounded-full">8 aujourd'hui</span>
+      </div>
+      
+      <div className="space-y-1">
+        <div className="flex items-center justify-between p-1.5 bg-accent/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.1s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="SL" variant="accent" />
+            <div>
+              <p className="text-[8px] font-medium text-foreground">Sophie Lavoie</p>
+              <p className="text-[6px] text-muted-foreground">Manucure gel</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-[7px] font-bold text-accent">10h30</p>
+            <p className="text-[6px] text-muted-foreground">1h</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center justify-between p-1.5 bg-secondary/20 rounded-lg animate-fade-in" style={{ animationDelay: "0.2s" }}>
+          <div className="flex items-center gap-1.5">
+            <Avatar initials="MB" variant="secondary" />
+            <div>
+              <p className="text-[8px] font-medium text-foreground">Marie Bouchard</p>
+              <p className="text-[6px] text-muted-foreground">Coupe & couleur</p>
+            </div>
+          </div>
+          <div className="text-right">
+            <p className="text-[7px] font-bold text-secondary-foreground">14h00</p>
+            <p className="text-[6px] text-muted-foreground">2h</p>
+          </div>
+        </div>
+      </div>
+      
+      <div className="flex justify-between pt-1 border-t border-border">
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-accent">32</p>
+          <p className="text-[6px] text-muted-foreground">Cette sem.</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-primary">2.4k$</p>
+          <p className="text-[6px] text-muted-foreground">Recettes</p>
+        </div>
+        <div className="text-center">
+          <p className="text-[10px] font-bold text-secondary-foreground">4.9⭐</p>
+          <p className="text-[6px] text-muted-foreground">Avis</p>
         </div>
       </div>
     </div>
@@ -724,7 +819,7 @@ const OBNLMockup = () => (
 const getMockupByIndustry = (value: string) => {
   const mockups: Record<string, React.ReactNode> = {
     auto: <AutoMockup />,
-    restaurant: <RestaurantMockup />,
+    restauration: <RestaurantMockup />,
     sante: <HealthMockup />,
     construction: <ConstructionMockup />,
     commerce: <CommerceMockup />,
@@ -733,14 +828,15 @@ const getMockupByIndustry = (value: string) => {
     services: <ServicesMockup />,
     architecture: <ArchitectureMockup />,
     transport: <TransportMockup />,
-    arts: <ArtsMockup />,
+    "arts-scene": <ArtsMockup />,
     demenagement: <MovingMockup />,
     immobilier: <RealEstateMockup />,
-    finance: <FinanceMockup />,
+    finances: <FinanceMockup />,
     obnl: <OBNLMockup />,
+    beaute: <BeautyMockup />,
   };
   
-  return mockups[value] || <TechMockup />;
+  return mockups[value] || <ServicesMockup />;
 };
 
 export const IndustryCard = ({

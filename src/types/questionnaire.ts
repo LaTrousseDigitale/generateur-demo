@@ -125,7 +125,7 @@ export const INDUSTRIES = [
   { value: "demenagement", label: "Déménagement" },
   { value: "immobilier", label: "Secteur immobilier" },
   { value: "finances", label: "Services financiers et comptabilité" },
-  { value: "autre", label: "Autre industrie" },
+  { value: "beaute", label: "Beauté et esthétique" },
 ];
 
 export const MODULES = [
