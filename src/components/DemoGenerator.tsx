@@ -364,7 +364,7 @@ export const DemoGenerator = () => {
   return <div className="min-h-screen bg-gradient-to-br from-background via-muted/20 to-background">
       {/* Navigation Header */}
       <header className="w-full bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div className="container mx-auto px-4 sm:px-6">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20">
             <div className="flex items-center">
               <img src={logoTrousseDigitale} alt="La Trousse Digitale" className="h-24 sm:h-28 w-auto" />
