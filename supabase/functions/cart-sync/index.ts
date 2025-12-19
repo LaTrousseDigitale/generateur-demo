@@ -14,6 +14,16 @@ interface CartItem {
   [key: string]: unknown
 }
 
+// Validate session ID format: must be 64 hex chars (256 bits of entropy)
+const isValidSecureSessionId = (id: string): boolean => {
+  return /^[a-f0-9]{64}$/i.test(id)
+}
+
+// Validate user ID format: must be valid UUID
+const isValidUUID = (id: string): boolean => {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -29,7 +39,23 @@ Deno.serve(async (req) => {
     const sessionId = url.searchParams.get('session_id')
     const userId = url.searchParams.get('user_id')
 
-    console.log(`[cart-sync] Method: ${req.method}, sessionId: ${sessionId}, userId: ${userId}`)
+    // Validate session ID format - reject predictable/weak session IDs
+    if (sessionId && !isValidSecureSessionId(sessionId)) {
+      console.error('[cart-sync] Invalid session_id format rejected:', sessionId?.substring(0, 20))
+      return new Response(
+        JSON.stringify({ error: 'Invalid session format' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
+
+    // Validate user ID format
+    if (userId && !isValidUUID(userId)) {
+      console.error('[cart-sync] Invalid user_id format rejected')
+      return new Response(
+        JSON.stringify({ error: 'Invalid user format' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
 
     // GET - Retrieve cart
     if (req.method === 'GET') {
@@ -171,6 +197,21 @@ Deno.serve(async (req) => {
       if (!mergeSessionId || !mergeUserId) {
         return new Response(
           JSON.stringify({ error: 'Both session_id and user_id required for merge' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      // Validate formats for merge operation
+      if (!isValidSecureSessionId(mergeSessionId)) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid session format for merge' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+
+      if (!isValidUUID(mergeUserId)) {
+        return new Response(
+          JSON.stringify({ error: 'Invalid user format for merge' }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
