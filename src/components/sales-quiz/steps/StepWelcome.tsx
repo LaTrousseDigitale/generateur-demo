@@ -88,16 +88,16 @@ export const StepWelcome = () => {
 
         {/* Demo Previews */}
         <div className="pt-8 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-          <p className="text-sm text-muted-foreground mb-4">
+          <p className="text-sm text-muted-foreground mb-6">
             Exemples de démos générées
           </p>
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-6">
             {DEMO_PREVIEWS.map((demo, index) => (
               <div
                 key={index}
                 className={cn(
-                  "relative w-24 h-16 md:w-32 md:h-20 rounded-xl overflow-hidden",
-                  "border-2 border-border/50 shadow-lg",
+                  "relative w-40 h-28 md:w-56 md:h-36 lg:w-72 lg:h-44 rounded-2xl overflow-hidden",
+                  "border-2 border-border/50 shadow-xl",
                   "hover:scale-105 hover:border-primary/50 transition-all duration-300",
                   "glow-card"
                 )}
@@ -107,8 +107,8 @@ export const StepWelcome = () => {
                   alt={demo.label}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/60 to-transparent" />
-                <span className="absolute bottom-1 left-2 text-xs text-white font-medium">
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent" />
+                <span className="absolute bottom-2 left-3 text-sm text-white font-semibold">
                   {demo.label}
                 </span>
               </div>
