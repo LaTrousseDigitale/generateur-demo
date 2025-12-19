@@ -364,7 +364,7 @@ export const StepFeatures = () => {
             Quelles fonctionnalités souhaitez-vous?
           </h2>
           <p className="text-muted-foreground max-w-lg mx-auto">
-            Sélectionnez les fonctionnalités importantes pour vous. Les options marquées ⭐ sont recommandées pour votre industrie.
+            Sélectionnez les fonctionnalités importantes pour vous. Les options marquées sont recommandées pour votre industrie.
           </p>
         </div>
 
@@ -537,8 +537,9 @@ export const StepFeatures = () => {
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{module.label}</span>
                         {isRecommended && (
-                          <Badge variant="secondary" className="text-xs py-0">
-                            ⭐ Suggéré
+                          <Badge variant="secondary" className="text-xs py-0 flex items-center gap-1">
+                            <Star className="w-3 h-3" />
+                            Suggéré
                           </Badge>
                         )}
                       </div>

@@ -1,10 +1,21 @@
 import { useQuiz } from "../QuizContext";
 import { QuizNavigation } from "../QuizNavigation";
 import { useQuizRecommendations, SOLUTION_EXPLANATIONS } from "../useQuizRecommendations";
-import { Layers, Check, Star, Info, ChevronDown, ChevronUp, Lightbulb } from "lucide-react";
+import { 
+  Layers, Check, Star, Info, ChevronDown, ChevronUp, Lightbulb,
+  Globe, Lock, Settings
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { LucideIcon } from "lucide-react";
+
+// Mapping des icônes de solutions
+const SOLUTION_ICONS: Record<string, LucideIcon> = {
+  website: Globe,
+  portal: Lock,
+  module: Settings,
+};
 
 const SOLUTIONS = [
   {
@@ -136,12 +147,18 @@ export const StepSolutions = () => {
                 {/* Header */}
                 <div className="flex items-start justify-between mb-3">
                   <div className={cn(
-                    "w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-all",
+                    "w-12 h-12 rounded-xl flex items-center justify-center transition-all",
                     isSelected 
                       ? "bg-primary/20" 
                       : "bg-muted"
                   )}>
-                    {explanation?.icon || "📦"}
+                    {(() => {
+                      const SolutionIcon = SOLUTION_ICONS[solution.id] || Settings;
+                      return <SolutionIcon className={cn(
+                        "w-6 h-6",
+                        isSelected ? "text-primary" : "text-muted-foreground"
+                      )} />;
+                    })()}
                   </div>
                   <div className={cn(
                     "w-6 h-6 rounded-lg border-2 flex items-center justify-center transition-all",

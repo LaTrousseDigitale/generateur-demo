@@ -1,6 +1,9 @@
 import { useQuiz } from "../QuizContext";
 import { QuizNavigation } from "../QuizNavigation";
-import { Target, Check, Sparkles, Info, ArrowRight } from "lucide-react";
+import { 
+  Target, Check, Sparkles, Info, ArrowRight,
+  TrendingUp, Eye, Clock, Wand2, Gem, Rocket, Lightbulb
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -9,14 +12,22 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { LucideIcon } from "lucide-react";
 
 // Priorités business universelles avec contenu pédagogique
-const BUSINESS_PRIORITIES = [
+const BUSINESS_PRIORITIES: Array<{
+  id: string;
+  label: string;
+  description: string;
+  Icon: LucideIcon;
+  educationalTip: string;
+  solutions: string[];
+}> = [
   { 
     id: "revenue", 
     label: "Augmenter les ventes", 
     description: "Générer plus de revenus et convertir plus de prospects",
-    icon: "📈",
+    Icon: TrendingUp,
     educationalTip: "Un site web optimisé peut augmenter vos conversions de 20-50%. Les formulaires de contact et les appels à l'action stratégiques captent les prospects.",
     solutions: ["Site Web", "Portail client"],
   },
@@ -24,7 +35,7 @@ const BUSINESS_PRIORITIES = [
     id: "visibility", 
     label: "Améliorer ma visibilité", 
     description: "Être trouvé plus facilement par mes clients potentiels",
-    icon: "👁️",
+    Icon: Eye,
     educationalTip: "75% des utilisateurs ne dépassent jamais la première page Google. Un site bien référencé (SEO) vous rend visible auprès des clients qui vous cherchent.",
     solutions: ["Site Web optimisé SEO"],
   },
@@ -32,7 +43,7 @@ const BUSINESS_PRIORITIES = [
     id: "efficiency", 
     label: "Gagner du temps", 
     description: "Automatiser les tâches répétitives et réduire les erreurs",
-    icon: "⏱️",
+    Icon: Clock,
     educationalTip: "L'automatisation peut réduire jusqu'à 80% le temps passé sur les tâches administratives : facturation, suivi client, réponses aux questions fréquentes.",
     solutions: ["Portail", "Modules d'automatisation"],
   },
@@ -40,7 +51,7 @@ const BUSINESS_PRIORITIES = [
     id: "image", 
     label: "Moderniser mon image", 
     description: "Projeter une image professionnelle et actuelle",
-    icon: "✨",
+    Icon: Wand2,
     educationalTip: "94% des premières impressions sont liées au design. Un site moderne et professionnel renforce immédiatement votre crédibilité.",
     solutions: ["Site Web design"],
   },
@@ -48,7 +59,7 @@ const BUSINESS_PRIORITIES = [
     id: "loyalty", 
     label: "Fidéliser mes clients", 
     description: "Créer des relations durables et encourager les achats récurrents",
-    icon: "💎",
+    Icon: Gem,
     educationalTip: "Acquérir un nouveau client coûte 5x plus cher que de fidéliser un client existant. Un portail client renforce la relation et la satisfaction.",
     solutions: ["Portail client", "CRM"],
   },
@@ -56,7 +67,7 @@ const BUSINESS_PRIORITIES = [
     id: "expansion", 
     label: "Atteindre de nouveaux marchés", 
     description: "Élargir ma clientèle géographiquement ou démographiquement",
-    icon: "🚀",
+    Icon: Rocket,
     educationalTip: "Le web abolit les frontières géographiques. Un site multilingue ou une boutique en ligne peuvent doubler votre zone de chalandise.",
     solutions: ["Site Web", "E-commerce"],
   },
@@ -92,10 +103,12 @@ export const StepObjectives = () => {
         {/* Educational Banner */}
         <div className="bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 border border-primary/20 rounded-xl p-4">
           <div className="flex items-start gap-3">
-            <Info className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+            <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+              <Lightbulb className="w-4 h-4 text-primary" />
+            </div>
             <div>
               <p className="text-sm text-muted-foreground">
-                <span className="font-medium text-foreground">💡 Pourquoi ces questions?</span> Comprendre vos objectifs business nous permet de vous recommander les solutions les plus adaptées et d'éviter les fonctionnalités superflues.
+                <span className="font-medium text-foreground">Pourquoi ces questions?</span> Comprendre vos objectifs business nous permet de vous recommander les solutions les plus adaptées et d'éviter les fonctionnalités superflues.
               </p>
             </div>
           </div>
@@ -134,13 +147,16 @@ export const StepObjectives = () => {
                 {/* Icon */}
                 <div
                   className={cn(
-                    "flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-2xl transition-all duration-300",
+                    "flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-300",
                     isSelected
                       ? "bg-white/20"
                       : "bg-muted group-hover:bg-primary/10"
                   )}
                 >
-                  {priority.icon}
+                  <priority.Icon className={cn(
+                    "w-6 h-6",
+                    isSelected ? "text-white" : "text-primary"
+                  )} />
                 </div>
 
                 {/* Content */}

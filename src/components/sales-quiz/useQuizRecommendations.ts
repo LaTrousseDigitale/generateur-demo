@@ -40,7 +40,7 @@ export const SOLUTION_EXPLANATIONS = {
       "Présentation de vos services/produits",
     ],
     bestFor: ["Attirer de nouveaux clients", "Présenter votre expertise", "Vendre en ligne"],
-    icon: "🌐",
+    iconName: "Globe",
   },
   portal: {
     title: "Portail Sécurisé",
@@ -52,7 +52,7 @@ export const SOLUTION_EXPLANATIONS = {
       "Signatures électroniques",
     ],
     bestFor: ["Fidéliser vos clients", "Collaborer avec votre équipe", "Automatiser les suivis"],
-    icon: "🔐",
+    iconName: "Lock",
   },
   module: {
     title: "Modules & Automatisations",
@@ -64,7 +64,7 @@ export const SOLUTION_EXPLANATIONS = {
       "Rapports automatiques",
     ],
     bestFor: ["Optimiser vos processus", "Gérer vos clients (CRM)", "Facturation automatisée"],
-    icon: "⚙️",
+    iconName: "Settings",
   },
 };
 
