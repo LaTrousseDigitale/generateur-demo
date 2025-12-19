@@ -1,18 +1,35 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { z } from 'https://deno.land/x/zod@v3.22.4/mod.ts'
 
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+  'https://latroussedigitale.ca',
+  'https://demos.latroussedigitale.ca',
+  'https://www.latroussedigitale.ca',
+  'http://localhost:5173',
+  'http://localhost:8080',
+]
+
+function getCorsHeaders(req: Request) {
+  const origin = req.headers.get('origin') || ''
+  const allowedOrigin = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0]
+  
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+  }
 }
 
-interface CartItem {
-  id: string
-  name: string
-  price: number
-  quantity: number
-  [key: string]: unknown
-}
+// Schema validation for cart items
+const CartItemSchema = z.object({
+  id: z.string().min(1).max(100),
+  name: z.string().min(1).max(255),
+  price: z.number().nonnegative().max(999999),
+  quantity: z.number().int().positive().max(999),
+}).passthrough()
+
+const CartSchema = z.array(CartItemSchema).max(100)
 
 // Validate session ID format: must be 64 hex chars (256 bits of entropy)
 const isValidSecureSessionId = (id: string): boolean => {
@@ -25,6 +42,8 @@ const isValidUUID = (id: string): boolean => {
 }
 
 Deno.serve(async (req) => {
+  const corsHeaders = getCorsHeaders(req)
+  
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders })
@@ -77,12 +96,12 @@ Deno.serve(async (req) => {
       if (error) {
         console.error('[cart-sync] GET error:', error)
         return new Response(
-          JSON.stringify({ error: error.message }),
+          JSON.stringify({ error: 'Unable to retrieve cart. Please try again.' }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
 
-      console.log('[cart-sync] GET success:', data)
+      console.log('[cart-sync] GET success:', data?.id || 'no cart')
       return new Response(
         JSON.stringify({ cart: data }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -92,9 +111,20 @@ Deno.serve(async (req) => {
     // POST/PUT - Update cart
     if (req.method === 'POST' || req.method === 'PUT') {
       const body = await req.json()
-      const items: CartItem[] = body.items || []
+      const rawItems = body.items || []
 
-      console.log('[cart-sync] POST/PUT items:', items)
+      // Validate cart items with Zod schema
+      const validationResult = CartSchema.safeParse(rawItems)
+      if (!validationResult.success) {
+        console.error('[cart-sync] Cart validation failed:', validationResult.error.issues)
+        return new Response(
+          JSON.stringify({ error: 'Invalid cart data. Please check item format and limits.' }),
+          { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        )
+      }
+      const items = validationResult.data
+
+      console.log('[cart-sync] POST/PUT validated items count:', items.length)
 
       if (!sessionId && !userId) {
         return new Response(
@@ -116,7 +146,7 @@ Deno.serve(async (req) => {
       let result
       if (existingCart) {
         // Update existing cart
-        const updateData: { items: CartItem[], user_id?: string } = { items }
+        const updateData: { items: typeof items, user_id?: string } = { items }
         
         // If we have userId and this was a session cart, link it to the user
         if (userId && sessionId) {
@@ -131,7 +161,7 @@ Deno.serve(async (req) => {
           .single()
       } else {
         // Create new cart
-        const insertData: { items: CartItem[], session_id?: string, user_id?: string } = { items }
+        const insertData: { items: typeof items, session_id?: string, user_id?: string } = { items }
         if (sessionId) insertData.session_id = sessionId
         if (userId) insertData.user_id = userId
 
@@ -145,12 +175,12 @@ Deno.serve(async (req) => {
       if (result.error) {
         console.error('[cart-sync] POST/PUT error:', result.error)
         return new Response(
-          JSON.stringify({ error: result.error.message }),
+          JSON.stringify({ error: 'Unable to save cart. Please try again.' }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
 
-      console.log('[cart-sync] POST/PUT success:', result.data)
+      console.log('[cart-sync] POST/PUT success:', result.data?.id)
       return new Response(
         JSON.stringify({ cart: result.data }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -177,7 +207,7 @@ Deno.serve(async (req) => {
       if (error) {
         console.error('[cart-sync] DELETE error:', error)
         return new Response(
-          JSON.stringify({ error: error.message }),
+          JSON.stringify({ error: 'Unable to clear cart. Please try again.' }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
@@ -216,7 +246,7 @@ Deno.serve(async (req) => {
         )
       }
 
-      console.log('[cart-sync] PATCH merge:', { mergeSessionId, mergeUserId })
+      console.log('[cart-sync] PATCH merge request for user:', mergeUserId.substring(0, 8))
 
       // Get both carts
       const { data: sessionCart } = await supabase
@@ -231,14 +261,21 @@ Deno.serve(async (req) => {
         .eq('user_id', mergeUserId)
         .maybeSingle()
 
-      // Merge items (user cart takes priority, session cart items are added if not duplicate)
-      const userItems: CartItem[] = userCart?.items || []
-      const sessionItems: CartItem[] = sessionCart?.items || []
+      // Validate and merge items
+      const userItemsRaw = userCart?.items || []
+      const sessionItemsRaw = sessionCart?.items || []
+      
+      // Validate both sets of items
+      const userValidation = CartSchema.safeParse(userItemsRaw)
+      const sessionValidation = CartSchema.safeParse(sessionItemsRaw)
+      
+      const userItems = userValidation.success ? userValidation.data : []
+      const sessionItems = sessionValidation.success ? sessionValidation.data : []
       
       const mergedItems = [...userItems]
       for (const sessionItem of sessionItems) {
         const exists = mergedItems.find(item => item.id === sessionItem.id)
-        if (!exists) {
+        if (!exists && mergedItems.length < 100) {
           mergedItems.push(sessionItem)
         }
       }
@@ -269,12 +306,12 @@ Deno.serve(async (req) => {
       if (result.error) {
         console.error('[cart-sync] PATCH error:', result.error)
         return new Response(
-          JSON.stringify({ error: result.error.message }),
+          JSON.stringify({ error: 'Unable to merge carts. Please try again.' }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         )
       }
 
-      console.log('[cart-sync] PATCH merge success:', result.data)
+      console.log('[cart-sync] PATCH merge success:', result.data?.id)
       return new Response(
         JSON.stringify({ cart: result.data }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -290,7 +327,7 @@ Deno.serve(async (req) => {
     console.error('[cart-sync] Unexpected error:', error)
     return new Response(
       JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      { status: 500, headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
     )
   }
 })
