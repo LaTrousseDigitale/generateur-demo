@@ -41,13 +41,13 @@ const QuizContent = () => {
       <div className="w-full px-4 md:px-6 lg:px-8 py-6">
         {/* Progress - hide on welcome step */}
         {state.step > 0 && state.step < STEPS.length - 1 && (
-          <div className="mb-6 w-full max-w-7xl mx-auto">
+          <div className="mb-6 w-full">
             <QuizProgress />
           </div>
         )}
 
         {/* Main Content with optional sidebar */}
-        <div className={`w-full max-w-7xl mx-auto ${showPanel ? 'grid lg:grid-cols-[1fr_320px] gap-6' : ''}`}>
+        <div className={`w-full ${showPanel ? 'grid lg:grid-cols-[1fr_320px] gap-6' : ''}`}>
           {/* Step Content */}
           <div className="w-full">
             <CurrentStep />
