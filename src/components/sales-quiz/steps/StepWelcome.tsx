@@ -50,7 +50,7 @@ const FLOATING_IMAGES = [
     image: heroConstruction, 
     label: "Déménagement", 
     position: "top-[40%] right-[2%]",
-    size: "w-30 h-22 md:w-42 md:h-30 lg:w-50 lg:h-34",
+    size: "w-24 h-16 md:w-32 md:h-22 lg:w-36 lg:h-24",
     rotation: "rotate-3",
     delay: "1.5s",
     duration: "6.5s"
