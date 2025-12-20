@@ -54,7 +54,7 @@ export const QuizSummaryPanel = () => {
         
         <CardContent className="h-full flex flex-col items-center justify-center p-4 text-center relative z-10">
           {/* Browser window mockup - LARGER & More dynamic */}
-          <div className="w-full max-w-[320px] mb-5 relative animate-float-gentle">
+          <div className="w-full max-w-[500px] mb-5 relative animate-float-gentle">
             {/* Main browser mockup */}
             <div className="rounded-2xl border-2 border-border/70 bg-card shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-500">
               {/* Browser header with traffic lights */}
