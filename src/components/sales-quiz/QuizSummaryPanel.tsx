@@ -44,103 +44,168 @@ export const QuizSummaryPanel = () => {
   if (!hasSelections) {
     return (
       <Card className="h-full border-dashed bg-gradient-to-b from-background to-muted/30 overflow-hidden relative">
-        {/* Animated background glow */}
+        {/* Animated background glow - more dynamic */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-40 h-40 bg-primary/15 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/3 right-1/4 w-32 h-32 bg-accent/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
-          <div className="absolute top-1/2 right-1/3 w-28 h-28 bg-secondary/15 rounded-full blur-3xl animate-pulse" style={{ animationDelay: "0.5s" }} />
+          <div className="absolute top-1/4 left-1/4 w-48 h-48 bg-primary/20 rounded-full blur-3xl animate-float-slow" />
+          <div className="absolute bottom-1/3 right-1/4 w-40 h-40 bg-accent/20 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: "1s" }} />
+          <div className="absolute top-1/2 right-1/3 w-36 h-36 bg-secondary/20 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: "0.5s" }} />
+          <div className="absolute bottom-1/4 left-1/3 w-32 h-32 bg-primary/15 rounded-full blur-3xl animate-float-slow" style={{ animationDelay: "1.5s" }} />
         </div>
         
-        <CardContent className="h-full flex flex-col items-center justify-center p-6 text-center relative z-10">
-          {/* Browser window mockup - Enhanced style */}
-          <div className="w-full max-w-[260px] mb-6 relative">
+        <CardContent className="h-full flex flex-col items-center justify-center p-4 text-center relative z-10">
+          {/* Browser window mockup - LARGER & More dynamic */}
+          <div className="w-full max-w-[320px] mb-5 relative animate-float-gentle">
             {/* Main browser mockup */}
-            <div className="rounded-xl border-2 border-border/60 bg-card shadow-2xl overflow-hidden">
+            <div className="rounded-2xl border-2 border-border/70 bg-card shadow-2xl overflow-hidden transform hover:scale-[1.02] transition-transform duration-500">
               {/* Browser header with traffic lights */}
-              <div className="h-8 bg-muted/80 border-b border-border/50 flex items-center px-3 gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[hsl(0,84%,60%)]" />
-                  <div className="w-3 h-3 rounded-full bg-[hsl(44,96%,66%)]" />
-                  <div className="w-3 h-3 rounded-full bg-[hsl(142,71%,45%)]" />
+              <div className="h-9 bg-gradient-to-r from-muted/90 to-muted/70 border-b border-border/50 flex items-center px-3 gap-2">
+                <div className="flex gap-2">
+                  <div className="w-3.5 h-3.5 rounded-full bg-destructive shadow-sm" />
+                  <div className="w-3.5 h-3.5 rounded-full bg-secondary shadow-sm" />
+                  <div className="w-3.5 h-3.5 rounded-full bg-[hsl(142,71%,45%)] shadow-sm" />
                 </div>
-                <div className="flex-1 mx-3 h-4 bg-background/80 rounded-md flex items-center justify-center">
-                  <span className="text-[8px] text-muted-foreground/60 font-medium">demo.latroussedigitale.ca</span>
+                <div className="flex-1 mx-3 h-5 bg-background/90 rounded-md flex items-center justify-center shadow-inner">
+                  <span className="text-[9px] text-muted-foreground font-medium">demo.latroussedigitale.ca</span>
                 </div>
               </div>
               
               {/* Content area */}
-              <div className="p-4 bg-background space-y-3">
+              <div className="p-5 bg-gradient-to-b from-background to-muted/10 space-y-4">
                 {/* Logo + Title row */}
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                    <Sparkles className="w-4 h-4 text-primary-foreground" />
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg animate-pulse-soft">
+                    <Sparkles className="w-5 h-5 text-primary-foreground" />
                   </div>
-                  <div className="h-3 w-20 bg-muted rounded animate-pulse" />
+                  <div className="space-y-1.5 flex-1">
+                    <div className="h-3.5 w-24 bg-muted rounded-md animate-shimmer-slow" />
+                    <div className="h-2.5 w-16 bg-muted/60 rounded animate-shimmer-slow" style={{ animationDelay: "0.2s" }} />
+                  </div>
                 </div>
                 
                 {/* Section title with accent */}
-                <div className="pt-2">
-                  <div className="flex items-center gap-2">
-                    <div className="h-4 w-36 bg-accent/30 rounded animate-pulse" />
-                  </div>
-                  <div className="h-1.5 w-full bg-secondary rounded-full mt-2" />
-                </div>
-                
-                {/* Preview box */}
-                <div className="h-16 bg-muted/50 rounded-lg flex items-center justify-center border border-border/30">
-                  <span className="text-[10px] text-muted-foreground/50">En construction...</span>
-                </div>
-                
-                {/* Color palette section */}
                 <div className="pt-1">
-                  <div className="text-[9px] text-accent font-medium mb-2">Palette de couleurs</div>
-                  <div className="flex gap-2">
-                    <div className="flex-1 space-y-1">
-                      <div className="h-12 rounded-xl bg-primary shadow-lg transition-transform hover:scale-105" />
-                      <span className="text-[8px] text-muted-foreground/60 block text-center">Principal</span>
+                  <div className="flex items-center gap-2">
+                    <div className="h-5 w-44 bg-gradient-to-r from-accent/40 to-accent/20 rounded-md animate-shimmer-slow" />
+                  </div>
+                  <div className="h-2 w-full bg-gradient-to-r from-secondary via-accent to-primary rounded-full mt-3 animate-gradient-x" />
+                </div>
+                
+                {/* Preview box with shimmer */}
+                <div className="h-20 bg-gradient-to-br from-muted/60 to-muted/30 rounded-xl flex items-center justify-center border border-border/40 relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer-fast" />
+                  <span className="text-xs text-muted-foreground/60 font-medium">En construction...</span>
+                </div>
+                
+                {/* Color palette section - LARGER */}
+                <div className="pt-2">
+                  <div className="text-[11px] text-accent font-semibold mb-3 flex items-center gap-1.5">
+                    <Palette className="w-3.5 h-3.5" />
+                    Palette de couleurs
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="flex-1 space-y-1.5 group">
+                      <div className="h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-lg transform group-hover:scale-105 group-hover:-translate-y-1 transition-all duration-300 ring-2 ring-primary/20" />
+                      <span className="text-[10px] text-muted-foreground block text-center font-medium">Principal</span>
                     </div>
-                    <div className="flex-1 space-y-1">
-                      <div className="h-12 rounded-xl bg-accent shadow-lg transition-transform hover:scale-105" />
-                      <span className="text-[8px] text-muted-foreground/60 block text-center">Accent</span>
+                    <div className="flex-1 space-y-1.5 group">
+                      <div className="h-16 rounded-2xl bg-gradient-to-br from-accent to-accent/80 shadow-lg transform group-hover:scale-105 group-hover:-translate-y-1 transition-all duration-300 ring-2 ring-accent/20" />
+                      <span className="text-[10px] text-muted-foreground block text-center font-medium">Accent</span>
                     </div>
-                    <div className="flex-1 space-y-1">
-                      <div className="h-12 rounded-xl bg-secondary shadow-lg transition-transform hover:scale-105" />
-                      <span className="text-[8px] text-muted-foreground/60 block text-center">Secondaire</span>
+                    <div className="flex-1 space-y-1.5 group">
+                      <div className="h-16 rounded-2xl bg-gradient-to-br from-secondary to-secondary/80 shadow-lg transform group-hover:scale-105 group-hover:-translate-y-1 transition-all duration-300 ring-2 ring-secondary/20" />
+                      <span className="text-[10px] text-muted-foreground block text-center font-medium">Secondaire</span>
                     </div>
                   </div>
                 </div>
                 
-                {/* Action buttons row */}
-                <div className="flex items-center gap-2 pt-2">
-                  <div className="flex items-center gap-1 text-[8px] text-primary">
-                    <Sparkles className="w-2.5 h-2.5" />
+                {/* Action buttons row - More styled */}
+                <div className="flex items-center justify-center gap-4 pt-3">
+                  <div className="flex items-center gap-1.5 text-[10px] text-primary font-medium px-3 py-1.5 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors cursor-pointer">
+                    <Sparkles className="w-3 h-3 animate-spin-slow" />
                     <span>Démarrer mon projet</span>
                   </div>
-                  <div className="flex items-center gap-1 text-[8px] text-muted-foreground">
-                    <Clock className="w-2.5 h-2.5" />
+                  <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground px-3 py-1.5 rounded-full bg-muted/50 hover:bg-muted transition-colors cursor-pointer">
+                    <Clock className="w-3 h-3" />
                     <span>Appel découverte</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Floating elements around the mockup */}
-            <div className="absolute -top-3 -right-3 w-8 h-8 rounded-lg bg-secondary/20 backdrop-blur-sm border border-secondary/30 flex items-center justify-center animate-bounce" style={{ animationDuration: "3s" }}>
-              <Star className="w-4 h-4 text-secondary" />
+            {/* Floating elements around the mockup - More dynamic */}
+            <div className="absolute -top-4 -right-4 w-10 h-10 rounded-xl bg-gradient-to-br from-secondary/30 to-secondary/10 backdrop-blur-sm border border-secondary/40 flex items-center justify-center animate-float-bounce shadow-lg">
+              <Star className="w-5 h-5 text-secondary drop-shadow-sm" />
             </div>
-            <div className="absolute -bottom-2 -left-2 w-7 h-7 rounded-full bg-accent/20 backdrop-blur-sm border border-accent/30 flex items-center justify-center animate-pulse">
-              <Zap className="w-3.5 h-3.5 text-accent" />
+            <div className="absolute -bottom-3 -left-3 w-9 h-9 rounded-full bg-gradient-to-br from-accent/30 to-accent/10 backdrop-blur-sm border border-accent/40 flex items-center justify-center animate-pulse-glow shadow-lg">
+              <Zap className="w-4 h-4 text-accent drop-shadow-sm" />
             </div>
-            <div className="absolute top-1/2 -right-4 w-6 h-6 rounded-full bg-primary/20 backdrop-blur-sm border border-primary/30 flex items-center justify-center animate-pulse" style={{ animationDelay: "0.5s" }}>
-              <Rocket className="w-3 h-3 text-primary" />
+            <div className="absolute top-1/3 -right-5 w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 backdrop-blur-sm border border-primary/40 flex items-center justify-center animate-float-slow shadow-lg">
+              <Rocket className="w-4 h-4 text-primary drop-shadow-sm" />
+            </div>
+            <div className="absolute top-2/3 -left-4 w-7 h-7 rounded-lg bg-gradient-to-br from-accent/25 to-secondary/15 backdrop-blur-sm border border-accent/30 flex items-center justify-center animate-spin-slow shadow-md">
+              <Gem className="w-3.5 h-3.5 text-accent" />
+            </div>
+            <div className="absolute -top-2 left-1/4 w-6 h-6 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 backdrop-blur-sm border border-primary/30 flex items-center justify-center animate-float-gentle shadow-md">
+              <Globe className="w-3 h-3 text-primary" />
             </div>
           </div>
           
-          <h3 className="font-semibold text-lg mb-2">Votre solution personnalisée</h3>
-          <p className="text-sm text-muted-foreground max-w-[220px]">
+          <h3 className="font-semibold text-lg mb-1.5 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Votre solution personnalisée</h3>
+          <p className="text-sm text-muted-foreground max-w-[260px]">
             Vos choix et nos recommandations apparaîtront ici au fur et à mesure.
           </p>
         </CardContent>
+        
+        {/* Dynamic animations */}
+        <style>{`
+          @keyframes float-slow {
+            0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+            50% { transform: translateY(-15px) scale(1.05); opacity: 0.8; }
+          }
+          @keyframes float-gentle {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+          }
+          @keyframes float-bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(5deg); }
+            75% { transform: translateY(-4px) rotate(-5deg); }
+          }
+          @keyframes shimmer-slow {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+          }
+          @keyframes shimmer-fast {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+          }
+          @keyframes gradient-x {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+          }
+          @keyframes pulse-soft {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(28, 97, 254, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 20px 5px rgba(28, 97, 254, 0.2); }
+          }
+          @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 107, 61, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(255, 107, 61, 0.6); }
+          }
+          @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+          }
+          .animate-float-slow { animation: float-slow 4s ease-in-out infinite; }
+          .animate-float-gentle { animation: float-gentle 3s ease-in-out infinite; }
+          .animate-float-bounce { animation: float-bounce 2.5s ease-in-out infinite; }
+          .animate-shimmer-slow { animation: shimmer-slow 2s ease-in-out infinite; }
+          .animate-shimmer-fast { animation: shimmer-fast 1.5s infinite; }
+          .animate-gradient-x { background-size: 200% 200%; animation: gradient-x 3s ease infinite; }
+          .animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+          .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+          .animate-spin-slow { animation: spin-slow 8s linear infinite; }
+        `}</style>
       </Card>
     );
   }
