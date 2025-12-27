@@ -137,42 +137,29 @@ All colors MUST be HSL.
   }
 }
 
-/* Custom multicolor scrollbar */
+/* Scrollbar personnalisée - Gradient de marque */
 html::-webkit-scrollbar {
-  width: 12px !important;
+  width: 9px !important;
 }
 
 html::-webkit-scrollbar-track {
-  background: transparent !important;
+  background: #f0f0f0 !important;
 }
 
 html::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    hsl(48 100% 55%) 0%,
-    hsl(36 100% 50%) 25%,
-    hsl(16 100% 55%) 50%,
-    hsl(0 85% 50%) 75%,
-    hsl(218 99% 55%) 100%
-  ) !important;
-  border-radius: 10px !important;
+  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%) !important;
+  border-radius: 6px !important;
+  min-height: 60px !important;
 }
 
 html::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    hsl(48 100% 60%) 0%,
-    hsl(36 100% 55%) 25%,
-    hsl(16 100% 60%) 50%,
-    hsl(0 85% 55%) 75%,
-    hsl(218 99% 60%) 100%
-  ) !important;
+  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
 }
 
-/* Firefox scrollbar */
+/* Firefox */
 html {
-  scrollbar-width: auto;
-  scrollbar-color: hsl(16 100% 55%) transparent;
+  scrollbar-width: thin;
+  scrollbar-color: #1c61fe #f0f0f0;
 }
 
 /* Scrollbar hide utility */
