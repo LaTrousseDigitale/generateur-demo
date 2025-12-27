@@ -26,6 +26,7 @@ interface IndustryCardProps {
   isSelected: boolean;
   onSelect: () => void;
   index: number;
+  isFeatured?: boolean;
 }
 
 // Mapping des images par industrie
@@ -107,6 +108,7 @@ export const IndustryCard = ({
   isSelected,
   onSelect,
   index,
+  isFeatured = false,
 }: IndustryCardProps) => {
   const imageSrc = getImageByIndustry(value);
   
@@ -114,7 +116,7 @@ export const IndustryCard = ({
     <button
       onClick={onSelect}
       className={cn(
-        "group relative w-full h-48 text-left rounded-2xl border-2 transition-all duration-500 overflow-hidden",
+        "group relative w-full h-full text-left rounded-2xl border-2 transition-all duration-500 overflow-hidden",
         "hover:scale-[1.02] hover:-translate-y-1",
         isSelected
           ? "border-primary ring-2 ring-primary/30 shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)]"
@@ -165,18 +167,23 @@ export const IndustryCard = ({
       )}
 
       {/* Content at bottom */}
-      <div className="absolute inset-x-0 bottom-0 p-4 z-10">
+      <div className={cn(
+        "absolute inset-x-0 bottom-0 p-4 z-10",
+        isFeatured && "p-6"
+      )}>
         <h3 className={cn(
-          "font-bold text-lg mb-1 transition-all duration-300 drop-shadow-lg",
+          "font-bold mb-1 transition-all duration-300 drop-shadow-lg",
           "text-white",
-          "group-hover:translate-x-1"
+          "group-hover:translate-x-1",
+          isFeatured ? "text-2xl" : "text-lg"
         )}>
           {label}
         </h3>
         <p className={cn(
-          "text-xs text-white/80 leading-relaxed line-clamp-2 transition-all duration-300",
+          "text-white/80 leading-relaxed transition-all duration-300",
           "group-hover:text-white group-hover:translate-x-1",
-          "drop-shadow-md"
+          "drop-shadow-md",
+          isFeatured ? "text-sm line-clamp-3" : "text-xs line-clamp-2"
         )}>
           {description}
         </p>

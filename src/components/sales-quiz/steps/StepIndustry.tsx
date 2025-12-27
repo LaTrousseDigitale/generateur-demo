@@ -77,19 +77,34 @@ export const StepIndustry = () => {
         />
       </div>
 
-      {/* Industry Grid - Grille immersive */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {filteredIndustries.map((industry, index) => (
-          <IndustryCard
-            key={industry.value}
-            value={industry.value}
-            label={industry.label}
-            description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
-            isSelected={selectedIndustry === industry.value}
-            onSelect={() => handleSelect(industry.value)}
-            index={index}
-          />
-        ))}
+      {/* Industry Grid - Style Magazine avec tailles variées */}
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 auto-rows-[180px]">
+        {filteredIndustries.map((industry, index) => {
+          // Définir quelles cartes sont "featured" (plus grandes)
+          const featuredIndices = [0, 3, 7, 11]; // Positions des grandes cartes
+          const isFeatured = featuredIndices.includes(index);
+          
+          return (
+            <div 
+              key={industry.value}
+              className={
+                isFeatured 
+                  ? "col-span-2 row-span-2" 
+                  : "col-span-1 row-span-1"
+              }
+            >
+              <IndustryCard
+                value={industry.value}
+                label={industry.label}
+                description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
+                isSelected={selectedIndustry === industry.value}
+                onSelect={() => handleSelect(industry.value)}
+                index={index}
+                isFeatured={isFeatured}
+              />
+            </div>
+          );
+        })}
       </div>
 
       {/* No Results */}
