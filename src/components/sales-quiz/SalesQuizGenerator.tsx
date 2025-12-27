@@ -204,7 +204,7 @@ const QuizContent = () => {
 
           {/* Summary Panel - desktop only, not on welcome/summary */}
           {showPanel && (
-            <div className="hidden lg:block sticky top-6 h-fit">
+            <div className="hidden lg:block sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto">
               <QuizSummaryPanel />
             </div>
           )}
