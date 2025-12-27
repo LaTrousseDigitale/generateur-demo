@@ -116,7 +116,7 @@ export const INDUSTRIES = [
   { value: "demenagement", label: "Déménagement" },
   { value: "transport", label: "Transport et logistique" },
   { value: "construction", label: "Construction et rénovation" },
-  { value: "sante", label: "Santé et bien-être" },
+  { value: "immobilier", label: "Secteur immobilier" },
   { value: "tech", label: "Technologie et informatique" },
   { value: "auto", label: "Vente automobile et pièces" },
   { value: "obnl", label: "Organisme à but non lucratif" },
@@ -125,7 +125,7 @@ export const INDUSTRIES = [
   { value: "education", label: "Éducation et formation" },
   { value: "arts-scene", label: "Arts de la scène" },
   { value: "commerce", label: "Commerce de détail" },
-  { value: "immobilier", label: "Secteur immobilier" },
+  { value: "sante", label: "Santé et bien-être" },
   { value: "finances", label: "Services financiers et comptabilité" },
   { value: "beaute", label: "Beauté et esthétique" },
 ];
