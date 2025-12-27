@@ -141,49 +141,56 @@ All colors MUST be HSL.
 
 /* Chrome / Edge / Safari */
 html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  width: 9px;
-  height: 9px;
+body::-webkit-scrollbar,
+*::-webkit-scrollbar {
+  width: 12px !important;
+  height: 12px !important;
 }
 
 html::-webkit-scrollbar-track,
-body::-webkit-scrollbar-track {
-  background: transparent;
+body::-webkit-scrollbar-track,
+*::-webkit-scrollbar-track {
+  background: transparent !important;
 }
 
 html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+*::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
     #fbca58 0%,
     #ff9f1c 33%,
     #ff6b3d 66%,
     #1c61fe 100%
-  );
-  border-radius: 999px;
+  ) !important;
+  border-radius: 999px !important;
 }
 
 html::-webkit-scrollbar-thumb:hover,
-body::-webkit-scrollbar-thumb:hover {
+body::-webkit-scrollbar-thumb:hover,
+*::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     180deg,
     #e9b840 0%,
     #e88a15 33%,
     #e55a2d 66%,
     #1450d8 100%
-  );
+  ) !important;
 }
 
-/* Pas de boutons/flèches */
+/* Supprimer les boutons/flèches */
 html::-webkit-scrollbar-button,
-body::-webkit-scrollbar-button {
-  display: none;
+body::-webkit-scrollbar-button,
+*::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 /* Firefox (ne supporte pas les gradients, couleur fallback) */
 html, body {
-  scrollbar-width: thin;
-  scrollbar-color: #ff6b3d transparent;
+  scrollbar-width: thin !important;
+  scrollbar-color: #ff6b3d transparent !important;
 }
 
 /* (optionnel mais utile dans certains builds React) */
