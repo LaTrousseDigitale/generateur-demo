@@ -113,18 +113,18 @@ export interface QuestionnaireData {
 }
 
 export const INDUSTRIES = [
-  { value: "commerce", label: "Commerce de détail" },
+  { value: "demenagement", label: "Déménagement" },
   { value: "transport", label: "Transport et logistique" },
   { value: "sante", label: "Santé et bien-être" },
   { value: "construction", label: "Construction et rénovation" },
   { value: "tech", label: "Technologie et informatique" },
-  { value: "education", label: "Éducation et formation" },
+  { value: "auto", label: "Vente automobile et pièces" },
   { value: "obnl", label: "Organisme à but non lucratif" },
   { value: "restauration", label: "Restauration" },
   { value: "architecture", label: "Architecture et design" },
-  { value: "auto", label: "Vente automobile et pièces" },
+  { value: "education", label: "Éducation et formation" },
   { value: "arts-scene", label: "Arts de la scène" },
-  { value: "demenagement", label: "Déménagement" },
+  { value: "commerce", label: "Commerce de détail" },
   { value: "immobilier", label: "Secteur immobilier" },
   { value: "finances", label: "Services financiers et comptabilité" },
   { value: "beaute", label: "Beauté et esthétique" },
