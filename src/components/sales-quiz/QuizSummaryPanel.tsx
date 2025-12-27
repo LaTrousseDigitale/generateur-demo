@@ -83,7 +83,7 @@ export const QuizSummaryPanel = () => {
               </div>
               
               {/* Content area - Site web avec changement de pages */}
-              <div className="p-4 bg-gradient-to-b from-background to-muted/10 min-h-[300px] relative overflow-hidden">
+              <div className="p-4 bg-gradient-to-b from-background to-muted/10 min-h-[380px] relative overflow-hidden">
                 
                 {/* Animated cursor */}
                 <div className="cursor-animated absolute w-4 h-4 z-50 pointer-events-none">
@@ -94,7 +94,7 @@ export const QuizSummaryPanel = () => {
                 </div>
 
                 {/* Pages container with slide animation */}
-                <div className="pages-carousel relative h-[260px]">
+                <div className="pages-carousel relative h-[340px]">
                   
                   {/* Page 1 - Homepage */}
                   <div className="page-slide page-1 absolute inset-0">
