@@ -82,7 +82,7 @@ export const QuizSummaryPanel = () => {
                 </div>
               </div>
               
-              {/* Content area - Site web en construction animé */}
+              {/* Content area - Site web avec changement de pages */}
               <div className="p-4 bg-gradient-to-b from-background to-muted/10 min-h-[300px] relative overflow-hidden">
                 
                 {/* Animated cursor */}
@@ -93,62 +93,121 @@ export const QuizSummaryPanel = () => {
                   <div className="cursor-click-ring absolute -inset-2 rounded-full border-2 border-primary/50 opacity-0" />
                 </div>
 
-                {/* Website being built */}
-                <div className="space-y-3">
-                  {/* Header skeleton building */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30 border border-border/30 element-build" style={{ animationDelay: "0s" }}>
-                    <div className="w-16 h-4 rounded bg-primary/30 skeleton-shimmer" />
-                    <div className="flex gap-2">
-                      <div className="w-10 h-3 rounded bg-muted-foreground/20 skeleton-shimmer" style={{ animationDelay: "0.1s" }} />
-                      <div className="w-10 h-3 rounded bg-muted-foreground/20 skeleton-shimmer" style={{ animationDelay: "0.2s" }} />
-                      <div className="w-10 h-3 rounded bg-muted-foreground/20 skeleton-shimmer" style={{ animationDelay: "0.3s" }} />
+                {/* Pages container with slide animation */}
+                <div className="pages-carousel relative h-[260px]">
+                  
+                  {/* Page 1 - Homepage */}
+                  <div className="page-slide page-1 absolute inset-0">
+                    <div className="space-y-3">
+                      {/* Header */}
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30 border border-border/30">
+                        <div className="w-16 h-4 rounded bg-primary/40 skeleton-shimmer" />
+                        <div className="flex gap-2">
+                          <div className="w-10 h-3 rounded bg-muted-foreground/20" />
+                          <div className="w-10 h-3 rounded bg-muted-foreground/20" />
+                          <div className="w-10 h-3 rounded bg-muted-foreground/20" />
+                        </div>
+                      </div>
+                      {/* Hero */}
+                      <div className="p-3 rounded-lg bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20">
+                        <div className="w-3/4 h-5 rounded bg-primary/40 mb-2" />
+                        <div className="w-1/2 h-3 rounded bg-muted-foreground/30 mb-3" />
+                        <div className="w-20 h-6 rounded-full bg-primary/50" />
+                      </div>
+                      {/* Cards */}
+                      <div className="grid grid-cols-3 gap-2">
+                        <div className="p-2 rounded-lg bg-card border border-border/50">
+                          <div className="w-8 h-8 rounded-lg bg-secondary/30 mb-2" />
+                          <div className="w-full h-2 rounded bg-muted-foreground/20 mb-1" />
+                          <div className="w-2/3 h-2 rounded bg-muted-foreground/15" />
+                        </div>
+                        <div className="p-2 rounded-lg bg-card border border-border/50">
+                          <div className="w-8 h-8 rounded-lg bg-accent/30 mb-2" />
+                          <div className="w-full h-2 rounded bg-muted-foreground/20 mb-1" />
+                          <div className="w-2/3 h-2 rounded bg-muted-foreground/15" />
+                        </div>
+                        <div className="p-2 rounded-lg bg-card border border-border/50">
+                          <div className="w-8 h-8 rounded-lg bg-primary/30 mb-2" />
+                          <div className="w-full h-2 rounded bg-muted-foreground/20 mb-1" />
+                          <div className="w-2/3 h-2 rounded bg-muted-foreground/15" />
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Hero section building */}
-                  <div className="p-3 rounded-lg bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/20 element-build" style={{ animationDelay: "0.5s" }}>
-                    <div className="w-3/4 h-5 rounded bg-primary/40 mb-2 skeleton-shimmer" />
-                    <div className="w-1/2 h-3 rounded bg-muted-foreground/30 mb-3 skeleton-shimmer" style={{ animationDelay: "0.1s" }} />
-                    <div className="w-20 h-6 rounded-full bg-primary/50 skeleton-shimmer" style={{ animationDelay: "0.2s" }} />
+                  
+                  {/* Page 2 - Products/Services */}
+                  <div className="page-slide page-2 absolute inset-0">
+                    <div className="space-y-3">
+                      {/* Header */}
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30 border border-border/30">
+                        <div className="w-16 h-4 rounded bg-primary/40" />
+                        <div className="flex gap-2">
+                          <div className="w-10 h-3 rounded bg-accent/40" />
+                          <div className="w-10 h-3 rounded bg-muted-foreground/20" />
+                          <div className="w-10 h-3 rounded bg-muted-foreground/20" />
+                        </div>
+                      </div>
+                      {/* Product grid */}
+                      <div className="grid grid-cols-2 gap-2">
+                        <div className="p-2 rounded-lg bg-card border border-accent/30">
+                          <div className="w-full h-16 rounded-lg bg-accent/20 mb-2" />
+                          <div className="w-3/4 h-3 rounded bg-foreground/30 mb-1" />
+                          <div className="w-1/2 h-2 rounded bg-muted-foreground/20" />
+                        </div>
+                        <div className="p-2 rounded-lg bg-card border border-secondary/30">
+                          <div className="w-full h-16 rounded-lg bg-secondary/20 mb-2" />
+                          <div className="w-3/4 h-3 rounded bg-foreground/30 mb-1" />
+                          <div className="w-1/2 h-2 rounded bg-muted-foreground/20" />
+                        </div>
+                        <div className="p-2 rounded-lg bg-card border border-primary/30">
+                          <div className="w-full h-16 rounded-lg bg-primary/20 mb-2" />
+                          <div className="w-3/4 h-3 rounded bg-foreground/30 mb-1" />
+                          <div className="w-1/2 h-2 rounded bg-muted-foreground/20" />
+                        </div>
+                        <div className="p-2 rounded-lg bg-card border border-border/50">
+                          <div className="w-full h-16 rounded-lg bg-muted/30 mb-2" />
+                          <div className="w-3/4 h-3 rounded bg-foreground/30 mb-1" />
+                          <div className="w-1/2 h-2 rounded bg-muted-foreground/20" />
+                        </div>
+                      </div>
+                    </div>
                   </div>
-
-                  {/* Cards section building */}
-                  <div className="grid grid-cols-3 gap-2 element-build" style={{ animationDelay: "1s" }}>
-                    <div className="p-2 rounded-lg bg-card border border-border/50 card-pop" style={{ animationDelay: "1.2s" }}>
-                      <div className="w-8 h-8 rounded-lg bg-secondary/30 mb-2 skeleton-shimmer" />
-                      <div className="w-full h-2 rounded bg-muted-foreground/20 mb-1 skeleton-shimmer" />
-                      <div className="w-2/3 h-2 rounded bg-muted-foreground/15 skeleton-shimmer" />
-                    </div>
-                    <div className="p-2 rounded-lg bg-card border border-border/50 card-pop" style={{ animationDelay: "1.5s" }}>
-                      <div className="w-8 h-8 rounded-lg bg-accent/30 mb-2 skeleton-shimmer" />
-                      <div className="w-full h-2 rounded bg-muted-foreground/20 mb-1 skeleton-shimmer" />
-                      <div className="w-2/3 h-2 rounded bg-muted-foreground/15 skeleton-shimmer" />
-                    </div>
-                    <div className="p-2 rounded-lg bg-card border border-border/50 card-pop" style={{ animationDelay: "1.8s" }}>
-                      <div className="w-8 h-8 rounded-lg bg-primary/30 mb-2 skeleton-shimmer" />
-                      <div className="w-full h-2 rounded bg-muted-foreground/20 mb-1 skeleton-shimmer" />
-                      <div className="w-2/3 h-2 rounded bg-muted-foreground/15 skeleton-shimmer" />
-                    </div>
-                  </div>
-
-                  {/* Content section building */}
-                  <div className="flex gap-3 element-build" style={{ animationDelay: "2s" }}>
-                    <div className="w-1/3 h-20 rounded-lg bg-muted/50 border border-border/30 skeleton-shimmer" />
-                    <div className="flex-1 space-y-2">
-                      <div className="w-full h-3 rounded bg-muted-foreground/20 skeleton-shimmer" />
-                      <div className="w-5/6 h-3 rounded bg-muted-foreground/15 skeleton-shimmer" style={{ animationDelay: "0.1s" }} />
-                      <div className="w-4/6 h-3 rounded bg-muted-foreground/10 skeleton-shimmer" style={{ animationDelay: "0.2s" }} />
-                      <div className="w-16 h-5 rounded-md bg-accent/40 mt-2 skeleton-shimmer" style={{ animationDelay: "0.3s" }} />
+                  
+                  {/* Page 3 - Contact/Form */}
+                  <div className="page-slide page-3 absolute inset-0">
+                    <div className="space-y-3">
+                      {/* Header */}
+                      <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30 border border-border/30">
+                        <div className="w-16 h-4 rounded bg-primary/40" />
+                        <div className="flex gap-2">
+                          <div className="w-10 h-3 rounded bg-muted-foreground/20" />
+                          <div className="w-10 h-3 rounded bg-muted-foreground/20" />
+                          <div className="w-10 h-3 rounded bg-secondary/40" />
+                        </div>
+                      </div>
+                      {/* Contact form */}
+                      <div className="p-3 rounded-lg bg-card border border-secondary/30">
+                        <div className="w-1/2 h-4 rounded bg-foreground/30 mb-3" />
+                        <div className="space-y-2">
+                          <div className="h-8 rounded-md bg-muted/50 border border-border/50" />
+                          <div className="h-8 rounded-md bg-muted/50 border border-border/50" />
+                          <div className="h-16 rounded-md bg-muted/50 border border-border/50" />
+                          <div className="w-24 h-8 rounded-md bg-secondary/50 ml-auto" />
+                        </div>
+                      </div>
+                      {/* Map placeholder */}
+                      <div className="h-16 rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 border border-border/30 flex items-center justify-center">
+                        <div className="w-6 h-6 rounded-full bg-primary/30" />
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Building progress indicator */}
-                <div className="absolute bottom-2 left-2 right-2 flex items-center gap-2">
-                  <div className="flex-1 h-1.5 bg-muted/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-primary via-accent to-secondary rounded-full progress-build" />
-                  </div>
-                  <span className="text-[9px] text-muted-foreground font-medium building-text">Construction...</span>
+                {/* Page indicators */}
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                  <div className="page-dot page-dot-1 w-2 h-2 rounded-full bg-primary/30" />
+                  <div className="page-dot page-dot-2 w-2 h-2 rounded-full bg-primary/30" />
+                  <div className="page-dot page-dot-3 w-2 h-2 rounded-full bg-primary/30" />
                 </div>
               </div>
             </div>
@@ -290,58 +349,116 @@ export const QuizSummaryPanel = () => {
             animation: click-ring 8s ease-in-out infinite;
           }
           
-          /* Element building animations */
-          @keyframes element-build {
-            0% { opacity: 0; transform: translateY(10px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+          /* Page slide animations */
+          @keyframes page-slide-1 {
+            0%, 30% { opacity: 1; transform: translateX(0); }
+            33%, 35% { opacity: 0; transform: translateX(-100%); }
+            36%, 63% { opacity: 0; transform: translateX(100%); }
+            64%, 96% { opacity: 0; transform: translateX(100%); }
+            97%, 100% { opacity: 1; transform: translateX(0); }
           }
           
-          @keyframes card-pop {
-            0% { opacity: 0; transform: scale(0.8); }
-            60% { transform: scale(1.05); }
-            100% { opacity: 1; transform: scale(1); }
+          @keyframes page-slide-2 {
+            0%, 30% { opacity: 0; transform: translateX(100%); }
+            33%, 35% { opacity: 1; transform: translateX(0); }
+            36%, 63% { opacity: 1; transform: translateX(0); }
+            64%, 66% { opacity: 0; transform: translateX(-100%); }
+            67%, 100% { opacity: 0; transform: translateX(100%); }
           }
           
-          @keyframes skeleton-shimmer {
-            0% { opacity: 0.3; }
-            50% { opacity: 0.7; }
-            100% { opacity: 0.3; }
+          @keyframes page-slide-3 {
+            0%, 63% { opacity: 0; transform: translateX(100%); }
+            64%, 66% { opacity: 1; transform: translateX(0); }
+            67%, 96% { opacity: 1; transform: translateX(0); }
+            97%, 100% { opacity: 0; transform: translateX(-100%); }
           }
           
-          @keyframes progress-build {
-            0% { width: 0%; }
-            20% { width: 15%; }
-            40% { width: 35%; }
-            60% { width: 55%; }
-            80% { width: 75%; }
-            100% { width: 90%; }
+          @keyframes dot-active-1 {
+            0%, 30% { background-color: hsl(var(--primary)); transform: scale(1.3); }
+            33%, 97% { background-color: hsl(var(--primary) / 0.3); transform: scale(1); }
+            100% { background-color: hsl(var(--primary)); transform: scale(1.3); }
           }
           
-          @keyframes building-text {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+          @keyframes dot-active-2 {
+            0%, 30% { background-color: hsl(var(--primary) / 0.3); transform: scale(1); }
+            33%, 63% { background-color: hsl(var(--primary)); transform: scale(1.3); }
+            66%, 100% { background-color: hsl(var(--primary) / 0.3); transform: scale(1); }
           }
           
-          .element-build {
-            opacity: 0;
-            animation: element-build 0.6s ease-out forwards;
+          @keyframes dot-active-3 {
+            0%, 63% { background-color: hsl(var(--primary) / 0.3); transform: scale(1); }
+            66%, 96% { background-color: hsl(var(--primary)); transform: scale(1.3); }
+            100% { background-color: hsl(var(--primary) / 0.3); transform: scale(1); }
           }
           
-          .card-pop {
-            opacity: 0;
-            animation: card-pop 0.5s ease-out forwards;
+          .page-slide {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+          }
+          
+          .page-1 {
+            animation: page-slide-1 9s ease-in-out infinite;
+          }
+          
+          .page-2 {
+            animation: page-slide-2 9s ease-in-out infinite;
+          }
+          
+          .page-3 {
+            animation: page-slide-3 9s ease-in-out infinite;
+          }
+          
+          .page-dot-1 {
+            animation: dot-active-1 9s ease-in-out infinite;
+          }
+          
+          .page-dot-2 {
+            animation: dot-active-2 9s ease-in-out infinite;
+          }
+          
+          .page-dot-3 {
+            animation: dot-active-3 9s ease-in-out infinite;
+          }
+          
+          /* Cursor animation synced with page changes */
+          @keyframes cursor-move {
+            0%, 5% { top: 30px; left: 80px; }
+            10% { top: 30px; left: 120px; }
+            15%, 30% { top: 70px; left: 100px; }
+            33%, 38% { top: 30px; left: 90px; }
+            43%, 63% { top: 100px; left: 80px; }
+            66%, 71% { top: 30px; left: 160px; }
+            76%, 96% { top: 150px; left: 130px; }
+            100% { top: 30px; left: 80px; }
+          }
+          
+          @keyframes cursor-click {
+            0%, 9%, 32%, 42%, 65%, 75%, 96%, 100% { transform: scale(1); }
+            10%, 33%, 43%, 66%, 76%, 97% { transform: scale(0.8); }
+            12%, 35%, 45%, 68%, 78%, 99% { transform: scale(1); }
+          }
+          
+          @keyframes click-ring {
+            0%, 9%, 32%, 42%, 65%, 75%, 96%, 100% { transform: scale(0); opacity: 0; }
+            10%, 33%, 43%, 66%, 76%, 97% { transform: scale(0.8); opacity: 0.6; }
+            15%, 38%, 48%, 71%, 81% { transform: scale(1.5); opacity: 0; }
+          }
+          
+          .cursor-animated {
+            animation: cursor-move 9s ease-in-out infinite, cursor-click 9s ease-in-out infinite;
+          }
+          
+          .cursor-click-ring {
+            animation: click-ring 9s ease-in-out infinite;
           }
           
           .skeleton-shimmer {
             animation: skeleton-shimmer 1.5s ease-in-out infinite;
           }
           
-          .progress-build {
-            animation: progress-build 6s ease-out infinite;
-          }
-          
-          .building-text {
-            animation: building-text 1s ease-in-out infinite;
+          @keyframes skeleton-shimmer {
+            0% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.4; }
           }
         `}</style>
       </Card>
