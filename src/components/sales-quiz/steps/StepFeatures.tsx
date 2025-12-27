@@ -456,7 +456,7 @@ export const StepFeatures = () => {
         {/* ===== PORTAL FEATURES ===== */}
         {hasPortal && (
           <div className="space-y-4">
-            {(portalType === "client" || portalType === "mixte") && (
+            {(portalType === "client" || portalType === "multifonctions") && (
               <FeatureSection
                 title="Portail Client"
                 icon={<Users className="w-4 h-4" />}
@@ -465,7 +465,7 @@ export const StepFeatures = () => {
                 onToggle={toggleFeature}
               />
             )}
-            {(portalType === "employes" || portalType === "mixte") && (
+            {(portalType === "employes" || portalType === "multifonctions") && (
               <FeatureSection
                 title="Portail Employés"
                 icon={<Briefcase className="w-4 h-4" />}
@@ -474,7 +474,7 @@ export const StepFeatures = () => {
                 onToggle={toggleFeature}
               />
             )}
-            {(portalType === "rh" || portalType === "mixte") && (
+            {(portalType === "rh" || portalType === "multifonctions") && (
               <FeatureSection
                 title="Portail RH"
                 icon={<Users className="w-4 h-4" />}

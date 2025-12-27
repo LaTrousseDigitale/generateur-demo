@@ -4,12 +4,14 @@ import { QuizProgress } from "./QuizProgress";
 import { QuizSummaryPanel } from "./QuizSummaryPanel";
 import { StepWelcome } from "./steps/StepWelcome";
 import { StepIndustry } from "./steps/StepIndustry";
-import { StepObjectives } from "./steps/StepObjectives";
+import { StepCompanyInfo } from "./steps/StepCompanyInfo";
 import { StepSolutions } from "./steps/StepSolutions";
 import { StepDetails } from "./steps/StepDetails";
+import { StepModulesSelection } from "./steps/StepModulesSelection";
 import { StepFeatures } from "./steps/StepFeatures";
 import { StepStyle } from "./steps/StepStyle";
 import { StepBranding } from "./steps/StepBranding";
+import { StepPaymentOptions } from "./steps/StepPaymentOptions";
 import { StepContact } from "./steps/StepContact";
 import { StepSummary } from "./steps/StepSummary";
 import { SyncedHeader } from "@/components/SyncedHeader";
@@ -45,21 +47,26 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 
+// PHASE 1: Génération de la démo
+// PHASE 2: Options de devis et achat
 const STEPS = [
-  StepWelcome,
-  StepIndustry,
-  StepObjectives,
-  StepSolutions,
-  StepDetails,
-  StepFeatures,
-  StepStyle,
-  StepBranding,
-  StepContact,
-  StepSummary,
+  StepWelcome,        // 0 - Accueil
+  StepIndustry,       // 1 - Industrie
+  StepCompanyInfo,    // 2 - Type & taille entreprise
+  StepSolutions,      // 3 - Site Web / Portail / Modules
+  StepDetails,        // 4 - Types détaillés (vitrine, e-commerce, etc.)
+  StepModulesSelection, // 5 - Sélection des modules
+  StepFeatures,       // 6 - Fonctionnalités conditionnelles
+  StepStyle,          // 7 - Style visuel
+  StepBranding,       // 8 - Branding (logo, couleurs)
+  // === PHASE 2 ===
+  StepPaymentOptions, // 9 - Mode paiement, maintenance, hébergement
+  StepContact,        // 10 - Coordonnées
+  StepSummary,        // 11 - Résumé et démo
 ];
 
-// Étapes où on affiche le panneau de résumé (pas sur welcome ni summary)
-const STEPS_WITH_PANEL = [1, 2, 3, 4, 5, 6, 7, 8];
+// Étapes où on affiche le panneau de résumé
+const STEPS_WITH_PANEL = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const QuizContent = () => {
   const { state, reset, updateData, goToStep } = useQuiz();
