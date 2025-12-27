@@ -1,37 +1,33 @@
-/* ========== Scrollbar arc-en-ciel - AVANT Tailwind ========== */
-*::-webkit-scrollbar {
-  width: 10px !important;
-  height: 10px !important;
+/* ===========================================
+   CUSTOM SCROLLBAR - Brand Gradient (PRIORITY)
+   Blue (#1c61fe) → Orange (#ff6b3d) → Yellow (#fbca58)
+   Must be at top for maximum specificity
+   =========================================== */
+
+html::-webkit-scrollbar {
+  width: 9px !important;
 }
-*::-webkit-scrollbar-track {
-  background: transparent !important;
+
+html::-webkit-scrollbar-track {
+  background: #f0f0f0 !important;
 }
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #fbca58 0%, #ff9f1c 33%, #ff6b3d 66%, #1c61fe 100%) !important;
-  border-radius: 10px !important;
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%) !important;
+  border-radius: 6px !important;
+  min-height: 60px !important;
 }
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #e9b840 0%, #e88a15 33%, #e55a2d 66%, #1450d8 100%) !important;
+
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
 }
-*::-webkit-scrollbar-button,
-*::-webkit-scrollbar-button:single-button,
-*::-webkit-scrollbar-button:start,
-*::-webkit-scrollbar-button:end,
-*::-webkit-scrollbar-button:vertical:start,
-*::-webkit-scrollbar-button:vertical:end,
-*::-webkit-scrollbar-button:vertical:increment,
-*::-webkit-scrollbar-button:vertical:decrement {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  background: transparent !important;
+
+/* Firefox fallback */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b3d #f0f0f0;
 }
-html, body {
-  scrollbar-width: thin !important;
-  scrollbar-color: #ff6b3d transparent !important;
-  overflow-y: scroll !important;
-  overflow-x: hidden !important;
-}
+
 
 @tailwind base;
 @tailwind components;
