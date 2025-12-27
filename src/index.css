@@ -139,61 +139,32 @@ All colors MUST be HSL.
 
 /* ========== Scrollbar arc-en-ciel (jaune → orangé → rouge → bleu) ========== */
 
-/* Chrome / Edge / Safari */
-html::-webkit-scrollbar,
-body::-webkit-scrollbar,
-*::-webkit-scrollbar {
-  width: 12px !important;
-  height: 12px !important;
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-html::-webkit-scrollbar-track,
-body::-webkit-scrollbar-track,
-*::-webkit-scrollbar-track {
-  background: transparent !important;
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb,
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    #fbca58 0%,
-    #ff9f1c 33%,
-    #ff6b3d 66%,
-    #1c61fe 100%
-  ) !important;
-  border-radius: 999px !important;
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #fbca58, #ff9f1c, #ff6b3d, #1c61fe);
+  border-radius: 10px;
 }
 
-html::-webkit-scrollbar-thumb:hover,
-body::-webkit-scrollbar-thumb:hover,
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    #e9b840 0%,
-    #e88a15 33%,
-    #e55a2d 66%,
-    #1450d8 100%
-  ) !important;
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #e9b840, #e88a15, #e55a2d, #1450d8);
 }
 
-/* Supprimer les boutons/flèches */
-html::-webkit-scrollbar-button,
-body::-webkit-scrollbar-button,
-*::-webkit-scrollbar-button {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
+/* Firefox */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b3d transparent;
 }
 
-/* Firefox (ne supporte pas les gradients, couleur fallback) */
-html, body {
-  scrollbar-width: thin !important;
-  scrollbar-color: #ff6b3d transparent !important;
-}
-
-/* (optionnel mais utile dans certains builds React) */
 #root {
   min-height: 100%;
 }
