@@ -1,35 +1,52 @@
 /* ===========================================
    CUSTOM SCROLLBAR - Brand Gradient (PRIORITY)
    Blue (#1c61fe) → Orange (#ff6b3d) → Yellow (#fbca58)
-   Must be at top for maximum specificity
+   Applies to ALL scrollbars in the app
    =========================================== */
 
-html::-webkit-scrollbar {
+/* All scrollbars */
+*::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
   width: 9px !important;
+  height: 9px !important;
 }
 
-html::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
   background: #f0f0f0 !important;
+  border-radius: 6px !important;
 }
 
-html::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%) !important;
   border-radius: 6px !important;
   min-height: 60px !important;
 }
 
-html::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
 }
 
-html::-webkit-scrollbar-button {
+*::-webkit-scrollbar-button,
+html::-webkit-scrollbar-button,
+body::-webkit-scrollbar-button {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
 }
 
+*::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
 /* Firefox fallback */
-html {
+* {
   scrollbar-width: thin;
   scrollbar-color: #ff6b3d #f0f0f0;
 }
