@@ -139,13 +139,13 @@ All colors MUST be HSL.
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
+  background: hsl(var(--muted) / 0.3);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(
-    to bottom,
+    180deg,
     hsl(0 84% 55%) 0%,        /* Rouge */
     hsl(16 100% 61%) 25%,     /* Orange */
     hsl(44 96% 66%) 50%,      /* Jaune */
@@ -154,23 +154,26 @@ All colors MUST be HSL.
   );
   border-radius: 10px;
   border: 2px solid hsl(var(--background));
+  background-attachment: scroll;
+  background-size: 100% 100vh;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
-    to bottom,
+    180deg,
     hsl(0 84% 60%) 0%,
-    hsl(16 100% 65%) 25%,
-    hsl(44 96% 70%) 50%,
-    hsl(218 99% 70%) 75%,
-    hsl(218 99% 60%) 100%
+    hsl(16 100% 70%) 25%,
+    hsl(44 96% 75%) 50%,
+    hsl(218 99% 75%) 75%,
+    hsl(218 99% 65%) 100%
   );
+  background-size: 100% 100vh;
 }
 
 /* Firefox scrollbar */
 html {
-  scrollbar-width: thin;
-  scrollbar-color: hsl(218 99% 55%) hsl(var(--muted));
+  scrollbar-width: auto;
+  scrollbar-color: hsl(16 100% 61%) hsl(var(--muted) / 0.3);
 }
 
 /* Scrollbar hide utility */
