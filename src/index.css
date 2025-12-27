@@ -286,6 +286,12 @@ html::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
 }
 
+html::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 /* Firefox fallback */
 html {
   scrollbar-width: thin !important;
