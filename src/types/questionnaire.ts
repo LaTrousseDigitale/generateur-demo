@@ -115,8 +115,8 @@ export interface QuestionnaireData {
 export const INDUSTRIES = [
   { value: "demenagement", label: "Déménagement" },
   { value: "transport", label: "Transport et logistique" },
-  { value: "sante", label: "Santé et bien-être" },
   { value: "construction", label: "Construction et rénovation" },
+  { value: "sante", label: "Santé et bien-être" },
   { value: "tech", label: "Technologie et informatique" },
   { value: "auto", label: "Vente automobile et pièces" },
   { value: "obnl", label: "Organisme à but non lucratif" },
