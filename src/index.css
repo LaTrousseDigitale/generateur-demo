@@ -150,6 +150,8 @@ html::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
     hsl(var(--brand-primary)) 0%,
+    hsl(var(--accent)) 35%,
+    hsl(0 84% 55%) 65%,
     hsl(var(--brand-secondary)) 100%
   ) !important;
   border-radius: 10px !important;
@@ -159,6 +161,8 @@ html::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     180deg,
     hsl(var(--brand-secondary)) 0%,
+    hsl(0 84% 60%) 35%,
+    hsl(var(--accent)) 65%,
     hsl(var(--brand-primary)) 100%
   ) !important;
 }
