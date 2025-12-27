@@ -123,10 +123,10 @@ export const INDUSTRIES = [
   { value: "restauration", label: "Restauration" },
   { value: "architecture", label: "Architecture et design" },
   { value: "education", label: "Éducation et formation" },
-  { value: "arts-scene", label: "Arts de la scène" },
+  { value: "finances", label: "Services financiers et comptabilité" },
   { value: "commerce", label: "Commerce de détail" },
   { value: "sante", label: "Santé et bien-être" },
-  { value: "finances", label: "Services financiers et comptabilité" },
+  { value: "arts-scene", label: "Arts de la scène" },
   { value: "beaute", label: "Beauté et esthétique" },
 ];
 
