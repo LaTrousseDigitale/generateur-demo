@@ -153,8 +153,6 @@ All colors MUST be HSL.
   );
   border-radius: 10px;
   border: 2px solid hsl(var(--background));
-  background-attachment: scroll;
-  background-size: 100% 100vh;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -165,7 +163,6 @@ All colors MUST be HSL.
     hsl(0 84% 60%) 60%,
     hsl(218 99% 60%) 100%
   );
-  background-size: 100% 100vh;
 }
 
 /* Firefox scrollbar */
