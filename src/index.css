@@ -137,7 +137,7 @@ All colors MUST be HSL.
   }
 }
 
-/* Scrollbar personnalisée - Gradient de marque (comme latroussedigitale.ca) */
+/* Scrollbar personnalisée - Gradient de marque (bleu → jaune → orange → rouge) */
 html::-webkit-scrollbar {
   width: 8px !important;
 }
@@ -150,11 +150,9 @@ html::-webkit-scrollbar-track {
 html::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
-    #3b82f6 0%,
-    #06b6d4 20%,
-    #22c55e 40%,
-    #eab308 60%,
-    #f97316 80%,
+    #1c61fe 0%,
+    #fbca58 40%,
+    #ff6b3d 70%,
     #ef4444 100%
   ) !important;
   border-radius: 10px !important;
@@ -164,11 +162,9 @@ html::-webkit-scrollbar-thumb {
 html::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     180deg,
-    #2563eb 0%,
-    #0891b2 20%,
-    #16a34a 40%,
-    #ca8a04 60%,
-    #ea580c 80%,
+    #1450d8 0%,
+    #e9b840 40%,
+    #e55a2d 70%,
     #dc2626 100%
   ) !important;
 }
@@ -176,7 +172,7 @@ html::-webkit-scrollbar-thumb:hover {
 /* Firefox */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #22c55e #e5e7eb;
+  scrollbar-color: #1c61fe #e5e7eb;
 }
 
 /* Scrollbar hide utility */
