@@ -33,8 +33,21 @@ const SOLUTION_ICONS: Record<string, LucideIcon> = {
 
 export const QuizSummaryPanel = () => {
   const { state } = useQuiz();
-  const { data } = state;
+  const { data, step } = state;
   const recommendations = useQuizRecommendations(data);
+
+  // Map quiz steps to mockup steps (0-indexed quiz step to 1-5 mockup steps)
+  const getMockupProgress = () => {
+    if (step === 0) return 0; // Welcome - nothing shown
+    if (step === 1) return 1; // Industry
+    if (step === 2) return 2; // Objectives
+    if (step === 3) return 3; // Solutions
+    if (step >= 4 && step <= 6) return 4; // Style/Branding/Features
+    return 5; // Summary and beyond
+  };
+  
+  const mockupStep = getMockupProgress();
+  const progressPercent = Math.min(100, Math.round((mockupStep / 5) * 100));
 
   const hasSelections = 
     data.industry || 
@@ -82,75 +95,155 @@ export const QuizSummaryPanel = () => {
                   </div>
                 </div>
                 
-                {/* Étapes du guide avec animation séquentielle */}
-                <div className="space-y-3">
-                  {/* Étape 1 */}
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-primary/10 border border-primary/30 animate-step-highlight" style={{ animationDelay: "0s" }}>
-                    <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-bold shadow-md">1</div>
+                {/* Étapes du guide - affichage progressif */}
+                <div className="space-y-2 overflow-hidden">
+                  {/* Étape 1 - Industrie */}
+                  <div 
+                    className={cn(
+                      "flex items-center gap-3 p-2.5 rounded-xl transition-all duration-500 transform",
+                      mockupStep >= 1 
+                        ? "bg-primary/10 border border-primary/30 opacity-100 translate-y-0" 
+                        : "bg-muted/20 border border-transparent opacity-40 translate-y-2"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-md transition-all duration-300",
+                      mockupStep >= 1 ? "bg-primary text-primary-foreground" : "bg-muted-foreground/20 text-muted-foreground"
+                    )}>1</div>
                     <div className="flex-1">
-                      <div className="text-xs font-medium text-foreground">Choisissez votre industrie</div>
+                      <div className={cn("text-xs font-medium transition-colors", mockupStep >= 1 ? "text-foreground" : "text-muted-foreground")}>
+                        Choisissez votre industrie
+                      </div>
                       <div className="text-[10px] text-muted-foreground">Restaurant, Auto, Santé...</div>
                     </div>
-                    <Check className="w-4 h-4 text-primary animate-check-appear" />
+                    {mockupStep > 1 && <Check className="w-4 h-4 text-primary animate-scale-in" />}
+                    {mockupStep === 1 && <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />}
                   </div>
                   
-                  {/* Étape 2 */}
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-accent/10 border border-accent/30 animate-step-highlight" style={{ animationDelay: "0.5s" }}>
-                    <div className="w-7 h-7 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-xs font-bold shadow-md">2</div>
+                  {/* Étape 2 - Objectifs */}
+                  <div 
+                    className={cn(
+                      "flex items-center gap-3 p-2.5 rounded-xl transition-all duration-500 transform",
+                      mockupStep >= 2 
+                        ? "bg-accent/10 border border-accent/30 opacity-100 translate-y-0" 
+                        : "bg-muted/20 border border-transparent opacity-40 translate-y-2",
+                      mockupStep < 2 && "scale-95"
+                    )}
+                    style={{ transitionDelay: "100ms" }}
+                  >
+                    <div className={cn(
+                      "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-md transition-all duration-300",
+                      mockupStep >= 2 ? "bg-accent text-accent-foreground" : "bg-muted-foreground/20 text-muted-foreground"
+                    )}>2</div>
                     <div className="flex-1">
-                      <div className="text-xs font-medium text-foreground">Définissez vos objectifs</div>
+                      <div className={cn("text-xs font-medium transition-colors", mockupStep >= 2 ? "text-foreground" : "text-muted-foreground")}>
+                        Définissez vos objectifs
+                      </div>
                       <div className="text-[10px] text-muted-foreground">Ventes, visibilité, efficacité...</div>
                     </div>
-                    <Target className="w-4 h-4 text-accent animate-pulse" />
+                    {mockupStep > 2 && <Check className="w-4 h-4 text-accent animate-scale-in" />}
+                    {mockupStep === 2 && <Target className="w-4 h-4 text-accent animate-pulse" />}
                   </div>
                   
-                  {/* Étape 3 */}
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-secondary/20 border border-secondary/40 animate-step-highlight" style={{ animationDelay: "1s" }}>
-                    <div className="w-7 h-7 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center text-xs font-bold shadow-md">3</div>
+                  {/* Étape 3 - Solutions */}
+                  <div 
+                    className={cn(
+                      "flex items-center gap-3 p-2.5 rounded-xl transition-all duration-500 transform",
+                      mockupStep >= 3 
+                        ? "bg-secondary/20 border border-secondary/40 opacity-100 translate-y-0" 
+                        : "bg-muted/20 border border-transparent opacity-40 translate-y-2",
+                      mockupStep < 3 && "scale-95"
+                    )}
+                    style={{ transitionDelay: "200ms" }}
+                  >
+                    <div className={cn(
+                      "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-md transition-all duration-300",
+                      mockupStep >= 3 ? "bg-secondary text-secondary-foreground" : "bg-muted-foreground/20 text-muted-foreground"
+                    )}>3</div>
                     <div className="flex-1">
-                      <div className="text-xs font-medium text-foreground">Sélectionnez vos solutions</div>
+                      <div className={cn("text-xs font-medium transition-colors", mockupStep >= 3 ? "text-foreground" : "text-muted-foreground")}>
+                        Sélectionnez vos solutions
+                      </div>
                       <div className="text-[10px] text-muted-foreground">Site web, portail, modules...</div>
                     </div>
-                    <Layers className="w-4 h-4 text-secondary-foreground/70 animate-bounce-slow" />
+                    {mockupStep > 3 && <Check className="w-4 h-4 text-secondary-foreground animate-scale-in" />}
+                    {mockupStep === 3 && <Layers className="w-4 h-4 text-secondary-foreground/70 animate-pulse" />}
                   </div>
                   
-                  {/* Étape 4 */}
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50 border border-border/50 animate-step-highlight" style={{ animationDelay: "1.5s" }}>
-                    <div className="w-7 h-7 rounded-full bg-muted-foreground/20 text-muted-foreground flex items-center justify-center text-xs font-bold">4</div>
+                  {/* Étape 4 - Style */}
+                  <div 
+                    className={cn(
+                      "flex items-center gap-3 p-2.5 rounded-xl transition-all duration-500 transform",
+                      mockupStep >= 4 
+                        ? "bg-[hsl(280,60%,50%)]/10 border border-[hsl(280,60%,50%)]/30 opacity-100 translate-y-0" 
+                        : "bg-muted/20 border border-transparent opacity-40 translate-y-2",
+                      mockupStep < 4 && "scale-95"
+                    )}
+                    style={{ transitionDelay: "300ms" }}
+                  >
+                    <div className={cn(
+                      "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-md transition-all duration-300",
+                      mockupStep >= 4 ? "bg-[hsl(280,60%,50%)] text-white" : "bg-muted-foreground/20 text-muted-foreground"
+                    )}>4</div>
                     <div className="flex-1">
-                      <div className="text-xs font-medium text-muted-foreground">Personnalisez votre style</div>
-                      <div className="text-[10px] text-muted-foreground/70">Couleurs, polices, design...</div>
+                      <div className={cn("text-xs font-medium transition-colors", mockupStep >= 4 ? "text-foreground" : "text-muted-foreground")}>
+                        Personnalisez votre style
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">Couleurs, polices, design...</div>
                     </div>
-                    <Palette className="w-4 h-4 text-muted-foreground/50" />
+                    {mockupStep > 4 && <Check className="w-4 h-4 text-[hsl(280,60%,50%)] animate-scale-in" />}
+                    {mockupStep === 4 && <Palette className="w-4 h-4 text-[hsl(280,60%,50%)] animate-pulse" />}
                   </div>
                   
-                  {/* Étape 5 */}
-                  <div className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/30 border border-border/30 animate-step-highlight" style={{ animationDelay: "2s" }}>
-                    <div className="w-7 h-7 rounded-full bg-muted-foreground/10 text-muted-foreground/60 flex items-center justify-center text-xs font-bold">5</div>
+                  {/* Étape 5 - Démo finale */}
+                  <div 
+                    className={cn(
+                      "flex items-center gap-3 p-2.5 rounded-xl transition-all duration-500 transform",
+                      mockupStep >= 5 
+                        ? "bg-[hsl(142,71%,45%)]/10 border border-[hsl(142,71%,45%)]/30 opacity-100 translate-y-0" 
+                        : "bg-muted/20 border border-transparent opacity-40 translate-y-2",
+                      mockupStep < 5 && "scale-95"
+                    )}
+                    style={{ transitionDelay: "400ms" }}
+                  >
+                    <div className={cn(
+                      "w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shadow-md transition-all duration-300",
+                      mockupStep >= 5 ? "bg-[hsl(142,71%,45%)] text-white" : "bg-muted-foreground/20 text-muted-foreground"
+                    )}>5</div>
                     <div className="flex-1">
-                      <div className="text-xs font-medium text-muted-foreground/80">Recevez votre démo</div>
-                      <div className="text-[10px] text-muted-foreground/60">Prévisualisation interactive</div>
+                      <div className={cn("text-xs font-medium transition-colors", mockupStep >= 5 ? "text-foreground" : "text-muted-foreground")}>
+                        Recevez votre démo
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">Prévisualisation interactive</div>
                     </div>
-                    <Rocket className="w-4 h-4 text-muted-foreground/40" />
+                    {mockupStep >= 5 && <Rocket className="w-4 h-4 text-[hsl(142,71%,45%)] animate-bounce" />}
                   </div>
                 </div>
                 
-                {/* Progress bar animée */}
+                {/* Progress bar dynamique */}
                 <div className="pt-2">
                   <div className="flex justify-between text-[10px] text-muted-foreground mb-1.5">
                     <span>Progression</span>
-                    <span className="animate-count-up">0%</span>
+                    <span className="font-medium text-foreground">{progressPercent}%</span>
                   </div>
                   <div className="h-2 bg-muted/50 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-primary via-accent to-secondary rounded-full animate-progress-grow" style={{ width: "0%" }} />
+                    <div 
+                      className="h-full bg-gradient-to-r from-primary via-accent to-secondary rounded-full transition-all duration-700 ease-out" 
+                      style={{ width: `${progressPercent}%` }} 
+                    />
                   </div>
                 </div>
                 
-                {/* CTA */}
+                {/* CTA dynamique */}
                 <div className="flex items-center justify-center pt-2">
-                  <div className="flex items-center gap-2 text-xs text-primary font-medium px-4 py-2 rounded-full bg-primary/10 border border-primary/30 hover:bg-primary/20 transition-all cursor-pointer animate-cta-pulse">
-                    <ArrowRight className="w-4 h-4" />
-                    <span>Commencer maintenant</span>
+                  <div className={cn(
+                    "flex items-center gap-2 text-xs font-medium px-4 py-2 rounded-full border transition-all cursor-pointer",
+                    mockupStep >= 5 
+                      ? "text-[hsl(142,71%,45%)] bg-[hsl(142,71%,45%)]/10 border-[hsl(142,71%,45%)]/30 hover:bg-[hsl(142,71%,45%)]/20"
+                      : "text-primary bg-primary/10 border-primary/30 hover:bg-primary/20"
+                  )}>
+                    {mockupStep >= 5 ? <Sparkles className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                    <span>{mockupStep >= 5 ? "Voir ma démo" : "Continuer"}</span>
                   </div>
                 </div>
               </div>
