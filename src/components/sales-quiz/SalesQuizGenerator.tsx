@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { QuizProvider, useQuiz } from "./QuizContext";
 import { QuizProgress } from "./QuizProgress";
 import { QuizSummaryPanel } from "./QuizSummaryPanel";
@@ -7,8 +7,9 @@ import { StepIndustry } from "./steps/StepIndustry";
 import { StepCompanyInfo } from "./steps/StepCompanyInfo";
 import { StepSolutions } from "./steps/StepSolutions";
 import { StepDetails } from "./steps/StepDetails";
+import { StepWebsiteDetails } from "./steps/StepWebsiteDetails";
+import { StepPortalDetails } from "./steps/StepPortalDetails";
 import { StepModulesSelection } from "./steps/StepModulesSelection";
-import { StepFeatures } from "./steps/StepFeatures";
 import { StepStyle } from "./steps/StepStyle";
 import { StepBranding } from "./steps/StepBranding";
 import { StepPaymentOptions } from "./steps/StepPaymentOptions";
@@ -46,34 +47,61 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import { QuestionnaireData } from "@/types/questionnaire";
 
-// PHASE 1: Génération de la démo
-// PHASE 2: Options de devis et achat
-const STEPS = [
-  StepWelcome,        // 0 - Accueil
-  StepIndustry,       // 1 - Industrie
-  StepCompanyInfo,    // 2 - Type & taille entreprise
-  StepSolutions,      // 3 - Site Web / Portail / Modules
-  StepDetails,        // 4 - Types détaillés (vitrine, e-commerce, etc.)
-  StepModulesSelection, // 5 - Sélection des modules
-  StepFeatures,       // 6 - Fonctionnalités conditionnelles
-  StepStyle,          // 7 - Style visuel
-  StepBranding,       // 8 - Branding (logo, couleurs)
+// Fonction pour générer les étapes dynamiquement selon les sélections
+const getSteps = (data: Partial<QuestionnaireData>) => {
+  const steps: Array<React.ComponentType> = [
+    StepWelcome,        // 0 - Accueil
+    StepIndustry,       // 1 - Industrie  
+    StepCompanyInfo,    // 2 - Type & taille entreprise
+    StepSolutions,      // 3 - Site Web / Portail / Modules
+    StepDetails,        // 4 - Types détaillés (vitrine, e-commerce, etc.)
+  ];
+
+  const solutionTypes = data.solutionTypes || [];
+  
+  // Ajouter les étapes conditionnelles selon les solutions sélectionnées
+  if (solutionTypes.includes("website") && data.websiteType) {
+    steps.push(StepWebsiteDetails); // Questions spécifiques au type de site
+  }
+  
+  if (solutionTypes.includes("portal") && data.portalType) {
+    steps.push(StepPortalDetails); // Questions spécifiques au type de portail
+  }
+  
+  if (solutionTypes.includes("module")) {
+    steps.push(StepModulesSelection); // Sélection des modules
+  }
+
+  // Étapes communes pour la démo
+  steps.push(StepStyle);      // Style visuel
+  steps.push(StepBranding);   // Branding (logo, couleurs)
+  
   // === PHASE 2 ===
-  StepPaymentOptions, // 9 - Mode paiement, maintenance, hébergement
-  StepContact,        // 10 - Coordonnées
-  StepSummary,        // 11 - Résumé et démo
-];
+  steps.push(StepPaymentOptions); // Mode paiement, maintenance, hébergement
+  steps.push(StepContact);        // Coordonnées
+  steps.push(StepSummary);        // Résumé et démo
 
-// Étapes où on affiche le panneau de résumé
-const STEPS_WITH_PANEL = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  return steps;
+};
 
 const QuizContent = () => {
   const { state, reset, updateData, goToStep } = useQuiz();
-  const CurrentStep = STEPS[state.step];
+  
+  // Générer les étapes dynamiquement selon les sélections
+  const steps = useMemo(() => getSteps(state.data), [
+    state.data.solutionTypes,
+    state.data.websiteType,
+    state.data.portalType
+  ]);
+  
+  const CurrentStep = steps[state.step] || steps[0];
   const isMobile = useIsMobile();
-  const showPanel = STEPS_WITH_PANEL.includes(state.step) && !isMobile;
-  const showControls = state.step > 0 && state.step < STEPS.length - 1;
+  
+  // Afficher le panneau après l'accueil et avant le résumé
+  const showPanel = state.step > 0 && state.step < steps.length - 1 && !isMobile;
+  const showControls = state.step > 0 && state.step < steps.length - 1;
   
   const { saving, saveQuiz, loadQuiz, generateShareUrl } = useSaveQuiz();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -262,8 +290,11 @@ const QuizContent = () => {
 };
 
 export const SalesQuizGenerator = () => {
+  // Calculer le nombre max d'étapes possibles pour le provider
+  const maxSteps = 13; // Nombre maximum si toutes les options sont sélectionnées
+  
   return (
-    <QuizProvider totalSteps={STEPS.length}>
+    <QuizProvider totalSteps={maxSteps}>
       <QuizContent />
     </QuizProvider>
   );
