@@ -135,33 +135,35 @@ All colors MUST be HSL.
 
 /* Custom multicolor scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 14px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--muted) / 0.3);
+  background: hsl(var(--muted) / 0.2);
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg,
-    hsl(48 100% 65%) 0%,       /* Jaune */
-    hsl(16 100% 61%) 40%,      /* Orange/Rouge */
-    hsl(0 84% 55%) 60%,        /* Rouge */
-    hsl(218 99% 55%) 100%      /* Bleu */
-  );
   border-radius: 10px;
   border: 2px solid hsl(var(--background));
+  background-image: linear-gradient(
+    to bottom,
+    hsl(48 100% 60%),
+    hsl(30 100% 55%),
+    hsl(16 100% 55%),
+    hsl(0 85% 50%),
+    hsl(240 80% 55%)
+  );
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    hsl(48 100% 70%) 0%,
-    hsl(16 100% 65%) 40%,
-    hsl(0 84% 60%) 60%,
-    hsl(218 99% 60%) 100%
+  background-image: linear-gradient(
+    to bottom,
+    hsl(48 100% 65%),
+    hsl(30 100% 60%),
+    hsl(16 100% 60%),
+    hsl(0 85% 55%),
+    hsl(240 80% 60%)
   );
 }
 
