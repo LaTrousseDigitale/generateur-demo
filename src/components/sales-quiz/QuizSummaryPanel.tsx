@@ -210,18 +210,7 @@ export const QuizSummaryPanel = () => {
                   <div className="page-dot page-dot-3 w-2 h-2 rounded-full bg-primary/30" />
                 </div>
               </div>
-            </div>
-            
-            {/* Floating elements around the mockup */}
-            <div className="absolute -top-4 -right-4 w-10 h-10 rounded-xl bg-gradient-to-br from-secondary/30 to-secondary/10 backdrop-blur-sm border border-secondary/40 flex items-center justify-center animate-float-bounce shadow-lg">
-              <Star className="w-5 h-5 text-secondary drop-shadow-sm" />
-            </div>
-            <div className="absolute -bottom-3 -left-3 w-9 h-9 rounded-full bg-gradient-to-br from-accent/30 to-accent/10 backdrop-blur-sm border border-accent/40 flex items-center justify-center animate-pulse-glow shadow-lg">
-              <Zap className="w-4 h-4 text-accent drop-shadow-sm" />
-            </div>
-            <div className="absolute top-1/3 -right-5 w-8 h-8 rounded-full bg-gradient-to-br from-primary/30 to-primary/10 backdrop-blur-sm border border-primary/40 flex items-center justify-center animate-float-slow shadow-lg">
-              <Sparkles className="w-4 h-4 text-primary drop-shadow-sm" />
-            </div>
+          </div>
           </div>
           
           <h3 className="font-semibold text-lg mb-1.5 bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">Votre solution personnalisée</h3>
