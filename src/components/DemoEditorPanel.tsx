@@ -1131,7 +1131,7 @@ export const DemoEditorPanel = () => {
                     )}
 
                     {/* Portail Client */}
-                    {config.serviceType === "portal" && (config.portalType === "client" || config.portalType === "mixte") && (
+                    {config.serviceType === "portal" && (config.portalType === "client" || config.portalType === "multifonctions") && (
                       <div>
                         <h3 className="font-medium mb-3">Fonctionnalités Portail Client</h3>
                         <div className="grid gap-3">
@@ -1152,7 +1152,7 @@ export const DemoEditorPanel = () => {
                     )}
 
                     {/* Portail Employés */}
-                    {config.serviceType === "portal" && (config.portalType === "employes" || config.portalType === "mixte") && (
+                    {config.serviceType === "portal" && (config.portalType === "employes" || config.portalType === "multifonctions") && (
                       <div>
                         <h3 className="font-medium mb-3">Fonctionnalités Portail Employés</h3>
                         <div className="grid gap-3">
@@ -1173,7 +1173,7 @@ export const DemoEditorPanel = () => {
                     )}
 
                     {/* Portail RH */}
-                    {config.serviceType === "portal" && (config.portalType === "rh" || config.portalType === "mixte") && (
+                    {config.serviceType === "portal" && (config.portalType === "rh" || config.portalType === "multifonctions") && (
                       <div>
                         <h3 className="font-medium mb-3">Fonctionnalités Portail RH</h3>
                         <div className="grid gap-3">

@@ -41,10 +41,10 @@ export interface DemoConfig {
   logo: string | null;
   companyName: string;
   theme?: DemoTheme;
-  websiteType?: "vitrine" | "ecommerce" | "organisationnel" | null;
+  websiteType?: "landing" | "vitrine" | "ecommerce" | "organisationnel" | null;
   websitePages?: string[];
   websiteSections?: string[];
-  portalType?: "client" | "employes" | "rh" | "mixte" | null;
+  portalType?: "client" | "employes" | "rh" | "admin" | "multifonctions" | null;
   portalUsers?: string;
   portalRoles?: string;
   portalClientFeatures?: string[];
@@ -190,7 +190,16 @@ const initialQuestionnaireData: QuestionnaireData = {
   clientPhone: "",
   serviceType: null,
   features: [],
-  companySize: "",
+  companySize: null,
+  companyType: "",
+  blogPages: 0,
+  translatedPages: 0,
+  portalAdminFeatures: [],
+  domainName: "",
+  numberOfUsers: 0,
+  numberOfBlogPages: 0,
+  numberOfTranslatedPages: 0,
+  clientName: "",
   budget: "",
   timeline: ""
 };
