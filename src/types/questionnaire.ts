@@ -126,8 +126,8 @@ export const INDUSTRIES = [
   { value: "restauration", label: "Restauration" },
   { value: "commerce", label: "Commerce de détail" },
   { value: "sante", label: "Santé et bien-être" },
-  { value: "arts-scene", label: "Arts de la scène" },
   { value: "beaute", label: "Beauté et esthétique" },
+  { value: "arts-scene", label: "Arts de la scène" },
 ];
 
 export const MODULES = [
