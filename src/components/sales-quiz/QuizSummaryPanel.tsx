@@ -203,6 +203,13 @@ export const QuizSummaryPanel = () => {
                   </div>
                 </div>
 
+                {/* Rainbow progress bar */}
+                <div className="absolute bottom-8 left-3 right-3">
+                  <div className="h-1.5 bg-muted/30 rounded-full overflow-hidden">
+                    <div className="h-full rounded-full rainbow-progress" />
+                  </div>
+                </div>
+
                 {/* Page indicators */}
                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
                   <div className="page-dot page-dot-1 w-2 h-2 rounded-full bg-primary/30" />
@@ -448,6 +455,31 @@ export const QuizSummaryPanel = () => {
             0% { opacity: 0.4; }
             50% { opacity: 0.8; }
             100% { opacity: 0.4; }
+          }
+          
+          /* Rainbow progress bar animation */
+          @keyframes rainbow-progress {
+            0% { width: 0%; }
+            50% { width: 85%; }
+            100% { width: 100%; }
+          }
+          
+          @keyframes rainbow-shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+          }
+          
+          .rainbow-progress {
+            background: linear-gradient(90deg, 
+              #1c61fe 0%, 
+              #6b4fff 20%, 
+              #ff6b3d 40%, 
+              #fbca58 60%, 
+              #1c61fe 80%, 
+              #6b4fff 100%
+            );
+            background-size: 200% 100%;
+            animation: rainbow-progress 9s ease-in-out infinite, rainbow-shimmer 2s linear infinite;
           }
         `}</style>
       </Card>
