@@ -457,11 +457,15 @@ export const QuizSummaryPanel = () => {
             100% { opacity: 0.4; }
           }
           
-          /* Rainbow progress bar animation */
+          /* Rainbow progress bar animation - synced with 9s page cycle */
           @keyframes rainbow-progress {
-            0% { width: 0%; }
-            50% { width: 85%; }
-            100% { width: 100%; }
+            0%, 2% { width: 5%; }
+            30% { width: 33%; }
+            33%, 35% { width: 33%; }
+            63% { width: 66%; }
+            66%, 68% { width: 66%; }
+            96% { width: 100%; }
+            97%, 100% { width: 5%; }
           }
           
           @keyframes rainbow-shimmer {
@@ -479,7 +483,7 @@ export const QuizSummaryPanel = () => {
               #6b4fff 100%
             );
             background-size: 200% 100%;
-            animation: rainbow-progress 9s ease-in-out infinite, rainbow-shimmer 2s linear infinite;
+            animation: rainbow-progress 9s ease-in-out infinite, rainbow-shimmer 1.5s linear infinite;
           }
         `}</style>
       </Card>
