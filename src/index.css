@@ -19,6 +19,8 @@
 html, body {
   scrollbar-width: thin !important;
   scrollbar-color: #ff6b3d transparent !important;
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
 }
 
 @tailwind base;
