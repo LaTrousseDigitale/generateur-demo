@@ -77,19 +77,18 @@ export const StepIndustry = () => {
         />
       </div>
 
-      {/* Industry Grid - Masonry symétrique */}
-      <div className="columns-2 md:columns-3 lg:columns-5 gap-4 space-y-4 [column-fill:balance]">
+      {/* Industry Grid - Grille immersive */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {filteredIndustries.map((industry, index) => (
-          <div key={industry.value} className="break-inside-avoid mb-4">
-            <IndustryCard
-              value={industry.value}
-              label={industry.label}
-              description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
-              isSelected={selectedIndustry === industry.value}
-              onSelect={() => handleSelect(industry.value)}
-              index={index}
-            />
-          </div>
+          <IndustryCard
+            key={industry.value}
+            value={industry.value}
+            label={industry.label}
+            description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
+            isSelected={selectedIndustry === industry.value}
+            onSelect={() => handleSelect(industry.value)}
+            index={index}
+          />
         ))}
       </div>
 

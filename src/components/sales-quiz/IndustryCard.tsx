@@ -108,43 +108,84 @@ export const IndustryCard = ({
   onSelect,
   index,
 }: IndustryCardProps) => {
+  const imageSrc = getImageByIndustry(value);
+  
   return (
     <button
       onClick={onSelect}
       className={cn(
-        "group relative w-full text-left p-4 rounded-2xl border-2 transition-all duration-300",
-        "shadow-[0_0_30px_-5px_hsl(var(--primary)/0.3)] hover:shadow-[0_0_40px_-5px_hsl(var(--primary)/0.5)]",
-        "bg-card hover:bg-accent/5",
+        "group relative w-full h-48 text-left rounded-2xl border-2 transition-all duration-500 overflow-hidden",
+        "hover:scale-[1.02] hover:-translate-y-1",
         isSelected
-          ? "border-primary shadow-[0_0_50px_-5px_hsl(var(--primary)/0.6)] ring-2 ring-primary/20"
-          : "border-border hover:border-primary/40"
+          ? "border-primary ring-2 ring-primary/30 shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)]"
+          : "border-transparent hover:border-primary/50 shadow-lg hover:shadow-xl"
       )}
       style={{
         animationDelay: `${index * 50}ms`,
       }}
     >
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={imageSrc}
+          alt={label}
+          className={cn(
+            "w-full h-full object-cover transition-transform duration-700",
+            "group-hover:scale-110",
+            isSelected && "scale-105"
+          )}
+        />
+      </div>
+      
+      {/* Gradient Overlay - plus prononcé */}
+      <div 
+        className={cn(
+          "absolute inset-0 transition-all duration-500",
+          "bg-gradient-to-t from-black/80 via-black/30 to-black/10",
+          "group-hover:from-primary/80 group-hover:via-primary/20 group-hover:to-transparent",
+          isSelected && "from-primary/70 via-primary/20 to-transparent"
+        )}
+      />
+      
+      {/* Shimmer effect on hover */}
+      <div 
+        className={cn(
+          "absolute inset-0 opacity-0 group-hover:opacity-100",
+          "bg-gradient-to-r from-transparent via-white/20 to-transparent",
+          "translate-x-[-100%] group-hover:translate-x-[100%]",
+          "transition-all duration-1000 ease-out"
+        )}
+      />
+
       {/* Checkmark */}
       {isSelected && (
-        <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-primary flex items-center justify-center shadow-md z-10">
-          <Check className="w-4 h-4 text-primary-foreground" />
+        <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-lg z-10 animate-scale-in">
+          <Check className="w-5 h-5 text-primary-foreground" />
         </div>
       )}
 
-      {/* Image réaliste animée */}
-      <div className="h-32 mb-3 rounded-xl overflow-hidden">
-        <AnimatedIndustryImage value={value} isSelected={isSelected} />
+      {/* Content at bottom */}
+      <div className="absolute inset-x-0 bottom-0 p-4 z-10">
+        <h3 className={cn(
+          "font-bold text-lg mb-1 transition-all duration-300 drop-shadow-lg",
+          "text-white",
+          "group-hover:translate-x-1"
+        )}>
+          {label}
+        </h3>
+        <p className={cn(
+          "text-xs text-white/80 leading-relaxed line-clamp-2 transition-all duration-300",
+          "group-hover:text-white group-hover:translate-x-1",
+          "drop-shadow-md"
+        )}>
+          {description}
+        </p>
       </div>
-
-      {/* Texte */}
-      <h3 className={cn(
-        "font-semibold text-base mb-1 transition-colors",
-        isSelected ? "text-primary" : "text-foreground group-hover:text-primary"
-      )}>
-        {label}
-      </h3>
-      <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-        {description}
-      </p>
+      
+      {/* Border glow effect when selected */}
+      {isSelected && (
+        <div className="absolute inset-0 rounded-2xl border-2 border-primary animate-pulse opacity-50" />
+      )}
     </button>
   );
 };
