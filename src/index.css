@@ -143,10 +143,6 @@ html::-webkit-scrollbar {
 }
 
 html::-webkit-scrollbar-track {
-  background: transparent !important;
-}
-
-html::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
     hsl(48 100% 55%) 0%,
@@ -159,22 +155,20 @@ html::-webkit-scrollbar-thumb {
   border-radius: 10px !important;
 }
 
+html::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground) / 0.3) !important;
+  border-radius: 10px !important;
+  border: 2px solid transparent !important;
+}
+
 html::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg,
-    hsl(48 100% 60%) 0%,
-    hsl(36 100% 55%) 20%,
-    hsl(16 100% 60%) 40%,
-    hsl(0 85% 55%) 60%,
-    hsl(280 80% 55%) 80%,
-    hsl(218 99% 60%) 100%
-  ) !important;
+  background: hsl(var(--foreground) / 0.5) !important;
 }
 
 /* Firefox scrollbar */
 html {
   scrollbar-width: auto;
-  scrollbar-color: hsl(16 100% 55%) transparent;
+  scrollbar-color: hsl(var(--foreground) / 0.3) hsl(16 100% 55%);
 }
 
 /* Scrollbar hide utility */
