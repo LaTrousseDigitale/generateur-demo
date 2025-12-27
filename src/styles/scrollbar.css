@@ -1,0 +1,35 @@
+/* ===========================================
+   CUSTOM SCROLLBAR - Brand Gradient
+   Blue (#1c61fe) → Orange (#ff6b3d) → Yellow (#fbca58)
+   Separate file for maximum priority
+   =========================================== */
+
+html::-webkit-scrollbar {
+  width: 9px !important;
+}
+
+html::-webkit-scrollbar-track {
+  background: #f0f0f0 !important;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%) !important;
+  border-radius: 6px !important;
+  min-height: 60px !important;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
+}
+
+html::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Firefox */
+html {
+  scrollbar-width: thin !important;
+  scrollbar-color: #ff6b3d #f0f0f0 !important;
+}
