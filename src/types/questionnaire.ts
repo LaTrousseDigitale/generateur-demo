@@ -155,7 +155,6 @@ export const INDUSTRIES = [
   { value: "sante", label: "Santé et bien-être" },
   { value: "beaute", label: "Beauté et esthétique" },
   { value: "arts-scene", label: "Arts de la scène" },
-  { value: "services", label: "Services professionnels" },
 ];
 
 export const COMPANY_TYPES = [
