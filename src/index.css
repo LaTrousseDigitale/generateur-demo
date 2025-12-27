@@ -139,30 +139,47 @@ All colors MUST be HSL.
 
 /* ========== Scrollbar arc-en-ciel (jaune → orangé → rouge → bleu) ========== */
 
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
+*,
+*::before,
+*::after,
+html,
+body {
+  scrollbar-width: thin !important;
+  scrollbar-color: #ff6b3d transparent !important;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: transparent;
+*::-webkit-scrollbar,
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
 }
 
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #fbca58, #ff9f1c, #ff6b3d, #1c61fe);
-  border-radius: 10px;
+*::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+  background: transparent !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #e9b840, #e88a15, #e55a2d, #1450d8);
+*::-webkit-scrollbar-thumb,
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #fbca58 0%, #ff9f1c 33%, #ff6b3d 66%, #1c61fe 100%) !important;
+  border-radius: 10px !important;
 }
 
-/* Firefox */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #ff6b3d transparent;
+*::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #e9b840 0%, #e88a15 33%, #e55a2d 66%, #1450d8 100%) !important;
+}
+
+*::-webkit-scrollbar-button,
+html::-webkit-scrollbar-button,
+body::-webkit-scrollbar-button {
+  display: none !important;
+  height: 0 !important;
+  width: 0 !important;
 }
 
 #root {
