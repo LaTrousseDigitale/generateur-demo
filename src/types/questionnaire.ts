@@ -113,7 +113,6 @@ export interface QuestionnaireData {
 }
 
 export const INDUSTRIES = [
-  { value: "services", label: "Services professionnels" },
   { value: "commerce", label: "Commerce de détail" },
   { value: "transport", label: "Transport et logistique" },
   { value: "sante", label: "Santé et bien-être" },
