@@ -137,38 +137,44 @@ All colors MUST be HSL.
   }
 }
 
-/* ========== Scrollbar (demos.latroussedigitale.ca) ========== */
-
-/* Firefox */
-html, body {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(28, 97, 254, 0.55) transparent;
-}
+/* ===== Scrollbar signature – gradient jaune → orange → rouge → bleu ===== */
 
 /* Chrome / Edge / Safari */
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 18px; /* largeur du track */
 }
 
 html::-webkit-scrollbar-track,
 body::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(255,255,255,0.95); /* track clair */
 }
 
 html::-webkit-scrollbar-thumb,
 body::-webkit-scrollbar-thumb {
-  background: rgba(28, 97, 254, 0.45);
+  background: linear-gradient(
+    180deg,
+    #fbca58 25%,   /* jaune */
+    #ff9f1c 25%,  /* orangé */
+    #ff6b3d 25%,  /* rouge-orangé */
+    #1c61fe 25%  /* bleu */
+  );
   border-radius: 999px;
-  border: 3px solid transparent;
+  /* rend le thumb mince et centré */
+  border: 6px solid transparent;
   background-clip: content-box;
 }
 
 html::-webkit-scrollbar-thumb:hover,
 body::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 107, 61, 0.55);
+  border: 5px solid transparent; /* léger élargissement au hover */
   background-clip: content-box;
+}
+
+/* Firefox (approximation, Firefox ne gère pas les gradients ici) */
+html, body {
+  scrollbar-width: auto;
+  scrollbar-color: #ff6b3d transparent;
 }
 
 /* (optionnel mais utile dans certains builds React) */
