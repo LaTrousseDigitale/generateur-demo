@@ -134,43 +134,48 @@ All colors MUST be HSL.
 }
 
 /* Custom multicolor scrollbar */
-::-webkit-scrollbar {
-  width: 14px;
+* {
+  scrollbar-width: auto;
+  scrollbar-color: auto;
 }
 
-::-webkit-scrollbar-track {
-  background: hsl(var(--muted) / 0.2);
+*::-webkit-scrollbar {
+  width: 14px !important;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--muted) / 0.2) !important;
   border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   border-radius: 10px;
   border: 2px solid hsl(var(--background));
-  background-image: linear-gradient(
+  background: linear-gradient(
     to bottom,
-    hsl(48 100% 60%),
-    hsl(30 100% 55%),
-    hsl(16 100% 55%),
-    hsl(0 85% 50%),
-    hsl(240 80% 55%)
-  );
+    #FFD700 0%,
+    #FFA500 25%,
+    #FF6347 50%,
+    #DC143C 70%,
+    #4169E1 100%
+  ) !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background-image: linear-gradient(
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
     to bottom,
-    hsl(48 100% 65%),
-    hsl(30 100% 60%),
-    hsl(16 100% 60%),
-    hsl(0 85% 55%),
-    hsl(240 80% 60%)
-  );
+    #FFE44D 0%,
+    #FFB733 25%,
+    #FF7F5E 50%,
+    #E6324F 70%,
+    #5A7FE8 100%
+  ) !important;
 }
 
-/* Firefox scrollbar */
+/* Firefox scrollbar - limited support for gradients */
 html {
   scrollbar-width: auto;
-  scrollbar-color: hsl(16 100% 61%) hsl(var(--muted) / 0.3);
+  scrollbar-color: #FF6347 hsl(var(--muted) / 0.2);
 }
 
 /* Scrollbar hide utility */
