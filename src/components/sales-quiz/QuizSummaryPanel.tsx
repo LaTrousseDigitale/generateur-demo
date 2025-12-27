@@ -70,7 +70,7 @@ export const QuizSummaryPanel = () => {
               </div>
               
               {/* Content area - Guide interactif */}
-              <div className="p-5 bg-gradient-to-b from-background to-muted/10 space-y-4 min-h-[330px]">
+              <div className="p-5 bg-gradient-to-b from-background to-muted/10 space-y-3 min-h-[280px]">
                 {/* Header du guide */}
                 <div className="flex items-center gap-3 pb-2 border-b border-border/30">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg animate-pulse-soft">
