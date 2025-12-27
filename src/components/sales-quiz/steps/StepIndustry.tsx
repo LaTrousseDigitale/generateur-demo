@@ -78,18 +78,19 @@ export const StepIndustry = () => {
       </div>
 
       {/* Industry Grid - Style Magazine avec tailles variées */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3" style={{ gridAutoRows: '180px' }}>
+      <div 
+        className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3"
+        style={{ gridAutoRows: '180px', gridAutoFlow: 'dense' }}
+      >
         {filteredIndustries.map((industry, index) => {
           // Pattern qui remplit sans espaces vides
-          // Featured: 0, 5, 8, 13 (espacées pour éviter les conflits)
-          const featuredPattern = [0, 5, 8, 13];
-          const isFeatured = featuredPattern.includes(index % 16);
+          const featuredPattern = [0, 5, 10];
+          const isFeatured = featuredPattern.includes(index);
           
           return (
             <div 
               key={industry.value}
               className={isFeatured ? "col-span-2 row-span-2" : ""}
-              style={{ gridRow: isFeatured ? 'span 2' : 'span 1' }}
             >
               <IndustryCard
                 value={industry.value}
