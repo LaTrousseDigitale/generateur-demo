@@ -83,8 +83,8 @@ export const StepIndustry = () => {
         style={{ gridAutoRows: '180px', gridAutoFlow: 'dense' }}
       >
         {filteredIndustries.map((industry, index) => {
-          // Industries featured: auto (9), déménagement (11), architecture (8)
-          const featuredPattern = [8, 9, 11];
+          // Pattern qui remplit sans espaces vides
+          const featuredPattern = [0, 5, 10];
           const isFeatured = featuredPattern.includes(index);
           
           return (
