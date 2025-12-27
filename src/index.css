@@ -133,6 +133,54 @@ All colors MUST be HSL.
   }
 }
 
+/* Custom multicolor scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    hsl(218 99% 55%) 0%,      /* Bleu principal */
+    hsl(218 99% 65%) 25%,     /* Bleu clair */
+    hsl(16 100% 61%) 50%,     /* Orange */
+    hsl(44 96% 66%) 75%,      /* Jaune */
+    hsl(218 99% 55%) 100%     /* Retour bleu */
+  );
+  border-radius: 10px;
+  border: 2px solid hsl(var(--muted));
+  background-size: 100% 200%;
+  animation: scrollbar-gradient 3s ease infinite;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    hsl(218 99% 60%) 0%,
+    hsl(218 99% 70%) 25%,
+    hsl(16 100% 65%) 50%,
+    hsl(44 96% 70%) 75%,
+    hsl(218 99% 60%) 100%
+  );
+  background-size: 100% 200%;
+}
+
+@keyframes scrollbar-gradient {
+  0%, 100% { background-position: 0% 0%; }
+  50% { background-position: 0% 100%; }
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(218 99% 55%) hsl(var(--muted));
+}
+
 /* Scrollbar hide utility */
 .scrollbar-hide {
   -ms-overflow-style: none;
