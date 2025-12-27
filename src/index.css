@@ -137,36 +137,38 @@ All colors MUST be HSL.
   }
 }
 
-/* Scrollbar personnalisée - Gradient de marque (comme la barre de progression) */
+/* Scrollbar personnalisée - Gradient de marque (comme latroussedigitale.ca) */
 html::-webkit-scrollbar {
-  width: 9px !important;
+  width: 8px !important;
 }
 
 html::-webkit-scrollbar-track {
   background: #e5e7eb !important;
-  border-radius: 6px !important;
+  border-radius: 10px !important;
 }
 
 html::-webkit-scrollbar-thumb {
   background: linear-gradient(
     180deg,
-    #1c61fe 0%,
-    #22c55e 25%,
-    #fbca58 50%,
-    #ff6b3d 75%,
+    #3b82f6 0%,
+    #06b6d4 20%,
+    #22c55e 40%,
+    #eab308 60%,
+    #f97316 80%,
     #ef4444 100%
   ) !important;
-  border-radius: 6px !important;
-  min-height: 60px !important;
+  border-radius: 10px !important;
+  min-height: 50px !important;
 }
 
 html::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(
     180deg,
-    #1450d8 0%,
-    #16a34a 25%,
-    #e9b840 50%,
-    #e55a2d 75%,
+    #2563eb 0%,
+    #0891b2 20%,
+    #16a34a 40%,
+    #ca8a04 60%,
+    #ea580c 80%,
     #dc2626 100%
   ) !important;
 }
