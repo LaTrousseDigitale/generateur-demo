@@ -263,9 +263,8 @@ All colors MUST be HSL.
 }
 
 /* Custom Scrollbar - La Trousse Digitale Brand Colors (Blue → Orange → Yellow) */
-html, body {
+html {
   overflow-y: scroll !important;
-  min-height: 101vh; /* Force scrollbar to always be visible */
 }
 
 /* Global scrollbar - Webkit browsers (Chrome, Safari, Edge) */
