@@ -17,16 +17,21 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
+    /* Brand colors */
+    --brand-blue: 220 99% 55%;    /* #1c61fe */
+    --brand-orange: 17 100% 62%;  /* #ff6b3d */
+    --brand-yellow: 40 96% 67%;   /* #fbca58 */
+
     /* La Trousse Digitale brand colors */
-    --primary: 218 99% 55%; /* #1c61fe - Bleu principal */
+    --primary: 220 99% 55%;       /* Blue - #1c61fe */
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 218 99% 65%;
+    --primary-glow: 220 99% 65%;
 
-    --secondary: 44 96% 66%; /* #fbca58 - Jaune */
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 17 100% 62%;     /* Orange - #ff6b3d */
+    --secondary-foreground: 0 0% 100%;
 
-    --accent: 16 100% 61%; /* #ff6b3d - Orange */
-    --accent-foreground: 0 0% 100%;
+    --accent: 40 96% 67%;         /* Yellow - #fbca58 */
+    --accent-foreground: 220 26% 14%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 215 16% 47%;
@@ -36,22 +41,18 @@ All colors MUST be HSL.
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 218 99% 55%;
+    --ring: 220 99% 55%;
 
     --radius: 0.75rem;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(218 99% 55%), hsl(218 99% 65%));
-    --gradient-accent: linear-gradient(135deg, hsl(16 100% 61%), hsl(44 96% 66%));
-    --gradient-hero: linear-gradient(135deg, hsl(218 99% 55%), hsl(16 100% 61%), hsl(44 96% 66%));
-    
-    /* Brand scrollbar colors */
-    --brand-primary: 44 96% 60%;    /* Jaune */
-    --brand-secondary: 218 99% 55%; /* Bleu */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--brand-blue)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--brand-orange)), hsl(var(--brand-yellow)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--brand-blue)), hsl(var(--brand-orange)), hsl(var(--brand-yellow)));
 
     /* Shadows */
-    --shadow-elegant: 0 10px 30px -10px hsl(218 99% 55% / 0.3);
-    --shadow-glow: 0 0 40px hsl(218 99% 65% / 0.4);
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--brand-blue) / 0.3);
+    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.4);
 
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
