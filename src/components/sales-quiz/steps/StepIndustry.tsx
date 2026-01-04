@@ -57,30 +57,28 @@ export const StepIndustry = () => {
   // En mode embed, on utilise une grille compacte optimisée pour tenir sur une page
   if (isEmbed) {
     return (
-      <div className="h-[100vh] flex flex-col overflow-hidden p-2">
-        {/* Header ultra compact */}
-        <div className="text-center pb-1 shrink-0">
-          <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-            <Building2 className="w-5 h-5 text-primary" />
-            Dans quelle industrie évoluez-vous?
+      <div className="h-[100vh] flex flex-col overflow-hidden px-3 py-1.5">
+        {/* Header + Search sur une ligne */}
+        <div className="flex items-center justify-center gap-3 pb-1.5 shrink-0">
+          <h2 className="text-sm font-bold flex items-center gap-1.5 whitespace-nowrap">
+            <Building2 className="w-4 h-4 text-primary" />
+            Votre industrie
           </h2>
+          <div className="relative w-40">
+            <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Rechercher..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-7 h-7 text-xs"
+            />
+          </div>
         </div>
 
-        {/* Search compact */}
-        <div className="relative max-w-xs mx-auto w-full pb-2 shrink-0">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Rechercher..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-8 h-8 text-sm"
-          />
-        </div>
-
-        {/* Grid magazine style - 4 colonnes avec pattern asymétrique */}
+        {/* Grid magazine style - 4 colonnes */}
         <div 
-          className="flex-1 grid grid-cols-4 gap-1.5 min-h-0 overflow-hidden"
+          className="flex-1 grid grid-cols-4 gap-1 min-h-0 overflow-hidden"
           style={{ 
             gridTemplateRows: 'repeat(4, 1fr)',
             gridAutoFlow: 'dense' 
