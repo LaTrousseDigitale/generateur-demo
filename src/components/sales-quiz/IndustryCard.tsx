@@ -27,7 +27,6 @@ interface IndustryCardProps {
   onSelect: () => void;
   index: number;
   isFeatured?: boolean;
-  compact?: boolean;
 }
 
 // Mapping des images par industrie
@@ -110,7 +109,6 @@ export const IndustryCard = ({
   onSelect,
   index,
   isFeatured = false,
-  compact = false,
 }: IndustryCardProps) => {
   const imageSrc = getImageByIndustry(value);
   
@@ -118,15 +116,14 @@ export const IndustryCard = ({
     <button
       onClick={onSelect}
       className={cn(
-        "group relative w-full h-full text-left rounded-xl border-2 transition-all duration-500 overflow-hidden",
-        "hover:scale-[1.02] hover:-translate-y-0.5",
+        "group relative w-full h-full text-left rounded-2xl border-2 transition-all duration-500 overflow-hidden",
+        "hover:scale-[1.02] hover:-translate-y-1",
         isSelected
           ? "border-primary ring-2 ring-primary/30 shadow-[0_10px_40px_-10px_hsl(var(--primary)/0.5)]"
-          : "border-transparent hover:border-primary/50 shadow-lg hover:shadow-xl",
-        compact && "rounded-md border"
+          : "border-transparent hover:border-primary/50 shadow-lg hover:shadow-xl"
       )}
       style={{
-        animationDelay: `${index * 20}ms`,
+        animationDelay: `${index * 50}ms`,
       }}
     >
       {/* Background Image */}
@@ -164,48 +161,37 @@ export const IndustryCard = ({
 
       {/* Checkmark */}
       {isSelected && (
-        <div className={cn(
-          "absolute top-1 right-1 rounded-full bg-primary flex items-center justify-center shadow-lg z-10 animate-scale-in",
-          compact ? "w-4 h-4" : "w-8 h-8"
-        )}>
-          <Check className={cn(
-            "text-primary-foreground",
-            compact ? "w-2.5 h-2.5" : "w-5 h-5"
-          )} />
+        <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-lg z-10 animate-scale-in">
+          <Check className="w-5 h-5 text-primary-foreground" />
         </div>
       )}
 
       {/* Content at bottom */}
       <div className={cn(
-        "absolute inset-x-0 bottom-0 z-10",
-        compact ? "p-1" : (isFeatured ? "p-6" : "p-4")
+        "absolute inset-x-0 bottom-0 p-4 z-10",
+        isFeatured && "p-6"
       )}>
         <h3 className={cn(
-          "font-bold transition-all duration-300 drop-shadow-lg",
+          "font-bold mb-1 transition-all duration-300 drop-shadow-lg",
           "text-white",
-          "group-hover:translate-x-0.5",
-          compact ? "text-[10px] leading-tight" : (isFeatured ? "text-2xl mb-1" : "text-lg mb-1")
+          "group-hover:translate-x-1",
+          isFeatured ? "text-2xl" : "text-lg"
         )}>
           {label}
         </h3>
-        {!compact && (
-          <p className={cn(
-            "text-white/80 leading-relaxed transition-all duration-300",
-            "group-hover:text-white group-hover:translate-x-1",
-            "drop-shadow-md",
-            isFeatured ? "text-sm line-clamp-3" : "text-xs line-clamp-2"
-          )}>
-            {description}
-          </p>
-        )}
+        <p className={cn(
+          "text-white/80 leading-relaxed transition-all duration-300",
+          "group-hover:text-white group-hover:translate-x-1",
+          "drop-shadow-md",
+          isFeatured ? "text-sm line-clamp-3" : "text-xs line-clamp-2"
+        )}>
+          {description}
+        </p>
       </div>
       
       {/* Border glow effect when selected */}
       {isSelected && (
-        <div className={cn(
-          "absolute inset-0 border-2 border-primary animate-pulse opacity-50",
-          compact ? "rounded-md" : "rounded-xl"
-        )} />
+        <div className="absolute inset-0 rounded-2xl border-2 border-primary animate-pulse opacity-50" />
       )}
     </button>
   );

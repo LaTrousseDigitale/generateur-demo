@@ -1,6 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
 import { QuizProvider, useQuiz } from "./QuizContext";
-import { EmbedProvider } from "./EmbedContext";
 import { QuizProgress } from "./QuizProgress";
 import { QuizSummaryPanel } from "./QuizSummaryPanel";
 import { StepWelcome } from "./steps/StepWelcome";
@@ -22,7 +21,6 @@ import { useSaveQuiz } from "@/hooks/useSaveQuiz";
 import { Button } from "@/components/ui/button";
 import { RotateCcw, Save, Copy, Check, Menu, X } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -88,11 +86,7 @@ const getSteps = (data: Partial<QuestionnaireData>) => {
   return steps;
 };
 
-interface QuizContentProps {
-  embedMode?: boolean;
-}
-
-const QuizContent = ({ embedMode = false }: QuizContentProps) => {
+const QuizContent = () => {
   const { state, reset, updateData, goToStep } = useQuiz();
   
   // Générer les étapes dynamiquement selon les sélections
@@ -158,16 +152,10 @@ const QuizContent = ({ embedMode = false }: QuizContentProps) => {
   };
 
   return (
-    <div className={cn(
-      "w-full bg-gradient-to-br from-background via-muted/20 to-background",
-      embedMode ? "h-screen overflow-hidden" : "min-h-screen"
-    )}>
-      {!embedMode && <SyncedHeader />}
+    <div className="min-h-screen w-full bg-gradient-to-br from-background via-muted/20 to-background">
+      <SyncedHeader />
       
-      <div className={cn(
-        "w-full",
-        embedMode ? "h-full p-0" : "px-4 md:px-6 lg:px-8 py-6"
-      )}>
+      <div className="w-full px-4 md:px-6 lg:px-8 py-6">
         {/* Progress & Controls */}
         {showControls && (
           <div className="mb-6 w-full flex items-center gap-2 md:gap-4">
@@ -301,19 +289,13 @@ const QuizContent = ({ embedMode = false }: QuizContentProps) => {
   );
 };
 
-interface SalesQuizGeneratorProps {
-  embedMode?: boolean;
-}
-
-export const SalesQuizGenerator = ({ embedMode = false }: SalesQuizGeneratorProps) => {
+export const SalesQuizGenerator = () => {
   // Calculer le nombre max d'étapes possibles pour le provider
   const maxSteps = 13; // Nombre maximum si toutes les options sont sélectionnées
   
   return (
-    <EmbedProvider isEmbed={embedMode}>
-      <QuizProvider totalSteps={maxSteps}>
-        <QuizContent embedMode={embedMode} />
-      </QuizProvider>
-    </EmbedProvider>
+    <QuizProvider totalSteps={maxSteps}>
+      <QuizContent />
+    </QuizProvider>
   );
 };

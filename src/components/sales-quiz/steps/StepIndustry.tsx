@@ -1,13 +1,10 @@
 import { useQuiz } from "../QuizContext";
-import { useEmbed } from "../EmbedContext";
 import { QuizNavigation } from "../QuizNavigation";
 import { IndustryCard } from "../IndustryCard";
 import { Building2, Search } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { INDUSTRIES } from "@/types/questionnaire";
-import { cn } from "@/lib/utils";
 
 const INDUSTRY_DESCRIPTIONS: Record<string, string> = {
   auto: "Pièces détachées, garages, concessionnaires",
@@ -30,7 +27,6 @@ const INDUSTRY_DESCRIPTIONS: Record<string, string> = {
 
 export const StepIndustry = () => {
   const { state, updateData, nextStep } = useQuiz();
-  const { isEmbed } = useEmbed();
   const [search, setSearch] = useState("");
 
   const selectedIndustry = state.data.industry;
@@ -54,63 +50,6 @@ export const StepIndustry = () => {
     }
   };
 
-  // En mode embed, on utilise une grille compacte optimisée pour tenir sur une page
-  if (isEmbed) {
-    return (
-      <div className="h-screen w-full flex flex-col overflow-hidden p-2">
-        {/* Header + Search sur une ligne */}
-        <div className="flex items-center justify-center gap-3 pb-2 shrink-0">
-          <h2 className="text-sm font-bold flex items-center gap-1.5 whitespace-nowrap">
-            <Building2 className="w-4 h-4 text-primary" />
-            Votre industrie
-          </h2>
-          <div className="relative w-44">
-            <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Rechercher..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-7 h-7 text-xs"
-            />
-          </div>
-        </div>
-
-        {/* Grid 4x4 simple - toutes les cartes de même taille */}
-        <div className="flex-1 grid grid-cols-4 grid-rows-4 gap-1.5 min-h-0">
-          {filteredIndustries.slice(0, 16).map((industry, index) => (
-            <IndustryCard
-              key={industry.value}
-              value={industry.value}
-              label={industry.label}
-              description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
-              isSelected={selectedIndustry === industry.value}
-              onSelect={() => handleSelect(industry.value)}
-              index={index}
-              isFeatured={false}
-              compact
-            />
-          ))}
-        </div>
-
-        {/* No Results */}
-        {filteredIndustries.length === 0 && (
-          <div className="text-center py-4 text-muted-foreground">
-            <p className="text-sm">Aucune industrie trouvée.</p>
-          </div>
-        )}
-
-        {/* Footer minimal */}
-        <div className="pt-1 shrink-0 text-center">
-          <span className="text-[10px] text-muted-foreground">
-            Cliquez pour continuer
-          </span>
-        </div>
-      </div>
-    );
-  }
-
-  // Mode normal (non-embed)
   return (
     <div className="space-y-6">
       {/* Header */}

@@ -20,30 +20,8 @@
     <meta name="twitter:site" content="@Lovable" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
-<!-- Custom Scrollbar - La Trousse Digitale Brand Colors + Iframe Optimization -->
+<!-- Custom Scrollbar - La Trousse Digitale Brand Colors -->
     <style>
-      /* Iframe optimization - remove margins, auto height */
-      html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100%;
-        height: 100%;
-        overflow-x: hidden;
-      }
-      html {
-        overflow-y: scroll !important;
-        min-height: 100vh;
-      }
-      body {
-        min-height: 100vh;
-      }
-      #root {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      /* Custom scrollbar */
       html::-webkit-scrollbar {
         width: 9px !important;
       }
@@ -58,21 +36,10 @@
       html::-webkit-scrollbar-thumb:hover {
         background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
       }
-      /* Firefox */
+      /* Firefox - note: Firefox ne supporte pas les gradients pour scrollbar-color */
       html {
         scrollbar-width: thin;
         scrollbar-color: #1c61fe #f0f0f0;
-      }
-      
-      /* Embed mode - hide scrollbar */
-      html.embed-mode {
-        overflow-y: auto !important;
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
-      }
-      html.embed-mode::-webkit-scrollbar {
-        display: none !important;
-        width: 0 !important;
       }
     </style>
   </head>
