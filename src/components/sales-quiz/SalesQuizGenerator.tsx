@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { QuizProvider, useQuiz } from "./QuizContext";
+import { EmbedProvider } from "./EmbedContext";
 import { QuizProgress } from "./QuizProgress";
 import { QuizSummaryPanel } from "./QuizSummaryPanel";
 import { StepWelcome } from "./steps/StepWelcome";
@@ -302,8 +303,10 @@ export const SalesQuizGenerator = ({ embedMode = false }: SalesQuizGeneratorProp
   const maxSteps = 13; // Nombre maximum si toutes les options sont sélectionnées
   
   return (
-    <QuizProvider totalSteps={maxSteps}>
-      <QuizContent embedMode={embedMode} />
-    </QuizProvider>
+    <EmbedProvider isEmbed={embedMode}>
+      <QuizProvider totalSteps={maxSteps}>
+        <QuizContent embedMode={embedMode} />
+      </QuizProvider>
+    </EmbedProvider>
   );
 };

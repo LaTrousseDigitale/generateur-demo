@@ -1,10 +1,12 @@
 import { useQuiz } from "../QuizContext";
+import { useEmbed } from "../EmbedContext";
 import { QuizNavigation } from "../QuizNavigation";
 import { IndustryCard } from "../IndustryCard";
 import { Building2, Search } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { INDUSTRIES } from "@/types/questionnaire";
+import { cn } from "@/lib/utils";
 
 const INDUSTRY_DESCRIPTIONS: Record<string, string> = {
   auto: "Pièces détachées, garages, concessionnaires",
@@ -27,6 +29,7 @@ const INDUSTRY_DESCRIPTIONS: Record<string, string> = {
 
 export const StepIndustry = () => {
   const { state, updateData, nextStep } = useQuiz();
+  const { isEmbed } = useEmbed();
   const [search, setSearch] = useState("");
 
   const selectedIndustry = state.data.industry;
@@ -50,6 +53,80 @@ export const StepIndustry = () => {
     }
   };
 
+  // En mode embed, on utilise une grille compacte optimisée pour tenir sur une page
+  if (isEmbed) {
+    return (
+      <div className="h-[calc(100vh-120px)] flex flex-col">
+        {/* Header compact */}
+        <div className="text-center space-y-1 pb-2 shrink-0">
+          <div className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent text-white shadow-glow">
+            <Building2 className="w-5 h-5" />
+          </div>
+          <h2 className="text-xl font-bold">
+            Dans quelle industrie évoluez-vous?
+          </h2>
+        </div>
+
+        {/* Search compact */}
+        <div className="relative max-w-sm mx-auto w-full pb-3 shrink-0">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            type="text"
+            placeholder="Rechercher..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="pl-9 h-9 text-sm"
+          />
+        </div>
+
+        {/* Grid magazine style - 4 colonnes avec pattern asymétrique */}
+        <div 
+          className="flex-1 grid grid-cols-4 gap-2 auto-rows-fr min-h-0"
+          style={{ gridAutoFlow: 'dense' }}
+        >
+          {filteredIndustries.map((industry, index) => {
+            // Pattern asymétrique magazine : certains éléments prennent 2 colonnes
+            const featuredPattern = [0, 7, 12]; // Éléments featured (2 colonnes)
+            const isFeatured = featuredPattern.includes(index);
+            
+            return (
+              <div 
+                key={industry.value}
+                className={cn(
+                  "min-h-0",
+                  isFeatured ? "col-span-2" : ""
+                )}
+              >
+                <IndustryCard
+                  value={industry.value}
+                  label={industry.label}
+                  description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
+                  isSelected={selectedIndustry === industry.value}
+                  onSelect={() => handleSelect(industry.value)}
+                  index={index}
+                  isFeatured={isFeatured}
+                  compact
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* No Results */}
+        {filteredIndustries.length === 0 && (
+          <div className="text-center py-6 text-muted-foreground">
+            <p className="text-sm">Aucune industrie trouvée.</p>
+          </div>
+        )}
+
+        <div className="pt-2 shrink-0">
+          <QuizNavigation canContinue={!!selectedIndustry} />
+        </div>
+      </div>
+    );
+  }
+
+  // Mode normal (non-embed)
   return (
     <div className="space-y-6">
       {/* Header */}
