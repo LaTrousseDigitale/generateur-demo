@@ -22,6 +22,10 @@
     
 <!-- Custom Scrollbar - La Trousse Digitale Brand Colors -->
     <style>
+      html {
+        overflow-y: scroll !important;
+        min-height: 101vh;
+      }
       html::-webkit-scrollbar {
         width: 9px !important;
       }
@@ -36,7 +40,7 @@
       html::-webkit-scrollbar-thumb:hover {
         background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
       }
-      /* Firefox - note: Firefox ne supporte pas les gradients pour scrollbar-color */
+      /* Firefox */
       html {
         scrollbar-width: thin;
         scrollbar-color: #1c61fe #f0f0f0;
