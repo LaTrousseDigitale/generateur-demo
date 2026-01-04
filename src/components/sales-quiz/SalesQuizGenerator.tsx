@@ -2,7 +2,6 @@ import { useEffect, useState, useMemo } from "react";
 import { QuizProvider, useQuiz } from "./QuizContext";
 import { QuizProgress } from "./QuizProgress";
 import { QuizSummaryPanel } from "./QuizSummaryPanel";
-import { StepWelcome } from "./steps/StepWelcome";
 import { StepIndustry } from "./steps/StepIndustry";
 import { StepCompanyInfo } from "./steps/StepCompanyInfo";
 import { StepSolutions } from "./steps/StepSolutions";
@@ -52,11 +51,10 @@ import { QuestionnaireData } from "@/types/questionnaire";
 // Fonction pour générer les étapes dynamiquement selon les sélections
 const getSteps = (data: Partial<QuestionnaireData>) => {
   const steps: Array<React.ComponentType> = [
-    StepWelcome,        // 0 - Accueil
-    StepIndustry,       // 1 - Industrie  
-    StepCompanyInfo,    // 2 - Type & taille entreprise
-    StepSolutions,      // 3 - Site Web / Portail / Modules
-    StepDetails,        // 4 - Types détaillés (vitrine, e-commerce, etc.)
+    StepIndustry,       // 0 - Industrie  
+    StepCompanyInfo,    // 1 - Type & taille entreprise
+    StepSolutions,      // 2 - Site Web / Portail / Modules
+    StepDetails,        // 3 - Types détaillés (vitrine, e-commerce, etc.)
   ];
 
   const solutionTypes = data.solutionTypes || [];
@@ -99,9 +97,9 @@ const QuizContent = () => {
   const CurrentStep = steps[state.step] || steps[0];
   const isMobile = useIsMobile();
   
-  // Afficher le panneau après l'accueil et avant le résumé
-  const showPanel = state.step > 0 && state.step < steps.length - 1 && !isMobile;
-  const showControls = state.step > 0 && state.step < steps.length - 1;
+  // Afficher le panneau et les contrôles (sauf sur le résumé)
+  const showPanel = state.step < steps.length - 1 && !isMobile;
+  const showControls = state.step < steps.length - 1;
   
   const { saving, saveQuiz, loadQuiz, generateShareUrl } = useSaveQuiz();
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -291,7 +289,7 @@ const QuizContent = () => {
 
 export const SalesQuizGenerator = () => {
   // Calculer le nombre max d'étapes possibles pour le provider
-  const maxSteps = 13; // Nombre maximum si toutes les options sont sélectionnées
+  const maxSteps = 12; // Nombre maximum si toutes les options sont sélectionnées
   
   return (
     <QuizProvider totalSteps={maxSteps}>
