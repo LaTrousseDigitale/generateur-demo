@@ -22,6 +22,7 @@ import { useSaveQuiz } from "@/hooks/useSaveQuiz";
 import { Button } from "@/components/ui/button";
 import { RotateCcw, Save, Copy, Check, Menu, X } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -157,10 +158,16 @@ const QuizContent = ({ embedMode = false }: QuizContentProps) => {
   };
 
   return (
-    <div className={`min-h-screen w-full bg-gradient-to-br from-background via-muted/20 to-background ${embedMode ? 'pt-2' : ''}`}>
+    <div className={cn(
+      "w-full bg-gradient-to-br from-background via-muted/20 to-background",
+      embedMode ? "h-screen overflow-hidden" : "min-h-screen"
+    )}>
       {!embedMode && <SyncedHeader />}
       
-      <div className={`w-full px-4 md:px-6 lg:px-8 ${embedMode ? 'py-2' : 'py-6'}`}>
+      <div className={cn(
+        "w-full",
+        embedMode ? "h-full p-0" : "px-4 md:px-6 lg:px-8 py-6"
+      )}>
         {/* Progress & Controls */}
         {showControls && (
           <div className="mb-6 w-full flex items-center gap-2 md:gap-4">
