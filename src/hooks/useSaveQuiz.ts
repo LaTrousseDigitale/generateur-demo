@@ -47,14 +47,15 @@ export const useSaveQuiz = () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
-        .from('saved_quizzes')
-        .select('*')
-        .eq('share_code', shareCode)
-        .single();
+        .rpc('get_quiz_by_share_code', { p_share_code: shareCode });
 
       if (error) throw error;
+      if (!data || data.length === 0) {
+        toast.error('Questionnaire non trouvé ou expiré');
+        return null;
+      }
       
-      return data as SavedQuiz;
+      return data[0] as SavedQuiz;
     } catch (error) {
       console.error('Error loading quiz:', error);
       toast.error('Questionnaire non trouvé');
@@ -70,16 +71,15 @@ export const useSaveQuiz = () => {
     currentStep: number
   ): Promise<boolean> => {
     try {
-      const { error } = await supabase
-        .from('saved_quizzes')
-        .update({
-          quiz_data: data,
-          current_step: currentStep,
-        })
-        .eq('share_code', shareCode);
+      const { data: success, error } = await supabase
+        .rpc('update_quiz_by_share_code', {
+          p_share_code: shareCode,
+          p_quiz_data: data,
+          p_current_step: currentStep,
+        });
 
       if (error) throw error;
-      return true;
+      return success === true;
     } catch (error) {
       console.error('Error updating quiz:', error);
       return false;

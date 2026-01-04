@@ -190,7 +190,26 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_quiz_by_share_code: {
+        Args: { p_share_code: string }
+        Returns: {
+          created_at: string
+          current_step: number
+          expires_at: string
+          id: string
+          quiz_data: Json
+          share_code: string
+          updated_at: string
+        }[]
+      }
+      update_quiz_by_share_code: {
+        Args: {
+          p_current_step: number
+          p_quiz_data: Json
+          p_share_code: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       [_ in never]: never
