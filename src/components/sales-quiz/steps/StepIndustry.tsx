@@ -57,11 +57,11 @@ export const StepIndustry = () => {
   // En mode embed, on utilise une grille compacte optimisée pour tenir sur une page
   if (isEmbed) {
     return (
-      <div className="h-[100vh] flex flex-col overflow-hidden p-2">
+      <div className="h-full flex flex-col overflow-hidden px-3 py-2">
         {/* Header ultra compact */}
-        <div className="text-center pb-1 shrink-0">
-          <h2 className="text-lg font-bold flex items-center justify-center gap-2">
-            <Building2 className="w-5 h-5 text-primary" />
+        <div className="text-center pb-1.5 shrink-0">
+          <h2 className="text-base font-bold flex items-center justify-center gap-2">
+            <Building2 className="w-4 h-4 text-primary" />
             Dans quelle industrie évoluez-vous?
           </h2>
         </div>
@@ -74,21 +74,21 @@ export const StepIndustry = () => {
             placeholder="Rechercher..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="pl-8 h-8 text-sm"
+            className="pl-8 h-7 text-sm"
           />
         </div>
 
-        {/* Grid magazine style - 4 colonnes avec pattern asymétrique */}
+        {/* Grid magazine style - limité à 12 éléments sur 3 lignes */}
         <div 
-          className="flex-1 grid grid-cols-4 gap-1.5 min-h-0 overflow-hidden"
+          className="flex-1 grid grid-cols-4 gap-1 min-h-0"
           style={{ 
-            gridTemplateRows: 'repeat(4, 1fr)',
+            gridTemplateRows: 'repeat(3, 1fr)',
             gridAutoFlow: 'dense' 
           }}
         >
-          {filteredIndustries.slice(0, 16).map((industry, index) => {
-            // Pattern asymétrique magazine : certains éléments prennent 2 colonnes
-            const featuredPattern = [0, 7, 12];
+          {filteredIndustries.slice(0, 12).map((industry, index) => {
+            // Pattern asymétrique : positions 0 et 6 sont featured (2 colonnes)
+            const featuredPattern = [0, 6];
             const isFeatured = featuredPattern.includes(index);
             
             return (
@@ -116,25 +116,16 @@ export const StepIndustry = () => {
 
         {/* No Results */}
         {filteredIndustries.length === 0 && (
-          <div className="text-center py-4 text-muted-foreground">
-            <p className="text-sm">Aucune industrie trouvée.</p>
+          <div className="text-center py-2 text-muted-foreground shrink-0">
+            <p className="text-xs">Aucune industrie trouvée.</p>
           </div>
         )}
 
-        {/* Navigation ultra compact */}
-        <div className="pt-1.5 shrink-0 flex justify-between items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {}}
-            className="text-xs opacity-0 pointer-events-none"
-          >
-            Retour
-          </Button>
+        {/* Footer compact */}
+        <div className="pt-1.5 shrink-0 text-center">
           <span className="text-xs text-muted-foreground">
             Cliquez sur une industrie pour continuer
           </span>
-          <div className="w-16" />
         </div>
       </div>
     );
