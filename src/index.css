@@ -262,90 +262,53 @@ All colors MUST be HSL.
   animation: rainbow 3s ease infinite;
 }
 
-/* Custom Scrollbar - La Trousse Digitale Brand Colors (Blue → Orange → Yellow) */
-html {
-  overflow-y: scroll !important;
+/* ===========================================
+   CUSTOM SCROLLBAR - Brand Gradient (PRIORITY)
+   Blue (#1c61fe) → Orange (#ff6b3d) → Yellow (#fbca58)
+   =========================================== */
+
+html::-webkit-scrollbar {
+  width: 9px !important;
 }
 
-/* Global scrollbar - Webkit browsers (Chrome, Safari, Edge) */
-*::-webkit-scrollbar {
-  width: 8px !important;
-  height: 8px !important;
+html::-webkit-scrollbar-track {
+  background: #f0f0f0 !important;
 }
 
-*::-webkit-scrollbar-track {
-  background: #f1f5f9 !important;
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%) !important;
+  border-radius: 6px !important;
+  min-height: 60px !important;
 }
 
-*::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg, 
-    #1c61fe 0%, 
-    #7b3fe4 25%, 
-    #c93d8f 40%, 
-    #ff5e3a 60%, 
-    #ff8c42 75%, 
-    #fbca58 100%
-  ) !important;
-  border-radius: 10px !important;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg, 
-    #1450d8 0%, 
-    #6a2fd0 25%, 
-    #b82d7f 40%, 
-    #e54d2a 60%, 
-    #e57a32 75%, 
-    #e9b840 100%
-  ) !important;
-}
-
-*::-webkit-scrollbar-button {
-  display: none !important;
+html::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
 }
 
 /* Firefox */
-* {
-  scrollbar-width: thin !important;
-  scrollbar-color: #ff6b3d #f1f5f9 !important;
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b3d #f0f0f0;
 }
 
-/* Utility class .custom-scrollbar pour conteneurs internes */
+/* Utility class for internal containers */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: hsl(var(--muted));
-  border-radius: 10px;
+  background: #f0f0f0;
+  border-radius: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(
-    180deg, 
-    #1c61fe 0%, 
-    #7b3fe4 25%, 
-    #c93d8f 40%, 
-    #ff5e3a 60%, 
-    #ff8c42 75%, 
-    #fbca58 100%
-  );
-  border-radius: 10px;
+  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%);
+  border-radius: 6px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(
-    180deg, 
-    #1450d8 0%, 
-    #6a2fd0 25%, 
-    #b82d7f 40%, 
-    #e54d2a 60%, 
-    #e57a32 75%, 
-    #e9b840 100%
-  );
+  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%);
 }
 
 .custom-scrollbar {
