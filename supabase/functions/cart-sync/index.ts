@@ -38,10 +38,12 @@ const CartSchema = z.array(CartItemSchema).max(100)
 const isValidSessionId = (id: string): boolean => {
   // Secure format: 64 hex characters (256 bits of entropy)
   if (/^[a-f0-9]{64}$/i.test(id)) return true
-  // Legacy format from latroussedigitale.ca: session_<timestamp> or similar
-  if (/^session_[0-9]{10,15}$/.test(id)) return true
+  // Legacy format from latroussedigitale.ca: session_<timestamp>_<suffix>
+  if (/^session_[0-9]{10,15}_[a-z0-9]+$/i.test(id)) return true
   // Also accept shorter hex strings (at least 16 chars) for compatibility
   if (/^[a-f0-9]{16,}$/i.test(id)) return true
+  // Accept test/demo session IDs
+  if (/^test_[a-z0-9_]+$/i.test(id)) return true
   return false
 }
 
