@@ -278,12 +278,28 @@ html {
 }
 
 *::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%) !important;
+  background: linear-gradient(
+    180deg, 
+    #1c61fe 0%, 
+    #7b3fe4 25%, 
+    #c93d8f 40%, 
+    #ff5e3a 60%, 
+    #ff8c42 75%, 
+    #fbca58 100%
+  ) !important;
   border-radius: 10px !important;
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%) !important;
+  background: linear-gradient(
+    180deg, 
+    #1450d8 0%, 
+    #6a2fd0 25%, 
+    #b82d7f 40%, 
+    #e54d2a 60%, 
+    #e57a32 75%, 
+    #e9b840 100%
+  ) !important;
 }
 
 *::-webkit-scrollbar-button {
@@ -308,12 +324,28 @@ html {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%);
+  background: linear-gradient(
+    180deg, 
+    #1c61fe 0%, 
+    #7b3fe4 25%, 
+    #c93d8f 40%, 
+    #ff5e3a 60%, 
+    #ff8c42 75%, 
+    #fbca58 100%
+  );
   border-radius: 10px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%);
+  background: linear-gradient(
+    180deg, 
+    #1450d8 0%, 
+    #6a2fd0 25%, 
+    #b82d7f 40%, 
+    #e54d2a 60%, 
+    #e57a32 75%, 
+    #e9b840 100%
+  );
 }
 
 .custom-scrollbar {
