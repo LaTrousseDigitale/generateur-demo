@@ -166,10 +166,10 @@ const QuizContent = ({ embedMode = false }: QuizContentProps) => {
       
       <div className={cn(
         "w-full",
-        embedMode ? "h-full p-0" : "px-4 md:px-6 lg:px-8 py-6"
+        embedMode ? "h-full flex flex-col p-0" : "px-4 md:px-6 lg:px-8 py-6"
       )}>
-        {/* Progress & Controls */}
-        {showControls && (
+        {/* Progress & Controls - hidden in embed mode */}
+        {showControls && !embedMode && (
           <div className="mb-6 w-full flex items-center gap-2 md:gap-4">
             <div className="flex-1 min-w-0">
               <QuizProgress />
@@ -243,14 +243,21 @@ const QuizContent = ({ embedMode = false }: QuizContentProps) => {
         )}
 
         {/* Main Content with optional sidebar */}
-        <div className={`w-full ${showPanel ? 'grid lg:grid-cols-[1fr_500px] gap-6' : ''}`}>
+        <div className={cn(
+          "w-full",
+          showPanel && !embedMode ? 'grid lg:grid-cols-[1fr_500px] gap-6' : '',
+          embedMode ? 'flex-1 min-h-0' : ''
+        )}>
           {/* Step Content */}
-          <div className="w-full">
+          <div className={cn(
+            "w-full",
+            embedMode ? "h-full" : ""
+          )}>
             <CurrentStep />
           </div>
 
           {/* Summary Panel - desktop only, not on welcome/summary */}
-          {showPanel && (
+          {showPanel && !embedMode && (
             <div className="hidden lg:block sticky top-6 max-h-[calc(100vh-14rem)] overflow-y-auto">
               <QuizSummaryPanel />
             </div>
