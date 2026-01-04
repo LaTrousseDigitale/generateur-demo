@@ -267,7 +267,7 @@ html {
   overflow-y: scroll !important;
 }
 
-/* Webkit browsers (Chrome, Safari, Edge) */
+/* Global scrollbar - Webkit browsers (Chrome, Safari, Edge) */
 *::-webkit-scrollbar {
   width: 8px !important;
   height: 8px !important;
@@ -294,4 +294,29 @@ html {
 * {
   scrollbar-width: thin !important;
   scrollbar-color: #ff6b3d #f1f5f9 !important;
+}
+
+/* Utility class .custom-scrollbar pour conteneurs internes */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #1c61fe 0%, #ff6b3d 50%, #fbca58 100%);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #1450d8 0%, #e55a2d 50%, #e9b840 100%);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #ff6b3d hsl(var(--muted));
 }
