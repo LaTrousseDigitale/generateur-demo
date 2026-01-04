@@ -57,14 +57,14 @@ export const StepIndustry = () => {
   // En mode embed, on utilise une grille compacte optimisée pour tenir sur une page
   if (isEmbed) {
     return (
-      <div className="h-[100vh] flex flex-col overflow-hidden px-3 py-1.5">
+      <div className="h-screen w-full flex flex-col overflow-hidden p-2">
         {/* Header + Search sur une ligne */}
-        <div className="flex items-center justify-center gap-3 pb-1.5 shrink-0">
+        <div className="flex items-center justify-center gap-3 pb-2 shrink-0">
           <h2 className="text-sm font-bold flex items-center gap-1.5 whitespace-nowrap">
             <Building2 className="w-4 h-4 text-primary" />
             Votre industrie
           </h2>
-          <div className="relative w-40">
+          <div className="relative w-44">
             <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground" />
             <Input
               type="text"
@@ -76,40 +76,21 @@ export const StepIndustry = () => {
           </div>
         </div>
 
-        {/* Grid magazine style - 4 colonnes */}
-        <div 
-          className="flex-1 grid grid-cols-4 gap-1 min-h-0 overflow-hidden"
-          style={{ 
-            gridTemplateRows: 'repeat(4, 1fr)',
-            gridAutoFlow: 'dense' 
-          }}
-        >
-          {filteredIndustries.slice(0, 16).map((industry, index) => {
-            // Pattern asymétrique magazine : certains éléments prennent 2 colonnes
-            const featuredPattern = [0, 7, 12];
-            const isFeatured = featuredPattern.includes(index);
-            
-            return (
-              <div 
-                key={industry.value}
-                className={cn(
-                  "min-h-0 overflow-hidden",
-                  isFeatured ? "col-span-2" : ""
-                )}
-              >
-                <IndustryCard
-                  value={industry.value}
-                  label={industry.label}
-                  description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
-                  isSelected={selectedIndustry === industry.value}
-                  onSelect={() => handleSelect(industry.value)}
-                  index={index}
-                  isFeatured={isFeatured}
-                  compact
-                />
-              </div>
-            );
-          })}
+        {/* Grid 4x4 simple - toutes les cartes de même taille */}
+        <div className="flex-1 grid grid-cols-4 grid-rows-4 gap-1.5 min-h-0">
+          {filteredIndustries.slice(0, 16).map((industry, index) => (
+            <IndustryCard
+              key={industry.value}
+              value={industry.value}
+              label={industry.label}
+              description={INDUSTRY_DESCRIPTIONS[industry.value] || ""}
+              isSelected={selectedIndustry === industry.value}
+              onSelect={() => handleSelect(industry.value)}
+              index={index}
+              isFeatured={false}
+              compact
+            />
+          ))}
         </div>
 
         {/* No Results */}
@@ -119,20 +100,11 @@ export const StepIndustry = () => {
           </div>
         )}
 
-        {/* Navigation ultra compact */}
-        <div className="pt-1.5 shrink-0 flex justify-between items-center">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {}}
-            className="text-xs opacity-0 pointer-events-none"
-          >
-            Retour
-          </Button>
-          <span className="text-xs text-muted-foreground">
-            Cliquez sur une industrie pour continuer
+        {/* Footer minimal */}
+        <div className="pt-1 shrink-0 text-center">
+          <span className="text-[10px] text-muted-foreground">
+            Cliquez pour continuer
           </span>
-          <div className="w-16" />
         </div>
       </div>
     );
